@@ -1,0 +1,474 @@
+/* Magnific Popup core CSS file v0.0.1 */
+
+
+
+.mfp-bg {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 500;
+  overflow: hidden;
+  position: fixed;
+}
+
+/* Root holder of all content */
+.mfp-wrap {
+  cursor: -moz-zoom-out;
+  cursor: -webkit-zoom-out;
+  cursor: zoom-out;
+
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 501;
+  position: fixed;
+}
+
+
+
+.mfp-container {
+  height: 100%;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* TODO: helper for IE resizing */
+.mfp-container-before {
+  display: none;
+}
+
+.mfp-overflow-hidden {
+  overflow: hidden;
+}
+
+.mfp-wrap *,
+.mfp-wrap {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.mfp-centerer {
+  vertical-align: middle; 
+  display: inline-block; 
+  line-height: 0;
+  margin: 0 auto;
+  cursor: auto;
+  position: relative;
+  width: 100%;
+
+  /* yea, I know that it's ugly. If you know better solution - welcome to GitHub */
+  *display: block;
+  *margin-top: expression(this.offsetHeight < this.parentNode.offsetHeight ? parseInt((this.parentNode.offsetHeight - this.offsetHeight) / 2) + "px" : "0");
+}
+
+.mfp-img {
+  cursor: pointer;
+
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+
+  margin-top: -3px;
+  /*min-width: 24px;
+  min-height: 24px;
+ background: rgba(0,0,0,0.2);*/
+   
+  /*background: url('http://dimsemenov.com/plugins/royal-slider/royalslider/skins/preloaders/preloader-white.gif') center center no-repeat;*/
+}
+
+.mfp-bg,
+.mfp-content,
+.mfp-centerer,
+.mfp-zoom-out img {
+  cursor: -moz-zoom-out;
+  cursor: -webkit-zoom-out;
+  cursor: zoom-out;
+}
+
+.mfp-video {
+  background: #000;
+}
+
+
+.mfp-content {
+  position: relative;
+}
+
+
+
+
+.mfp-iframe-content {
+  line-height: 0;
+}
+.mfp-img-content img {
+  line-height: 0;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+.mfp-inline-content {
+  line-height: 1.231;
+}
+
+
+
+
+
+.mfp-zoom {
+  cursor: pointer;
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+}
+
+
+/* 1 of X counter */
+.mfp-counter {
+  position: absolute;
+  bottom: -34px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  color: #C5C5C5;
+  font-size: 13px;
+  line-height: 15px;
+}
+
+
+.mfp-preloader {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 13px;
+  position: absolute;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -12px;
+  top: 50%;
+  width: 100px;
+  text-align: center;
+  height: 20px;
+  line-height: 20px;
+}
+
+
+/*.mfp-preloader {
+  width:8px;
+  height:8px;
+  background: #FFF;
+  border-radius: 4px;
+  left:50%;
+  top:50%;
+  margin-left:-4px;
+  margin-top:-4px; 
+  position: absolute;
+  z-index: -1;
+ 
+ -webkit-animation: blink 1.4s linear infinite;
+  animation: blink 1.4s linear infinite;
+
+}*/
+
+
+
+.mfp-close,
+.mfp-arrow,
+.mfp-preloader,
+.mfp-counter {
+  -webkit-user-select:none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+
+/**
+ * Arrows
+ */
+
+.mfp-arrow {
+  display: block;
+  position: absolute;
+  bottom: -44px;
+  padding: 10px 40px 10px 20px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.mfp-arrow:hover {
+  opacity: 1;
+}
+.mfp-arrow:active {
+  margin-top: 1px;
+}
+.mfp-arrow span {
+  background: #FFF;
+  width: 9px;
+  height: 8px;
+  border-radius: 2px;
+  display: block;
+  position: relative;
+  padding: 8px 8px;
+}
+
+.mfp-arrow-left {
+  left: 50%;
+  margin-left: -85px;
+}
+.mfp-arrow-right {
+  right: 50%;
+  margin-right: -85px;
+  padding-left: 40px;
+  padding-right: 20px;
+}
+.mfp-arrow i {
+  display: block;
+  width: 0; 
+  height: 0; 
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+.mfp-arrow-left i {
+  margin-left: -1px;
+  border-right: 9px solid #444;
+}
+.mfp-arrow-right i {
+  margin-left: 1px;
+  border-left: 9px solid #444;
+}
+
+
+/*.mfp-arrow {
+  display: block;
+  position: absolute;
+  bottom: 12px;
+  padding: 10px 30px 10px 20px;
+  cursor: pointer;
+}
+.mfp-arrow:hover span {
+  background: #FFF;
+}
+.mfp-arrow:active {
+  margin-top: 1px;
+}
+.mfp-arrow span {
+
+  background: rgba(255, 255, 255, 0.75);
+  width: 15px;
+  height: 9px;
+  border-radius: 2px;
+  display: block;
+  position: relative;
+  padding: 6px 16px;
+}
+
+.mfp-arrow-left {
+  left: 50%;
+  margin-left: -115px;
+}
+.mfp-arrow-right {
+  right: 50%;
+  margin-right: -115px;
+  padding-left: 30px;
+  padding-right: 20px;
+}
+.mfp-arrow i {
+  font-style: normal;
+  display: block;
+  color: #FFF;
+}
+.mfp-arrow-left i {
+  width: 0; 
+  height: 0; 
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 9px solid #444;
+}
+.mfp-arrow-right i {
+  margin-left: 4px;
+
+   width: 0; 
+  height: 0; 
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 9px solid #444;
+}*/
+
+
+
+/**
+ *
+ * Appearence
+ * 
+ */
+
+/* Dark overlay */
+.mfp-bg {
+  background: #000;
+  opacity: 0.85;
+  filter: alpha(opacity=85);
+}
+
+
+
+
+/* Close Icon */
+.mfp-close {
+  width: 44px;
+  height: 44px;
+  position: absolute;
+  right: -10px;
+  top: -30px;
+  z-index: 1000;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  opacity: 0.6;
+}
+
+.mfp-close-icn {
+  font-style: normal;
+  color: #FFF;
+  font-size: 30px;
+  line-height: 30px;
+  font-family: Arial,sans-serif;
+}
+.mfp-close:hover {
+  text-decoration: none;
+  opacity: 1;
+}
+
+.mfp-close {
+  top: 0;
+  right: 0;
+}
+.mfp-close-icn {
+  line-height: 44px;
+}
+.mfp-close:active {
+  margin-top: 1px;
+}
+.mfp-dark-close-button .mfp-close-icn {
+  color: #000;
+}
+
+.mfp-inline-content {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+/*.mfp-close-icn:after {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  transform: rotate(45deg);
+
+  display: block;
+  font-weight: bold;
+  font-size: 33px;
+  width: 33px;
+  height: 35px;
+  line-height: 33px;
+  color: white;
+  font-family: Georgia, sans-serif;
+  content: "+";
+  text-align: center;
+  vertical-align: middle;
+  margin-top: 12px;
+  margin-left: 13px;
+}
+.mfp-close:hover {
+  opacity: 1;
+}
+.mfp-close:active {
+  margin-top: 1px;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Alternative arrow styles */
+
+/*
+Positioning on left side
+.mfp-arrow {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 100px;
+  height: 100px;
+  margin-top: -50px;
+  cursor: pointer;
+}
+.mfp-arrow:hover,
+.mfp-arrow.mfp-hover {
+  background: rgba(0,0,0,0.3);
+}
+.mfp-arrow-left {
+  left: 0;
+}
+.mfp-arrow-right {
+  right: 0;
+}
+.mfp-arrow i {
+  display: block;
+  margin: 25px;
+  width: 50px;
+  height: 50px;
+  background: url( 'mfp-sprite.png' ) no-repeat 0 0 transparent;
+}
+.mfp-arrow-right i {
+  background-position: 0 -50px;
+}*/
+
+/*
+ Simple at the bottom
+.mfp-arrow {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100px;
+  height: 70px;
+  cursor: pointer;
+}
+.mfp-arrow:hover,
+.mfp-arrow.mfp-hover {
+  background: rgba(0,0,0,0.3);
+}
+.mfp-arrow-left {
+  left: 50%;
+  margin-left: -100px;
+}
+.mfp-arrow-right {
+  right: 50%;
+  margin-right: -100px;
+}
+.mfp-arrow i {
+  display: block;
+  width: 50px;
+  height: 50px;
+  background: url( 'mfp-sprite.png' ) no-repeat 0 0 transparent;
+  margin: 10px 20px;
+}
+.mfp-arrow-right i {
+  background-position: 0 -50px;
+  margin-left: 30px;
+}*/
+
