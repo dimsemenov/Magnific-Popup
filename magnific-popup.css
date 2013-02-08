@@ -97,6 +97,7 @@
 
 .mfp-content {
   position: relative;
+  display: inline-block;
 }
 
 
@@ -354,7 +355,7 @@
 .mfp-inline-content {
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 

@@ -26,6 +26,7 @@
 						self.index = self.currData.index;
 						self.wrap.on('click.mfp-g-next', 'img', function(e) {
 							self.next();
+							return false;
 						});
 
 						self.doc.on('keydown.mfp-gallery', function(e) {
@@ -56,12 +57,13 @@
 							self.counter = self._getEl('counter');
 							var markup = self.st.gallery.arrowMarkup;
 							self.arrowLeft = $( markup.replace('%title%', self.st.txt.prev).replace('%dir%', 'left') ).click(function(e) {
-								e.preventDefault();
 								self.prev();
+								return false;
 							});
 							self.arrowRight = $( markup.replace('%title%', self.st.txt.next).replace('%dir%', 'right') ).click(function(e) {
 								e.preventDefault();
 								self.next();
+								return false;
 							});
 							self.container.append(self.counter, self.arrowLeft, self.arrowRight);
 						}

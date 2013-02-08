@@ -52,7 +52,7 @@
 				} else {
 					//self.wH -= 20;
 				}
-				var margin = 44;
+				var margin = self.st.vMargin;
 
 	 			var size = {
 					height: self.wH - margin*2,
@@ -67,22 +67,7 @@
 				self.ev.trigger('mfpResize');
 			}
 		}, 
-		hasScrollBar: function(winHeight) {
-			var self = this;
-			if( self.body.height() > winHeight || self.win.height() ) {
-                return true;    
-            }
-            return false;
-		},
-		_getEl: function(className, appendTo, tagName) {
-			var el = document.createElement(tagName || 'div');
-			el.className = 'mfp-'+className;
-			el = $(el);
-			if(appendTo) {
-				el.appendTo(appendTo);
-			}
-			return el;
-		},
+		
 		open: function(data) {
 			var self = this;
 			
@@ -102,12 +87,15 @@
 				self.wrap = self._getEl('wrap');
 				self.container = self._getEl('container', self.wrap);
 				self.centerer = self._getEl('centerer', self.container);
+
+				if(self.st.preloader)
+					self.preloader = self._getEl('preloader', self.centerer, self.st.txt.loading);
+
 				self.content = self._getEl('content', self.centerer);
 				if(!self.st.closeBtnInside) {
 					self.wrap.append( self._getCloseBtn() );
 				}
-				if(self.st.preloader)
-					self.centerer.prepend('<div class="mfp-preloader">Loading...</div>');
+				
 
 				if(self.fixedPosition) {
 					self.wrap.css({
@@ -153,9 +141,14 @@
 					if(self.st.closeOnContentClick) {
 						self.close();
 					} else {
-						if( $(e.target).hasClass('mfp-wrap') ||  $(e.target).hasClass('mfp-container')) {
+						console.log($(e.target)[0], $(e.target).closest('.mfp-content')[0] );
+						console.log( $(e.target).parent() );
+						if( !$(e.target).closest('.mfp-content').length ) {
 							self.close();
 						}
+						// if( $(e.target).hasClass('mfp-wrap') ||  $(e.target).hasClass('mfp-container')) {
+						// 	self.close();
+						// }
 					}
 				});
 
@@ -175,8 +168,8 @@
 				
 				self.bgOverlay.add(self.wrap).appendTo( self.body );
 				self.body.addClass(bodyClasses);
-				if( self.hasScrollBar(winHeight) ) {
-					var s = self.getScrollbarSize();
+				if(self.fixedPosition && self._hasScrollBar(winHeight) ) {
+					var s = self._getScrollbarSize();
 					if(s) {
 						self.body.css('paddingRight', s);
 					}
@@ -295,28 +288,7 @@
 			
 		},
 
-		_getCloseBtn: function() {
-			var self = this;
-			if(!self.closeBtn) {
-				self.closeBtn = $( self.st.closeMarkup.replace('%title%', self.st.txt.close ) ).click(function(e) {
-					e.preventDefault();
-					self.close();
-				});
-			}
-			
-			return self.closeBtn;
-		},
-
-		getScrollbarSize: function() {
-			var self = this;
-			// slightly modified of idea by http://benalman.com/projects/jquery-misc-plugins/#scrollbarwidth
-			if(self.scrollbarSize === undefined) {
-				var itemWithScroll = $('<div style="width:50px;height:50px;overflow-y:scroll;position:absolute;top:0;left:0;"><div style="height:99px;"> </div></div>').appendTo( document.body );
-				self.scrollbarSize = Math.max(0, itemWithScroll[0].offsetWidth - itemWithScroll[0].firstChild.offsetWidth);
-				itemWithScroll.remove();
-			}
-			return self.scrollbarSize;
-		},
+		
 
 		
 		// converts DOM element to Magnific Popup data object
@@ -373,6 +345,56 @@
 				options.items = el;
 				el.off('click.mfp').on('click.mfp', eHandler);
 			}
+		},
+
+
+
+
+
+
+		/*
+			"Private" helpers
+		 */
+		_getCloseBtn: function() {
+			var self = this;
+			if(!self.closeBtn) {
+				self.closeBtn = $( self.st.closeMarkup.replace('%title%', self.st.txt.close ) ).click(function(e) {
+					e.preventDefault();
+					self.close();
+				});
+			}
+			
+			return self.closeBtn;
+		},
+		_hasScrollBar: function(winHeight) {
+			var self = this;
+			if( self.body.height() > winHeight || self.win.height() ) {
+                return true;    
+            }
+            return false;
+		},
+		_getEl: function(className, appendTo, html, tagName) {
+			var el = document.createElement(tagName || 'div');
+			el.className = 'mfp-'+className;
+			if(html) {
+				el.innerHTML = html;
+			}
+
+			el = $(el);
+			if(appendTo) {
+				el.appendTo(appendTo);
+			}
+			return el;
+		},
+		_getScrollbarSize: function() {
+			var self = this;
+			// slightly modified of idea by http://benalman.com/projects/jquery-misc-plugins/#scrollbarwidth
+			if(self.scrollbarSize === undefined) {
+				var itemWithScroll = $('<div style="width:50px;height:50px;overflow-y:scroll;position:absolute;top:0;left:0;"><div style="height:99px;"> </div></div>').appendTo( document.body );
+				self.scrollbarSize = Math.max(0, itemWithScroll[0].offsetWidth - itemWithScroll[0].firstChild.offsetWidth);
+				itemWithScroll.remove();
+			}
+			return self.scrollbarSize;
 		}
 
 	}; /* MagnificPopup core prototype end */
@@ -410,6 +432,8 @@
 		minHeight: 300,
 		preloader: true,
 
+		vMargin: 44, // Vertical margin for main wrap that holds popup content (top and bottom).
+
 		gallery: false,
 		disableOn: 700, // Conditional lightbox: property defines on what screen width in pixels should the lightbox be disabled. TODO: add option to pass function instead of number
 
@@ -439,7 +463,8 @@
 			close: 'Close (Esc)',
 			prev: 'Previous (Left arrow key)',
 			next: 'Next (Right arrow key)',
-			counter: '%curr% of %total%'
+			counter: '%curr% of %total%',
+			loading: 'Loading...'
 		}
 		
 	};
