@@ -7,7 +7,7 @@
 	 */ 
 	$.fn.magnificPopup.defaults.gallery = {
 		enabled: false,
-		arrowMarkup: '<a title="%title%" class="mfp-arrow mfp-arrow-%dir%"><span><i></i></span></a>',
+		arrowMarkup: '<button title="%title%" class="mfp-arrow mfp-arrow-%dir%"><span><i></i></span></button>',
 		preload: 0
 	};
 	$.extend($.magnificPopup.proto, {

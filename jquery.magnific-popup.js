@@ -2,7 +2,7 @@
 * 
 * MagnificPopup | http://dimsemenov.com/magnific
 *
-* @version 0.0.4:
+* @version 0.0.5:
 *
 */
 ;(function($) {
@@ -20,7 +20,7 @@
 
 		self.bodyhtml = $('body, html');
 		self.win = $(window);
-		self.body = $('body');
+		self.body = $(document.body);
 		self.ev = self.win;
 		self.doc = $(document);
 		
@@ -31,19 +31,22 @@
 		}
 	}
 
-	/**
-	*
-	* Core Prototype
-	* 
-	*/
+
+
 	MagnificPopup.prototype = {
 
 		constructor: MagnificPopup,
 
+		/**
+		 * Updates layout of popup
+		 * @param  Boolean force     If set to true forces the resize, no matter if height is changed or not.
+		 * @param  Number  winHeight Height of window (optional).
+		 */
 		resize: function(force, winHeight) {
 			var self = this;
 			self.wH = winHeight || self.win.height();
 
+			// we resize only height
 			if(force || self.prevHeight !== self.wH) {
 				self.prevHeight = self.wH;
 			
@@ -52,14 +55,13 @@
 				} else {
 					//self.wH -= 20;
 				}
-				var margin = self.st.vMargin;
 
-	 			var size = {
+				var margin = self.st.vMargin;
+				self.container.css({
 					height: self.wH - margin*2,
 					lineHeight: (self.wH - margin*2) + 'px',
 					margin: margin + 'px 0'
-				};
-				self.container.css(size);
+				});
 
 				if(self.currData.type === 'img')
 					self.wrap.find('img').css('max-height', self.wH - margin*2);
@@ -70,7 +72,6 @@
 		
 		open: function(data) {
 			var self = this;
-			
 			
 			if(!self.isOpen) {
 
@@ -84,14 +85,22 @@
 				self.ev.trigger('mfpBeforeOpen');
 
 				self.bgOverlay = self._getEl('bg');
+				
+				
 				self.wrap = self._getEl('wrap');
 				self.container = self._getEl('container', self.wrap);
 				self.centerer = self._getEl('centerer', self.container);
 
-				if(self.st.preloader)
+				if(self.st.preloader) {
 					self.preloader = self._getEl('preloader', self.centerer, self.st.txt.loading);
+				}
 
 				self.content = self._getEl('content', self.centerer);
+
+				if(self.st.alignTop) {
+					self.centerer.css('vertical-align', 'top');
+				}
+
 				if(!self.st.closeBtnInside) {
 					self.wrap.append( self._getCloseBtn() );
 				}
@@ -108,6 +117,7 @@
 						height: self.doc.height(),
 						position: 'absolute'
 					});
+					
 					self.wrap.css({ 
 						top: window.pageYOffset,
 						position: 'absolute'
@@ -126,29 +136,23 @@
 						self.close();
 					}
 				});
-				self.bgOverlay.on('click', function() {
+
+				self.bgOverlay.on('click.mfp', function() {
 					self.close();
 				});
 
+
 				if(self.st.closeOnContentClick) {
 					self.wrap.addClass('mfp-zoom-out');
-					self.bgOverlay.on('click.mfp', function() {
-						self.close();
-					});
 				}
 				
 				self.wrap.on('click.mfp', function(e) {
 					if(self.st.closeOnContentClick) {
 						self.close();
 					} else {
-						console.log($(e.target)[0], $(e.target).closest('.mfp-content')[0] );
-						console.log( $(e.target).parent() );
 						if( !$(e.target).closest('.mfp-content').length ) {
 							self.close();
 						}
-						// if( $(e.target).hasClass('mfp-wrap') ||  $(e.target).hasClass('mfp-container')) {
-						// 	self.close();
-						// }
 					}
 				});
 
@@ -157,17 +161,14 @@
 
 				
 				// this triggers recalculation of layout, so we get it once
-				var winHeight = self.win.height(),
-					bodyClasses = '';
+				 var winHeight = self.win.height(),
+				 	 bodyClasses = '';
 
 				if(self.st.mainClass)
-					bodyClasses += self.st.mainClass;
+				 	bodyClasses += self.st.mainClass;
 
-				if(self.st.fixedPosition)
-					bodyClasses += ' mfp-overflow-hidden';
 				
-				self.bgOverlay.add(self.wrap).appendTo( self.body );
-				self.body.addClass(bodyClasses);
+
 				if(self.fixedPosition && self._hasScrollBar(winHeight) ) {
 					var s = self._getScrollbarSize();
 					if(s) {
@@ -175,43 +176,54 @@
 					}
 				}
 
-				self.ev.trigger('mfpOpen');
+				if(self.st.fixedPosition)
+					self.body.addClass('mfp-overflow-hidden');
+
+				self._addClassToMFP(bodyClasses);
 				self.resize(true, winHeight);
+
+				self.bgOverlay.add(self.wrap).appendTo( self.body );
+
+				self.ev.trigger('mfpOpen');
+
 
 				//for CSS3 animation
 				setTimeout(function() {
-					self.body.addClass('mfp-ready');
+					self._addClassToMFP('mfp-ready');
 				}, 0);
 				
 			}
 
 		},
-
+		
 
 		close: function(browserAction) {
 			var self = this;
 
 			if(self.isOpen) {
 				self.isOpen = false;
+
 				// for CSS3 animation
-				if(self.st.removalDelay) 
-					self.body.addClass('mfp-removing');
+				if(self.st.removalDelay)  {
+					self._addClassToMFP('mfp-removing');
+				}
 
 				setTimeout(function() {
-					var bClassesToRemove = 'mfp-removing mfp-ready ';
+					var classesToRemove = 'mfp-removing mfp-ready ';
 					self.bgOverlay.remove();
 					self.wrap.remove();
 					self.closeBtn = null;
+					self.currImg = null;
 
 					if(self.st.mainClass)
-						bClassesToRemove += self.st.mainClass + ' ';
+						classesToRemove += self.st.mainClass + ' ';
 
 					if(self.fixedPosition) {
-						self.body.css('paddingRight', 'inherit');
-						bClassesToRemove += 'mfp-overflow-hidden';
+						self.body.css('paddingRight', 'inherit').removeClass('mfp-overflow-hidden');
 					}
 
-					self.body.removeClass(bClassesToRemove);
+					self._removeClassFromMFP(classesToRemove);
+
 
 					self.win.off('resize.mfp');
 					self.doc.off('keyup.mfp');
@@ -234,6 +246,12 @@
 				data = self.parseEl( data );
 			}
 			
+			if(self.preloader) {
+				if(self.currImg) {
+					self.currImg.off('error.mfp');
+					self.preloader.removeClass('mfp-img-load-error').html(self.st.txt.loading);
+				}
+			}
 			currContentClass = 'mfp-'+data.type+'-content';
 			switch(data.type) {
 				case 'iframe':
@@ -246,7 +264,13 @@
 					content = $(data.url).clone().css('display', 'block');
 					break;
 				case 'img':
-					content = self.st.img.replace('%maxheight%', self.wH-88).replace('%url%', data.url);
+					content = $( self.st.img.replace('%maxheight%', self.wH-88).replace('%url%', data.url) );
+					if(self.preloader) {
+						self.currImg = ( content.is('img') ? content : content.find('img') ).on('error.mfp', function() {
+							$(this).remove();
+							self.preloader.addClass('mfp-img-load-error').html(self.st.txt.imageError);
+						});
+					}
 					break;
 			}
 			
@@ -270,6 +294,7 @@
 			// 	}, 16);
 			// } else {
 				self.content.html( content ).addClass(currContentClass);
+				
 				//self.content.html( content );
 			//}
 				
@@ -352,6 +377,8 @@
 
 
 
+
+
 		/*
 			"Private" helpers
 		 */
@@ -366,33 +393,48 @@
 			
 			return self.closeBtn;
 		},
+		_addClassToMFP: function(cName) {
+			this.bgOverlay.addClass(cName);
+			this.wrap.addClass(cName);
+		},
+		_removeClassFromMFP: function(cName) {
+			this.bgOverlay.removeClass(cName);
+			this.wrap.removeClass(cName);
+		},
 		_hasScrollBar: function(winHeight) {
-			var self = this;
-			if( self.body.height() > winHeight || self.win.height() ) {
+			if(document.body.clientHeight > (winHeight || this.win.height()) ) {
                 return true;    
             }
             return false;
 		},
-		_getEl: function(className, appendTo, html, tagName) {
-			var el = document.createElement(tagName || 'div');
+		_getEl: function(className, appendTo, html, raw) {
+			var el = document.createElement('div');
 			el.className = 'mfp-'+className;
 			if(html) {
 				el.innerHTML = html;
 			}
-
-			el = $(el);
-			if(appendTo) {
-				el.appendTo(appendTo);
+			if(!raw) {
+				el = $(el);
+				if(appendTo) {
+					el.appendTo(appendTo);
+				}
+			} else if(appendTo) {
+				appendTo.appendChild(el);
 			}
 			return el;
 		},
 		_getScrollbarSize: function() {
-			var self = this;
-			// slightly modified of idea by http://benalman.com/projects/jquery-misc-plugins/#scrollbarwidth
-			if(self.scrollbarSize === undefined) {
-				var itemWithScroll = $('<div style="width:50px;height:50px;overflow-y:scroll;position:absolute;top:0;left:0;"><div style="height:99px;"> </div></div>').appendTo( document.body );
-				self.scrollbarSize = Math.max(0, itemWithScroll[0].offsetWidth - itemWithScroll[0].firstChild.offsetWidth);
-				itemWithScroll.remove();
+			// from http://davidwalsh.name/detect-scrollbar-width
+			if(this.scrollbarSize === undefined) {
+				var scrollDiv = document.createElement("div");
+				scrollDiv.id = "mfp-sbm";
+				document.body.appendChild(scrollDiv);
+
+				// Get the scrollbar width
+				this.scrollbarSize = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+
+				// Delete the DIV 
+				document.body.removeChild(scrollDiv);
 			}
 			return self.scrollbarSize;
 		}
@@ -442,29 +484,30 @@
 		
 		closeBtnInside: false,
 
-		
+		overlay: true,
+	
 
-		verticalAlign: 'middle',
+		alignTop: false,
 		
 		fixedPosition: 'auto', // "auto", true, false. "Auto" will automatically disable this option when browser doesn't support fixed position properly.
 		overflow: 'auto', // CSS property of slider wrap: 'auto', 'scroll', 'hidden'. Doesn't apply when fixedPosition is on.
 
 
-		
 
 		iframe: '<iframe class="mfp-video" width="%wid%" height="%hei%" src="%url%" frameborder="0" allowfullscreen></iframe>',
-		iframeWid: 800,
-		iframeHei: 600,
+		iframeWid: 600,
+		iframeHei: 400,
 		img: '<img class="mfp-img" width="300" height="200" style="max-height:%maxheight%px" src="%url%" />',
 			
-		closeMarkup: '<a title="%title%" class="mfp-close"><i class="mfp-close-icn">&times;</i></a>',
+		closeMarkup: '<button title="%title%" class="mfp-close"><i class="mfp-close-icn">&times;</i></button>',
 
 		txt: {
 			close: 'Close (Esc)',
 			prev: 'Previous (Left arrow key)',
 			next: 'Next (Right arrow key)',
 			counter: '%curr% of %total%',
-			loading: 'Loading...'
+			loading: 'Loading...',
+			imageError: 'Image was not loaded!<br/>Try to reopen popup.'
 		}
 		
 	};
