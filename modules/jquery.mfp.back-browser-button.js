@@ -1,10 +1,13 @@
-(function($) {
-	/**
-	 *
-	 * Magnific Popup Experimental Module - Back Browser Button To Close Popup
-	 * @version 0.0.1:
-	 *
-	 */ 
+/**
+ *
+ * Magnific Popup Experimental Module - Back Browser Button To Close Popup
+ * @version 0.0.1:
+ *
+ */
+;(function($) {
+
+	"use strict";
+	 
 	$.extend($.magnificPopup.proto, {
 
 		initBackBrowserButton: function() {

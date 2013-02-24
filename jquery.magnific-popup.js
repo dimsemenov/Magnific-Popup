@@ -2,27 +2,32 @@
 * 
 * MagnificPopup | http://dimsemenov.com/magnific
 *
-* @version 0.0.5:
+* @version 0.0.6:
 *
 */
 ;(function($) {
 
 	"use strict";
 
-	function MagnificPopup(data) {
+	function MagnificPopup() {
 		var self = this;
 
-		// TODO find a better way to find browsers that handle fixed position badly
+
+		self.isLowIE = jQuery && $.support.leadingWhiteSpace; // <=IE8
 		self.isAndroid = (/android/gi).test(navigator.appVersion);
 		self.isIOS = (/iphone|ipad|ipod/gi).test(navigator.appVersion);
-		// mobile webkit doesn't play nicely with fixed position, so we use different technique for it
-		self.supportsFixedPositon = !(self.isAndroid || self.isIOS);
+
+		console.log(self.isLowIE);
+
+		// We disable fixed positioned lightbox on devices that don't handle it properly.
+		// If you know a better way of doing this - let me know.
+		self.probablyMobile = (self.isAndroid || self.isIOS || /Opera Mini|webOS|BlackBerry|Opera Mobi|IEMobile/i.test(navigator.userAgent) );
 
 		self.bodyhtml = $('body, html');
-		self.win = $(window);
+		self.ev = self.win = $(window);
 		self.body = $(document.body);
-		self.ev = self.win;
 		self.doc = $(document);
+		self.types = ['inline']; // built-in is inline
 		
 		// Initialize modules
 		var modules = $.magnificPopup.modules;
@@ -44,67 +49,92 @@
 		 */
 		resize: function(force, winHeight) {
 			var self = this;
+			if(self.st.alignTop){
+				return;
+			} 
+
 			self.wH = winHeight || self.win.height();
 
-			// we resize only height
+			// we resize popup only when height changes
 			if(force || self.prevHeight !== self.wH) {
 				self.prevHeight = self.wH;
 			
 				if(self.wH < self.st.minHeight ) {
 					self.wH = self.st.minHeight;
-				} else {
-					//self.wH -= 20;
 				}
 
-				var margin = self.st.vMargin;
-				self.container.css({
-					height: self.wH - margin*2,
-					lineHeight: (self.wH - margin*2) + 'px',
-					margin: margin + 'px 0'
-				});
-
-				if(self.currData.type === 'img')
-					self.wrap.find('img').css('max-height', self.wH - margin*2);
-
-				self.ev.trigger('mfpResize');
+				var containerCSS = {
+					height: self.wH ,
+					lineHeight: self.wH + 'px'
+				};
+				self.trigger('mfpResize', containerCSS);
+				self.container.css(containerCSS);
 			}
 		}, 
+
+
+
 		
 		open: function(data) {
 			var self = this;
 			
 			if(!self.isOpen) {
-
+			
 				self.isOpen = true;
-				self.currData = data;
 				self.items = data.items;
 
-				self.st = $.extend({}, $.fn.magnificPopup.defaults, data); 
-				self.fixedPosition = self.st.fixedPosition === 'auto' ? self.supportsFixedPositon : self.st.fixedPosition;
+				self.currentData = data;
+				self.popupID = data.id;
 
-				self.ev.trigger('mfpBeforeOpen');
+				if(!data.parsedItems) {
+					data.parsedItems = [];
+				}
+				self.parsedItems = data.parsedItems;
 
-				self.bgOverlay = self._getEl('bg');
-				
-				
-				self.wrap = self._getEl('wrap');
-				self.container = self._getEl('container', self.wrap);
-				self.centerer = self._getEl('centerer', self.container);
-
-				if(self.st.preloader) {
-					self.preloader = self._getEl('preloader', self.centerer, self.st.txt.loading);
+				var id = data.el.data('mfp-id');
+				if(data.el.data('mfp-id') !== undefined) {
+					self.index = id;
+				} else {
+					self.index = data.items.index( data.el );
 				}
 
-				self.content = self._getEl('content', self.centerer);
+				self.st = $.extend({}, $.magnificPopup.defaults, data); 
+				self.fixedPosition = self.st.fixedPosition === 'auto' ? !self.probablyMobile : self.st.fixedPosition;
+				
 
-				if(self.st.alignTop) {
-					self.centerer.css('vertical-align', 'top');
+
+				// Dark overlay
+				self.bgOverlay = self._getEl('bg').on('click.mfp', function() {
+					self.close();
+				});
+
+
+				self.wrap = self._getEl('wrap').attr('tabindex', -1).on('click.mfp', function(e) {
+					if(self.st.closeOnContentClick) {
+						self.close();
+					} else {
+						// close popup if click is not on a content
+						if( e.target !== self.content[0] && (!self.st.preloader || e.target !== self.preloader[0]) && !$.contains(self.content[0], e.target) ) {
+							self.close();
+						}
+					}
+				});
+
+
+				self.container = self._getEl('container', self.wrap);
+
+
+				self.trigger('mfpBeforeOpen');
+
+
+				if(self.st.preloader) {
+					self.preloader = self._getEl('preloader', self.container, self.st.txt.loading);
 				}
 
 				if(!self.st.closeBtnInside) {
 					self.wrap.append( self._getCloseBtn() );
 				}
-				
+			
 
 				if(self.fixedPosition) {
 					self.wrap.css({
@@ -119,26 +149,21 @@
 					});
 					
 					self.wrap.css({ 
-						top: window.pageYOffset,
+						top: self.win.scrollTop(),
 						position: 'absolute'
 					});
 				}
 
-
-
-
+				// Window resize
 				self.win.on('resize.mfp', function() {
 					self.resize();
 				});
 
+				// ESC key
 				self.doc.on('keyup.mfp', function(e) {
 					if(e.keyCode === 27) {
 						self.close();
 					}
-				});
-
-				self.bgOverlay.on('click.mfp', function() {
-					self.close();
 				});
 
 
@@ -146,56 +171,69 @@
 					self.wrap.addClass('mfp-zoom-out');
 				}
 				
-				self.wrap.on('click.mfp', function(e) {
-					if(self.st.closeOnContentClick) {
-						self.close();
-					} else {
-						if( !$(e.target).closest('.mfp-content').length ) {
-							self.close();
-						}
-					}
-				});
 
-				self.setItemHTML(data, false);
-				
+				// this triggers recalculation of layout, so we get it once to not to trigger twice
+				self.wH = self.win.height();
 
 				
-				// this triggers recalculation of layout, so we get it once
-				 var winHeight = self.win.height(),
-				 	 bodyClasses = '';
-
-				if(self.st.mainClass)
-				 	bodyClasses += self.st.mainClass;
-
-				
-
-				if(self.fixedPosition && self._hasScrollBar(winHeight) ) {
+				var bodyStyles = {};
+				if(self.fixedPosition && self._hasScrollBar(self.wH) ) {
 					var s = self._getScrollbarSize();
 					if(s) {
-						self.body.css('paddingRight', s);
+						bodyStyles.paddingRight = s;
 					}
 				}
 
-				if(self.st.fixedPosition)
-					self.body.addClass('mfp-overflow-hidden');
+				if(self.fixedPosition) {
+					if(!self.isLowIE) {
+						bodyStyles.overflow = 'hidden';
+					} else {
+						self.bodyhtml.css('overflow', 'hidden');
+					}
+				}
 
-				self._addClassToMFP(bodyClasses);
-				self.resize(true, winHeight);
-
-				self.bgOverlay.add(self.wrap).appendTo( self.body );
-
-				self.ev.trigger('mfpOpen');
-
-
-				//for CSS3 animation
-				setTimeout(function() {
-					self._addClassToMFP('mfp-ready');
-				}, 0);
 				
+				
+					
+				if(self.st.mainClass) {
+					self._addClassToMFP( self.st.mainClass );
+				}
+					
+				
+
+				self.setItemHTML(self.index);
+				
+				self.body.css(bodyStyles);
+
+				self.resize(true, self.wH);
+				self.bgOverlay.add(self.wrap).appendTo( document.body );
+
+				// Save last focused element
+				self._lastFocusedEl = document.activeElement;
+				//(self.st.focusInput ? self.contentContainer.find(':input').eq(0) : self.wrap).focus();
+				
+				// We aren't using self.wrap[0].offsetWidth; hack and trading smoothness for speed
+				setTimeout(function() {
+
+					if(self.content)
+						(self.st.focusInput ? self.content.find(':input').eq(0) : self.wrap).focus();
+
+					self._addClassToMFP('mfp-ready');
+
+					
+					// Lock focus on popup
+					$(document).on('focusin.mfp', function (e) {
+						if( e.target !== self.wrap[0] && !$.contains(self.wrap[0], e.target) ) {
+							self.wrap.focus();
+							return false;
+						}
+					});
+					self.trigger('mfpOpen');
+
+				}, 16);
 			}
 
 		},
-		
 
 		close: function(browserAction) {
 			var self = this;
@@ -203,23 +241,52 @@
 			if(self.isOpen) {
 				self.isOpen = false;
 
-				// for CSS3 animation
-				if(self.st.removalDelay)  {
-					self._addClassToMFP('mfp-removing');
-				}
+				var remove = function() {
 
-				setTimeout(function() {
+					self.trigger('mfpClose', self, browserAction);
+
+					$(document).off('focusin.mfp');
+
+					if(self._lastFocusedEl) {
+						$(self._lastFocusedEl).focus(); // put tab focus back
+					}
+						
+
 					var classesToRemove = 'mfp-removing mfp-ready ';
 					self.bgOverlay.remove();
 					self.wrap.remove();
+
+					// if cleanup
+					if(!self.st.keepReference) {
+						var item;
+						for(var i = 0; i < self.parsedItems.length; i++) {
+							item = self.parsedItems[i];
+							if(item && item.type === 'inline'){
+								$('.mfp-placeholder-'+self.popupID + '-'+i).replaceWith( item.view.hide() );
+							}
+						}
+						self.parsedItems = null;
+						self.currentData.parsedItems = null;
+					}
+
 					self.closeBtn = null;
 					self.currImg = null;
+					self.content = null;
 
-					if(self.st.mainClass)
+
+					if(self.st.mainClass) {
 						classesToRemove += self.st.mainClass + ' ';
+					}
+						
 
 					if(self.fixedPosition) {
-						self.body.css('paddingRight', 'inherit').removeClass('mfp-overflow-hidden');
+						var bodyStyles = {paddingRight: 'inherit'};
+						if(self.isLowIE) {
+							self.bodyhtml.overflow = 'visible';
+						} else {
+							bodyStyles.overflow = 'visible';
+						}
+						self.body.css(bodyStyles);
 					}
 
 					self._removeClassFromMFP(classesToRemove);
@@ -229,140 +296,146 @@
 					self.doc.off('keyup.mfp');
 
 					self.prevHeight = 0;
+				};
 
-					self.ev.trigger('mfpClose', self, browserAction);
-				}, self.st.removalDelay || 0);
+				// for CSS3 animation
+				if(self.st.removalDelay)  {
+					self._addClassToMFP('mfp-removing');
+					setTimeout(function() {
+						remove();
+					}, self.st.removalDelay);
+				} else {
+					remove();
+				}
+
 			}
 		},
 
 		
 		// set content of popup
-		setItemHTML: function(data,  resize) {
-			var self = this,
-				content,
-				currContentClass;
+		setItemHTML: function(index, preload, content) {
+			var self = this;
 
-			if(data.el) {	
-				data = self.parseEl( data );
+			var item = self.parsedItems[index];
+			if(!item) {
+				self.parsedItems[index] = item = self.parseEl( self.items[index] );
 			}
-			
-			if(self.preloader) {
-				if(self.currImg) {
-					self.currImg.off('error.mfp');
-					self.preloader.removeClass('mfp-img-load-error').html(self.st.txt.loading);
+
+			if(content) {
+				item.view = content;
+			} else if(!item.view) {
+				switch(item.type) {
+					case 'inline':
+						if(!self.st.keepReference) {
+							item.view = $(item.src).replaceWith( self._getEl('mfp-hidden mfp-placeholder-'+self.popupID + '-'+ index) ).detach().show();
+						} else {
+							item.view = $(item.src).detach().show();
+						}
+						break;
+				}
+				self.trigger('mfpContentParse', item);
+
+				// if still there is no view - we terminate
+				if(!item.view) {
+					return;
 				}
 			}
-			currContentClass = 'mfp-'+data.type+'-content';
-			switch(data.type) {
-				case 'iframe':
-					content = self.st.iframe
-									.replace('%url%', data.url)
-									.replace('%wid%', self.st.iframeWid)
-									.replace('%hei%', self.st.iframeHei);
-					break;
-				case 'inline':
-					content = $(data.url).clone().css('display', 'block');
-					break;
-				case 'img':
-					content = $( self.st.img.replace('%maxheight%', self.wH-88).replace('%url%', data.url) );
-					if(self.preloader) {
-						self.currImg = ( content.is('img') ? content : content.find('img') ).on('error.mfp', function() {
-							$(this).remove();
-							self.preloader.addClass('mfp-img-load-error').html(self.st.txt.imageError);
-						});
+
+
+			if(item.rendered) {
+				self.content.parent().hide();
+				item.view.parent().show();		
+			} else {
+				var contentContainer = self._getEl('content');
+				contentContainer.attr('mfp-id', index);
+				contentContainer.addClass('mfp-'+item.type+'-content').html(item.view);
+				
+				if(self.st.closeBtnInside) {
+					contentContainer.append( self._getCloseBtn() );
+				}
+
+				if(!preload) {
+					if(self.content) {
+						self.content.parent().hide();
 					}
-					break;
-			}
-			
-			//self._tContent = content;
+				} else if(!content) {
+					contentContainer.hide();
+				}
 
-			
-
-			self.ev.trigger('mfpBeforeContentSet', data);
-			self.currData = data;
-
-
-
-			//var oldContent = self.content.children();
-			// if(oldContent.length) {
-			// 	content = $(content).css('display', 'none').appendTo( self.content );
-			// 	setTimeout(function() {
-			// 		content.css({
-			// 			display: 'inline-block'
-			// 		});
-			// 		oldContent.remove();
-			// 	}, 16);
-			// } else {
-				self.content.html( content ).addClass(currContentClass);
-				
-				//self.content.html( content );
-			//}
-				
-
-			//if(resize)
-			//	self.resize(true, self.wH);
-
-			//
-
-			if(self.st.closeBtnInside) {
-				self.content.append( self._getCloseBtn() );
+				self.container.append(contentContainer);
+				item.rendered = true;
 			}
 
-			self.contentClass = currContentClass;
-
-			
+			if(!preload) {
+				self.content = item.view;
+				self.currItem = item;
+				self.trigger('mfpChange', self.parsedItems[self.index]);
+			}
 		},
 
 		
-
-		
-		// converts DOM element to Magnific Popup data object
-		parseEl: function(data) {
+		// creates Magnific Popup data object
+		parseEl: function(item) {
 			var self = this,
-				el = data.el;
-			
-			if(data.items) {
-				data.index = data.items.index( el );
+				el;
+
+
+			if(item.tagName) {
+				el = $(item);
+				item = { el: el, parsed: true };
+			} else {
+				item.parsed = true;
+				return item;
 			}
 
-			if(el.hasClass('mfp-iframe')) {
-				data.url = el.attr('href');	
-				data.type = 'iframe';
-			} else if(el.hasClass('mfp-inline')) {
-				data.url = el.attr('data-mfp-select');	
-				data.type = 'inline';
-				
-			} else {
-				data.url = el.attr('href');	
-				data.type = 'img';
+			if(item.el) {
+				var types = self.types;
+				for(var i = 0; i < types.length; i++) {
+					if( (self.st.type === types[i] && !item.src) || item.el.hasClass('mfp-'+types[i]) ) {
+						item.src = item.el.attr('data-mfp-src');
+						if(!item.src) {
+							item.src = item.el.attr('href');
+						}
+						
+						item.type = types[i];	
+						item.parsed = true;
+						break;
+					}
+				}
 			}
-			return data;
+
+			self.ev.trigger('mfpElementParse', item);
+			return item;
 		},
 
 
 		/**
-		 * Initializes single or group of popups
+		 * Initializes single popup or group of popups
 		 * @param el      jQuery DOM element
 		 * @param options MFP options
 		 */
+		gCounter: 0,
 		addGroup: function(el, options) {
 			var self = this,
 				eHandler = function(e) {
 
 					if(e.which !== 2) {
 
-						if( $(window).width() > (options.disableOn !== undefined ? options.disableOn : $.fn.magnificPopup.defaults.disableOn ) ) {
+						if( $(window).width() > (options.disableOn !== undefined ? options.disableOn : $.magnificPopup.defaults.disableOn ) ) {
 							e.preventDefault();
 							options.el = $(this);
-					   		self.open( options );
+							self.open(options);
 						}
 
 					}
 					
 				};
 
-			if(!options) options = {};
+			if(!options) {
+				options = {};
+			} 
 
+			options.id = self.gCounter++;
 			if(options.delegate) {
 				options.items = el.find(options.delegate);
 				el.off('click.mfp').on('click.mfp', options.delegate , eHandler);
@@ -373,11 +446,34 @@
 		},
 
 
+		/**
+		 * Updates text on preloader
+		 * @param  {String}  txt     Preloader text
+		 * @param  {Boolean} isError Adds mfp-img-error class if enabled
+		 */
+		updatePreloader: function(txt, isError) {
+			if(this.preloader) {
+				this.preloader[isError ? 'addClass' : 'removeClass']('mfp-load-error').html( txt.replace('%url%', this.currItem.src) );
+				if(isError) {
+					// prevent closing of popup, when link is clicked in preloader text
+					this.preloader.find('a').click(function(e) {
+						e.stopImmediatePropagation();
+					});
+				}
+			}
+		},
 
 
-
-
-
+		trigger: function(e, data) {
+			this.ev.trigger(e, data);
+			if(this.st.callbacks) {
+				// converts mfpEventName to eventName
+				e = e.charAt(3).toLowerCase() + e.slice(4);
+				if(this.st.callbacks[e]) {
+					this.st.callbacks[e].call(this, data);
+				}
+			}
+		},
 
 		/*
 			"Private" helpers
@@ -394,6 +490,7 @@
 			return self.closeBtn;
 		},
 		_addClassToMFP: function(cName) {
+
 			this.bgOverlay.addClass(cName);
 			this.wrap.addClass(cName);
 		},
@@ -425,6 +522,7 @@
 		},
 		_getScrollbarSize: function() {
 			// from http://davidwalsh.name/detect-scrollbar-width
+			// Know lighter solution that doesn't cause reflow? Let me know.
 			if(this.scrollbarSize === undefined) {
 				var scrollDiv = document.createElement("div");
 				scrollDiv.id = "mfp-sbm";
@@ -436,81 +534,200 @@
 				// Delete the DIV 
 				document.body.removeChild(scrollDiv);
 			}
-			return self.scrollbarSize;
+			return this.scrollbarSize;
 		}
 
 	}; /* MagnificPopup core prototype end */
 
 	
 
-	// TODO: add "global" public methods
+	/**
+	 * Public interface
+	 */
 	$.magnificPopup = {
+		instance: null,
+		proto: MagnificPopup.prototype,
+		modules: [],
+
 		open: function(data) {
-	
+			console.log('open');
 		},
 		close: function() {
-			$.mfpInstance.close();
+			$.magnificPopup.instance.close();
+		},
+
+
+
+		defaults: {   
+			mainClass: '',
+			minHeight: 400,
+			preloader: true,
+
+			focusInput: false,
+
+			gallery: false,
+			disableOn: 600, // Conditional lightbox: property defines on what screen width in pixels should the lightbox be disabled. TODO: add option to pass function instead of number
+				
+			openOnMidClick: false,	// if middle button clicked - we do nothing, to allow opening images in new window e.t.c
+			closeOnContentClick: false,
+			
+
+			keepReference: false, 
+			// !important option
+			// When popup is opened script creates new element and attaches it o DOM. After popup is closed element is detached.
+			// This option defines if you want to keep detached element in memory after popup is closed (to not to create it second time).
+			// If inline element is used - Popup will not put it where it was after it's closed.
+
+			closeBtnInside: false,
+
+			overlay: true,
+		
+			animated: false,
+			removalDelay: 0,
+
+			alignTop: false,
+			
+			fixedPosition: 'auto', // "auto", true, false. "Auto" will automatically disable this option when browser doesn't support fixed position properly.
+			overflow: 'auto', // CSS property of slider wrap: 'auto', 'scroll', 'hidden'. Doesn't apply when fixedPosition is on.
+
+			
+				
+			closeMarkup: '<button title="%title%" class="mfp-close"><i class="mfp-close-icn">&times;</i></button>',
+
+			txt: {
+				close: 'Close (Esc)',
+				prev: 'Previous (Left arrow key)',
+				next: 'Next (Right arrow key)',
+				counter: '%curr% of %total%',
+				loading: 'Loading...',
+				imageError: '<a href="%url%">The image</a> could not be loaded'
+			}
 		}
 	};
 
 
 	$.fn.magnificPopup = function(options) {
-		if(!$.mfpInstance) {
-			$.mfpInstance = new MagnificPopup();
+		if(!$.magnificPopup.instance) {
+			$.magnificPopup.instance = new MagnificPopup();
 		}
 		return this.each(function(){
-			$.mfpInstance.addGroup($(this), options);
+			$.magnificPopup.instance.addGroup($(this), options);
 			return $(this);
 		});
 	};
 
-
-	$.magnificPopup.proto = MagnificPopup.prototype;
-	$.magnificPopup.modules = [];
-
-
-	$.fn.magnificPopup.defaults = {   
-		mainClass: '',
-		minHeight: 300,
-		preloader: true,
-
-		vMargin: 44, // Vertical margin for main wrap that holds popup content (top and bottom).
-
-		gallery: false,
-		disableOn: 700, // Conditional lightbox: property defines on what screen width in pixels should the lightbox be disabled. TODO: add option to pass function instead of number
-
-		openOnMidClick: false, 	// if middle button clicked - we do nothing, to allow opening images in new window e.t.c
-		closeOnContentClick: false,
-		
-		closeBtnInside: false,
-
-		overlay: true,
-	
-
-		alignTop: false,
-		
-		fixedPosition: 'auto', // "auto", true, false. "Auto" will automatically disable this option when browser doesn't support fixed position properly.
-		overflow: 'auto', // CSS property of slider wrap: 'auto', 'scroll', 'hidden'. Doesn't apply when fixedPosition is on.
-
-
-
-		iframe: '<iframe class="mfp-video" width="%wid%" height="%hei%" src="%url%" frameborder="0" allowfullscreen></iframe>',
-		iframeWid: 600,
-		iframeHei: 400,
-		img: '<img class="mfp-img" width="300" height="200" style="max-height:%maxheight%px" src="%url%" />',
-			
-		closeMarkup: '<button title="%title%" class="mfp-close"><i class="mfp-close-icn">&times;</i></button>',
-
-		txt: {
-			close: 'Close (Esc)',
-			prev: 'Previous (Left arrow key)',
-			next: 'Next (Right arrow key)',
-			counter: '%curr% of %total%',
-			loading: 'Loading...',
-			imageError: 'Image was not loaded!<br/>Try to reopen popup.'
-		}
-		
-	};
-
-
 })(window.jQuery || window.Zepto, window);
+
+
+
+
+// Quick benchmark
+// var iterations = 500;
+// var start = window.performance.now();
+// for(var i = 0; i < iterations; i++) {
+// 
+// }
+// var time1 = window.performance.now() - start;
+
+
+// var start = window.performance.now();
+// for(var i = 0; i < iterations; i++) {
+// 
+// }
+// var time2 = window.performance.now() - start;
+// console.log('Diff:' + (time1-time2) + ' t1,t2:',time1,time2);
+
+
+//  FastClick 
+// 	$.fn.mfpTap = function(handler) {
+// 		return this.each(function(){
+// 			// this.element = element;
+// 			// this.handler = handler;
+// 			var el = this;
+
+			
+// 			//handler.call(this, ev);
+			
+
+// 			//var superTouch = {
+
+// 			var startX = 0,
+// 				startY = 0,
+// 				moved = false,
+
+// 				init = function() {
+// 					el.addEventListener('touchstart', onTouchStart, false);
+// 					el.addEventListener('click', onClick, false);
+// 				},
+
+// 				onTouchStart = function(e) {
+// 				  e.stopPropagation();
+// 				  moved = false;
+
+// 				  el.addEventListener('touchend', onClick, false);
+// 				  document.body.addEventListener('touchmove', onTouchMove, false);
+
+// 				  startX = e.touches[0].clientX;
+// 				  startY = e.touches[0].clientY;
+// 				},
+
+// 				onTouchMove = function(e) {
+// 					console.log('move:',e.touches[0].clientX, startX );
+// 				  if (Math.abs(e.touches[0].clientX - startX) > 10 ||
+// 				      Math.abs(e.touches[0].clientY - startY) > 10) {
+// 				  	moved = true;
+// 				    reset();
+// 				  }
+// 				},
+
+// 				onClick = function(e) {
+// 				  e.stopPropagation();
+// 				  reset();
+// 				  console.log('fire!', e.type);
+// 				  if(moved) return;
+// 				  handler(e);
+				  
+
+// 				  if (e.type == 'touchend') {
+// 				  	preventGhostClick(startX, startY);
+// 				   // google.clickbuster.preventGhostClick(this.startX, this.startY);
+// 				  }
+// 				},
+
+// 				reset = function() {
+// 					console.log('reset');
+// 					el.removeEventListener('touchend', onClick, false);
+// 	  				document.body.removeEventListener('touchmove', onTouchMove, false);
+// 				},
+
+// 				preventGhostClick = function(x, y) {
+// 				  coordinates.push(x, y);
+// 				  window.setTimeout(pop, 1000);
+// 				},
+
+// 				pop = function() {
+// 				  coordinates.splice(0, 2);
+// 				};
+
+// 			var onClickBuster = function(e) {
+// 				console.log('on click buster', coordinates);
+// 				for (var i = 0; i < coordinates.length; i += 2) {
+// 					var x = coordinates[i];
+// 					var y = coordinates[i + 1];
+// 					if (Math.abs(e.clientX - x) < 25 && Math.abs(e.clientY - y) < 25) {
+// 						e.stopPropagation();
+// 						e.preventDefault();
+// 					}
+// 				}
+// 			};
+
+// 			document.addEventListener('click', onClickBuster, true);
+// 			var coordinates = [];
+
+
+// 			//};
+
+// 			init();
+
+// 		});
+//	};	

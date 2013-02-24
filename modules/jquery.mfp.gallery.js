@@ -1,14 +1,17 @@
-(function($) {
-	/**
-	 *
-	 * Magnific Popup Gallery Module
-	 * @version 0.0.1:
-	 *
-	 */ 
-	$.fn.magnificPopup.defaults.gallery = {
+/**
+ *
+ * Magnific Popup Gallery Module
+ * @version 0.0.1:
+ *
+ */
+;(function($) {
+
+	"use strict";
+	
+	$.magnificPopup.defaults.gallery = {
 		enabled: false,
 		arrowMarkup: '<button title="%title%" class="mfp-arrow mfp-arrow-%dir%"><span><i></i></span></button>',
-		preload: 0
+		preload: [0,1] // will preload previous image and next three. can be chaged dynamically.
 	};
 	$.extend($.magnificPopup.proto, {
 
@@ -18,12 +21,15 @@
 			self.ev.on('mfpBeforeOpen', function(e, data) {
 
 				var gSt = self.st.gallery;
+				self.direction = true; // true - next, false - prev
+				
 				if(gSt && (gSt === true || gSt.enabled) ) {
-					self.st.gallery = $.extend({}, $.fn.magnificPopup.defaults.gallery, gSt);
+					self.wrap.addClass('mfp-gallery');
+
+					self.st.gallery = $.extend({}, $.magnificPopup.defaults.gallery, gSt);
 
 					self.ev.one('mfpOpen.gallery', function() {
 
-						self.index = self.currData.index;
 						self.wrap.on('click.mfp-g-next', 'img', function(e) {
 							self.next();
 							return false;
@@ -38,19 +44,24 @@
 						});
 
 						self.addSwipeGesture();
-						if(self.st.gallery.preload > 0)
-							self.preloadNearbyImages();
 					});
-					
-					self.ev.on('mfpBeforeContentSet.gallery-controls', function(e, data) {
 
+					self.ev.on('mfpChange.gallery-controls', function(e, data) {
+
+
+						if(self._preloadTimeout) clearTimeout(self._preloadTimeout);
+
+						self._preloadTimeout = setTimeout(function() {
+							self.preloadNearbyImages();
+						}, 16);
+						
 						self.counterHTML = self.st.txt.counter
 											.replace('%of%', self.st.txt.of)
 											.replace('%title%', data.title || '')
-											.replace('%curr%', data.index + 1)
+											.replace('%curr%', self.index + 1)
 											.replace('%total%', self.items.length);
 
-						self.ev.trigger('mfpParseCounter'); //allow custom parsing for self.counterHTML
+						self.trigger('mfpParseCounter'); //allow custom parsing for self.counterHTML
 						
 
 						if(!self.counter) {
@@ -74,7 +85,7 @@
 					self.ev.one('mfpClose', function() {
 						self.win.off(self._tStart + ' ' + self._tMove + ' ' + self._tEnd + ' ' + self._tCancel);
 						self.doc.off('.mfp-gallery');
-						self.ev.off('mfpBeforeContentSet.gallery-controls');
+						self.ev.off('mfpChange.gallery-controls');
 						self.wrap.off('click.mfparrow');
 						self.counter = null;
 					});
@@ -88,44 +99,54 @@
 
 		next: function() {
 			var self = this;
-			if(self.index >= self.items.length - 1) {
-				self.index = 0;
-			} else {
-				self.index++;
-			}
-
-			self.currData.el = self.items.eq( self.index );
-			self.setItemHTML( self.currData, true );
+			self.direction = true ;
+			self.index = self._getId(self.index + 1);
+			self.setItemHTML( self.index, self.contentContainer );
 		},
 
 		prev: function() {
 			var self = this;
-		
-			if(self.index <= 0) {
-				self.index = self.items.length - 1;
-			} else {
-				self.index--;
-			}
-
-			self.currData.el = self.items.eq( self.index );
-			self.setItemHTML( self.currData, true );
+			self.direction = false;
+			self.index = self._getId(self.index - 1);
+			self.setItemHTML( self.index, self.contentContainer );
 		},
+
+
+		
 
 		preloadNearbyImages: function() {
 			var self = this,
-			//  TODO: make number of images to preload configurable
-			//	itemsToLoad = 2,
+				itemsToLoad = 2,
 				img,
 				itemData;
 
-			for(var i = 0; i < self.items.length; i++) {
-				img = new Image();
-				itemData = self.parseEl({el: $(self.items[i]) });
 
-				if(itemData.url)
-					img.src = itemData.url;
+			var preload = [false,true,true,true];
+			
+
+			var preload = function(index) {
+				var index = self._getId(index);
+				if(!self.parsedItems[index] || !self.parsedItems[index].rendered) {
+					self.setItemHTML(index, true);
+				}
+			};
+
+			var p = self.st.gallery.preload;
+			var preloadBefore = Math.min(p[0], self.items.length);
+			var preloadAfter = Math.min(p[1], self.items.length);
+
+			for(var i = 1; i <= (self.direction ? preloadAfter : preloadBefore); i++) {
+				preload(self.index+i);
+			}
+			for(var i = 1; i <= (self.direction ? preloadBefore : preloadAfter); i++) {
+				preload(self.index-i);
 			}
 		},
+
+
+
+
+
 
 		addSwipeGesture: function() {
 			var self = this,
@@ -145,7 +166,10 @@
 				addEventNames('MSPointer', 'Down', 'Move', 'Up', 'Cancel');
 			} else if('ontouchstart' in window) {
 				addEventNames('touch', 'start', 'move', 'end', 'cancel');
+			} else {
+				return;
 			}
+
 
 			self.win.on(self._tStart, function(e) {
 				var oE = e.originalEvent;
@@ -170,10 +194,23 @@
 					}
 				}
 			});
+		},
+
+
+		/**
+		 * Looped index depending on number of slides
+		 * @param  {int} index 
+		 * @return {int}       
+		 */
+		_getId: function(index) {
+			var numSlides = this.items.length;
+			if(index > numSlides - 1) {
+				return index - numSlides;
+			} else  if(index < 0) {
+				return numSlides + index;
+			}
+			return index;
 		}
 	});
 	$.magnificPopup.modules.push( $.magnificPopup.proto.initGallery );
 })(window.jQuery || window.Zepto);
-
-
-

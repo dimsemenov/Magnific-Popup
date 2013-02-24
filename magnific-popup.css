@@ -12,6 +12,9 @@
 ******************************/
 
 
+
+
+
 /***************
 *
 *  1. Dark overlay
@@ -20,8 +23,10 @@
 
 .mfp-bg {
   background: #000;
-  opacity: 0.85;
-  filter: alpha(opacity=85);
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+
+
 }
 
 
@@ -35,19 +40,21 @@
 
 .mfp-preloader {
   font-size: 13px;
-  color: #EEE;
-  color: rgba(255, 255, 255, 0.74);
+  color: #CCC;
   position: absolute;
-  left: 50%;
   top: 50%;
-  width: 200px;
+  width: 100%;
   text-align: center;
   height: 20px;
-  margin-left: -100px;
-  margin-top: -12px;
+  margin-top: -5px;
   line-height: 20px;
 }
-
+.mfp-preloader a {
+  color: #CCC;
+}
+.mfp-preloader a:hover {
+  color: #FFF;
+}
 
 
 
@@ -82,7 +89,7 @@
   opacity: 1;
 }
 .mfp-close:active {
-  margin-top: 1px;
+  top: 1px;
 }
 .mfp-dark-close-button .mfp-close-icn {
   color: #000;
@@ -99,7 +106,7 @@
 
 .mfp-counter {
   position: absolute;
-  bottom: -34px;
+  bottom:11px;
   left: 0;
   width: 100%;
   height: 20px;
@@ -107,6 +114,7 @@
   color: #C5C5C5;
   font-size: 13px;
   line-height: 15px;
+  z-index: 1;
 }
 
 
@@ -120,9 +128,10 @@
 
 .mfp-arrow {
   position: absolute;
-  bottom: -44px;
+  bottom: 0;
   padding: 10px 40px 10px 20px;
   opacity: 0.7;
+  width: 85px;
 }
 .mfp-arrow:hover {
   opacity: 1;
@@ -173,20 +182,21 @@
 *
 ****************/
 
-.mfp-bg,
-.mfp-wrap,
-.mfp-centerer,
-.mfp-zoom-out img,
-.mfp-zoom-out .mfp-content {
+.mfp-ajax-cur {
+  cursor: progress;
+}
+.mfp-zoom-out-cur {
   cursor: -moz-zoom-out;
   cursor: -webkit-zoom-out;
   cursor: zoom-out;
 }
-
 .mfp-zoom {
   cursor: pointer;
   cursor: -webkit-zoom-in;
   cursor: -moz-zoom-in;
+}
+.mfp-gallery .mfp-image-content {
+  cursor: pointer;
 }
 
 .mfp-close,
@@ -198,7 +208,6 @@
   user-select: none;
 }
 
-
  /* Transparent overlay */
 .mfp-bg {
   top: 0;
@@ -208,8 +217,6 @@
   z-index: 500;
   overflow: hidden;
   position: fixed;
-  /* fixes webkit bug that can cause appearance of scrollbar */
-  -webkit-backface-visibility: hidden;
 }
 
 /* Wrapper for popup. Scroll overflow is applied on it. */
@@ -220,6 +227,10 @@
   height: 100%;
   z-index: 501;
   position: fixed;
+  outline: none !important;
+
+ /* fixes webkit bug that can cause "false" of scrollbar */
+  -webkit-backface-visibility: hidden;
 }
 
 
@@ -234,44 +245,63 @@
 }
 
 /* Extra container that centers popup vertically and horizontally. + contains controls */
-.mfp-centerer {
+/*.mfp-centerer {
   vertical-align: middle; 
   display: inline-block; 
   line-height: 0;
   margin: 0 auto;
-  cursor: auto;
   position: relative;
   width: 100%;
 
-  /* yea, I know that it's ugly. If you know better solution - welcome to GitHub */
   *display: block;
   *margin-top: expression(this.offsetHeight < this.parentNode.offsetHeight ? parseInt((this.parentNode.offsetHeight - this.offsetHeight) / 2) + "px" : "0");
-}
+}*/
 
 /* Holds popup content itself. */
 .mfp-content {
   position: relative;
   display: inline-block;
+  vertical-align: middle;
+  margin: 0 auto;
+  line-height: 1.3;
 }
 
 /* Main image in popup */
 img.mfp-img {
-  cursor: pointer;
   width: auto;
   max-width: 100%;
   height: auto;
   display: inline-block;
   margin-top: -3px;
-}
-
-.mfp-iframe-content {
-  line-height: 0;
-}
-
-.mfp-img-content img {
   line-height: 0;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 }
+.mfp-img-content {
+  line-height: 0;
+  position: relative;
+  width: 100%;
+}
+
+
+
+.mfp-iframe-content {
+  line-height: 0;
+  width: 100%;
+  max-width: 900px;
+}
+.mfp-iframe-scaler {
+  width: 100%;
+}
+.mfp-iframe-scaler iframe {  
+   position: absolute;              
+   top: 0;                          
+   left: 0;                         
+   width: 100%;                     
+   height: 100%;                    
+}  
+
+
+
 
 .mfp-inline-content {
   line-height: 1.231;
@@ -285,6 +315,7 @@ button.mfp-arrow {
   border: 0;
   -webkit-appearance: none;
   display: block;
+  z-index: 1;
 }
 
 /* helper classes */
@@ -297,9 +328,8 @@ button.mfp-arrow {
   top: -9999px;
 }
 
-/* applied to body to hide default scrollbar */
-.mfp-overflow-hidden {
-  overflow: hidden;
+.mfp-hidden {
+  display: none;
 }
 
 .mfp-inline-content {
@@ -308,3 +338,35 @@ button.mfp-arrow {
   margin: 0 auto;
   cursor: auto;
 }
+
+
+
+
+
+
+
+/* test styles for image with caption */
+.img-popup-bg {
+  max-width: 100%;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  line-height: 0;
+}
+.img-popup-bg img {
+  max-width: 100%;
+}
+.img-popup-bg p {
+  text-align: left;
+  line-height: 20px;
+  padding: 8px 16px;
+  color: #FFF;
+  opacity: 0.8;
+  margin: 0;
+}
+
+
+
+
+
+
+
