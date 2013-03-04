@@ -1,0 +1,50 @@
+{% if site.url == 'local' %}
+  <!-- analytics removed -->
+{% else %}
+<!-- Analytics start -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-25969065-1']);
+
+    if(document.getElementById('logo-overlay') && window.localStorage!==undefined) {
+      var colors = localStorage.getItem("colors");
+      if(colors) {
+        colors = colors.split(',');
+      }
+      if(colors && colors[0] && colors[0] !== 'undefined') {
+        _gaq.push(["_setCustomVar", 1, "Color1", colors[0], 1]);
+        _gaq.push(["_setCustomVar", 2, "Color2", colors[1], 1]);
+        _gaq.push(["_setCustomVar", 3, "Color3", colors[2], 1]);
+      }
+    }
+
+
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    function recordOutboundLink(link, category, action) {
+      _gat._getTrackerByName()._trackEvent(category, action);
+      setTimeout('document.location = "' + link.href + '"', 100);
+    }
+</script>
+<div style="display:none;"><script type="text/javascript">
+if(window.location.hostname.indexOf('dimsemenov.com') > -1) {
+  (function(w, c) {
+      (w[c] = w[c] || []).push(function() {
+          try {
+              w.yaCounter11382601 = new Ya.Metrika({id:11382601, enableAll: true, trackHash:false, webvisor:true});
+          }
+          catch(e) { }
+      });
+  })(window, "yandex_metrika_callbacks");
+}
+</script></div>
+<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
+<noscript><div><img src="//mc.yandex.ru/watch/11382601" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- Analytics end -->
+{% endif %}

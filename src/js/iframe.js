@@ -1,14 +1,8 @@
-/**
- *
- * Magnific Popup Image
- * @version 0.0.1:
- *
- */ 
-;(function($) {
 
-	"use strict";
-	
-	$.magnificPopup.defaults.iframe = {
+
+$.magnificPopup.registerModule('iframe', {
+
+	options: {
 		markup: '<div class="mfp-iframe-scaler"><iframe class="mfp-video" src="%url%" frameborder="0" allowfullscreen></iframe></div>',
 		ratio: 9/16,
 
@@ -18,9 +12,10 @@
 				// Supported url: youtube.com/watch?v=7HKoqNJtMTQ
 				index: 'youtube.com/', 
 				id: 'v=', // String or function that returns %id% for src param. Can be null.
-				// id: function(url) {
-				// 	return '123123'; // returning ID
-				// }
+				//  E.g.:
+				//	id: function(url) {
+				//		return '123123'; // returning ID
+				//	}
 				src: '//www.youtube.com/embed/%id%?autoplay=1'
 			},
 			vimeo: {
@@ -34,44 +29,35 @@
 				src: '%id%&output=embed'
 			}
 		}
-	};
-	$.extend($.magnificPopup.proto, {
+	},
 
+	proto: {
 		initIframe: function() {
-			var self = this;
+			var self = this,
+				ns = '.iframe';
 			self.types.push('iframe');
 
-			self.ev.on('mfpBeforeOpen', function() {
-
-				self.ev.on({
-					'mfpContentParse.mfpIframe' : function(e, item) {
-						if(item.type === 'iframe') {
-							self.parseIframe(item);
-						}
-					},
-					'mfpClose.mfpIframe' : function() {
-						if(self.isLowIE && self.currItem.type === 'iframe') {
-							// ie black screen bug fix
-							var el = self.content.find('iframe');
-							if(el.length) {
-								el.hide();
-							}
-						}
-						self.ev.off('.mfpIframe');
-					}
-				});
-
+			self.on('ContentParse'+ns, function(e, item) {
+				if(item.type === 'iframe') {
+					self.parseIframe(item);
+				}
 			});
-
+			self.on('Close'+ns, function() {
+				if(self.isLowIE && self.currItem.type === 'iframe') {
+					// ie black screen bug fix
+					var el = self.content.find('iframe');
+					if(el.length) {
+						el.hide();
+					}
+				}
+			});
 		},
 
 		parseIframe: function(item) {
-			var self = this;
-
-			var patters = self.st.iframe.patterns;
-			var embedSrc = item.src;
-			var id;
-			$.each(patters, function() {
+			var self = this,
+				embedSrc = item.src;
+				
+			$.each(self.st.iframe.patterns, function() {
 				if(embedSrc.indexOf( this.index ) > -1) {
 					if(this.id) {
 						if(typeof this.id === 'string') {
@@ -92,7 +78,6 @@
 			// Technique stolen from FITVIDS.JS http://fitvidsjs.com/  (by Chris Coyier and Paravel)
 			item.view = $(item.view).css('padding-top', (self.st.iframe.ratio * 100)+"%");	
 		}
+	}
+});
 
-	});
-	$.magnificPopup.modules.push( $.magnificPopup.proto.initIframe );
-})(window.jQuery || window.Zepto);

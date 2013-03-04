@@ -1,0 +1,23 @@
+{
+  "name": "jquery-plugin",
+  "version": "0.0.0-ignored",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt qunit"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-qunit": "~0.1.1",
+    "grunt-contrib-concat": "~0.1.2",
+    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt": "~0.4.0",
+    "grunt-contrib-cssmin": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.0",
+    "grunt-jekyll": "~0.2.2",
+    "grunt-contrib-sass": "~0.2.2"
+  }
+}

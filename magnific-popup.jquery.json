@@ -1,0 +1,27 @@
+{
+  "name": "magnific-popup",
+  "title": "Magnific Popup",
+  "description": "Fast, light and responsive lightbox plugin",
+  "version": "0.0.6",
+  "homepage": "http://dimsemenov.com/plugins/magnific-popup/",
+  "author": {
+    "name": "Dmitry Semenov",
+    "email": "diiiimaaaa@gmail.com",
+    "url": "http://dimsemenov.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dimsemenov/Magnific-Popup.git"
+  },
+  "bugs": "https://github.com/dimsemenov/Magnific-Popup/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://dimsemenov.com/plugins/magnific-popup//blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "1.7.2"
+  },
+  "keywords": []
+}

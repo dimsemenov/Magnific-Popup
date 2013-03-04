@@ -1,19 +1,25 @@
 /******************************
 *
-*  Magnific Popup core CSS file v0.0.1
+*  Magnific Popup core SCSS file v0.0.1
 *
-*    1. Dark overlay
-*    2. Preloader
-*    3. Close button
-*    4. 1 of X counter text
-*    5. Arrows
-*    6. Core styles
-* 
 ******************************/
 
 
+$overlay-color: #000;
+$overlay-opacity: 0.8;
 
+$controls-opacity: 0.75;
+$controls-color: #FFF;
+$controls-color-alt: #444;
 
+$inner-close-icon-color: #333;
+
+$controls-text-color: #CCC;
+$controls-text-color-hover: #FFF;
+
+$shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+
+$arrows: true; // Set to false to exclude all arrow styles
 
 /***************
 *
@@ -22,11 +28,9 @@
 ****************/
 
 .mfp-bg {
-  background: #000;
-  opacity: 0.8;
-  filter: alpha(opacity=80);
-
-
+  background: $overlay-color;
+  opacity: $overlay-opacity;
+  filter: alpha(opacity=$overlay-opacity*100);
 }
 
 
@@ -40,7 +44,7 @@
 
 .mfp-preloader {
   font-size: 13px;
-  color: #CCC;
+  color: $controls-text-color;
   position: absolute;
   top: 50%;
   width: 100%;
@@ -50,10 +54,10 @@
   line-height: 20px;
 }
 .mfp-preloader a {
-  color: #CCC;
+  color: $controls-text-color;
 }
 .mfp-preloader a:hover {
-  color: #FFF;
+  color: $controls-text-color-hover;
 }
 
 
@@ -73,16 +77,19 @@
   z-index: 1000;
   text-decoration: none;
   text-align: center;
-  opacity: 0.6;
+  opacity: $controls-opacity;
   padding: 0;
 }
 .mfp-close-icn {
   font-style: normal;
-  color: #FFF;
+  color: $controls-color;
   font-size: 30px;
   line-height: 30px;
   font-family: Arial,sans-serif;
   line-height: 44px;
+}
+.mfp-close-btn-in .mfp-close-icn {
+  color: $inner-close-icon-color;
 }
 .mfp-close:hover {
   text-decoration: none;
@@ -91,11 +98,6 @@
 .mfp-close:active {
   top: 1px;
 }
-.mfp-dark-close-button .mfp-close-icn {
-  color: #000;
-}
-
-
 
 
 /***************
@@ -111,7 +113,7 @@
   width: 100%;
   height: 20px;
   text-align: center;
-  color: #C5C5C5;
+  color: $controls-text-color;
   font-size: 13px;
   line-height: 15px;
   z-index: 1;
@@ -126,53 +128,57 @@
 *
 ****************/
 
-.mfp-arrow {
-  position: absolute;
-  bottom: 0;
-  padding: 10px 40px 10px 20px;
-  opacity: 0.7;
-  width: 85px;
-}
-.mfp-arrow:hover {
-  opacity: 1;
-}
-.mfp-arrow:active {
-  margin-top: 1px;
-}
-.mfp-arrow span {
-  background: #FFF;
-  width: 9px;
-  height: 8px;
-  border-radius: 2px;
-  display: block;
-  position: relative;
-  padding: 8px 8px;
-}
+@if $arrows { 
 
-.mfp-arrow-left {
-  left: 50%;
-  margin-left: -85px;
-}
-.mfp-arrow-right {
-  right: 50%;
-  margin-right: -85px;
-  padding-left: 40px;
-  padding-right: 20px;
-}
-.mfp-arrow i {
-  display: block;
-  width: 0; 
-  height: 0; 
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-}
-.mfp-arrow-left i {
-  margin-left: -1px;
-  border-right: 9px solid #444;
-}
-.mfp-arrow-right i {
-  margin-left: 1px;
-  border-left: 9px solid #444;
+  .mfp-arrow {
+    position: absolute;
+    bottom: 0;
+    padding: 10px 40px 10px 20px;
+    opacity: $controls-opacity;
+    width: 85px;
+  }
+  .mfp-arrow:hover {
+    opacity: 1;
+  }
+  .mfp-arrow:active {
+    margin-top: 1px;
+  }
+  .mfp-arrow span {
+    background: $controls-color;
+    width: 9px;
+    height: 8px;
+    border-radius: 2px;
+    display: block;
+    position: relative;
+    padding: 8px 8px;
+  }
+
+  .mfp-arrow-left {
+    left: 50%;
+    margin-left: -85px;
+  }
+  .mfp-arrow-right {
+    right: 50%;
+    margin-right: -85px;
+    padding-left: 40px;
+    padding-right: 20px;
+  }
+  .mfp-arrow i {
+    display: block;
+    width: 0; 
+    height: 0; 
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+  .mfp-arrow-left i {
+    margin-left: -1px;
+    border-right: 9px solid $controls-color-alt;
+  }
+  .mfp-arrow-right i {
+    margin-left: 1px;
+    border-left: 9px solid $controls-color-alt;
+  }
+
 }
 
 
@@ -263,7 +269,9 @@
   display: inline-block;
   vertical-align: middle;
   margin: 0 auto;
-  line-height: 1.3;
+  /* reset line height */
+  line-height: 1.231;
+  text-align: left;
 }
 
 /* Main image in popup */
@@ -274,7 +282,7 @@ img.mfp-img {
   display: inline-block;
   margin-top: -3px;
   line-height: 0;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  box-shadow: $shadow;
 }
 .mfp-img-content {
   line-height: 0;
@@ -291,6 +299,7 @@ img.mfp-img {
 }
 .mfp-iframe-scaler {
   width: 100%;
+  box-shadow: $shadow;
 }
 .mfp-iframe-scaler iframe {  
    position: absolute;              
@@ -299,6 +308,7 @@ img.mfp-img {
    width: 100%;                     
    height: 100%;                    
 }  
+
 
 
 
@@ -338,7 +348,12 @@ button.mfp-arrow {
   margin: 0 auto;
   cursor: auto;
 }
-
+.mfp-img {
+  max-width: 100%;
+  display: inline-block;
+  box-shadow: $shadow;
+  line-height: 0;
+}
 
 
 
@@ -346,12 +361,7 @@ button.mfp-arrow {
 
 
 /* test styles for image with caption */
-.img-popup-bg {
-  max-width: 100%;
-  display: inline-block;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-  line-height: 0;
-}
+
 .img-popup-bg img {
   max-width: 100%;
 }

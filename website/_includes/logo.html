@@ -1,0 +1,61 @@
+<script>
+(function() {
+if(document.addEventListener && document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1") ) {
+      a = document.getElementById("mfp-svg");
+  a.addEventListener("load",function(){
+        var svgDoc = a.contentDocument,
+          el1 = svgDoc.getElementById('logo1').style,
+          el2 = svgDoc.getElementById('logo2').style,
+          el3 = svgDoc.getElementById('logo3').style,
+          pickColor = function() {
+            return '#'+Math.floor(Math.random()*16777215).toString(16); // thx Paul
+          },
+          locked = false,
+          c1,c2,c3,
+          isDown = false,
+          w = window,
+          logoStatus = $('#logo-status'),
+          changeColor = function(e) {
+            if(isDown) {
+              e.preventDefault();
+
+
+              if(locked) return;
+              locked = true;
+              setTimeout(function() {
+                locked = false;
+              }, 150);
+             
+              c1 = el1.fill = pickColor();
+              c2 = el2.fill = pickColor();
+              c3 = el3.fill = pickColor();
+            }
+          },
+          msPointer = window.navigator.msPointerEnabled,
+          upEvents = msPointer ? 'msPointerUp.s' : 'mouseup.s touchend.s',
+          moveEvents = msPointer ? 'msPointerMove.s' : 'mousemove.s touchmove.s',
+          down = function(e) {
+            logoStatus.addClass('down');
+            e.preventDefault();
+            isDown = true;
+            $(w)
+              .on(upEvents, up)
+              .on(moveEvents, changeColor);
+          },
+          up = function(e) {
+            logoStatus.removeClass('down');
+            e.preventDefault();
+            isDown = false;
+            $(w).off(moveEvents + ' ' + upEvents);
+            if(window.localStorage!==undefined){
+                localStorage.setItem("colors", c1+','+c2+','+c3);
+            }
+          },
+          overlay = document.getElementById('logo-overlay');
+
+      overlay.style.cursor = 'move';
+      $(overlay).on(msPointer ? 'msPointerDown.s'  : 'mousedown.s touchstart.s', down);
+  },false);
+}
+})();
+</script>
