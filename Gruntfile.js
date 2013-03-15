@@ -113,10 +113,10 @@ module.exports = function(grunt) {
     watch: { // for development run 'grunt watch'
       jekyll: {
         files: ['website/**'],
-        tasks: ['jekyll:dev']
+        tasks: ['jekyll:dev', 'copy:dev']
       },
       files: ['src/**'],
-      tasks: ['jshint', 'sass', 'mfpbuild', 'copy:dev']
+      tasks: [ 'sass', 'mfpbuild', 'copy:dev']
     },
 
     cssmin: {
@@ -195,8 +195,8 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'sass', 'mfpbuild', 'uglify', 'copy', 'jekyll:dev']);
+  grunt.registerTask('default', ['sass', 'mfpbuild', 'uglify', 'copy', 'jekyll:dev']);
 
-  grunt.registerTask('production', ['jshint', 'sass', 'mfpbuild', 'uglify', 'copy', 'cssmin', 'jekyll:production']);
+  grunt.registerTask('production', ['sass', 'mfpbuild', 'uglify', 'copy', 'cssmin', 'jekyll:production']);
 
 };

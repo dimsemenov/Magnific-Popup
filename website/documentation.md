@@ -10,7 +10,11 @@ description: The complete guide on how to use Magnific Popup.
   <strong>Warning!</strong> This documentation page is currently under development, please wait until I finish it.
 </div>
 
-Here you can find guide about how to use Magnific Popup. I've tried to make it useful both for experienced developers and for newbies. If you've found any mistake in documentation (or this site) or you know how to improve something, please <a href="">contribute to documentation on GitHub</a>.
+Here you can find guide about how to use Magnific Popup. I've tried to make it useful both for experienced developers and for newbies. If you've found any mistake or type in documentation (or this site) or you know how to improve something, simply submit <a href="">commit to documentation.md on GitHub</a>.
+
+<ul>
+  <li>Edit documentation.md on GitHub (this page).</li>
+</ul>
 
 * This will become a table of contents (this text will be scraped).
 {:toc}
@@ -21,15 +25,14 @@ Here you can find guide about how to use Magnific Popup. I've tried to make it u
 <!-- Magnific Popup core CSS file -->
 <link rel="stylesheet" href="magnific-popup/magnific-popup.css"> 
 
-<!-- jQuery 1.7+ or Zepto.js -->
+<!-- jQuery 1.7.2+ -->
 <script src="magnific-popup/jquery-1.9.0.min.js"></script> 
 
 <!-- Magnific Popup core JS file -->
 <script src="magnific-popup/jquery.magnific-popup.js"></script> 
 {% endhighlight %}
     
-
-I recommend to put CSS file in `<head>`. JavaScript files and initialization code - in footer of your site, before closing `</body>` tag.<br/> If you already have jQuery on your site - don't include it second time, or use jQuery.noConflict();.
+It's recommended to put CSS files in `<head>`. JavaScript files and initialization code - in footer of your site (before closing `</body>` tag).<br/> If you already have jQuery.js on your site - don't include it second time, or use jQuery.noConflict(); mode.
 
 
 
@@ -49,12 +52,10 @@ There are three ways to initialize popup:
 
 This code will bind click event to target element (in our case `.your-popup-link`). Extra options are added if you use this method, like conditional lightbox and opening content on middle mouse click. 
 
-HTML:
 {% highlight html %}
 <a class="your-popup-link" href="path-to-image.jpg">Open popup</a>
 {% endhighlight %}
 
-JavaScript:
 {% highlight javascript %}
 $('.your-popup-link').magnificPopup({ 
 	// options
@@ -63,10 +64,9 @@ $('.your-popup-link').magnificPopup({
 
     
 
-### 2. From element, with event delegation
+### 2. From a group of elements with one parent
 Same as first one, but use this method if you are creating popup from list of elements in one container. Note that this method does not enable gallery, it just reduces number of event handlers, and each item will be opened as a single popup. If you wish to enable gallery add `gallery:true` option.
 
-HTML:
 {% highlight html %}
 <div class="parent-container">
   <a href="path-to-image-1.jpg">Open popup 1</a>
@@ -75,7 +75,6 @@ HTML:
 </div>
 {% endhighlight %}
 
-JavaScript:
 {% highlight javascript %}
 $('.parent-container').magnificPopup({
   delegate: 'a' // child items selector, by clicking on it popup will open
@@ -269,6 +268,33 @@ callbacks: {
 ### Public methods
 
 Magnific Popup object is not attached to DOM element.
+
+
+## Preloader & status
+
+Preloader in Magnific Popup is used as an indicator of current status. It's always present in DOM only text inside of it changes. Below you can see explanation of CSS names that are applied to container that holds preloader and content area depending on the state of current item:
+
+{% highlight css %}
+
+/* Content loading is in progress */
+.mfp-s-loading { }
+
+/* Content successfully loaded */
+.mfp-s-ready { }
+
+/* Error during loading  */
+.mfp-s-error { }
+{% endhighlight %}
+
+For example, if you want your error message to be in red add such CSS:
+
+{% highlight css %}
+.mfp-s-error .mfp-preloader {
+  color: red;
+}
+{% endhighlight %}
+
+You can trigger change of status manually by calling `instance.updateStatus('error', 'error message')`. 
 
 ## Extending
 

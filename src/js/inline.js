@@ -1,34 +1,38 @@
 
-$.magnificPopup.registerModule('inline', {
+var INLINE_NS = 'inline',
+	_atLeastOneInline;
+$.magnificPopup.registerModule(INLINE_NS, {
 
 	proto: {
 		initInline: function() {
-			var self = this,
-				ns = '.inline',
-				atLeastOne;
+			mfp.types.push(INLINE_NS);
 
-			self.types.push('inline');
-
-			self.on('ContentParse'+ns, function(e, item) {
-				if(item.type === 'inline') {
-					if(mfp.preloader) {
-						item.finished = true;
-					}
-					atLeastOne = true;
-					item.view = $(item.src).after( mfp._getEl('mfp-hidden mfp-placeholder-'+mfp.popupID + '-'+ self.index) ).detach().show();
-				}
-			});
-			self.on('Close'+ns, function() {
-				if(atLeastOne) {
+			_mfpOn(CLOSE_EVENT+'.'+INLINE_NS, function() {
+				if(_atLeastOneInline) {
 					var item;
-					for(var i = 0; i < mfp.parsedItems.length; i++) {
-						item = mfp.parsedItems[i];
-						if(item && item.type === 'inline'){
-							$('.mfp-placeholder-'+mfp.popupID + '-'+i).after( item.view.hide() ).remove();
+					for(var i = 0; i < mfp.items.length; i++) {
+						item = mfp.items[i];
+						if(item && item.inlinePlaceholder){
+							item.inlinePlaceholder.after( item.inlineElement.hide() ).detach();
 						}
 					}
 				}
 			});
+		},
+		getInline: function(item) {
+			var inlinePlaceHolder
+			_atLeastOneInline = true;
+
+			if(!item.inlinePlaceholder) {
+				item.inlinePlaceholder = _getEl('mfp-hidden mfp-placeholder-'+mfp.popupID + '-'+ item.index);
+			}
+
+			if(!item.inlineElement) {
+				item.inlineElement = $(item.src);
+			}
+
+			item.inlineElement.after(item.inlinePlaceholder).detach().show();
+			return item.inlineElement;
 		}
 
 	}

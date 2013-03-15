@@ -1,10 +1,10 @@
 
+var IFRAME_NS = 'iframe';
 
-$.magnificPopup.registerModule('iframe', {
+$.magnificPopup.registerModule(IFRAME_NS, {
 
 	options: {
-		markup: '<div class="mfp-iframe-scaler"><iframe class="mfp-video" src="%url%" frameborder="0" allowfullscreen></iframe></div>',
-		ratio: 9/16,
+		markup: '<div class="mfp-iframe-scaler">%close%<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe></div>',
 
 		// we don't care and support only one default type of URL for each service. Without slow regexps
 		patterns: {
@@ -33,19 +33,12 @@ $.magnificPopup.registerModule('iframe', {
 
 	proto: {
 		initIframe: function() {
-			var self = this,
-				ns = '.iframe';
-			self.types.push('iframe');
-
-			self.on('ContentParse'+ns, function(e, item) {
-				if(item.type === 'iframe') {
-					self.parseIframe(item);
-				}
-			});
-			self.on('Close'+ns, function() {
-				if(self.isLowIE && self.currItem.type === 'iframe') {
+			mfp.types.push(IFRAME_NS);
+			
+			_mfpOn(CLOSE_EVENT + '.' + IFRAME_NS, function() {
+				if(mfp.isIE7 && mfp.currItem.type === 'iframe') {
 					// ie black screen bug fix
-					var el = self.content.find('iframe');
+					var el = mfp.content.find('iframe');
 					if(el.length) {
 						el.hide();
 					}
@@ -53,11 +46,10 @@ $.magnificPopup.registerModule('iframe', {
 			});
 		},
 
-		parseIframe: function(item) {
-			var self = this,
-				embedSrc = item.src;
+		getIframe: function(item) {
+			var embedSrc = item.src;
 				
-			$.each(self.st.iframe.patterns, function() {
+			$.each(mfp.st.iframe.patterns, function() {
 				if(embedSrc.indexOf( this.index ) > -1) {
 					if(this.id) {
 						if(typeof this.id === 'string') {
@@ -66,17 +58,20 @@ $.magnificPopup.registerModule('iframe', {
 							embedSrc = this.id.call( this, embedSrc );
 						}
 					}
-					
 					embedSrc = this.src.replace('%id%', embedSrc );
 					return false; //break
 				}
 			});
 
-			item.view = self.st.iframe.markup.replace('%url%', embedSrc);
+			var iframeObj = mfp.templates['iframe'];
+			var iframeEl = iframeObj.find('.mfp-iframe')[0];
+			if(iframeEl.src !== embedSrc) {
+				iframeEl.src = embedSrc;
+			}
+			
+			mfp._parseMarkup(iframeObj, {}, item);
 
-			// auto scaling of iframe
-			// Technique stolen from FITVIDS.JS http://fitvidsjs.com/  (by Chris Coyier and Paravel)
-			item.view = $(item.view).css('padding-top', (self.st.iframe.ratio * 100)+"%");	
+			return iframeObj;
 		}
 	}
 });

@@ -1,91 +1,136 @@
 
 // As we have only one instance of MagnificPopup, we define it locally to not to use 'this'
 var mfp,
-	MagnificPopup = function(){};
+	MagnificPopup = function(){},
+	_prevStatus,
+	_window,
+	_body,
+	_document,
+	_prevContentType;
+
+// private static const
+var CLOSE_EVENT = 'Close',
+	BEFORE_APPEND_EVENT = 'BeforeAppend',
+	MARKUP_PARSE_EVENT = 'MarkupParse',
+	OPEN_EVENT = 'Open',
+	CHANGE_EVENT = 'Change',
+
+	CLICK_EVENT = 'click';
+
+var NS = 'mfp';
+	EVENT_NS = '.' + NS;
+
+var READY_CLASS = 'mfp-ready',
+	REMOVING_CLASS = 'mfp-removing';
+
+var _mfpOn = function(name, f) {
+		mfp.ev.on(NS + name+EVENT_NS, f);
+	},
+	_getEl = function(className, appendTo, html, raw) {
+		var el = document.createElement('div');
+		el.className = NS + '-'+className;
+		if(html) {
+			el.innerHTML = html;
+		}
+		if(!raw) {
+			el = $(el);
+			if(appendTo) {
+				el.appendTo(appendTo);
+			}
+		} else if(appendTo) {
+			appendTo.appendChild(el);
+		}
+		return el;
+	},
+	_mfpTrigger = function(e, data) {
+		// We dispatch a lot of events, so we use triggerHandler instead of trigger, as bubbling is slow
+		mfp.ev.triggerHandler(NS + e, data);
+
+		if(mfp.st.callbacks) {
+			// converts mfpEventName to eventName
+			e = e.charAt(0).toLowerCase() + e.slice(1);
+			if(mfp.st.callbacks[e]) {
+				mfp.st.callbacks[e].call(mfp, data);
+			}
+		}
+	};
 
 MagnificPopup.prototype = {
 
 	constructor: MagnificPopup,
 
+	/**
+	 * Initializes Magnific Popup plugin. 
+	 * This function is triggered only once. And only when $.fn.magnificPopup or $.magnificPopup is executed
+	 */
 	init: function() {
-		mfp.isLowIE = jQuery && $.support.leadingWhiteSpace; // <=IE8
-		mfp.isAndroid = (/android/gi).test(navigator.appVersion);
-		mfp.isIOS = (/iphone|ipad|ipod/gi).test(navigator.appVersion);
+		var appVersion = navigator.appVersion;
+		mfp.isIE7 = appVersion.indexOf("MSIE 7.") !== -1; 
+		mfp.isAndroid = (/android/gi).test(appVersion);
+		mfp.isIOS = (/iphone|ipad|ipod/gi).test(appVersion);
 
 		// We disable fixed positioned lightbox on devices that don't handle it nicely.
 		// If you know a better way of doing this - let me know.
 		mfp.probablyMobile = (mfp.isAndroid || mfp.isIOS || /Opera Mini|webOS|BlackBerry|Opera Mobi|IEMobile/i.test(navigator.userAgent) );
-		mfp.win = $(window);
-		mfp.body = $(document.body);
-		mfp.doc = $(document);
+		_window = $(window);
+		_body = $(document.body);
+		_document = $(document);
+		mfp.templates = {};
+		
 	},
 
+
 	/**
-	 * Updates layout of popup
-	 * @param  Boolean force     If set to true forces the resize, no matter if height is changed or not.
-	 * @param  Number  winHeight Height of window (optional).
+	 * Opens popup
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
 	 */
-	resize: function(force, winHeight) {
-		if(mfp.st.alignTop){
-			return;
-		} 
-
-		mfp.wH = winHeight || mfp.win.height();
-
-		// we resize popup only when height changes
-		if(force || mfp.prevHeight !== mfp.wH) {
-			mfp.prevHeight = mfp.wH;
-		
-			if(mfp.wH < mfp.st.minHeight ) {
-				mfp.wH = mfp.st.minHeight;
-			}
-
-			var containerCSS = {
-				height: mfp.wH ,
-				lineHeight: mfp.wH + 'px'
-			};
-			mfp.trigger('Resize', containerCSS);
-			mfp.container.css(containerCSS);
-		}
-	}, 
-
-	
 	open: function(data) {
 
 		if(!mfp.isOpen) {
 			mfp.types = []; 
-		
+
 			var isArr = $.isArray(data.items);
+			mfp.ev = isArr ? _document : data.el;	
 
-			mfp.ev = isArr ? mfp.doc : data.el;	
 
-			//mfp.index = data.items.length > 1 ? data.items.index( data.el ) : 0;
-			mfp.index = isArr ? data.index : data.items.index(data.el);
+			var items = data.items,
+				item;
+			for(var i = 0; i < items.length; i++) {
+				item = items[i];
+				item = item.parsed ? item.el[0] : item;
+
+				if(item === data.el[0]) {
+					mfp.index = i;
+					break;
+				}
+			}
 
 			mfp.st = $.extend(true, {}, $.magnificPopup.defaults, data ); 
 			mfp.fixedPosition = mfp.st.fixedPosition === 'auto' ? !mfp.probablyMobile : mfp.st.fixedPosition;
 
 
-			mfp.isOpen = true;
+			
 			mfp.items = data.items;
 			mfp.popupID = data.id;
-			mfp.parsedItems = [];
 
 
 			// Dark overlay
-			mfp.bgOverlay = mfp._getEl('bg').on('click.mfp', function() {
+			mfp.bgOverlay = _getEl('bg').on(CLICK_EVENT, function() {
 				mfp.close();
 			});
 
 
-			mfp.wrap = mfp._getEl('wrap').attr('tabindex', -1).on('click.mfp', function(e) {
+			mfp.wrap = _getEl('wrap').attr('tabindex', -1).on(CLICK_EVENT, function(e) {
 				if(mfp.st.closeOnContentClick) {
 					mfp.close();
 				} else {
-					// close popup if click is not on a content or content does not exist
+					// close popup if click is not on a content, on close button, or content does not exist
+					var target = e.target;
 					if( !mfp.content || 
+						$(e.target).hasClass('mfp-close') ||
 						(mfp.preloader && e.target === mfp.preloader[0]) || 
-						(e.target !== mfp.content[0] && !$.contains(mfp.content[0], e.target)) ) {
+						(target !== mfp.content[0] && !$.contains(mfp.content[0], target)) ) {
 						mfp.close();
 					}
 				}
@@ -95,7 +140,15 @@ MagnificPopup.prototype = {
 
 			
 
-			mfp.container = mfp._getEl('container', mfp.wrap);
+			mfp.container = _getEl('container', mfp.wrap);
+
+
+
+			if(mfp.st.preloader) {
+				mfp.preloader = _getEl('preloader', mfp.container, mfp.st.tLoading);
+			}
+
+			mfp.contentContainer = _getEl('content', mfp.container);
 
 
 			var modules = $.magnificPopup.modules;
@@ -105,12 +158,10 @@ MagnificPopup.prototype = {
 				n = n.charAt(0).toUpperCase() + n.slice(1);
 				mfp['init'+n].call(mfp);
 			}
-			mfp.trigger('BeforeOpen');
+			_mfpTrigger('BeforeOpen');
 
 
-			if(mfp.st.preloader) {
-				mfp.preloader = mfp._getEl('preloader', mfp.container, mfp.st.tLoading);
-			}
+			
 
 			if(!mfp.st.closeBtnInside) {
 				mfp.wrap.append( mfp._getCloseBtn() );
@@ -127,23 +178,20 @@ MagnificPopup.prototype = {
 				});
 			} else {
 				mfp.bgOverlay.css({
-					height: mfp.doc.height(),
-					position: 'absolute'
+					//height: _document.height(),
+					position: 'fixed'
 				});
 				
 				mfp.wrap.css({ 
-					top: mfp.win.scrollTop(),
+					top: _window.scrollTop(),
 					position: 'absolute'
 				});
 			}
 
-			// Window resize
-			mfp.win.on('resize.mfp', function() {
-				mfp.resize();
-			});
+			
 
 			// ESC key
-			mfp.doc.on('keyup.mfp', function(e) {
+			_document.on('keyup' + EVENT_NS, function(e) {
 				if(e.keyCode === 27) {
 					mfp.close();
 				}
@@ -156,11 +204,12 @@ MagnificPopup.prototype = {
 			
 
 			// this triggers recalculation of layout, so we get it once to not to trigger twice
-			mfp.wH = mfp.win.height();
+			var windowHeight = mfp.wW = _window.width();
+				windowWidth = mfp.wH = _window.height();
 
 			
 			var bodyStyles = {};
-			if(mfp.fixedPosition && mfp._hasScrollBar(mfp.wH) ) {
+			if(mfp.fixedPosition && mfp._hasScrollBar(windowHeight) ) {
 				var s = mfp._getScrollbarSize();
 				if(s) {
 					bodyStyles.paddingRight = s;
@@ -168,7 +217,7 @@ MagnificPopup.prototype = {
 			}
 
 			if(mfp.fixedPosition) {
-				if(!mfp.isLowIE) {
+				if(!mfp.isIE7) {
 					bodyStyles.overflow = 'hidden';
 				} else {
 					$('body, html').css('overflow', 'hidden');
@@ -177,19 +226,35 @@ MagnificPopup.prototype = {
 
 			
 			
-				
-			if(mfp.st.mainClass) {
-				mfp._addClassToMFP( mfp.st.mainClass );
+			var classesToadd = mfp.st.mainClass;
+
+			if(mfp.isIE7) {
+				classesToadd += ' mfp-ie7';
+			}
+
+			if(classesToadd) {
+				mfp._addClassToMFP( classesToadd );
 			}
 				
 			
 
 			mfp.setItemHTML(mfp.index);
 			
-			mfp.body.css(bodyStyles);
+			// TOOD: fix this
+			if(mfp.currItem.type !== 'image' && mfp.currItem.type !== 'iframe') {
+				mfp.container.css({
+					paddingTop: 0,
+					paddingBootom: 0
+				});
+			}
+			
+			mfp.bgOverlay.add(mfp.wrap).prependTo( document.body );
+			
+			_body.css(bodyStyles);
 
-			mfp.resize(true, mfp.wH);
-			mfp.bgOverlay.add(mfp.wrap).appendTo( document.body );
+
+
+			//return;
 
 			// Save last focused element
 			mfp._lastFocusedEl = document.activeElement;
@@ -199,31 +264,30 @@ MagnificPopup.prototype = {
 			setTimeout(function() {
 				
 				if(mfp.content) {
-					mfp._addClassToMFP('mfp-ready');
+					mfp._addClassToMFP(READY_CLASS);
 					mfp.setFocus();
 				} else {
-					mfp.bgOverlay.addClass('mfp-ready');
+					mfp.bgOverlay.addClass(READY_CLASS);
 				}
 				
-
-				
 				// Lock focus on popup
-				mfp.doc.on('focusin.mfp', function (e) {
+				_document.on('focusin' + EVENT_NS, function (e) {
 					if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
 						mfp.wrap.focus();
 						return false;
 					}
 				});
-				mfp.trigger('Open');
-
 			}, 16);
+
+			mfp.isOpen = true;
+			_mfpTrigger(OPEN_EVENT);
 		}
 
 	},
 	setFocus: function() {
 		(mfp.st.focusInput ? mfp.content.find(':input').eq(0) : mfp.wrap).focus();
 	},
-	close: function(browserAction) {
+	close: function() {
 		
 
 		if(mfp.isOpen) {
@@ -231,7 +295,7 @@ MagnificPopup.prototype = {
 
 			var remove = function() {
 
-				mfp.trigger('Close', mfp, browserAction);
+				_mfpTrigger(CLOSE_EVENT);
 
 				if(mfp.closeBtn) {
 					mfp.closeBtn.remove();
@@ -245,11 +309,11 @@ MagnificPopup.prototype = {
 				}
 					
 
-				var classesToRemove = 'mfp-removing mfp-ready ';
+				var classesToRemove = REMOVING_CLASS + ' ' + READY_CLASS + ' ';
 				
 				
 
-				mfp.parsedItems = null;
+
 				mfp.bgOverlay.remove();
 				mfp.wrap.remove();
 
@@ -260,30 +324,26 @@ MagnificPopup.prototype = {
 
 				if(mfp.fixedPosition) {
 					var bodyStyles = {paddingRight: 'inherit'};
-					if(mfp.isLowIE) {
-						$('body, html').overflow = 'visible';
+					if(mfp.isIE7) {
+						$('body, html').css('overflow', 'auto');
 					} else {
 						bodyStyles.overflow = 'visible';
 					}
-					mfp.body.css(bodyStyles);
+					_body.css(bodyStyles);
 				}
 
 				
-
-
-				mfp.win.off('resize.mfp');
-				mfp.doc.off('keyup.mfp');
-				mfp.doc.off('focusin.mfp');
-				mfp.ev.off('.mfp');
+				_document.off('keyup' + EVENT_NS + ' focusin' + EVENT_NS);
+				mfp.ev.off(EVENT_NS);
 
 				// clean up everything that has link to content
-				mfp.currItem = mfp.items = mfp.st = mfp.container = mfp.wrap = mfp.bgOverlay = mfp.content = mfp.closeBtn = null;
+				//mfp.currItem = mfp.items = mfp.st = mfp.container = mfp.wrap = mfp.bgOverlay = mfp.content = mfp.closeBtn = null;
 				mfp.prevHeight = 0;
 			};
 
 			// for CSS3 animation
 			if(mfp.st.removalDelay)  {
-				mfp._addClassToMFP('mfp-removing');
+				mfp._addClassToMFP(REMOVING_CLASS);
 				setTimeout(function() {
 					remove();
 				}, mfp.st.removalDelay);
@@ -296,78 +356,149 @@ MagnificPopup.prototype = {
 
 	
 	// set content of popup
-	setItemHTML: function(index, preload, content) {
-		var item = mfp.parsedItems[index];
+	setItemHTML: function(index) {
+		var item = mfp.items[index];
 
-		if(!item) {
-			mfp.parsedItems[index] = item = mfp.parseEl( mfp.items[index] );
-			item.index = index;
+		if(!item.parsed) {
+			item = mfp.parseEl( index );
 		}
-		if(!preload) {
+		//if(!preload) {
 			mfp.currItem = item;
+		//}
+
+		// if(content) {
+		// 	item.view = content;
+		// } else if(!item.view) {
+		
+
+			//_mfpTrigger('ContentParse', item);
+
+		// detach
+		//if(mfp.content)
+		//	mfp.content.detach();
+
+		// update structure
+		var type = item.type;
+		if(!mfp.templates[type]) {
+			var markup = mfp.st[type] ? mfp.st[type].markup : false;
+			if(markup) {
+				if(mfp.st.closeBtnInside) {
+					markup = markup.replace('%close%', mfp._getCloseBtn() );
+				}
+				_mfpTrigger('FirstMarkupParse', markup);
+				mfp.templates[type] = $(markup);
+			}
+			
 		}
 
-		if(content) {
-			item.view = content;
-		} else if(!item.view) {
-			mfp.trigger('ContentParse', item, preload);
+
+
+		mfp.content = mfp['get' + type.charAt(0).toUpperCase() + type.slice(1)](item);
+		
+		// TODO: fix this
+		if(item.type === 'inline' || item.type === 'ajax') {
+			if(mfp.st.closeBtnInside) {
+				if( !(mfp.content.find('.mfp-close').length > 0) ) {
+					mfp.content.prepend( mfp._getCloseBtn() );
+				}
+			}
+		}
+
+		_mfpTrigger(BEFORE_APPEND_EVENT);
+
+		
+
+		if(_prevContentType && _prevContentType !== item.type) {
+			mfp.contentContainer.removeClass('mfp-'+item.type+'-content');
+			
+		}
+		// put it back
+		mfp.contentContainer.addClass('mfp-'+item.type+'-content').html(mfp.content);
+		item.preloaded = true;
+		_mfpTrigger(CHANGE_EVENT, item);
+		_prevContentType = item.type;
+
+
+			//mfp.content = item.view;
+			// if(mfp.st.closeBtnInside) {
+			// 	mfp.content.append( mfp._getCloseBtn() );
+			// }
+
+			
+
+			// var contentContainer = _getEl('content');
+			// contentContainer.attr('mfp-id', index);
+			// contentContainer.addClass('mfp-'+item.type+'-content').html(mfp.content);
+
+			
+			
+
+
+
+			//mfp.container.append(contentContainer);
+
+			//_mfpTrigger('Change', mfp.[mfp.index]);
+
 
 			// if still there is no view - we terminate
-			if(!item.view) {
-				item.emptyLoad = preload;
-				return;
-			}
-		}
+			// if(!item.view) {
+			// 	item.emptyLoad = preload;
+			// 	return;
+			// }
+		//}
 
-		if(item.rendered) {
-			mfp.content.parent().hide();
-			item.view.parent().show();		
-		} else {
-			var contentContainer = mfp._getEl('content');
-			contentContainer.attr('mfp-id', index);
-			contentContainer.addClass('mfp-'+item.type+'-content').html(item.view);
+		// if(item.rendered) {
+		// 	mfp.content.parent().hide();
+		// 	item.view.parent().show();		
+		// } else {
+		// 	var contentContainer = _getEl('content');
+		// 	contentContainer.attr('mfp-id', index);
+		// 	contentContainer.addClass('mfp-'+item.type+'-content').html(item.view);
 			
 			
 
-			if(!preload) {
-				if(mfp.content) {
-					mfp.content.parent().hide();
-				}
-			} else {
-				contentContainer.hide();
-			}
+		// 	if(!preload) {
+		// 		if(mfp.content) {
+		// 			mfp.content.parent().hide();
+		// 		}
+		// 	} else {
+		// 		contentContainer.hide();
+		// 	}
 
-			mfp.container.append(contentContainer);
-			item.rendered = true;
-		}
+		// 	mfp.container.append(contentContainer);
+		// 	item.rendered = true;
+		// }
 
-		if(!preload) {
-			mfp.content = item.view;
-			if(mfp.st.closeBtnInside) {
-				mfp.content.append( mfp._getCloseBtn() );
-			}
+		// if(!preload) {
+		// 	mfp.content = item.view;
+		// 	if(mfp.st.closeBtnInside) {
+		// 		mfp.content.append( mfp._getCloseBtn() );
+		// 	}
 
-			if(mfp.st.preloader) {
-				mfp.updatePreloader();
-			}
+		// 	if(mfp.st.preloader) {
+		// 		mfp.updatePreloader();
+		// 	}
 
-			mfp.trigger('Change', mfp.parsedItems[mfp.index]);
-		}
+		
+		// }
 	},
 
 	
 	// creates Magnific Popup data object
-	parseEl: function(item) {
-		var el;
+	parseEl: function(index) {
+		var el,
+			item = mfp.items[index];
 
-
+		
 		if(item.tagName) {
 			el = $(item);
-			item = { el: el, parsed: true };
-		} else {
-			item.parsed = true;
-			return item;
+			item = { el: el };
 		}
+
+		//  else {
+		// 	item.parsed = true;
+		// 	return item;
+		// }
 
 		if(item.el) {
 			var types = mfp.types;
@@ -377,16 +508,20 @@ MagnificPopup.prototype = {
 					if(!item.src) {
 						item.src = item.el.attr('href');
 					}
+
 					
 					item.type = types[i];	
-					item.parsed = true;
+					
 					break;
 				}
 			}
 		}
 
-		mfp.ev.trigger('ElementParse', item);
-		return item;
+		item.index = index;
+		item.parsed = true;
+		mfp.items[index] = item;
+		_mfpTrigger('ElementParse', item);
+		return mfp.items[index];
 	},
 
 
@@ -430,7 +565,7 @@ MagnificPopup.prototype = {
 		} 
 
 		options.id = mfp.gCounter++;
-		var eName = 'click.magnificPopup';
+		var eName = CLICK_EVENT + '.magnificPopup';
 		if(options.delegate) {
 			options.items = el.find(options.delegate);
 			el.off(eName).on(eName, options.delegate , eHandler);
@@ -441,62 +576,52 @@ MagnificPopup.prototype = {
 	},
 
 
+
+
 	/**
 	 * Updates text on preloader
 	 * @param  {String}  txt     Preloader text
 	 * @param  {Boolean} isError Adds mfp-img-error class if enabled
 	 */
-	updatePreloader: function() {
+	updateStatus: function(status, text) {
 		
-		if(mfp.preloader ) {
+		//mfp.currStatus = 'loaded';
+
+
+
+
+		if(mfp.preloader) {
+			if(_prevStatus !== status) {
+				mfp.container.removeClass('mfp-s-'+_prevStatus);
+			}
+
+
 			
-			var errorText = mfp.currItem.errorText;
-			if(errorText || mfp._isPreloaderError) {
-				var txt;
-				mfp.preloader.css('display', 'block');
-				if(!errorText) {
-					txt = mfp.st.tLoading;
-				} else {
-					txt = errorText;
-				}
-				mfp._isPreloaderError = Boolean(errorText);
-				
-				mfp.preloader[errorText ? 'addClass' : 'removeClass']('mfp-load-error').html( txt.replace('%url%', mfp.currItem.src) );
-				if(errorText) {
-					// prevent closing of popup, when link is clicked in preloader text
-					mfp.preloader.find('a').click(function(e) {
-						e.stopImmediatePropagation();
-					});
-				}
-			} else {
-				if(mfp.currItem.finished) {
-					mfp.preloader.css('display', 'none');
-				} else {
-					mfp.preloader.css('display', 'block');
-				}
+
+			if(status === 'loading') {
+				text = mfp.st.tLoading;
+			} else if(status === 'ready') {
+
+			} else if(status === 'error') {
 
 			}
-			
+			mfp.preloader.html(text);
+
+			mfp.preloader.find('a').click(function(e) {
+				e.stopImmediatePropagation();
+			});
+
+			mfp.container.addClass('mfp-s-'+status);
+			_prevStatus = status;
 		}
 
+
+
 	},
 
 
-	trigger: function(e, data) {
-		// We have a lot of events, so we use triggerHandler instead of trigger, as bubbling is slow
-		mfp.ev.triggerHandler('mfp' + e, data);
-
-		if(mfp.st.callbacks) {
-			// converts mfpEventName to eventName
-			e = e.charAt(0).toLowerCase() + e.slice(1);
-			if(mfp.st.callbacks[e]) {
-				mfp.st.callbacks[e].call(mfp, data);
-			}
-		}
-	},
-	on: function(name, f) {
-		mfp.ev.on('mfp' + name+'.mfp', f);
-	},
+	
+	
 
 
 
@@ -507,14 +632,11 @@ MagnificPopup.prototype = {
 	 */
 	_getCloseBtn: function() {
 		
-		if(!mfp.closeBtn) {
-			mfp.closeBtn = $( mfp.st.closeMarkup.replace('%title%', mfp.st.tClose ) ).click(function(e) {
-				e.preventDefault();
-				mfp.close();
-			});
-		}
+		// if(!mfp.closeBtn) {
+		// 	mfp.closeBtn = $( mfp.st.closeMarkup.replace('%title%', mfp.st.tClose ) );
+		// }
 		
-		return mfp.closeBtn;
+		return mfp.st.closeMarkup.replace('%title%', mfp.st.tClose );
 	},
 	_addClassToMFP: function(cName) {
 
@@ -526,26 +648,20 @@ MagnificPopup.prototype = {
 		mfp.wrap.removeClass(cName);
 	},
 	_hasScrollBar: function(winHeight) {
-		if(document.body.clientHeight > (winHeight || mfp.win.height()) ) {
+		if(document.body.clientHeight > (winHeight || _window.height()) ) {
             return true;    
         }
         return false;
 	},
-	_getEl: function(className, appendTo, html, raw) {
-		var el = document.createElement('div');
-		el.className = 'mfp-'+className;
-		if(html) {
-			el.innerHTML = html;
-		}
-		if(!raw) {
-			el = $(el);
-			if(appendTo) {
-				el.appendTo(appendTo);
+	_parseMarkup: function(element, values, item) {
+		_mfpTrigger(MARKUP_PARSE_EVENT, [element, values, item] );
+		$.each(values, function(key, value) {
+			if(key.indexOf('replace_') > -1 ) {
+				element.find(EVENT_NS + '-'+key.slice(8)).replaceWith(value);
+			} else {
+				element.find(EVENT_NS + '-'+key).html(value);
 			}
-		} else if(appendTo) {
-			appendTo.appendChild(el);
-		}
-		return el;
+		});
 	},
 	_getScrollbarSize: function() {
 		// thx David
@@ -614,7 +730,7 @@ $.magnificPopup = {
 
 		mainClass: null,
 
-		minHeight: 400,
+		minHeight: 200,
 
 		preloader: true,
 
@@ -622,7 +738,7 @@ $.magnificPopup = {
 		
 		closeOnContentClick: false,
 
-		closeBtnInside: false,
+		closeBtnInside: true,
 
 		overlay: true,
 	
@@ -633,7 +749,7 @@ $.magnificPopup = {
 		fixedPosition: 'auto', // "auto", true, false. "Auto" will automatically disable this option when browser doesn't support fixed position properly.
 		overflow: 'auto', // CSS property of slider wrap: 'auto', 'scroll', 'hidden'. Doesn't apply when fixedPosition is on.
 
-		closeMarkup: '<button title="%title%" class="mfp-close"><i class="mfp-close-icn">&times;</i></button>',
+		closeMarkup: '<button title="%title%" class="mfp-close">&times;</button>',
 
 		tClose: 'Close (Esc)',
 		tLoading: 'Loading...'

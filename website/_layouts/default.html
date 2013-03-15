@@ -8,21 +8,22 @@
     <meta name="description" content="{{page.description}}"/>
     <meta name="viewport" content="width = device-width, initial-scale = 1.0" />
     <meta name="author" content="Dmitry Semenov">
+    
     <link rel="canonical" href="http://dimsemenov.com/plugins/magnific-popup/" />
 
     {% if site.url == 'local' %}
-      <link href="site-assets/site.css?v=0.0.6" rel="stylesheet" />
-      <link href="dist/magnific-popup.css?v=0.0.6" rel="stylesheet" />
+      <link href="site-assets/site.css?v=0.0.7" rel="stylesheet" />
+      <link href="dist/magnific-popup.css?v=0.0.7" rel="stylesheet" />
 
       <!-- <script  src="third-party-libs/jquery.min.js"></script> -->
       <!-- <script  src="magnific-popup/zepto.js"></script>-->
 
       <script  src="third-party-libs/jquery.js"></script>
-      <script src="dist/jquery.magnific-popup.js?v=0.0.6"></script>
+      <script src="dist/jquery.magnific-popup.js?v=0.0.7"></script>
     {% else %}
-      <link href="site-assets/all.min.css?v=0.0.6" rel="stylesheet" />
+      <link href="site-assets/all.min.css?v=0.0.7" rel="stylesheet" />
       <script  src="third-party-libs/jquery.min.js"></script>
-      <script src="dist/jquery.magnific-popup.min.js?v=0.0.6"></script>
+      <script src="dist/jquery.magnific-popup.min.js?v=0.0.7"></script>
     {% endif %}
   </head>
   <body>
@@ -34,7 +35,7 @@
     {{ content | markdown }}
 
     <div id="footer">
-      Made by <a href="http://dimsemenov.com" rel="author">Dmitry Semenov</a>. Photography in demo by <a href="http://500px.com/MarselvanOosten">Marsel Van Oosten</a>
+      Created by <a href="http://dimsemenov.com" rel="author">Dmitry Semenov</a>. Photography in demo by <a href="http://www.squiver.com">Marsel Van Oosten</a>
     </div>
   </div>
 {{page.footer}}

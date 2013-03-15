@@ -1,4 +1,12 @@
-$.magnificPopup.registerModule('ajax', {
+var AJAX_NS = 'ajax',
+	_ajaxCur,
+	_removeAjaxCursor = function() {
+		if(_ajaxCur) {
+			_body.removeClass(_ajaxCur);
+		}
+	};
+
+$.magnificPopup.registerModule(AJAX_NS, {
 
 	options: {
 		settings: null,
@@ -8,61 +16,64 @@ $.magnificPopup.registerModule('ajax', {
 
 	proto: {
 		initAjax: function() {
-			mfp.types.push('ajax');
+			mfp.types.push(AJAX_NS);
+			_ajaxCur = mfp.st.ajax.cursor;
 
-			var ajaxCur = mfp.st.ajax.cursor,
-				ns = '.ajax';
-
-			mfp.on('ContentParse'+ns, function(e, item) {
-				if(item.type === 'ajax') {
-
-					if(ajaxCur)
-						mfp.body.addClass(ajaxCur);
-
-					mfp.req = $.ajax(item.src, 
-
-						$.extend({
-							success:function(data, textStatus, jqXHR) {
-								mfp.trigger('ParseAjax', jqXHR);
-								mfp.setItemHTML(item.index, item.emptyLoad, $(jqXHR.responseText) );
-								item.finished = true;
-								if(ajaxCur) {
-									mfp.body.removeClass(ajaxCur);
-								}
-									
-
-								mfp.setFocus();
-
-								setTimeout(function() {
-									mfp.wrap.addClass('mfp-ready');
-								}, 16);
-								mfp.updatePreloader();
-							},
-							error:function() {
-								item.finished = true;
-								if(ajaxCur)
-									mfp.body.removeClass(ajaxCur);
-								item.ajaxLoadError = true;
-								item.errorText = mfp.st.ajax.tError;
-								mfp.updatePreloader();
-								mfp.setItemHTML(item.index, item.emptyLoad, $('<div>') );
-							}
-						}, mfp.st.ajax.settings)
-
-					);
-				}
-			});
-
-			mfp.on('Close'+ns, function() {
-				if(ajaxCur) {
-					mfp.body.removeClass(ajaxCur);
-				}
+			_mfpOn(CLOSE_EVENT+'.'+AJAX_NS, function() {
+				_removeAjaxCursor();
 				if(mfp.req) {
 					mfp.req.abort();
 				}
 			});
+		},
 
+		getAjax: function(item) {
+
+			if(_ajaxCur)
+				_body.addClass(_ajaxCur);
 			
+
+			mfp.updateStatus('loading');
+
+			mfp.req = $.ajax(item.src, 
+
+				$.extend({
+					success:function(data, textStatus, jqXHR) {
+						_mfpTrigger('ParseAjax', jqXHR);
+						item.ajaxContent.replaceWith( $(jqXHR.responseText) );
+						//mfp.setItemHTML(item.index, item.emptyLoad, $(jqXHR.responseText) );
+						item.finished = true;
+
+						_removeAjaxCursor();
+
+						mfp.setFocus();
+
+						setTimeout(function() {
+							mfp.wrap.addClass(READY_CLASS);
+						}, 16);
+						mfp.updateStatus('ready');
+					},
+					error:function() {
+						item.finished = true;
+
+
+
+						_removeAjaxCursor();
+							
+
+						item.loadError = true;
+						mfp.updateStatus('error', mfp.st.ajax.tError);
+					}
+				}, mfp.st.ajax.settings)
+
+			);
+
+			item.ajaxContent = $(document.createElement('div'));
+			return item.ajaxContent;
+
+
+
+
 		}
 	}
 });

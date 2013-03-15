@@ -1,10 +1,10 @@
 <!-- Basic idea of such build tool is stolen from modernizr.com -->
 <div id="mfp-build-tool" class="hidden">
-  <h2>Magnific Popup v0.0.61 Buld Tool</h2>
+  <h2>Magnific Popup v0.0.7 Buld Tool</h2>
   <form id="mfp-build-form">
     <p class="help-block">Simply select what you need to include and click 'generate build' button, you'll generate optimized version of main JS file (`jquery.magnific-popup.js`).</p>
      <label class="checkbox">
-      <input type="checkbox" name="image" checked> Inline
+      <input type="checkbox" name="inline" checked> Inline
     </label>
     <label class="checkbox">
       <input type="checkbox" name="image" checked> Image
@@ -36,7 +36,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		
-		$('.mfp-build-tool-link').magnificPopup({alignTop:true, closeBtnInside:true, type:'inline'});
+		$('.mfp-build-tool-link').magnificPopup({alignTop:true, closeBtnInside:true, type:'inline', midClick: true});
 
 	    var button = $('#mfp-build-button').click(function(e) {
 	    	e.preventDefault();

@@ -5,10 +5,11 @@
 ******************************/
 
 
-$overlay-color: #000;
+
+$overlay-color: #0b0b0b;
 $overlay-opacity: 0.8;
 
-$controls-opacity: 0.75;
+$controls-opacity: 0.65;
 $controls-color: #FFF;
 $controls-color-alt: #444;
 
@@ -19,7 +20,12 @@ $controls-text-color-hover: #FFF;
 
 $shadow: 0 0 8px rgba(0, 0, 0, 0.6);
 
+$iframe-max-width: 900px;
+$iframe-background: #000;
+$iframe-ratio: 9/16;
+
 $arrows: true; // Set to false to exclude all arrow styles
+
 
 /***************
 *
@@ -34,8 +40,6 @@ $arrows: true; // Set to false to exclude all arrow styles
 }
 
 
-
-
 /***************
 *
 *  2. Preloader
@@ -47,11 +51,13 @@ $arrows: true; // Set to false to exclude all arrow styles
   color: $controls-text-color;
   position: absolute;
   top: 50%;
-  width: 100%;
+  width: auto;
   text-align: center;
   height: 20px;
-  margin-top: -5px;
+  margin-top: -9px;
   line-height: 20px;
+  left: 0;
+  right: 0;
 }
 .mfp-preloader a {
   color: $controls-text-color;
@@ -60,6 +66,24 @@ $arrows: true; // Set to false to exclude all arrow styles
   color: $controls-text-color-hover;
 }
 
+
+/* Content loading is in progress */
+.mfp-s-loading .mfp-preloader {
+
+}
+
+/* Content successfully loaded */
+.mfp-s-ready .mfp-preloader {
+  display: none;
+}
+
+/* Error during loading */
+.mfp-s-error .mfp-preloader {
+
+}
+.mfp-s-error .mfp-content {
+  display: none;
+} 
 
 
 /***************
@@ -70,33 +94,46 @@ $arrows: true; // Set to false to exclude all arrow styles
 
 .mfp-close {
   width: 44px;
-  height: 44px;
+  height:44px;
   position: absolute;
   right: 0;
-  top: 0;
+  top: -2px;
   z-index: 1000;
   text-decoration: none;
   text-align: center;
   opacity: $controls-opacity;
-  padding: 0;
-}
-.mfp-close-icn {
+  padding: 0 0 18px 10px;
+
   font-style: normal;
   color: $controls-color;
-  font-size: 30px;
-  line-height: 30px;
-  font-family: Arial,sans-serif;
-  line-height: 44px;
+  font-size: 28px;
+  font-family: Georgia, Arial, sans-serif;
+  line-height: 41px;
 }
-.mfp-close-btn-in .mfp-close-icn {
+
+.mfp-close-btn-in .mfp-close {
   color: $inner-close-icon-color;
 }
-.mfp-close:hover {
-  text-decoration: none;
+
+.mfp-image-content .mfp-close, 
+.mfp-iframe-content .mfp-close {
+  color: $controls-color;
+  top: -48px;
+  right: -8px;
+  width: 32px;
+  padding-left: 20px;
+  padding-bottom: 8px;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.mfp-close:hover,
+.mfp-close:focus {
   opacity: 1;
 }
 .mfp-close:active {
-  top: 1px;
+  margin-top: 1px;
 }
 
 
@@ -108,15 +145,9 @@ $arrows: true; // Set to false to exclude all arrow styles
 
 .mfp-counter {
   position: absolute;
-  bottom:11px;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  text-align: center;
-  color: $controls-text-color;
-  font-size: 13px;
-  line-height: 15px;
-  z-index: 1;
+  top:8px;
+  right: 0;
+  color: #BDBDBD;
 }
 
 
@@ -130,56 +161,105 @@ $arrows: true; // Set to false to exclude all arrow styles
 
 @if $arrows { 
 
+  $triangle-inner-size: 12px;
+  $triangle-inner-width: 12px;
+
+  $triangle-size: 20px;
+  $triangle-width: 20px;
+
+  $triangle-padding: 35px;
+
   .mfp-arrow {
     position: absolute;
-    bottom: 0;
-    padding: 10px 40px 10px 20px;
+    top: 0;
     opacity: $controls-opacity;
-    width: 85px;
-  }
-  .mfp-arrow:hover {
-    opacity: 1;
+    margin: 0;
+    top: 50%;
+    margin-top: ($triangle-padding + $triangle-size) * -1;
+    padding: 0;
+    width: $triangle-size + $triangle-padding * 2;
+    height: $triangle-size * 2 + $triangle-padding * 2;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
   .mfp-arrow:active {
-    margin-top: 1px;
+    margin-top: ($triangle-padding + $triangle-size) * -1 + 1;
   }
-  .mfp-arrow span {
-    background: $controls-color;
-    width: 9px;
-    height: 8px;
-    border-radius: 2px;
-    display: block;
-    position: relative;
-    padding: 8px 8px;
+  .mfp-arrow:hover,
+  .mfp-arrow:focus {
+    opacity: 1;
+  }
+
+
+ 
+ //@if $ie7 {
+    
+//
+
+  .mfp-arrow {
+
+    &:before,
+    &:after,
+    .mfp-b,
+    .mfp-a {
+      display: block;
+      width: 0; 
+      height: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin-top: $triangle-padding;
+      margin-left: $triangle-padding;
+    }
+
+    &:after,
+    .mfp-a {
+      content: '';
+      opacity: $overlay-opacity;
+      border-top: $triangle-inner-size solid transparent;
+      border-bottom: $triangle-inner-size solid transparent;
+      top:8px;
+    }
+    
+    &:before,
+    .mfp-b {
+      content: '';
+      border-top: $triangle-size solid transparent;
+      border-bottom: $triangle-size solid transparent;
+    }
+
   }
 
   .mfp-arrow-left {
-    left: 50%;
-    margin-left: -85px;
+    left: 0;
+
+    &:after,
+    .mfp-a {
+      border-right: $triangle-inner-width solid #000;
+      left: 5px;
+    }
+    &:before,
+    .mfp-b {
+       border-right: $triangle-width solid #FFF;
+    }
   }
+  
+
+  
   .mfp-arrow-right {
-    right: 50%;
-    margin-right: -85px;
-    padding-left: 40px;
-    padding-right: 20px;
-  }
-  .mfp-arrow i {
-    display: block;
-    width: 0; 
-    height: 0; 
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-  }
-  .mfp-arrow-left i {
-    margin-left: -1px;
-    border-right: 9px solid $controls-color-alt;
-  }
-  .mfp-arrow-right i {
-    margin-left: 1px;
-    border-left: 9px solid $controls-color-alt;
+    right: 0;
+    &:after,
+    .mfp-a {
+      border-left: $triangle-inner-width solid #000;
+      left: 3px;
+    }
+    &:before,
+    .mfp-b {
+      border-left: $triangle-width solid #FFF;
+    }
   }
 
 }
+
 
 
 /***************
@@ -246,22 +326,10 @@ $arrows: true; // Set to false to exclude all arrow styles
   text-align: center;
   position: absolute;
   width: 100%;
+  height: 100%;
   left: 0;
   top: 0;
 }
-
-/* Extra container that centers popup vertically and horizontally. + contains controls */
-/*.mfp-centerer {
-  vertical-align: middle; 
-  display: inline-block; 
-  line-height: 0;
-  margin: 0 auto;
-  position: relative;
-  width: 100%;
-
-  *display: block;
-  *margin-top: expression(this.offsetHeight < this.parentNode.offsetHeight ? parseInt((this.parentNode.offsetHeight - this.offsetHeight) / 2) + "px" : "0");
-}*/
 
 /* Holds popup content itself. */
 .mfp-content {
@@ -279,36 +347,43 @@ img.mfp-img {
   width: auto;
   max-width: 100%;
   height: auto;
-  display: inline-block;
-  margin-top: -3px;
+  display: block;
   line-height: 0;
   box-shadow: $shadow;
+  margin: 0 auto;
+  margin-top: -5px;
 }
 .mfp-img-content {
   line-height: 0;
   position: relative;
   width: 100%;
+
 }
 
 
-
+.mfp-image-content {
+  max-width: 100%;
+}
 .mfp-iframe-content {
   line-height: 0;
   width: 100%;
-  max-width: 900px;
+  max-width: $iframe-max-width;
 }
 .mfp-iframe-scaler {
   width: 100%;
-  box-shadow: $shadow;
+  height: 0;
+  overflow: hidden;
+  padding-top: $iframe-ratio * 100%;       
 }
 .mfp-iframe-scaler iframe {  
-   position: absolute;              
-   top: 0;                          
-   left: 0;                         
-   width: 100%;                     
-   height: 100%;                    
+  position: absolute;              
+  top: -3px;                          
+  left: 0;                         
+  width: 100%;                     
+  height: 100%;  
+  box-shadow: $shadow;
+  background: $iframe-background;
 }  
-
 
 
 
@@ -326,6 +401,8 @@ button.mfp-arrow {
   -webkit-appearance: none;
   display: block;
   z-index: 1;
+  padding: 0;
+  outline: none;
 }
 
 /* helper classes */
@@ -344,37 +421,159 @@ button.mfp-arrow {
 
 .mfp-inline-content {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
   cursor: auto;
 }
-.mfp-img {
-  max-width: 100%;
-  display: inline-block;
-  box-shadow: $shadow;
-  line-height: 0;
+.mfp-ajax-content {
+  cursor: auto;
 }
 
 
 
 
 
+.mfp-container:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
 
 /* test styles for image with caption */
+.mfp-container {
+  padding: 44px 8px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 
-.img-popup-bg img {
-  max-width: 100%;
 }
-.img-popup-bg p {
+
+.mfp-img-holder {
+  line-height: 0;
+}
+.mfp-img-holder figcaption {
   text-align: left;
   line-height: 20px;
-  padding: 8px 16px;
-  color: #FFF;
-  opacity: 0.8;
+  padding: 8px 0 0;
+  color: #F3F3F3;
   margin: 0;
+  line-height: 1.231;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  text-align: left;
+}
+.mfp-img-holder small {
+  color: #BDBDBD;
+  display: block;
+}
+.mfp-loading .mfp-close,
+.mfp-loading figcaption {
+  display: none;
 }
 
 
+
+/* IE7 stuff */
+.mfp-ie7 {
+  .mfp-img-holder figcaption {
+    width: 600px;
+    left: 50%;
+    margin-left: -300px;
+  }
+  .mfp-container {
+    padding: 0;
+  }
+  .mfp-content {
+    padding-top: 44px;
+  }
+  .mfp-close {
+    top: 0;
+    right: 0;
+    padding-top: 0;
+  }
+}
+
+@media all and (max-width: 800px) {
+  .mfp-arrow {
+    -webkit-transform: scale(0.8); 
+    transform: scale(0.8); 
+  }
+  .mfp-arrow-left {
+    -webkit-transform-origin: 0; 
+    transform-origin: 0;
+  }
+  .mfp-arrow-right {
+     -webkit-transform-origin: 100%; 
+    transform-origin: 100%;
+  }
+  // .mfp-container {
+  //   padding: 0;
+  // }
+  // .mfp-image-content {
+  //   position: static;
+  // }
+  // .mfp-img-holder .mfp-close {
+  //   background: #000;
+  //   right: 0;
+  //   top: 0;
+  // }
+  // .mfp-img-holder figcaption {
+  //   background: rgba(0, 0, 0, 0.4);
+  //   text-align: left;
+  //   bottom: 0;
+  //   width: 100%;
+  //   top: auto;
+  //   text-indent: 10px;
+  //   padding: 6px 0;
+  // }
+} 
+
+
+// @media all and (max-width: 1000px) { 
+//   // .mfp-bg {
+//   //   opacity: 1;
+//   // }
+//   .mfp-container {
+//     padding-top: 0;
+//     padding-bottom: 0;
+//   }
+//   .mfp-arrow {
+//     width: auto;
+//     padding: 20px !important;
+//     top: 50%;
+//     margin-top: -25px;
+//   }
+//   .mfp-arrow-right { 
+//     right: 0;
+//     margin-right: 0;
+//   }
+//   .mfp-arrow-left { 
+//     left: 0;
+//     margin-left: 0;
+//   }
+//   .mfp-counter {
+//     top: auto;
+//     left: auto;
+//     right: 15px;
+//     bottom: 10px;
+//     text-align: left;
+//     width: auto;
+
+//   }
+//   .mfp-image-content {
+//     position: static;
+//   }
+  // .mfp-img-holder figcaption {
+  //   background: rgba(0, 0, 0, 0.4);
+  //   text-align: left;
+  //   bottom: 0;
+  //   width: 100%;
+  //   top: auto;
+  //   text-indent: 10px;
+  //   padding: 6px 0;
+  // }
+// }
 
 
 

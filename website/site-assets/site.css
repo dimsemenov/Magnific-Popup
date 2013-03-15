@@ -32,6 +32,16 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   margin-bottom: 5px;
 }
+
+#magnific_popup_documentation {
+text-align: center;
+font-weight: bold;
+font-size: 3.1em;
+line-height: 1em;
+margin-bottom: 1em;
+}
+
+
 h2 {
   font-weight: bold;
 margin-top: 2em;
@@ -141,13 +151,62 @@ h2:target {
   padding-left: .5em;
 }
 
-pre {
-  background: #F7F7F7;
+code {
+  background: #F8F8F8;
+  font-family: Consolas, courier, monospace;
+  padding: .1em .4em;
+  color: #c82829;
   font-size: 13px;
-  padding: 10px 20px;
-  font-family: Monaco;
-  color: #000;
 }
+
+pre {
+  background: none;
+  line-height: 18px;
+  overflow: auto;
+  padding: 20px 25px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  border-radius: 2px;
+}
+pre code {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: #000;
+  font-size: 13px;
+}
+.highlight {
+  position: relative;
+  padding: 0;
+margin-bottom: 0.5em;
+}
+pre code:before {
+background: #E4E4E4;
+display: block;
+position: absolute;
+right: 0;
+top: 6px;
+padding: 3px 7px 0;
+color: #858383;
+font-size: 12px;
+line-height: 13px;
+border-top-left-radius: 2px;
+border-bottom-left-radius: 2px;
+}
+
+
+code.html:before {
+content: 'HTML';
+}
+code.javascript:before {
+content: 'JS';
+}
+code.css:before {
+content: 'CSS';
+}
+
+
+
+
 
 #logo {
   margin-bottom: 2.5em;
@@ -177,10 +236,7 @@ pre {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-.highlight {
-  padding: 0.2em 3em;
-  margin: 1em -3em;
-}
+
 
 .hidden {
   display: none;
@@ -189,6 +245,9 @@ pre {
   background: #FFF;
   padding:  20px 30px;
   text-align: left;
+  max-width: 650px;
+  margin: 40px auto;
+  position: relative;
 }
 .example {
   margin-bottom: 20px;
@@ -242,13 +301,6 @@ pre {
 #logo-status.down {
     opacity: 1;
 }
-#logo-status:after {
-  content: 'find your mood';
-  font-style: italic;
-  font-family: Georgia;
-  color: #999;
-}
-
 
 @media all and (max-width: 30em) {
 
@@ -289,16 +341,6 @@ pre {
     background-color: #F8F8F8;
 }
 
-pre {
-  background: none;
-  font-size: 13px;
-  line-height: 19px;
-  overflow: auto;
-  padding: 6px 10px;
-  border-radius: 3px;
-  font-family: Consolas, "Liberation Mono", Courier, monospace;
-}
-
 
 #superlogo {
   position: relative;
@@ -337,12 +379,10 @@ pre {
   padding: 30px 40px 40px 40px;
   max-width: 500px;
   text-align: left;
-  margin: 20px;
+  margin: 0 auto;
+  position: relative;
 }
-#mfp-build-tool .mfp-close {
-  margin-top: 20px;
-  margin-right: 20px;
-}
+
   #mfp-build-tool h2 {
     margin-top: 0;
     margin-bottom: 0.7em;
