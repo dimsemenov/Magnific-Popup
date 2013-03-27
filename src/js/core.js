@@ -374,7 +374,8 @@ MagnificPopup.prototype = {
 		mfp.bgOverlay.attr('class', 'mfp-bg');
 		mfp.container.attr('class', 'mfp-container');
 
-		if(!mfp.st.closeBtnInside && mfp.templates.closeBtn) {
+		// remove close button from target element
+		if(mfp.st.closeBtnInside && mfp.templates[mfp.currItem.type] === true ) {
 			mfp.templates.closeBtn.detach();
 		}
 
