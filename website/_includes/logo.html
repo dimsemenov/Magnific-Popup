@@ -1,61 +1,75 @@
-<script>
-(function() {
-if(document.addEventListener && document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1") ) {
-      a = document.getElementById("mfp-svg");
-  a.addEventListener("load",function(){
-        var svgDoc = a.contentDocument,
-          el1 = svgDoc.getElementById('logo1').style,
-          el2 = svgDoc.getElementById('logo2').style,
-          el3 = svgDoc.getElementById('logo3').style,
-          pickColor = function() {
-            return '#'+Math.floor(Math.random()*16777215).toString(16); // thx Paul
-          },
-          locked = false,
-          c1,c2,c3,
-          isDown = false,
-          w = window,
-          logoStatus = $('#logo-status'),
-          changeColor = function(e) {
-            if(isDown) {
-              e.preventDefault();
+<script type="text/javascript">
 
+  (function() {
 
-              if(locked) return;
-              locked = true;
-              setTimeout(function() {
-                locked = false;
-              }, 150);
-             
-              c1 = el1.fill = pickColor();
-              c2 = el2.fill = pickColor();
-              c3 = el3.fill = pickColor();
-            }
-          },
-          msPointer = window.navigator.msPointerEnabled,
-          upEvents = msPointer ? 'msPointerUp.s' : 'mouseup.s touchend.s',
-          moveEvents = msPointer ? 'msPointerMove.s' : 'mousemove.s touchmove.s',
-          down = function(e) {
-            logoStatus.addClass('down');
-            e.preventDefault();
-            isDown = true;
-            $(w)
-              .on(upEvents, up)
-              .on(moveEvents, changeColor);
-          },
-          up = function(e) {
-            logoStatus.removeClass('down');
-            e.preventDefault();
-            isDown = false;
-            $(w).off(moveEvents + ' ' + upEvents);
-            if(window.localStorage!==undefined){
-                localStorage.setItem("colors", c1+','+c2+','+c3);
-            }
-          },
-          overlay = document.getElementById('logo-overlay');
+    var canvas = document.getElementById('broken-glass'),
+        context = canvas.getContext('2d'),
+        width = canvas.width = Math.min(800, window.innerWidth),
+        height = canvas.height,  
+        numTriangles = 100,
+        rand = function(min, max){
+          return Math.floor( (Math.random() * (max - min + 1) ) + min);
+        };
+        
+    window.drawTriangles = function(){
+      canvas.style.cssText = 'display:none';
 
-      overlay.style.cursor = 'move';
-      $(overlay).on(msPointer ? 'msPointerDown.s'  : 'mousedown.s touchstart.s', down);
-  },false);
-}
-})();
+      context.clearRect(0, 0, width, height);
+
+      var hue = rand(0,360);
+      var increment = 80 / numTriangles;
+
+      for(var i = 0; i < numTriangles; i++) { 
+          context.beginPath();      
+          context.moveTo(rand(0,width), rand(0,height) );  
+          context.lineTo(rand(0,width), rand(0,height) );
+          context.lineTo(rand(0,width), rand(0,height) );
+          context.globalAlpha = 0.5;
+          context.fillStyle = 'hsl('+Math.round(hue)+', '+rand(15,60)+'%, '+ rand(10, 60) +'%)';      
+          context.closePath();    
+          context.fill();
+
+          hue+=increment;
+          if(hue > 360) hue = 0;
+      }
+
+      // var imageData = context.getImageData(0, 0, width, height);
+      // var pixels = imageData.data;
+
+      // // Apply random pixels
+      // var contrast = -50;
+      // for (var i = 0, il = pixels.length; i < il; i += 4) {
+        
+      //   var average = Math.round( ( pixels[i] + pixels[i+1] + pixels[i+2] ) / 3 );
+      //   if (average > 127){
+      //     pixels[i] += ( pixels[i]/average ) * contrast;
+      //     pixels[i+1] += ( pixels[i+1]/average ) * contrast;
+      //     pixels[i+2] += ( pixels[i+2]/average ) * contrast;
+      //   } else {
+      //     pixels[i] -= ( pixels[i]/average ) * contrast;
+      //     pixels[i+1] -= ( pixels[i+1]/average ) * contrast;
+      //     pixels[i+2] -= ( pixels[i+2]/average ) * contrast;
+      //   }
+      // }
+
+      // context.putImageData(imageData, 0, 0);
+      canvas.style.cssText = '-webkit-filter: contrast(110%);';
+
+    };
+
+    drawTriangles();
+
+    $(document).ready(function($) {
+      var alpha = 0.6;
+      var imageData = context.getImageData(0, 0, width, height);
+      var pixels = imageData.data;
+
+      // $('#tweet-link').mouseover(function() {
+      //  drawTriangles();
+      // });
+      $('#logo').click(function(e) {
+       drawTriangles();
+      });
+    });
+  })();
 </script>

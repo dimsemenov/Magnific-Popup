@@ -12,34 +12,54 @@
     <link rel="canonical" href="http://dimsemenov.com/plugins/magnific-popup/" />
 
     {% if site.url == 'local' %}
-      <link href="site-assets/site.css?v=0.0.7" rel="stylesheet" />
-      <link href="dist/magnific-popup.css?v=0.0.7" rel="stylesheet" />
+      <link href="site-assets/site.css?v=0.0.8" rel="stylesheet" />
+      <link href="dist/magnific-popup.css?v=0.0.8" rel="stylesheet" />
 
       <!-- <script  src="third-party-libs/jquery.min.js"></script> -->
-      <!-- <script  src="magnific-popup/zepto.js"></script>-->
+      <!-- <script  src="third-party-libs/zepto.js"></script> -->
 
       <script  src="third-party-libs/jquery.js"></script>
-      <script src="dist/jquery.magnific-popup.js?v=0.0.7"></script>
+      <script src="dist/jquery.magnific-popup.js?v=0.0.8"></script>
+
+      <script type="text/javascript">
+      WebFontConfig = { fontdeck: { id: '30976' } };
+
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+      </script>
+
     {% else %}
-      <link href="site-assets/all.min.css?v=0.0.7" rel="stylesheet" />
+      <link href="site-assets/all.min.css?v=0.0.8" rel="stylesheet" />
       <script  src="third-party-libs/jquery.min.js"></script>
-      <script src="dist/jquery.magnific-popup.min.js?v=0.0.7"></script>
+      <script src="dist/jquery.magnific-popup.min.js?v=0.0.8"></script>
     {% endif %}
   </head>
   <body>
-    {% if site.url == 'local' %}
-      <strong style="display:block; width:100%;text-align:center;">This page is just for tests and should not be used for production!</strong>
-    {% endif %}
+    
   <div id="main-wrapper">
+
+    
 
     {{ content | markdown }}
 
     <div id="footer">
       Created by <a href="http://dimsemenov.com" rel="author">Dmitry Semenov</a>. Photography in demo by <a href="http://www.squiver.com">Marsel Van Oosten</a>
     </div>
+
   </div>
 {{page.footer}}
 {% include analytics.html %}
 {% include build-tool.html %}
   </body>
 </html>
+
+{% if site.url == 'local' %}
+      <strong style="display:block; width:100%;text-align:center;">This page is just for tests and should not be used for production!</strong>
+    {% endif %}

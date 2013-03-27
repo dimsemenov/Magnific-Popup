@@ -2,41 +2,19 @@
 layout: default
 title: Magnific Popup&#58; Responsive jQuery Lightbox Plugin
 description: Light and open source conditional lightbox with focus on performance and user experience, for jQuery and Zepto.js.
-
 ---
 
-<div id="superlogo">
-<object id="mfp-svg" data="site-assets/img/l.svg" type="image/svg+xml">Magnific Popup</object>
-<div id="logo-overlay"></div>
-<div id="logo-status"></div>
+<div id="logo">
+  <canvas id="broken-glass"></canvas>
+  <h1>Magnific Popup</h1>
 </div>
-
 {% include logo.html %}
-
-<!-- <h3>Want to help?</h3>
-<div>If you like this script and wish it to be always up to date, please spread the word share it with your collegues.</div>
-<div>Improve script via GitHub, any optimization even the tiniest one is very welcome.</div> -->
-
-<div style="padding: 25px; background: #FFE7E7; margin-bottom: 20px;">
-  <p><strong>Warning!</strong> Plugin is in very-very early beta, for now please do not use it in live projects and wait until I completely finish it. In about a week, it should be fully ready. Follow me on <a href="http://twitter.com/dimsemenov">Twitter</a> to get notified.</p>
-<p>Want to help?</p>
-<ul>
-  <li>Suggest a feature or an improvement of overall user experience via Twitter to <a href="http://twitter.com/dimsemenov">@dimsemenov</a> or just <a href="http://dimsemenov.com">email me</a>.</li>
-  <li>After full release, you'll be able to contribute to code or documentation.</li>
-</ul>
+<div>
+  <h2 class="intro">Magnific Popup is an open source responsive jQuery lightbox plugin that is focused on performance and providing best experience for user with any device (Zepto.js compatible).</h2>
+  <div id="header-links">
+    <a href="documentation.html">Plugin documentation</a> &middot; <a href="https://twitter.com/dimsemenov">via @dimsemenov</a><!-- &middot; <a href="https://github.com/dimsemenov/Magnific-Popup">star on GitHub</a> &middot; <a id="tweet-link" href="http://twitter.com/share?url=http://dimsemenov.com/plugins/magnific-popup/&text=Magnific Popup: responsive lightbox plugin&via=dimsemenov" class="tweet-link" rel="nofollow">tweet!</a> -->
+  </div>
 </div>
-
-
-<p>Magnific Popup is a responsive jQuery lightbox plugin that is focused on performance and providing best experience for users with any device and works with jQuery.</p>
-
-
-
-<ul>
-<li>Read the <a href="documentation.html">documentation</a></li>
-<li><a href="#mfp-build-tool" class="mfp-inline mfp-build-tool-link">Configure &amp; download build</a></li>
-<li>Contribute to <a href="https://github.com/dimsemenov/Magnific-Popup">project on Github</a></li>
-<!-- <li>WordPress vesion is under development, <a href="http://dimsemenov.com/subscribe.html">get notified</a>.</li> -->
-</ul>
 
 
 <h2>What makes it different?</h2>
@@ -44,83 +22,58 @@ description: Light and open source conditional lightbox with focus on performanc
 
   <div class="gc3">
     <h3>Light and modular</h3>
-    <p>Plugin is modular - you can include in build only features that you neeed using <a href="#mfp-build-tool" class="mfp-build-tool-link">online build tool</a> or by compiling it by yourself with Grunt.js. Size of core JS file: <strong>2.8KB gzipped</strong> + each module weights about 0.5KB. <strong>Sass</strong> CSS preprocessor is used for easier skinning, but you're not obligated to use it.</p>
+    <p>You can include in build only features that you need using <a href="#mfp-build-tool" class="mfp-build-tool-link popup-link">online build tool</a> or by compiling it by yourself with Grunt.js. Size of core JS file is 2.8KB + each module weights about 0.5KB (gzipped). Sass CSS preprocessor is used for easier skinning, but you're not obligated to use it.</p>
   </div>
 
   <div class="gc3">
     <h3>Content is resized mostly with CSS</h3>
-    <p>Majority of lightbox plugins require you to define size of it via JS option. Magnific Popup does not -  feel free to use relative units like EM's or resize lightbox with help of CSS media queries.<br/>Update content inside lightbox without worrying about how it'll resize and center.</p>
+    <p>The majority of lightbox plugins require you to define size of it via JS option. Magnific Popup does not -  feel free to use relative units like EM's or resize lightbox with help of CSS media queries. Update content inside lightbox without worrying about how it'll resize and center.</p>
   </div>
 
   <div class="gc3">
     <h3>Fast</h3>
-    <p>Magnific Popup displays images before they're completely loaded to take full advantage of stuff like progressive JPEG's.<br/>Plugin does not use slow jQuery animations, and provides an easy way to add CSS3 transitions.</p>
+    <p>Magnific Popup displays images before they're completely loaded to take full advantage of progressive loading. For in and out animations CSS3 transitions are used instead of slow jQuery animations.</p>
+  </div>
+  <div class="gc3">
+    <h3>No external graphics</h3>
+    <p>By default controls are made just with pure CSS, which makes them not just light, but also high-dpi screen (retina) ready. Surely, you can style everything by yourself however you wish.</p>
   </div>
   <div class="gc3">
     <h3>Conditional lightbox technique</h3>
     <p>Plugin has an option to automatically switch to alternative mobile-friendly source on small screen sizes. Brad Frost has a <a href="http://bradfrostweb.com/blog/post/conditional-lightbox/">terrific article</a> about this technique.</p>
   </div>
   <div class="gc3">
-    <h3>No external controls</h3>
-    <p>By default controls are made just with help of CSS, without external graphics, which makes them not just light, but also high-dpi screen (<strong>retina</strong>) ready, and of course you can style them by yourself however you wish.</p>
-  </div>
-  <div class="gc3">
-    <h3>API + documentation</h3>
-    <p>Tons of options to configure anything, public methods, events, ability to extend any function without modifying the core and other awesome stuff that you like.</p>
-  </div>
-  <div class="gc3">
-    <h3>Full control over layout</h3>
-    <p>Close button can be positioned inside or outside of the popup, arrows can be on sides or paired on top, you change appearance of the scrollbar.</p>
-  </div>
-  <div class="gc3">
     <h3>Memory management</h3>
-    <p>Popup has an extendable micro templating engine that reuses existing DOM elements to avoid filling the memory, which is especially useful for gallery mode.</p>
+    <p>Popup has an extendable micro templating engine that reuses existing DOM elements, which is expecially useful when you have same pattern for each popup.</p>
   </div>
 </div><br/>
-<p id="conditional-lightbox-notice"><strong>Your screen size is small and lightbox disabled!</strong> Images, videos and maps now just open direct link to their sources.</p>
+
+<h3 style="color:#C00; text-align:center;">Warning! Plugin is in early beta, please don't use it in live projects and wait until I finish it. Please send your suggestions about it via Twitter to <a href="http://twitter.com/dimsemenov">@dimsemenov</a>.</h3>
+
+
+<!-- <p id="conditional-lightbox-notice"><strong>Your screen size is small and lightbox disabled!</strong> Images, videos and maps now just open direct link to their sources.</p> -->
 {% include examples.html %}
 
-<h2>Browser support</h2>
-<p>IE support is under development. Plugins works and tested on modern browsers, iOS, Android, Blackberry. If you found that on some device it works incorrectly, please open issue on GitHub.</p>
-
-<h2>Updates</h2>
-<p>If you wish to get notified about important plugin updates, you may follow <a href="http://twitter.com/dimsemenov">me on Twitter</a>, or join my tiny Mailchimp <a href="http://dimsemenov.com/subscribe.html">email newsletter</a>. </p>
 
 <h2 id="license">License</h2>
-<p>Script is MIT licensed and free and will always be kept this way.  But has a small restriction from me - <em>Please do not create public WordPress plugin based on it,  because I will create it =).</em>.<br/>Attribution is not required, but linking back to this page is much appreciated, especially if you use it in theme.
+<p>Script is available under MIT license. But please do me a favor and do not create public WordPress plugin based on it,  because I will make it soon (<a href="http://dimsemenov.com/subscribe.html">want to get notified?</a>).
 </p>
 
-<h2>Support, bug reporting, feature requests</h2>
-<ul>
-  <li>If you've found a bug or want to see some new feature please <a href="https://github.com/dimsemenov/Magnific-Popup/issues">open issue on GitHub</a>.</li>
-  <li>If you have general question about how to implement something with plugin, ask your question on StackOverflow tagged with <code>magnific-popup</code>.</li>
-</ul>
-
 <h2>Contributors</h2>
-<p>To get your name with link to your site listed here contribute to Magnific Popup on GitHub:</p>
+To get in here contribute to Magnific Popup script or just improve this site on <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub</a>. Even tiniest optimizations are very welcome.
+
+Special thanks to:
+
 <ul>
-  <li>Improve speed of some action.</li>
-  <li>Fix bug.</li>
-  <li>Write useful module.</li>
-  <li>Contribute to documentation or add example.</li>
-</ul>
-<p><em>Noone is here yet, just <a href="http://twitter.com/dimsemenov">me</a></em>.</p>
-
-<h2>My TODO list</h2>
-<ul>
-  <li>Add low IE support.</li>
-  <li><strike>Add basic swipe support for tablets.</strike></li>
-  <li><strike>Fix positioning of fixed element on mobile webkit.</strike></li>
-  <li><strike>Add support for CSS3 animation</strike></li>
-  <li><strike>Make close button.</strike></li>
-  <li>Write extensive docs and add more examples.</li>
-  <li>Improve touch nav.</li>
-  <li>Make public static API.</li>
-  <li><strike>Add built-in Ajax support.</strike></li>
-  <li><strike>Implement preloading of nearby items in the gallery.</strike></li>
-  <li><strike>Build an online tool that can pack all modules in one JS file.</strike></li>
-  <li><strike>Implement parser for YouTube, Vimeo and gMap URLs.</strike></li>
-  <li><strike>Make iframes responsive.</strike></li>
-</ul>
+  <li><a href="https://twitter.com/lokeshdhakar">Lokesh Dhakar</a> for creating original Lightbox script.</li>
+  <li><a href="https://twitter.com/chriscoyier">Chris Coyier</a> for awesome CSS techniques.</li>
+  <li><a href="https://twitter.com/chriscoyier">Brad Frost</a> for conditional lightbox technique.</li>
+</uL>
 
 
+<h2>Updates</h2>
+<p>If you wish to get notified about important plugin updates, you may follow <a href="http://twitter.com/dimsemenov">me on Twitter</a>, or join my tiny Mailchimp <a href="http://dimsemenov.com/subscribe.html">email newsletter</a>.</p>
+
+<!-- <h3>Want to help?</h3>
+<div>If you like this script and wish it to be always up to date, please spread the word share it with your collegues.</div>
+<div>Improve script via GitHub, any optimization even the tiniest one is very welcome.</div> -->

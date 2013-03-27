@@ -4,7 +4,7 @@ var IFRAME_NS = 'iframe';
 $.magnificPopup.registerModule(IFRAME_NS, {
 
 	options: {
-		markup: '<div class="mfp-iframe-scaler">%close%<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe></div>',
+		markup: '<div class="mfp-iframe-scaler"><div class="mfp-close"></div><iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe></div>',
 
 		// we don't care and support only one default type of URL for each service. Without slow regexps
 		patterns: {
@@ -36,17 +36,17 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 			mfp.types.push(IFRAME_NS);
 			
 			_mfpOn(CLOSE_EVENT + '.' + IFRAME_NS, function() {
-				if(mfp.isIE7 && mfp.currItem.type === 'iframe') {
+				if(mfp.isIE7 && mfp.currItem.type === IFRAME_NS) {
 					// ie black screen bug fix
 					var el = mfp.content.find('iframe');
 					if(el.length) {
-						el.hide();
+						el.css('display', 'none');
 					}
 				}
 			});
 		},
 
-		getIframe: function(item) {
+		getIframe: function(item, template) {
 			var embedSrc = item.src;
 				
 			$.each(mfp.st.iframe.patterns, function() {
@@ -59,19 +59,15 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 						}
 					}
 					embedSrc = this.src.replace('%id%', embedSrc );
-					return false; //break
+					return false; // break;
 				}
 			});
-
-			var iframeObj = mfp.templates['iframe'];
-			var iframeEl = iframeObj.find('.mfp-iframe')[0];
-			if(iframeEl.src !== embedSrc) {
-				iframeEl.src = embedSrc;
-			}
 			
-			mfp._parseMarkup(iframeObj, {}, item);
+			mfp._parseMarkup(template, {
+				iframe_src: embedSrc
+			}, item);
 
-			return iframeObj;
+			return template;
 		}
 	}
 });

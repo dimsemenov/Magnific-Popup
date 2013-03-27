@@ -1,6 +1,6 @@
 <!-- Basic idea of such build tool is stolen from modernizr.com -->
-<div id="mfp-build-tool" class="hidden">
-  <h2>Magnific Popup v0.0.7 Buld Tool</h2>
+<div id="mfp-build-tool" class="mfp-hide">
+  <h2>Magnific Popup v0.0.8 Buld Tool</h2>
   <form id="mfp-build-form">
     <p class="help-block">Simply select what you need to include and click 'generate build' button, you'll generate optimized version of main JS file (`jquery.magnific-popup.js`).</p>
      <label class="checkbox">
@@ -31,10 +31,12 @@
   <p id="mfp-build-status" style="display:none"></p>
   <br/>
   <textarea id="mfp-build-tool-out" style="width: 100%; height: 300px; display:none;"></textarea>
-	
 </div>
+
+
+
 <script type="text/javascript">
-	jQuery(document).ready(function($) {
+	$(document).ready(function($) {
 		
 		$('.mfp-build-tool-link').magnificPopup({alignTop:true, closeBtnInside:true, type:'inline', midClick: true});
 
@@ -118,6 +120,177 @@
 				setStatus("Error: Build tool wasn't able to GET js file. Please try again or make file by yourself using Grunt.", 'error');
 			});
 	    });
+
+
+
+
+		/**
+		 * Popup with source code for each example
+		 */
+		var example,
+		      getCode,
+		      CSS,
+		      JS,
+		      HTML,
+		      highlighterLoaded;
+
+		  var formatCode = function (str) {
+		      if(str) {
+		        // replace special chars
+		        str = str.replace(/[&<>"']/g, function($0) {
+		            return "&" + {"&":"amp", "<":"lt", ">":"gt", '"':"quot", "'":"#39"}[$0] + ";";
+		        });
+		        
+		        // remove spaces from each line based on spaces on first line
+		        var firstLineLength = str.match(/^(\s*)/)[1].length;
+		        var regExp = new RegExp('^ {' + (firstLineLength-1) + '}', "gm");
+		        str = str.replace(regExp, '');
+
+		        // replace spaces with tabs
+		        str = str.replace(/  /g,'\t');
+
+		        str = $.trim(str);
+		      }
+		      return str;
+		    };
+
+		  var highlight = function() {
+		    hljs.highlightBlock(JS.find('code')[0]);
+
+		    if(CSS)
+		      hljs.highlightBlock(CSS.find('code')[0]);
+
+		    if(HTML)
+		      hljs.highlightBlock(HTML.find('code')[0]);
+		  };
+
+		  $('.example').each(function() {
+		    getCode = $(this).find('h3').click(function() {
+		      var example = $(this).parent('.example');
+		      var getCodeWindow = $('<div class="get-code-window"><h1>'+example.find('h3').text()+'</h1></div>');
+		      JS = $('<div class="highlight"><pre><code class="javascript">'+formatCode(example.find('script').html())+'</code></pre></div>');
+
+		      CSS = example.find('style');
+		      if(CSS.length) {
+		        CSS = $('<div class="highlight"><pre><code class="css">'+formatCode(CSS.html())+'</code></pre></div>');
+		      } else {
+		        CSS = '';
+		      }
+
+		      HTML = example.find('.html-code');
+		      if(HTML.length) {
+		        HTML = $('<div class="highlight"><pre><code class="xml html">'+formatCode(HTML.html())+'</code></pre></div>');
+		      } else {
+		        HTML = '';
+		      }
+
+		      if(!highlighterLoaded) {
+		        highlighterLoaded = true;
+		         var script = document.createElement("script"),
+		              $script = $(script);
+		              script.src = 'http://yandex.st/highlightjs/7.3/highlight.min.js';
+		        if(jQuery) {
+		        	$.getScript(script.src , function() {
+		        		highlight();
+		        	});
+		        } else {
+		        	$(script).appendTo("head").on("load", function() {
+			          highlight();
+			        });
+		        }
+		        
+		      } else {
+		        highlight();
+		      }
+
+		      getCodeWindow.append(JS);
+		      getCodeWindow.append(HTML);
+		      getCodeWindow.append(CSS);
+
+		      getCodeWindow.append('<p>Code above is dynamically generated directly from the source of this example.<br/>Please read <a href="documentation.html">the documentation</a> before using it.</p>');
+
+		      $.magnificPopup.open({
+		        src: getCodeWindow
+		      }, {
+		        type: 'inline'
+		      });
+
+
+		      // $.magnificPopup.open(
+		      //   [
+		      //     {
+		      //       src: "site-assets/img/p1/1.jpg"
+		      //     },
+		      //     {
+		      //       src: "site-assets/img/p1/2.jpg"
+		      //     },
+		      //     {
+		      //       src: "site-assets/img/p1/3.jpg"
+		      //     }
+		      // ], {
+		      //   type: 'image'
+		      // });
+
+
+
+
+
+
+		      // FROM INLINE ELEMENT
+		      // .my-popup {
+		      //   background: white;
+		      //   max-width: 400px;
+		      //   width: 100%;
+		      //   margin: 0 auto;
+		      //   text-align: center;
+		      //   padding: 50px;
+		      //   position: relative;
+		      // }
+
+		      // $.magnificPopup.open({
+		      //   src: $('<div class="my-popup">Hello World!</div>'),
+		      //   type: 'inline'
+		      // }, {
+		      //   closeBtnInside: true
+		      // });
+
+
+
+		      // WORKS, GALLERY
+		      // $.magnificPopup.open(
+		      // [
+		      //   {
+		      //     src: "http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_b.jpg"
+		      //   },
+		      //   {
+		      //     src: "http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_s.jpg"
+		      //   },
+		      //   {
+		      //     src: "http://www.youtube.com/watch?v=7HKoqNJtMTQ",
+		      //     type: 'iframe'
+		      //   }
+		      // ], {
+		      //   type: 'image',
+		      //   closeBtnInside: false,
+		      //   gallery: {
+		      //     enabled: true
+		      //   }
+		      // });
+
+
+		      // WORKS IFRAME
+		      // $.magnificPopup.open({
+		      //   src: "http://www.youtube.com/watch?v=7HKoqNJtMTQ",
+		      //   type: 'iframe'
+		      // }, {
+		      //   closeBtnInside: false
+		      // });
+
+
+
+		    });
+
+		  });
 
 
 	});

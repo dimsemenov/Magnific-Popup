@@ -1,10 +1,10 @@
-// Local folks
 var _imgInterval;
 
 $.magnificPopup.registerModule('image', {
 
 	options: {
-		markup: '<figure class="mfp-img-holder">%close%<div class="mfp-img"></div><figcaption class="mfp-title">%title%<span class="mfp-counter"></span></figcaption></figure>',
+		markup: '<figure class="mfp-figure"><div class="mfp-close"></div><div class="mfp-img"></div><figcaption class="mfp-title">%title%<span class="mfp-counter"></span></figcaption></figure>',
+
 		cursor: 'mfp-zoom-out-cur',
 		titleSrc: 'title', 
 
@@ -16,47 +16,37 @@ $.magnificPopup.registerModule('image', {
 	},
 
 
-
-
 	proto: {
 		initImage: function() {
-			mfp.types.push('image');
-
-			var zoomOutCur = mfp.st.image.cursor,
+			var imgSt = mfp.st.image,
 				ns = '.image';
 
-			//mfp._imgVerticalGap = 0;
+			mfp.types.push('image');
 
-			// _mfpOn('ContentParse'+ns, function(e, item) {
-			// 	if(item.type === 'image'){
-					
-			// 		mfp.parseImage(item);
-			// 	}	
-			// });
+			if(!imgSt.verticalFit)
+				_wrapClasses += ' mfp-img-no-vertical-fit';
+
+			
 
 			_mfpOn(OPEN_EVENT+ns, function() {
-				if(mfp.currItem.type === 'image' && mfp.st.image.cursor) {
-					_body.addClass(mfp.st.image.cursor);
+				if(mfp.currItem.type === 'image' && imgSt.cursor) {
+					_body.addClass(imgSt.cursor);
 				}
 			});
 
 			_mfpOn(CLOSE_EVENT+ns, function() {
-				if(zoomOutCur) {
-					_body.removeClass(zoomOutCur);
+				if(imgSt.cursor) {
+					_body.removeClass(imgSt.cursor);
 				}
 				_window.off('resize' + EVENT_NS);
 			});
 
 			_mfpOn(OPEN_EVENT+ns, function() {
-				//setTimeout(function() {
-					mfp.resizeImage();
-				//}, 100);
+				mfp.resizeImage();
 			});
-
 
 			var onWindowResize = function(force, winHeight, winWidth) {
 				mfp.wH = winHeight || _window.height();
-			
 
 				// we resize popup only when height changes
 				if(force || mfp.prevHeight !== mfp.wH) {
@@ -69,9 +59,9 @@ $.magnificPopup.registerModule('image', {
 				_window.on('resize' + EVENT_NS,onWindowResize);
 			});
 
-			_mfpOn(BEFORE_APPEND_EVENT+ns, function() {
-				//mfp.resizeImage();
-			});
+			// _mfpOn(BEFORE_APPEND_EVENT+ns, function() {
+			// 	//mfp.resizeImage();
+			// });
 			
 		},
 		resizeImage: function() {
@@ -80,7 +70,6 @@ $.magnificPopup.registerModule('image', {
 			if(mfp.st.image.verticalFit) {
 				item.img.css('max-height', (mfp.wH - mfp.st.image.verticalGap) + 'px');
 			}
-			
 		},
 		_onImageHasSize: function(item) {
 			if(item.img) {
@@ -105,8 +94,6 @@ $.magnificPopup.registerModule('image', {
 		 * Function that loops until image has size to display elements that rely on it asap
 		 */
 		findImageSize: function(item) {
-			
-				
 			var counter = 0,
 				mfpSetInterval = function(delay) {
 					if(_imgInterval) {
@@ -124,7 +111,6 @@ $.magnificPopup.registerModule('image', {
 							clearInterval(_imgInterval);
 						}
 
-
 						counter++;
 						if(counter === 3) {
 							mfpSetInterval(10);
@@ -139,9 +125,8 @@ $.magnificPopup.registerModule('image', {
 				};
 			mfpSetInterval(1);
 		},
-		getImage: function(item) {
 
-			
+		getImage: function(item, template) {
 
 			var guard = 0,
 
@@ -210,10 +195,9 @@ $.magnificPopup.registerModule('image', {
 				}
 			}
 			
-			var imageObj = mfp.templates['image'];
-			mfp._parseMarkup(imageObj, {
+			mfp._parseMarkup(template, {
 				title: title,
-				replace_img: item.img || '<img src="'+item.src+'" class="mfp-img" />'
+				img_replaceWith: item.img || '<img src="'+item.src+'" class="mfp-img" />'
 			}, item);
 
 
@@ -222,42 +206,34 @@ $.magnificPopup.registerModule('image', {
 			if(item.hasSize) {
 				if(_imgInterval) clearInterval(_imgInterval);
 
-
 				if(item.loadError) {
-					imageObj.addClass('mfp-loading');
-					mfp.updateStatus('error', imgSt.tError.replace('%url%', item.src) );
+					template.addClass('mfp-loading');
+					mfp.updateStatus(ERROR_STATUS, imgSt.tError.replace('%url%', item.src) );
 				} else {
-					imageObj.removeClass('mfp-loading');
-					mfp.updateStatus('ready');
+					template.removeClass('mfp-loading');
+					mfp.updateStatus(READY_STATUS);
 				}
 
-				return imageObj;
+				return template;
 			}
-		
 
-			mfp.updateStatus('loading');
+			mfp.updateStatus(LOADING_STATUS);
 
-			item.img = ( imageObj.is('img') ? imageObj : imageObj.find('.mfp-img') )
+			item.img = ( template.is('img') ? template : template.find('.mfp-img') )
 					.on('error.mfploader', onError).on('load.mfploader', onLoadComplete);
-
 
 			item.loading = true;
 			
 
 			if(!item.hasSize) {
 				item.imgHidden = true;
-				imageObj.addClass('mfp-loading');
+				template.addClass('mfp-loading');
 				mfp.findImageSize(item);
 			} else {
-				//if(item.imgHidden) {
-				
-				
 
-				//}
 			}
 
-			return imageObj;
-
+			return template;
 		}
 
 		

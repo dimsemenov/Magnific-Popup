@@ -4,17 +4,51 @@ title: Magnific Popup Documentation
 description: The complete guide on how to use Magnific Popup.
 ---
 
-# Magnific Popup Documentation
+# &nbsp;
 
-<div style="padding: 25px; background: #FFE7E7; margin-bottom: 20px;">
-  <strong>Warning!</strong> This documentation page is currently under development, please wait until I finish it.
+<div id="documentation-intro">
+  <h1><a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a> Documentation</h1>
+  <p><a href="">Project on Github</a> &middot; <a href="#mfp-build-tool" class="mfp-build-tool-link">Build tool</a> &middot; <a href="http://twitter.com/dimsemenov">Twitter of developer</a> &middot; <a href="http://dimsemenov.com/subscribe.html">Newsletter of developer</a></p>
 </div>
+<style>
+#documentation-intro {
+  background: #2b2b2b;
+  text-align: center;
+  padding: 3em;
+  width: 100%;
+  margin-left: -3em;
+  margin-bottom: 3em;
+}
+#documentation-intro h1 {
+  color: #FFF;
+  width: 100%;
+  text-align: center;
+  font-size: 44px;
+  line-height: 1.1em;
+}
+#id1 {
+  display: none;
+}
+#main-wrapper {
+  background: #FFF;
+}
+#documentation-intro h1 a {
+  text-decoration: none;
+  color: #FFF;
+}
+#documentation-intro p a {
+  font-size: 15px;
+  color: #7CB5FF;
+}
+#documentation-intro a:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+</style>
 
-Here you can find guide about how to use Magnific Popup. I've tried to make it useful both for experienced developers and for newbies. If you've found any mistake or type in documentation (or this site) or you know how to improve something, simply submit <a href="">commit to documentation.md on GitHub</a>.
+<h3 style="color:#C00; text-align:center;">Warning! Plugin is in early beta and this documentation is not finished yet. Please send your suggestions about it via Twitter to <a href="http://twitter.com/dimsemenov">@dimsemenov</a>.</h3>
 
-<ul>
-  <li>Edit documentation.md on GitHub (this page).</li>
-</ul>
+Here you can find guide about how to use Magnific Popup. If you've found any mistake in this site or you know how to improve something, simply submit <a href="">commit on GitHub</a>.
 
 * This will become a table of contents (this text will be scraped).
 {:toc}
@@ -25,26 +59,28 @@ Here you can find guide about how to use Magnific Popup. I've tried to make it u
 <!-- Magnific Popup core CSS file -->
 <link rel="stylesheet" href="magnific-popup/magnific-popup.css"> 
 
-<!-- jQuery 1.7.2+ -->
-<script src="magnific-popup/jquery-1.9.0.min.js"></script> 
+<!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
 
 <!-- Magnific Popup core JS file -->
 <script src="magnific-popup/jquery.magnific-popup.js"></script> 
 {% endhighlight %}
     
-It's recommended to put CSS files in `<head>`. JavaScript files and initialization code - in footer of your site (before closing `</body>` tag).<br/> If you already have jQuery.js on your site - don't include it second time, or use jQuery.noConflict(); mode.
+It's not required, but recommended to put CSS files in `<head>`. JavaScript files and initialization code - in footer of your site (before closing `</body>` tag).<br/> If you already have `jquery.js` on your site - don't include it second time, or use `jQuery.noConflict();` mode.
 
 
 
 ## Initializing popup
 
-Popup initialization code should be executed inside document ready, for example:
+Popup initialization code should be executed after document ready, for example:
 {% highlight javascript %}
-jQuery(document).ready(function($) {
+$(document).ready(function() {
   // initialization code
   $('.image-link').magnificPopup();
 });
 {% endhighlight %}
+
+Basically all this function does is binds click event to the element.
 
 There are three ways to initialize popup:
 
@@ -65,7 +101,7 @@ $('.your-popup-link').magnificPopup({
     
 
 ### 2. From a group of elements with one parent
-Same as first one, but use this method if you are creating popup from list of elements in one container. Note that this method does not enable gallery, it just reduces number of event handlers, and each item will be opened as a single popup. If you wish to enable gallery add `gallery:true` option.
+Same as first one, but use this method if you are creating popup from list of elements in one container. Note that this method does not enable gallery, it just reduces number of event handlers, and each item will be opened as a single popup. If you wish to enable gallery add `gallery:{enabled:true}` option.
 
 {% highlight html %}
 <div class="parent-container">
@@ -97,31 +133,160 @@ $('#some-button').click(function() {
 
 
 
-      
+## Image Type
+
+To
+
+## Video Type
+
+## Inline Type
+
+Example of popup:
+
+<div class="your-popup mfp-hide">
+  Popup content
+</div>
+
+$('.your-popup').magnificPopup({type:'inline'});
+
+.your-popup {
+  background: #FFF;
+  padding: 20px;
+  width:100%;
+  max-width: 500px;
+}
+
+Class `mfp-hide` must be present on inline element to make it hidden, it's toggled when popup is displayed.
+Class `mfp-hide` is toggled on target inline element.
+
+
+
+
+## Ajax Type      
+
+
+## Gallery
+
+Basically all galery module does is allows you to switch content of popup and adds navigation arrows. It can switch and mix any types of content, not just images. 
+
+### Lazy-loading
+
+Lazy-loading option preloads nearby items. It accepts array with two integers as a parameter, first one - is a number of items to preload before the current, second one - the number of images to preload after current. For example `preload: [1,3]` will load 3 next items and 1 that is before current. These values are automatically switched based on direction of movement. 
+
+Option can be changed dynamically.
+
+By default all what it does is just searches for an image tag and preloads it with JavaScript. But you can extend it and do your custom preloading logic with help of `lazyLoad` event, like so:
+
+{% highlight javascript %}
+callbacks: {
+  lazyLoad: function(item) {
+    console.log(item); // Magnific Popup data object that should be loaded
+  }
+}
+{% endhighlight %}
 
 
 
 ## Options
 
-Name | Default | Description
---- | --- | ---
-disableOn | 0 | If window width is less then number in this option - lightbox will not be opened and default behavior of element will be triggered. Option can also accept Function as a parameter, which should return `true` if lightbox can be opened and `false` otherwise. Set to `0` to disable behavior.
-midClick | false | Open lightbox if user clicks on middle mouse button.
-mainClass | null | String that contains classes that will be added to root element of popup wrapper and to dark overlay. For example `myClass`, or `myClassOne myClasTwo`.
-minHeight | 400 | Scrollbar will appear if height of window is less than number in this option.
-preloader | true | Enables preloader (Loading... text in the middle of the screen). Otion is always `false` for inline type of popup.
-focusInput | false | Puts tab focus to the first input in popup (after it's displayed and/or loaded). If set to false - it'll just set focus to popup root element.
-closeOnContentClick | false | Close popup if user clicks on content of it. It's recommended to enable this option when you have only one image in popup.
-closeBtnInside | false | If enabled, Magnific Popup will put close button inside content of popup, wrapper will get class `mfp-close-btn-in` which will make button inside dark (by default).
-overlay | true | Dark overlay behind the popup
-removalDelay | 0 | Used for animation. Removal of popup will be delayed by value in the field.
-alignTop | false | Aligns popup to top, otherwise to center. If you expect larger popup to appear it's recommended to enable this option.
-tClose | 'Close (Esc)' | Title of close button
-tLoading | 'Loading...' | Preloader text
-closeMarkup | `<button title="%title%" class="mfp-close"><i class="mfp-close-icn">&times;</i></button>` | Markup of close button. %title% will be replaced with option `tClose`.
+
+### disableOn *0* 
+If window width is less then number in this option - lightbox will not be opened and default behavior of element will be triggered. Set to `0` to disable behavior. Option works only when you initialize Magnific Popup from DOM element.
+
+Can also accept Function as a parameter, which should return `true` if lightbox can be opened and `false` otherwise. For example: 
+
+{% highlight javascript %}
+disableOn: function() {
+  if( $(window).width() < 600 ) {
+    return false;
+  } 
+  return true;
+}
+{% endhighlight %}
 
 
-## CSS animations
+### key *null*
+
+Key defines unique identifier of the group of popups. The parameter is optional and is used to cache templates, if you won't define it - it'll be generated automaticaly when `$.magnificPopup.open` or `$.fn.magnificPopup` is called. **If you have many popups with similar structure, this option is a must.** 
+
+{% highlight javascript %}
+// These three magnificPopups will share same instance, because they have same key.
+// If you don't provide key for each one, 3 instances will be created.
+
+$('.button1').magnificPopup(function() {
+  key: 'my-app-popup'
+});
+
+$('.button2').magnificPopup(function() {
+  key: 'my-app-popup'
+});
+
+$.magnificPopup.open({
+  key: 'my-app-popup'
+});
+{% endhighlight %}
+
+
+
+
+### midClick *false*
+If set to `true` opens lightbox if user clicked middle mouse button. Option works only when you initialize Magnific Popup from DOM element.
+
+
+### mainClass *''*
+String that contains classes that will be added to the root element of popup wrapper and to dark overlay. For example `"myClass"`, can also contain multiple classes - `'myClassOne myClasTwo'`.
+
+### preloader *true*
+
+Preloader in Magnific Popup is used as an indicator of current status. If option enabled, it's always present in DOM only text inside of it changes. Below you can see explanation of CSS names that are applied to container that holds preloader and content area depending on the state of current item:
+
+{% highlight css %}
+
+/* Content loading is in progress */
+.mfp-s-loading { }
+
+/* Content successfully loaded */
+.mfp-s-ready { }
+
+/* Error during loading  */
+.mfp-s-error { }
+{% endhighlight %}
+
+For example, if you want your error message to be in red add such CSS:
+
+{% highlight css %}
+.mfp-s-error .mfp-preloader {
+  color: red;
+}
+{% endhighlight %}
+
+You can trigger change of status manually by calling `instance.updateStatus('error', 'error message')`. 
+
+
+### focus *''*
+String with CSS selector of element inside popup to focus. For example `'input'` or `'#login-input'`. Leave empty to focus popup itself.
+
+
+### closeOnContentClick *false*
+Close popup when user clicks on content of it. It's recommended to enable this option when you have only one image in popup.
+
+### closeBtnInside *false*
+If enabled, Magnific Popup will put close button inside content of popup, and wrapper will get class `mfp-close-btn-in` (which in default CSS file makes color of it change).
+
+### removalDelay *0*
+Delay before popup is removed from DOM. Read more in [animation](#animation) section.
+
+### closeMarkup 
+Default value: `<button title="%title%" class="mfp-close"><i class="mfp-close-icn">&times;</i></button>`.
+Markup of close button. %title% will be replaced with option `tClose`.
+
+
+
+
+
+## Animation
+
+Animation can be added to any example. For Ajax based popup content animation is fired only after content is loaded.
 
 After popup is opened popup wrapper and background overlay get class `mfp-ready`. Before popup is removed they get class `mfp-removing`.
 
@@ -270,31 +435,10 @@ callbacks: {
 Magnific Popup object is not attached to DOM element.
 
 
-## Preloader & status
 
-Preloader in Magnific Popup is used as an indicator of current status. It's always present in DOM only text inside of it changes. Below you can see explanation of CSS names that are applied to container that holds preloader and content area depending on the state of current item:
 
-{% highlight css %}
 
-/* Content loading is in progress */
-.mfp-s-loading { }
 
-/* Content successfully loaded */
-.mfp-s-ready { }
-
-/* Error during loading  */
-.mfp-s-error { }
-{% endhighlight %}
-
-For example, if you want your error message to be in red add such CSS:
-
-{% highlight css %}
-.mfp-s-error .mfp-preloader {
-  color: red;
-}
-{% endhighlight %}
-
-You can trigger change of status manually by calling `instance.updateStatus('error', 'error message')`. 
 
 ## Extending
 
@@ -303,7 +447,9 @@ You can trigger change of status manually by calling `instance.updateStatus('err
 
 ## Translating
 
-All you need is to extend default settings object with new values, or just pass option to popup initialization options.
+Internationalization of Magnific Popup is very simple, all you need is to extend default settings object with new values, or just pass options to your initialization code. If you're making something public, it's strongly recommended to use oly second method to avoid conflicts.
+
+Some properties contain %keys% that should not be translated. 
 
 {% highlight javascript %}
 // Add it after jquery.magnific-popup.js and before first initialization code

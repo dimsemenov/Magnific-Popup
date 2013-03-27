@@ -1,179 +1,274 @@
-
-
 <!--
 
-Examples Start. Each '.example' block contains JS, HTML and optionally CSS for popup.
+Each '.example' block contains JS, HTML and optionally CSS for popup. 
 
 -->
 
 <h2 id="examples">Examples</h2>
 <div class="grid-c">
+
+
+
+
+
   <div class="example gc3">
+    <h3>Single image lightbox</h3> 
+    <p>Three simple popups with different scaling settings. First one fits in area horizontally and vertically, second one - only horizontally, third one - has no gaps and close button is always in top right corner.</p>
+    <div class="html-code grid-of-images">
+      <a class="image-popup-vertical-fit" href="http://farm9.staticflickr.com/8241/8589392310_7b6127e243_b.jpg" title="Fits horizontally and vertically">
+        <img src="http://farm9.staticflickr.com/8241/8589392310_7b6127e243_s.jpg" width="75" height="75" />
+      </a>
+
+      <a class="image-popup-fit-width" href="http://farm9.staticflickr.com/8379/8588290361_ecf8c27021_b.jpg" title="Fits only horizontally">
+        <img src="http://farm9.staticflickr.com/8379/8588290361_ecf8c27021_s.jpg" width="75" height="75" />
+      </a>
+
+      <a class="image-popup-no-margins" href="http://farm9.staticflickr.com/8514/8589902684_da1978cf93_b.jpg" >
+        <img src="http://farm9.staticflickr.com/8514/8589902684_da1978cf93_s.jpg" width="75" height="75" />
+      </a>
+    </div>
     <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $('#single-image').magnificPopup({
+      $(document).ready(function() {
+
+        $('.image-popup-vertical-fit').magnificPopup({
+          type: 'image',
           closeOnContentClick: true,
-          disableOn: 700
+          image: {
+            verticalFit: true
+          }
+        });
+
+        $('.image-popup-fit-width').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          image: {
+            verticalFit: false
+          }
+        });
+
+        $('.image-popup-no-margins').magnificPopup({
+          type: 'image',
+          closeOnContentClick: true,
+          closeBtnInside: false,
+          mainClass: 'mfp-no-margins', // class to remove default margin from left and right side
+          image: {
+            verticalFit: true,
+            verticalGap: 16
+          }
+        });
+
+      });
+    </script>
+  </div>
+
+
+
+
+
+  <div class="example gc3">
+    <h3>Lightbox gallery</h3>
+    <p>For demonstration purpose lazy-loading is enabled only for the next image depending on move direction, but you can set any number. Also note, that you can put any HTML content in each gallery item, including iframes, it's not just for images.</p>
+    <div class="html-code grid-of-images">
+      <div class="popup-gallery">
+        <a href="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_b.jpg" title="The Cleaner"><img src="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_s.jpg" width="75" height="75" /></a>
+        <a href="http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_b.jpg" title="Winter Dance"><img src="http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_s.jpg" width="75" height="75" /></a>
+        <a href="http://farm9.staticflickr.com/8225/8558295635_b1c5ce2794_b.jpg" title="The Uninvited Guest"><img src="http://farm9.staticflickr.com/8225/8558295635_b1c5ce2794_s.jpg" width="75" height="75" /></a>
+        <a href="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_b.jpg" title="Oh no, not again!"><img src="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_s.jpg" width="75" height="75" /></a>
+        <a href="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_b.jpg" title="Swan Lake"><img src="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_s.jpg" width="75" height="75" /></a>
+        <a href="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_b.jpg" title="The Shake"><img src="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_s.jpg" width="75" height="75" /></a>
+        <a href="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_b.jpg" title="Who's that, mommy?"><img src="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_s.jpg" width="75" height="75" /></a>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('.popup-gallery').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          gallery: {
+            enabled: true,
+            preload: [0,1] // Will preload 0 - before current, and 1 after current image
+          },
+          image: {
+            titleSrc: function(item) {
+              return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
+            }
+          }
         });
       });
     </script>
-    <h3>Single image lightbox</h3> 
-    <p>Single-lightbox is closed by clicking on any part</p>
-    <a id="single-image" class="zoom-cursor mfp-image" href="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_b.jpg" ><img src="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_s.jpg" width="75" height="75" /></a>
   </div>
+
+
+
+
+
   <div class="example gc3">
+    <h3>Popup with video or map</h3>
+    <p>Lightbox is automatically disabled on small screen sizes and links work as usual.</p>
+    <div class="html-code">
+      <a class="popup-youtube" href="http://www.youtube.com/watch?v=7HKoqNJtMTQ" >Open YouTube video</a><br/>
+      <a class="popup-vimeo" href="https://vimeo.com/45830194" >Open Vimeo video</a><br/>
+      <a class="popup-gmaps" href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom">Open Google Map</a>
+    </div>
+    <style type="text/css">
+      /**
+       * Simple fade transition,
+       */
+      .mfp-fade.mfp-bg {
+        opacity: 0;
+        -webkit-transition: all 0.15s ease-out; 
+        -moz-transition: all 0.15s ease-out; 
+        transition: all 0.15s ease-out;
+      }
+      .mfp-fade.mfp-bg.mfp-ready {
+        opacity: 0.8;
+      }
+      .mfp-fade.mfp-bg.mfp-removing {
+        opacity: 0;
+      }
+
+      .mfp-fade.mfp-wrap .mfp-content {
+        opacity: 0;
+        -webkit-transition: all 0.15s ease-out; 
+        -moz-transition: all 0.15s ease-out; 
+        transition: all 0.15s ease-out;
+      }
+      .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+        opacity: 1;
+      }
+      .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+        opacity: 0;
+      }
+    </style>
     <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      $('#image-gallery').magnificPopup({
-        delegate: 'a',
-        preloader: true,
-        disableOn: 0,
-        gallery: {
-          enabled: true,
-          preload: [0]
-        },
-        image: {
-          titleSrc: function(item) {
-            return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
-          }
+      $(document).ready(function() {
+        $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
+          disableOn: 700,
+          type: 'iframe',
+          mainClass: 'mfp-fade',
+          removalDelay: 160,
+          preloader: false,
 
-        },
-        callbacks: {
-          open: function() {
-
-
-          },
-          close: function() {
-
-          }
-        }
+          fixedPosition: false
+        });
       });
-    });
     </script>
-    <h3>Lightbox gallery</h3>
-    <p>For demonstration purpose lazy-loading is enabled only for next image (depending on move direction). But you can set any number.</p>
-    <div id="image-gallery">
+  </div>
 
-     <a class="zoom-cursor mfp-image" href="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_b.jpg" title="The Cleaner"><img src="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_s.jpg" width="75" height="75" /></a>
-    
 
-      <a class="zoom-cursor mfp-image" href="http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_b.jpg" title="Winter Dance"><img src="http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_s.jpg" width="75" height="75" /></a>
 
-<!-- <a id="ajax-content-2" class="mfp-ajax" href="site-assets/test-ajax-2.html" >Load another content via ajax</a> -->
-      <a class="zoom-cursor mfp-image" href="http://farm9.staticflickr.com/8225/8558295635_b1c5ce2794_b.jpg" title="The Uninvited Guest"><img src="http://farm9.staticflickr.com/8225/8558295635_b1c5ce2794_s.jpg" width="75" height="75" /></a>
 
-      <a class="zoom-cursor mfp-image" href="http://farm9.staticflickr.com/8525/8559402860_f485399e47_b.jpg" title="Oh no, not again!"><img src="http://farm9.staticflickr.com/8525/8559402860_f485399e47_s.jpg" width="75" height="75" /></a>
 
-      <a class="zoom-cursor mfp-image" href="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_b.jpg" title="Swan Lake"><img src="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_s.jpg" width="75" height="75" /></a>
+  <div class="example gc3">
+    <h3>Dialog with CSS animation</h3>
+    <p>Animations are added with simple CSS transitions, you can make them look however you wish.</p>
+    <div class="html-code">
+      <a class="popup-with-zoom-anim" href="#small-dialog" >Open with fade-zoom animation</a><br/>
+      <a class="popup-with-move-anim" href="#small-dialog" >Open with fade-slide animation</a>
 
-      <a class="zoom-cursor mfp-image" href="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_b.jpg" title="The Shake"><img src="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_s.jpg" width="75" height="75" /></a>
-
-      <a class="zoom-cursor mfp-image" href="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_b.jpg" title="Who's that, mommy?"><img src="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_s.jpg" width="75" height="75" /></a>
-
+      <!-- dialog itself, mfp-hide class is required to make dialog hidden -->
+      <div id="small-dialog" class="mfp-hide">
+        <h1>Dialog example</h1>
+        <p>This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.</p>
+      </div>
     </div>
 
-
-
-  </div>
-  <div class="example gc3">
     <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $('#video-youtube, #video-vimeo, #google-maps').magnificPopup({disableOn: 700, closeBtnInside: true});
+      $(document).ready(function() {
+        $('.popup-with-zoom-anim').magnificPopup({
+          type: 'inline',
+          disableOn:0,
+          fixedPosition: false,
+          closeBtnInside: true,
+          preloader: false,
+          vMargin: 0,
+          midClick: true,
+
+          animated: true,
+          removalDelay: 300,
+          mainClass: 'my-mfp-zoom-in'
+        });
+
+        $('.popup-with-move-anim').magnificPopup({
+          type: 'inline',
+          disableOn:0,
+          fixedPosition: false,
+          closeBtnInside: true,
+          preloader: false,
+          marTop: 0,
+          alignTop: true,
+          midClick: true,
+          
+          animated: true,
+          removalDelay: 300,
+          mainClass: 'my-mfp-slide-bottom'
+        });
       });
-    </script>
-    <h3>Popup with video</h3>
-    <p>You can open absolutely any iframe in popup, not just these.</p>
-    <a id="video-youtube" class="mfp-iframe" href="http://www.youtube.com/watch?v=7HKoqNJtMTQ" >Open YouTube video</a><br/>
-    <a id="video-vimeo" class="mfp-iframe" href="http://vimeo.com/123123" >Open Vimeo video</a><br/>
-    <a id="google-maps" class="mfp-iframe" href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" >Open Google Map</a>
-  </div>
-
-  
-
-  
-
-  <div class="example gc3">
-
-    <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      $('#animated-popup-1').magnificPopup({
-        disableOn:0,
-        fixedPosition: false,
-        closeBtnInside: true,
-        preloader: false,
-        vMargin: 0,
-
-        animated: true,
-        removalDelay: 300,
-        mainClass: 'my-mfp-zoom-in mfp-dark-close-button'
-      });
-
-      $('#animated-popup-2').magnificPopup({
-        disableOn:0,
-        fixedPosition: false,
-        closeBtnInside: true,
-        preloader: false,
-        marTop: 0,
-        alignTop: true,
-        
-        animated: true,
-        removalDelay: 300,
-        mainClass: 'my-mfp-slide-bottom mfp-dark-close-button'
-      });
-
-    });
     </script>
 
     <style type="text/css">
+      /* Styles for dialog window */
+      #small-dialog {
+        background: white;
+        padding: 20px 30px;
+        text-align: left;
+        max-width: 400px;
+        margin: 40px auto;
+        position: relative;
+      }
 
 
-      /* at start */
-      .my-mfp-zoom-in #custom-content-small {
+      /**
+       * Fade-zoom animation for first dialog
+       */
+      
+      /* start state */
+      .my-mfp-zoom-in #small-dialog {
         opacity: 0;
 
         -webkit-transition: all 0.2s ease-in-out; 
-           -moz-transition: all 0.2s ease-in-out; 
-             -o-transition: all 0.2s ease-in-out; 
-                transition: all 0.2s ease-in-out; 
+        -moz-transition: all 0.2s ease-in-out; 
+        -o-transition: all 0.2s ease-in-out; 
+        transition: all 0.2s ease-in-out; 
 
-     
+
 
         -webkit-transform: scale(0.8); 
-           -moz-transform: scale(0.8); 
-            -ms-transform: scale(0.8); 
-             -o-transform: scale(0.8); 
-                transform: scale(0.8); 
+        -moz-transform: scale(0.8); 
+        -ms-transform: scale(0.8); 
+        -o-transform: scale(0.8); 
+        transform: scale(0.8); 
       }
 
-       /* animate in */
-      .my-mfp-zoom-in.mfp-ready #custom-content-small {
+      /* animate in */
+      .my-mfp-zoom-in.mfp-ready #small-dialog {
         opacity: 1;
 
         -webkit-transform: scale(1); 
-           -moz-transform: scale(1); 
-            -ms-transform: scale(1); 
-             -o-transform: scale(1); 
-                transform: scale(1); 
+        -moz-transform: scale(1); 
+        -ms-transform: scale(1); 
+        -o-transform: scale(1); 
+        transform: scale(1); 
       }
 
       /* animate out */
-      .my-mfp-zoom-in.mfp-removing #custom-content-small {
+      .my-mfp-zoom-in.mfp-removing #small-dialog {
         -webkit-transform: scale(0.8); 
-           -moz-transform: scale(0.8); 
-            -ms-transform: scale(0.8); 
-             -o-transform: scale(0.8); 
-                transform: scale(0.8); 
+        -moz-transform: scale(0.8); 
+        -ms-transform: scale(0.8); 
+        -o-transform: scale(0.8); 
+        transform: scale(0.8); 
 
         opacity: 0;
       }
 
-      /* bg overlay at start */
+      /* Dark overlay, start state */
       .my-mfp-zoom-in.mfp-bg {
         opacity: 0;
         -webkit-transition: opacity 0.3s ease-out; 
-           -moz-transition: opacity 0.3s ease-out; 
-             -o-transition: opacity 0.3s ease-out; 
-                transition: opacity 0.3s ease-out;
+        -moz-transition: opacity 0.3s ease-out; 
+        -o-transition: opacity 0.3s ease-out; 
+        transition: opacity 0.3s ease-out;
       }
       /* animate in */
       .my-mfp-zoom-in.mfp-ready.mfp-bg {
@@ -186,47 +281,55 @@ Examples Start. Each '.example' block contains JS, HTML and optionally CSS for p
 
 
 
+      /**
+       * Fade-move animation for second dialog
+       */
+      
       /* at start */
-      .my-mfp-slide-bottom #custom-content-small {
-        -webkit-transition: all 0.2s ease-out; 
-           -moz-transition: all 0.2s ease-out; 
-             -o-transition: all 0.2s ease-out; 
-                transition: all 0.2s ease-out; 
+      .my-mfp-slide-bottom #small-dialog {
+        opacity: 0;
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
 
-        -webkit-transform: perspective( 600px ) rotateX( 10deg );
+        -webkit-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+        -moz-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+        -ms-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+        -o-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+        transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
 
       }
-
       
       /* animate in */
-      .my-mfp-slide-bottom.mfp-ready #custom-content-small {
+      .my-mfp-slide-bottom.mfp-ready #small-dialog {
         opacity: 1;
         -webkit-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
-           -moz-transform: translateY(0); 
-            -ms-transform: translateY(0); 
-             -o-transform: translateY(0); 
-                transform: translateY(0); 
+        -moz-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
+        -ms-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
+        -o-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
+        transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
       }
 
-      .my-mfp-slide-bottom.mfp-removing #custom-content-small,
-      .my-mfp-slide-bottom #custom-content-small {
+      /* animate out */
+      .my-mfp-slide-bottom.mfp-removing #small-dialog {
         opacity: 0;
 
-        -webkit-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg ); 
-           -moz-transform: translateY(-40px); 
-            -ms-transform: translateY(-40px); 
-             -o-transform: translateY(-40px); 
-                transform: translateY(-40px); 
+        -webkit-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
+        -moz-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
+        -ms-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
+        -o-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
+        transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 
       }
 
-      /* bg overlay at start */
+      /* Dark overlay, start state */
       .my-mfp-slide-bottom.mfp-bg {
         opacity: 0;
-        -webkit-backface-visibility: hidden;
+
         -webkit-transition: opacity 0.3s ease-out; 
-           -moz-transition: opacity 0.3s ease-out; 
-             -o-transition: opacity 0.3s ease-out; 
-                transition: opacity 0.3s ease-out;
+        -moz-transition: opacity 0.3s ease-out; 
+        -o-transition: opacity 0.3s ease-out; 
+        transition: opacity 0.3s ease-out;
       }
       /* animate in */
       .my-mfp-slide-bottom.mfp-ready.mfp-bg {
@@ -236,27 +339,20 @@ Examples Start. Each '.example' block contains JS, HTML and optionally CSS for p
       .my-mfp-slide-bottom.mfp-removing.mfp-bg {
         opacity: 0;
       }
-      #custom-content-small {
-        max-width: 400px;
-      }
     </style>
-
-    <h3>Modal dialog with CSS animation</h3>
-    <p>Animations are added with simple CSS3 transitions you can make them look however you wish.</p>
-    <a id="animated-popup-1" class="mfp-inline" data-mfp-src="#custom-content-small" href="javascript:void()" >Open with fade-zoom animation</a><br/>
-    <a id="animated-popup-2" class="mfp-inline" data-mfp-src="#custom-content-small" href="javascript:void()" >Open with fade-slide animation</a>
   </div>
 
+
+
+
+
   <div class="example gc3">
-    <style type="text/css">
-      #custom-content {
-        margin-top: 40px;
-        margin-bottom: 40px;
-        position: relative;
-      }
-    </style>
+    <h3>Popup with tall block</h3>
+    <div class="html-code">
+      <a id="inline-html-content" class="mfp-inline" data-mfp-src="#custom-content" href="#custom-content" >Open inline text block</a>
+    </div>
     <script type="text/javascript">
-      jQuery(document).ready(function($) {
+      $(document).ready(function() {
         $('#inline-html-content').magnificPopup({
           disableOn:0,
           alignTop: true,
@@ -268,102 +364,96 @@ Examples Start. Each '.example' block contains JS, HTML and optionally CSS for p
         });
       });
     </script>
-    <h3>Popup with tall HTML block</h3>
-    <a id="inline-html-content" class="mfp-inline" data-mfp-src="#custom-content" href="#custom-content" >Open inline text block</a>
   </div>
 
+
+
+
+
   <div class="example gc3">
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $('#test-form-popup-link').magnificPopup({
-          disableOn:0,
-          closeBtnInside: true,
-          mainClass: 'mfp-dark-close-button',
-          preloader: false,
-          focusInput: true
-        });
-      });
-    </script>
     <h3>Popup with form</h3>
-    <a id="test-form-popup-link" class="mfp-inline" data-mfp-src="#test-form" href="#test-form" >Open form</a>
-  </div>
+    <div class="html-code">
+      <!-- link that opens popup -->
+      <a class="popup-with-form" href="#test-form">Open form</a>
 
-  <div class="example gc3">
-
-    <style type="text/css">
-      /*.mfp-fade.mfp-bg {
-        opacity: 0;
-
-        -webkit-transition: all 0.15s ease-out; 
-        -moz-transition: all 0.15s ease-out; 
-        transition: all 0.15s ease-out;
-      }
-      .mfp-fade.mfp-bg.mfp-ready {
-        opacity: 0.8;
-      }
-      .mfp-fade.mfp-bg.mfp-removing {
-        opacity: 0;
-      }
-
-
-
-      .mfp-fade.mfp-wrap .mfp-content {
-        opacity: 0;
-
-        -webkit-transition: all 0.15s ease-out; 
-        -moz-transition: all 0.15s ease-out; 
-        transition: all 0.15s ease-out;
-      }
-      .mfp-fade.mfp-wrap.mfp-ready .mfp-content {
-        opacity: 1;
-      }
-      .mfp-fade.mfp-wrap.mfp-removing .mfp-content {
-        opacity: 0;
-      }*/
-
-
-    </style>
-
-
-
-
+      <!-- form itself -->
+      <form id="test-form" class="mfp-hide white-popup-block">
+        <h1>Form</h1>
+        <fieldset style="border:0;">
+          <p>Magnific Popup has an option to automatically focus on first input. Entered data is not lost if you open and close the popup or if you go to another page and then press back browser button.</p>
+          <ol>
+            <li>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="First and last name" required autofocus>
+            </li>
+            <li>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="example@domain.com" required>
+            </li>
+            <li>
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" placeholder="Eg. +447500000000" required>
+            </li>
+            <li>
+              <label for="textarea">Textarea</label><br/>
+              <textarea id="textarea">Try to resize me.</textarea>
+            </li>
+          </ol>
+        </fieldset>
+      </form>
+    </div>
     <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $('#ajax-content, #ajax-content-2').magnificPopup({
-          //mainClass: 'mfp-fade',
-          //removalDelay: 200,
-          gallery: {
-            enabled: false
-          },
-          callbacks: {
-            parseAjax: function(jqXHR) {
-              // jqXHR.responseText = $(jqXHR.responseText).prepend('<h1>I am at the top of the popup</h1>');
-            }
-          }
+      $(document).ready(function() {
+        $('.popup-with-form').magnificPopup({
+          type: 'inline',
+          preloader: false,
+          focus: '#name'
         });
       });
     </script>
-    <h3>Ajax popup</h3>
-    <a id="ajax-content" class="mfp-ajax" href="site-assets/test-ajax.html" >Load content via ajax</a><br/>
-    <a id="ajax-content-2" class="mfp-ajax" href="site-assets/test-ajax-2.html" >Load another content via ajax</a>
   </div>
+
+
+
+
 
   <div class="example gc3">
+    <h3>Ajax popup</h3>
+    <div class="html-code">
+      <a class="simple-ajax-popup" href="site-assets/test-ajax.html" >Load content via ajax</a><br/>
+      <a class="simple-ajax-popup" href="site-assets/test-ajax-2.html" >Load another content via ajax</a>
+    </div>
     <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $('#broken-image, #broken-ajax').magnificPopup();
+      $(document).ready(function() {
+        $('.simple-ajax-popup').magnificPopup({
+          type: 'ajax'
+        });
       });
     </script>
-    <h3>Error handling</h3>
-    <a id="broken-image" class="mfp-image" href="http://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Blois_Loire_Panorama_-_July_2011.jpg/640px-Blois_Loire_Panorama_-_July_2011-fake.jpg" >Broken image</a><br/>
-    <a id="broken-ajax" class="mfp-ajax" href="http://example.com/fakeg" >Broken ajax request</a>
   </div>
 
-  
 
-  
+
+
+
+  <div class="example gc3">
+    <h3>Error handling</h3>
+    <div class="html-code">
+      <!-- classes mfp-image and mfp-ajax define type of popup -->
+      <a id="broken-image" class="mfp-image" href="http://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Blois_Loire_Panorama_-_July_2011.jpg/640px-Blois_Loire_Panorama_-_July_2011-fake.jpg" >Broken image</a><br/>
+      <a id="broken-ajax" class="mfp-ajax" href="http://example.com/fakeg" >Broken ajax request</a>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#broken-image, #broken-ajax').magnificPopup({});
+      });
+    </script>
+  </div>
+
+
 
 </div>
+
 <!--
 
 Examples end.
@@ -371,8 +461,10 @@ Examples end.
 -->
 
 
-<!-- inline blocks -->
-<div id="custom-content" class="hidden white-popup-block">
+
+
+<!-- inline block for 5th example -->
+<div id="custom-content" class="mfp-hide white-popup-block">
 <h1>HTML Ipsum Presents</h1>
          
 <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
@@ -416,35 +508,7 @@ Examples end.
 <a href="javascript:$.magnificPopup.close();">Close Popup</a>
 </div>
 
-<div id="custom-content-small" class="hidden white-popup-block">
-  <h1>Dialog example</h1>
-  <p>This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.</p>
-</div>
 
-<div id="test-form" class="hidden white-popup-block">
 
-<h1>Form</h1>
-<p>Magnific Popup has an option to automatically focus on first input. Entered data is not lost if you open and close the popup or if you go to another page and then press back browser button.</p>
 
-<div>
-  <br/>
-    <div>
-      <label for="text_field">Text input</label>
-      <input type="text" id="text_field" name="text_field" />
-    </div>
-    <div>
-      <label for="select_choice">Dropdown</label>
-      <select name="select_choice" id="select_choice">
-      <option value="Choice 1">Choice 1</option>
-      <option value="Choice 2">Choice 2</option>
-      <option value="Choice 3">Choice 3</option>
-      </select>
-    </div>
-    <br/>
-    <div>
-      <label>Textarea</label><br/>
-      <textarea>Try to resize me.</textarea>
-    </div>
-</div>
-</div>
 

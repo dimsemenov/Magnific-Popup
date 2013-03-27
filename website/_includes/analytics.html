@@ -5,20 +5,6 @@
 <script type="text/javascript">
   var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-25969065-1']);
-
-    if(document.getElementById('logo-overlay') && window.localStorage!==undefined) {
-      var colors = localStorage.getItem("colors");
-      if(colors) {
-        colors = colors.split(',');
-      }
-      if(colors && colors[0] && colors[0] !== 'undefined') {
-        _gaq.push(["_setCustomVar", 1, "Color1", colors[0], 1]);
-        _gaq.push(["_setCustomVar", 2, "Color2", colors[1], 1]);
-        _gaq.push(["_setCustomVar", 3, "Color3", colors[2], 1]);
-      }
-    }
-
-
     _gaq.push(['_trackPageview']);
 
     (function() {

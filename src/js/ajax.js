@@ -31,49 +31,40 @@ $.magnificPopup.registerModule(AJAX_NS, {
 
 			if(_ajaxCur)
 				_body.addClass(_ajaxCur);
-			
 
-			mfp.updateStatus('loading');
+			mfp.updateStatus(LOADING_STATUS);
 
-			mfp.req = $.ajax(item.src, 
+			var opts = $.extend({
+				url: item.src,
+				success:function(data, textStatus, jqXHR) {
 
-				$.extend({
-					success:function(data, textStatus, jqXHR) {
-						_mfpTrigger('ParseAjax', jqXHR);
-						item.ajaxContent.replaceWith( $(jqXHR.responseText) );
-						//mfp.setItemHTML(item.index, item.emptyLoad, $(jqXHR.responseText) );
-						item.finished = true;
+					_mfpTrigger('ParseAjax', jqXHR);
 
-						_removeAjaxCursor();
+					mfp.appendContent( $(jqXHR.responseText), AJAX_NS );
 
-						mfp.setFocus();
+					item.finished = true;
 
-						setTimeout(function() {
-							mfp.wrap.addClass(READY_CLASS);
-						}, 16);
-						mfp.updateStatus('ready');
-					},
-					error:function() {
-						item.finished = true;
+					_removeAjaxCursor();
 
+					_setFocus();
 
+					setTimeout(function() {
+						mfp.wrap.addClass(READY_CLASS);
+					}, 16);
+					mfp.updateStatus(READY_STATUS);
 
-						_removeAjaxCursor();
-							
+				},
+				error:function() {
+					item.finished = true;
+					_removeAjaxCursor();
+					item.loadError = true;
+					mfp.updateStatus(ERROR_STATUS, mfp.st.ajax.tError.replace('%url%', item.src));
+				}
+			}, mfp.st.ajax.settings);
 
-						item.loadError = true;
-						mfp.updateStatus('error', mfp.st.ajax.tError);
-					}
-				}, mfp.st.ajax.settings)
+			mfp.req = $.ajax(opts);
 
-			);
-
-			item.ajaxContent = $(document.createElement('div'));
-			return item.ajaxContent;
-
-
-
-
+			return '';
 		}
 	}
 });

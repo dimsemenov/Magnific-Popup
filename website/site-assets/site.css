@@ -1,4 +1,4 @@
-/* Demo site CSS:; not semantic, not mobile first,  made for 20 minutes mess */
+/* Demo site CSS:; not semantic, not mobile first, made for 20 minutes, mess */
 html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, ol, ul, li, form, fieldset, legend, label, table, header, footer, nav, section, figure {
   margin: 0;
   padding: 0; 
@@ -6,8 +6,11 @@ html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, ol, ul, 
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
-  line-height: 1.5;
-  color: #333;
+  line-height: 1.6;
+  color: #5A6064;
+}
+pre,code{
+  tab-size: 4;
 }
 p {
   margin: 0 0 11px;
@@ -25,20 +28,28 @@ li {
 }
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  font-family: inherit;
   font-weight: normal;
   text-rendering: optimizelegibility;
+
+  color: #282B30;
+  font-family:"Museo Sans 100", Calibri, 'Helvetica Neue', Arial
 }
 h1 {
   margin-bottom: 5px;
 }
-
+.get-code-window {
+  position: relative;
+  background: #FFF;
+  padding: 2em 3em;
+  width: auto;
+  margin: 20px auto;
+  max-width: 600px;
+}
 #magnific_popup_documentation {
-text-align: center;
-font-weight: bold;
-font-size: 3.1em;
-line-height: 1em;
-margin-bottom: 1em;
+  font-size: 3em;
+  margin-bottom: 1em;
+  font-weight: bold;
+  text-align: center;
 }
 
 
@@ -48,18 +59,19 @@ margin-top: 2em;
 margin-bottom: .3em;
 border-bottom: 1px solid #DDD;
 padding-bottom: 0.2em;
+font-size: 1.8em;
 }
 h3 {
-  font-size: 18px;
-  line-height: 23px;
-  margin-bottom: 5px;
+  font-size: 22px;
+line-height: 24px;
+margin-bottom: 12px;
   margin-top: 20px;
 }
 h4 {
   margin-bottom: 5px;
 }
 a {
-  color: #1760BF;
+  color: #3169B3;
   text-decoration: underline;
 }
 a:hover {
@@ -70,11 +82,9 @@ a:hover {
 
 
 body {
-  background: #DEE4E4;
+  background: #fafafa;
 }
-#logo {
-  color: #000;
-}
+
 
 .grid-c h3 {
   margin-top: 0;
@@ -98,6 +108,72 @@ body {
 .grid-c .gc3:nth-of-type(2n+1) {
 clear: left;
 }
+
+
+
+#logo {
+  height: 150px;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  padding: 0 3em;
+  margin-left: -3em;
+  cursor: pointer;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+#broken-glass {
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+#logo:active h1 {
+  top: 1px;
+}
+
+#logo h1 {
+  margin-top: 27px;
+font-size: 63px;
+line-height: 1.4;
+top: 0;
+}
+
+#logo h1 {
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+  color: #000;
+  position: absolute;
+  left: 0;
+  color: rgba(250, 250, 250, 0.95);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  cursor: pointer;
+}
+
+
+h2.intro {
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: normal;
+  border: 0;
+  margin-top: 0;
+}
+#header-links {
+  font-size: 16px;
+}
+/*#header-links a {
+  color: #A5CCFF;
+}
+#header-links a:hover {
+  opacity: 0.8;
+}*/
+
 
 
 .maruku_toc {
@@ -150,10 +226,11 @@ h2:target {
   padding-top: .2em;
   padding-left: .5em;
 }
-
+code,pre {
+   font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
 code {
   background: #F8F8F8;
-  font-family: Consolas, courier, monospace;
   padding: .1em .4em;
   color: #c82829;
   font-size: 13px;
@@ -164,7 +241,7 @@ pre {
   line-height: 18px;
   overflow: auto;
   padding: 20px 25px;
-  font-family: Consolas, "Liberation Mono", Courier, monospace;
+ 
   border-radius: 2px;
 }
 pre code {
@@ -175,22 +252,23 @@ pre code {
   font-size: 13px;
 }
 .highlight {
-  position: relative;
-  padding: 0;
+position: relative;
 margin-bottom: 0.5em;
+margin-left: -1.5em;
+width: 100%;
+padding: 0 1.5em;
+background-color: #F5FAFC;
+
 }
 pre code:before {
-background: #E4E4E4;
 display: block;
 position: absolute;
-right: 0;
+right: 3px;
 top: 6px;
 padding: 3px 7px 0;
-color: #858383;
+color: #889499;
 font-size: 12px;
 line-height: 13px;
-border-top-left-radius: 2px;
-border-bottom-left-radius: 2px;
 }
 
 
@@ -206,35 +284,18 @@ content: 'CSS';
 
 
 
-
-
-#logo {
-  margin-bottom: 2.5em;
-  text-align: center;
-  text-transform: lowercase;
-}
-#logo h1 {
-  font-weight: bold;
-	display: block;
-	margin: 0 auto;
-	font-size: 3em;
-  line-height: 1em;
-	font-style: normal;
-}
-#logo p {
-  margin-top: 4px;
-  font-size: 15px;
-}
-
 #main-wrapper {
-  background: #FFF;
+ 
+  background: none;
 	max-width: 800px;
 	width: 100%;
 	margin: 2em auto 4em;
   padding: 3em;
+   padding-top: 0;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  position: relative;
 }
 
 
@@ -249,9 +310,53 @@ content: 'CSS';
   margin: 40px auto;
   position: relative;
 }
+
+
+
+#examples:after {
+  content: 'click on example title to view the source';
+opacity: 0.4;
+font-weight: normal;
+font-size: 14px;
+margin-top: 13px;
+float: right;
+}
 .example {
   margin-bottom: 20px;
+  position: relative;
 }
+.example h3 {
+  display: inline-block;
+  cursor: pointer;
+  border-bottom: 1px dotted #949494;
+}
+.example h3:hover {
+  color: #C00;
+}
+.example h3:hover:after {
+  content: 'view source';
+  padding-left: 8px;
+  color: #999;
+  position: absolute;
+  top: 16px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+  font-size: 12px;
+}
+
+/*button.get-code-btn {
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  display: block;
+  z-index: 1;
+  padding: 0;
+  outline: none;
+  background: red;
+  position: absolute;
+  right: 0;
+  top: 0;
+}*/
 
 .square-tmb {
   margin: 0 10px 0 0;
@@ -262,13 +367,20 @@ content: 'CSS';
   cursor: -moz-zoom-in;
   cursor: zoom-in;
 }
-.example a {
+.example a,
+a.popup-link {
   text-decoration: none;
   border-bottom: 1px dotted;
 }
-.example a:hover {
+.example a:hover,
+a.popup-link:hover {
   text-decoration: none;
 }
+
+.example a {
+  line-height: 26px;
+}
+
 #image-gallery a,
 #single-image {
   border-bottom: none;
@@ -302,6 +414,25 @@ content: 'CSS';
     opacity: 1;
 }
 
+.grid-of-images a {
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+  cursor: zoom-in;
+  border-bottom: 0;
+  height: 75px;
+  display: block;
+  float: left;
+  margin: 0 5px 5px 0;
+  width: 75px;
+}
+
+
+h3 em {
+  opacity: 0.3;
+}
+
+
+
 @media all and (max-width: 30em) {
 
   .gc3 { 
@@ -318,11 +449,14 @@ content: 'CSS';
     margin: 1em -1em;
   }
   #logo {
-    margin-bottom: 3em;
-    margin-top: 2em;
+    height: 95px;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 0;
+    margin-bottom: 2em;
   }
   #logo h1 {
-    font-size: 2.5em;
+    font-size: 30px;
   }
 }
 
@@ -337,30 +471,8 @@ content: 'CSS';
   }
 }
 
-.highlight {
-    background-color: #F8F8F8;
-}
 
 
-#superlogo {
-  position: relative;
-  height: 110px;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-user-select:none;
-  -moz-user-select:none;
-}
-#superlogo object {
-   display: block;
-   position: relative;
-   max-width: 600px;
-   margin: 0 auto;
-   text-align: center;
-}
-
-#superlogo path {
-  -webkit-transition: fill 0.05s;
-}
-#superlogo object,
 #logo-overlay {
   width: 100%;
   height: 75px;
@@ -415,6 +527,124 @@ content: 'CSS';
     color: #000;
   }
 
+
+
+pre .comment,
+pre .template_comment,
+pre .diff .header,
+pre .javadoc {
+  color: #998;
+  font-style: italic
+}
+
+pre .keyword,
+pre .css .rule .keyword,
+pre .winutils,
+pre .javascript .title,
+pre .nginx .title,
+pre .subst,
+pre .request,
+pre .status {
+  color: #333;
+  font-weight: bold
+}
+
+pre .number,
+pre .hexcolor,
+pre .ruby .constant {
+  color: #099;
+}
+
+pre .string,
+pre .tag .value,
+pre .phpdoc,
+pre .tex .formula {
+  color: #D01040;
+}
+
+pre .title,
+pre .id {
+  color: #900;
+  font-weight: bold
+}
+
+pre .javascript .title,
+pre .lisp .title,
+pre .clojure .title,
+pre .subst {
+  font-weight: normal
+}
+
+pre .class .title,
+pre .haskell .type,
+pre .vhdl .literal,
+pre .tex .command {
+  color: #458;
+  font-weight: bold
+}
+
+pre .tag,
+pre .tag .title,
+pre .rules .property,
+pre .django .tag .keyword {
+  color: #000080;
+  font-weight: normal
+}
+
+pre .attribute,
+pre .variable,
+pre .lisp .body {
+  color: teal;
+}
+
+pre .regexp {
+  color: #009926
+}
+
+pre .class {
+  color: #458;
+  font-weight: bold
+}
+
+pre .symbol,
+pre .ruby .symbol .string,
+pre .lisp .keyword,
+pre .tex .special,
+pre .prompt {
+ 
+
+}
+
+pre .built_in,
+pre .lisp .title,
+pre .clojure .built_in {
+  color: #0086b3
+}
+
+pre .preprocessor,
+pre .pi,
+pre .doctype,
+pre .shebang,
+pre .cdata {
+  color: #999;
+  font-weight: bold
+}
+
+pre .deletion {
+  background: #fdd
+}
+
+pre .addition {
+  background: #dfd
+}
+
+pre .diff .change {
+  background: #0086b3
+}
+
+pre .chunk {
+  color: #aaa
+}
 
 
 
