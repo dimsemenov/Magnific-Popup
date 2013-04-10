@@ -43,7 +43,7 @@ module.exports = function(grunt) {
         "newcap": true,
         "noarg": true,
         "sub": true,
-        "undef": true,
+        "undef": false,
         "unused": true,
         "boss": true,
         "eqnull": true,
@@ -69,7 +69,8 @@ module.exports = function(grunt) {
           'ajax',
           'image',
           'iframe',
-          'gallery'
+          'gallery',
+          'fastclick'
         ],
         basePath: 'src/js/',
         dest: 'dist/jquery.magnific-popup.js',
@@ -197,6 +198,9 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['sass', 'mfpbuild', 'uglify', 'copy', 'jekyll:dev']);
 
-  grunt.registerTask('production', ['sass', 'mfpbuild', 'uglify', 'copy', 'cssmin', 'jekyll:production']);
+
+ grunt.registerTask('production', ['sass', 'mfpbuild', 'uglify', 'copy', 'cssmin', 'jekyll:production']);
+ 
+ grunt.registerTask('hint', ['jshint']);
 
 };

@@ -34,6 +34,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #282B30;
   font-family:"Museo Sans 100", Calibri, 'Helvetica Neue', Arial
 }
+.mfp-preloader {
+  font-size: 13px;
+}
 h1 {
   margin-bottom: 5px;
 }
@@ -212,7 +215,7 @@ h2.intro {
   text-decoration: none;
   color: #666;
 }
-h2:target {
+/*h2:target {
   font-weight: bold;
   margin-top: 0;
   border-top: 1.8em solid transparent;
@@ -225,7 +228,7 @@ h2:target {
   background-color: #FFF6BF;
   padding-top: .2em;
   padding-left: .5em;
-}
+}*/
 code,pre {
    font-family: Consolas, "Liberation Mono", Courier, monospace;
 }
@@ -299,22 +302,17 @@ content: 'CSS';
 }
 
 
-.hidden {
-  display: none;
-}
 .white-popup-block {
   background: #FFF;
-  padding:  20px 30px;
+  padding: 20px 30px;
   text-align: left;
   max-width: 650px;
   margin: 40px auto;
   position: relative;
 }
 
-
-
 #examples:after {
-  content: 'click on example title to view the source';
+  content: 'to view source click on the title of example';
 opacity: 0.4;
 font-weight: normal;
 font-size: 14px;
@@ -491,41 +489,41 @@ h3 em {
   padding: 30px 40px 40px 40px;
   max-width: 500px;
   text-align: left;
-  margin: 0 auto;
+  margin: 10px auto;
   position: relative;
 }
 
-  #mfp-build-tool h2 {
-    margin-top: 0;
-    margin-bottom: 0.7em;
-  }
-  #mfp-build-form label {
-    display: block;
-  margin-bottom: 5px;
-  min-height: 18px;
-  padding-left: 18px;
-  }
-  #mfp-build-form input[type="checkbox"] {
-    margin: 3px 0;
-  line-height: normal;
-  cursor: pointer;
-  width: auto;
-  margin-right: 5px;
-  float: left;
-  margin-left: -18px;
-  }
-  #mfp-build-status {
-    min-height: 40px;
-  }
-  #mfp-build-status .error {
-    color: #830C0C;
-  }
-  #mfp-build-status .success {
-    color: #014B04;
-  }
-  #mfp-build-status .progress {
-    color: #000;
-  }
+#mfp-build-tool h2 {
+  margin-top: 0;
+  margin-bottom: 0.7em;
+}
+#mfp-build-form label {
+  display: block;
+margin-bottom: 5px;
+min-height: 18px;
+padding-left: 18px;
+}
+#mfp-build-form input[type="checkbox"] {
+  margin: 3px 0;
+line-height: normal;
+cursor: pointer;
+width: auto;
+margin-right: 5px;
+float: left;
+margin-left: -18px;
+}
+#mfp-build-status {
+  min-height: 40px;
+}
+#mfp-build-status .error {
+  color: #830C0C;
+}
+#mfp-build-status .success {
+  color: #014B04;
+}
+#mfp-build-status .progress {
+  color: #000;
+}
 
 
 

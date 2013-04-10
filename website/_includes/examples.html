@@ -7,22 +7,16 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 <h2 id="examples">Examples</h2>
 <div class="grid-c">
 
-
-
-
-
   <div class="example gc3">
     <h3>Single image lightbox</h3> 
     <p>Three simple popups with different scaling settings. First one fits in area horizontally and vertically, second one - only horizontally, third one - has no gaps and close button is always in top right corner.</p>
     <div class="html-code grid-of-images">
-      <a class="image-popup-vertical-fit" href="http://farm9.staticflickr.com/8241/8589392310_7b6127e243_b.jpg" title="Fits horizontally and vertically">
+      <a class="image-popup-vertical-fit" href="http://farm9.staticflickr.com/8241/8589392310_7b6127e243_b.jpg" title="Caption. Can be aligned it to any side.">
         <img src="http://farm9.staticflickr.com/8241/8589392310_7b6127e243_s.jpg" width="75" height="75" />
       </a>
-
-      <a class="image-popup-fit-width" href="http://farm9.staticflickr.com/8379/8588290361_ecf8c27021_b.jpg" title="Fits only horizontally">
+      <a class="image-popup-fit-width" href="http://farm9.staticflickr.com/8379/8588290361_ecf8c27021_b.jpg" title="This image fits only horizontally.">
         <img src="http://farm9.staticflickr.com/8379/8588290361_ecf8c27021_s.jpg" width="75" height="75" />
       </a>
-
       <a class="image-popup-no-margins" href="http://farm9.staticflickr.com/8514/8589902684_da1978cf93_b.jpg" >
         <img src="http://farm9.staticflickr.com/8514/8589902684_da1978cf93_s.jpg" width="75" height="75" />
       </a>
@@ -33,6 +27,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         $('.image-popup-vertical-fit').magnificPopup({
           type: 'image',
           closeOnContentClick: true,
+          mainClass: 'mfp-img-mobile',
           image: {
             verticalFit: true
           }
@@ -52,13 +47,27 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           closeBtnInside: false,
           mainClass: 'mfp-no-margins', // class to remove default margin from left and right side
           image: {
-            verticalFit: true,
-            verticalGap: 16
+            verticalFit: true
           }
         });
 
       });
     </script>
+    <style type="text/css">
+    /* padding-bottom and top for image */
+    .mfp-no-margins img.mfp-img {
+      padding: 0;
+    }
+    /* position of shadow behind the image */
+    .mfp-no-margins .mfp-figure:after {
+      top: 0;
+      bottom: 0;
+    }
+    /* padding for main container */
+    .mfp-no-margins .mfp-container {
+      padding: 0;
+    }
+    </style>
   </div>
 
 
@@ -84,11 +93,15 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         $('.popup-gallery').magnificPopup({
           delegate: 'a',
           type: 'image',
+          tLoading: 'Loading image #%curr%...',
+          mainClass: 'mfp-img-mobile',
           gallery: {
             enabled: true,
-            preload: [0,1] // Will preload 0 - before current, and 1 after current image
+            navigateByImgClick: true,
+            preload: [0,1] // Will preload 0 - before current, and 1 after the current image
           },
           image: {
+            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
             titleSrc: function(item) {
               return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
             }
@@ -149,7 +162,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           removalDelay: 160,
           preloader: false,
 
-          fixedPosition: false
+          fixedContentPos: false
         });
       });
     </script>
@@ -178,12 +191,16 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         $('.popup-with-zoom-anim').magnificPopup({
           type: 'inline',
           disableOn:0,
-          fixedPosition: false,
+
+          fixedContentPos: false,
+          fixedBgPos: true,
+
+          overflowY: 'auto',
+
           closeBtnInside: true,
           preloader: false,
-          vMargin: 0,
+          
           midClick: true,
-
           animated: true,
           removalDelay: 300,
           mainClass: 'my-mfp-zoom-in'
@@ -192,13 +209,16 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         $('.popup-with-move-anim').magnificPopup({
           type: 'inline',
           disableOn:0,
-          fixedPosition: false,
+
+          fixedContentPos: false,
+          fixedBgPos: true,
+
+          overflowY: 'auto',
+
           closeBtnInside: true,
           preloader: false,
-          marTop: 0,
-          alignTop: true,
-          midClick: true,
           
+          midClick: true,
           animated: true,
           removalDelay: 300,
           mainClass: 'my-mfp-slide-bottom'
@@ -347,30 +367,6 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
 
   <div class="example gc3">
-    <h3>Popup with tall block</h3>
-    <div class="html-code">
-      <a id="inline-html-content" class="mfp-inline" data-mfp-src="#custom-content" href="#custom-content" >Open inline text block</a>
-    </div>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $('#inline-html-content').magnificPopup({
-          disableOn:0,
-          alignTop: true,
-          marTop: 0,
-          marBottom: 0,
-          closeBtnInside: true,
-          mainClass: 'mfp-dark-close-button mfp-with-40-margin',
-          preloader: false
-        });
-      });
-    </script>
-  </div>
-
-
-
-
-
-  <div class="example gc3">
     <h3>Popup with form</h3>
     <div class="html-code">
       <!-- link that opens popup -->
@@ -420,14 +416,22 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
   <div class="example gc3">
     <h3>Ajax popup</h3>
     <div class="html-code">
-      <a class="simple-ajax-popup" href="site-assets/test-ajax.html" >Load content via ajax</a><br/>
+      <a class="simple-ajax-popup-align-top" href="site-assets/test-ajax.html" >Load content via ajax</a><br/>
       <a class="simple-ajax-popup" href="site-assets/test-ajax-2.html" >Load another content via ajax</a>
     </div>
     <script type="text/javascript">
       $(document).ready(function() {
+
+        $('.simple-ajax-popup-align-top').magnificPopup({
+          type: 'ajax',
+          alignTop: true,
+          overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default
+        });
+
         $('.simple-ajax-popup').magnificPopup({
           type: 'ajax'
         });
+        
       });
     </script>
   </div>
@@ -452,6 +456,29 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
 
 
+
+
+  <!-- <div class="example gc3">
+    <h3>Other variations</h3>
+    <div class="html-code">
+      <a id="inline-html-content" class="mfp-inline" data-mfp-src="#custom-content" href="#custom-content" >Open inline text block</a>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#inline-html-content').magnificPopup({
+          disableOn:0,
+          alignTop: true,
+          marTop: 0,
+          marBottom: 0,
+          closeBtnInside: true,
+          mainClass: 'mfp-dark-close-button mfp-with-40-margin',
+          preloader: false
+        });
+      });
+    </script>
+  </div> -->
+
+
 </div>
 
 <!--
@@ -459,56 +486,3 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 Examples end.
 
 -->
-
-
-
-
-<!-- inline block for 5th example -->
-<div id="custom-content" class="mfp-hide white-popup-block">
-<h1>HTML Ipsum Presents</h1>
-         
-<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
-
-<h2>Header Level 2</h2>
-         
-<ol>
-   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-   <li>Aliquam tincidunt mauris eu risus.</li>
-</ol>
-
-<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
-
-<h3>Header Level 3</h3>
-
-<ul>
-   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-   <li>Aliquam tincidunt mauris eu risus.</li>
-</ul>
-
-<pre><code>
-#header h1 a { 
-  display: block; 
-  width: 300px; 
-  height: 80px; 
-}
-</code></pre>
-<h1>HTML Ipsum Presents</h1>
-         
-<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
-
-<h2>Header Level 2</h2>
-         
-<ol>
-   <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-   <li>Aliquam tincidunt mauris eu risus.</li>
-</ol>
-
-<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
-
-<a href="javascript:$.magnificPopup.close();">Close Popup</a>
-</div>
-
-
-
-
-

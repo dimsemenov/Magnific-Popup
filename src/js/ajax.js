@@ -11,7 +11,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 	options: {
 		settings: null,
 		cursor: 'mfp-ajax-cur',
-		tError: '<a href="%url%">The request</a> failed.'
+		tError: '<a href="%url%">The content</a> could not be loaded.'
 	},
 
 	proto: {
@@ -32,7 +32,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 			if(_ajaxCur)
 				_body.addClass(_ajaxCur);
 
-			mfp.updateStatus(LOADING_STATUS);
+			mfp.updateStatus('loading');
 
 			var opts = $.extend({
 				url: item.src,
@@ -51,14 +51,14 @@ $.magnificPopup.registerModule(AJAX_NS, {
 					setTimeout(function() {
 						mfp.wrap.addClass(READY_CLASS);
 					}, 16);
-					mfp.updateStatus(READY_STATUS);
+					mfp.updateStatus('ready');
 
 				},
 				error:function() {
 					item.finished = true;
 					_removeAjaxCursor();
 					item.loadError = true;
-					mfp.updateStatus(ERROR_STATUS, mfp.st.ajax.tError.replace('%url%', item.src));
+					mfp.updateStatus('error', mfp.st.ajax.tError.replace('%url%', item.src));
 				}
 			}, mfp.st.ajax.settings);
 

@@ -135,9 +135,82 @@ $('#some-button').click(function() {
 
 ## Image Type
 
-To
 
-## Video Type
+
+Image options:
+
+{% highlight javascript %}
+image: {
+  markup: '<div class="mfp-figure"><div class="mfp-close"></div><div class="mfp-img"></div><div class="mfp-title">%title%<span class="mfp-counter"></span></div></div>', // Popup HTML markup. `.mfp-img` div will be replaced with img tag
+
+  cursor: 'mfp-zoom-out-cur', // Class that adds zoom cursor, will be added to body. Set to null to disable zoom out cursor. 
+  
+  titleSrc: 'title', // Attribute of the target element that contains caption for the slide.
+  // Or the function that should return the title. For example:
+  // titleSrc: function(item) {
+  //   return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
+  // }
+
+  verticalGap:88,
+
+  verticalFit: true, // Fits image in area vertically
+
+  tError: '<a href="%url%">The image</a> could not be loaded.' // Error message
+}
+{% endhighlight %}
+
+
+## Iframe Type
+
+By default Magnific Popup supports only one type of URL for each service:
+
+{% highlight javascript %}
+// YouTube
+"http://www.youtube.com/watch?v=7HKoqNJtMTQ"
+
+// Vimeo
+"http://vimeo.com/123123"
+
+// Google Maps
+"https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom"
+{% endhighlight %}
+
+But you can extend it and make it support absolutely any URL or any other service (view [example that adds Dailymotion support](http://codepen.io/dimsemenov/pen/jnohA)). Iframe options:
+
+{% highlight javascript %}
+iframe: {
+  markup: '<div class="mfp-iframe-scaler"><div class="mfp-close"></div><iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe></div>', // HTML markup of popup
+
+  patterns: {
+    youtube: {
+      index: 'youtube.com/', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+
+      id: 'v=', // String that splits URL in a two parts, second part should be %id%
+      // Or null - full URL will be returned
+      // Or a function that should return %id%, for example:
+      // id: function(url) { return 'parsed id'; } 
+
+      src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe. 
+    },
+    vimeo: {
+      index: 'vimeo.com/',
+      id: '/',
+      src: '//player.vimeo.com/video/%id%?autoplay=1'
+    },
+    gmaps: {
+      index: '//maps.google.',
+      src: '%id%&output=embed'
+    }
+
+    // you may add here more sources
+
+  },
+
+  srcAction: 'iframe_src', // Find "iframe" and set attribute "src".
+}
+{% endhighlight %}
+
+
 
 ## Inline Type
 
@@ -263,7 +336,7 @@ For example, if you want your error message to be in red add such CSS:
 You can trigger change of status manually by calling `instance.updateStatus('error', 'error message')`. 
 
 
-### focus *''*
+### focus
 String with CSS selector of element inside popup to focus. For example `'input'` or `'#login-input'`. Leave empty to focus popup itself.
 
 
@@ -447,7 +520,7 @@ Magnific Popup object is not attached to DOM element.
 
 ## Translating
 
-Internationalization of Magnific Popup is very simple, all you need is to extend default settings object with new values, or just pass options to your initialization code. If you're making something public, it's strongly recommended to use oly second method to avoid conflicts.
+Internationalization of Magnific Popup is very simple, all you need is to extend default settings object with new values, or just pass options to your initialization code. If you're making something public, it's strongly recommended to use only second method to avoid conflicts.
 
 Some properties contain %keys% that should not be translated. 
 

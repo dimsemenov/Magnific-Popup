@@ -49,7 +49,7 @@ $.magnificPopup.registerModule(INLINE_NS, {
 			item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(mfp.st.inline.hiddenClass);
 
 
-			mfp.updateStatus(READY_STATUS);
+			mfp.updateStatus('ready');
 
 			return item.inlineElement;
 		}

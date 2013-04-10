@@ -1,6 +1,6 @@
 <!-- Basic idea of such build tool is stolen from modernizr.com -->
 <div id="mfp-build-tool" class="mfp-hide">
-  <h2>Magnific Popup v0.0.8 Buld Tool</h2>
+  <h2>Magnific Popup v0.0.9 Buld Tool</h2>
   <form id="mfp-build-form">
     <p class="help-block">Simply select what you need to include and click 'generate build' button, you'll generate optimized version of main JS file (`jquery.magnific-popup.js`).</p>
      <label class="checkbox">
@@ -17,6 +17,9 @@
     </label>
     <label class="checkbox">
       <input type="checkbox" name="gallery" checked> Gallery
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="fastclick" checked> Fast tap for gallery arrows
     </label>
   </form> 
      
@@ -38,7 +41,7 @@
 <script type="text/javascript">
 	$(document).ready(function($) {
 		
-		$('.mfp-build-tool-link').magnificPopup({alignTop:true, closeBtnInside:true, type:'inline', midClick: true});
+		$('.mfp-build-tool-link').magnificPopup({closeBtnInside:true, type:'inline', midClick: true});
 
 	    var button = $('#mfp-build-button').click(function(e) {
 	    	e.preventDefault();
@@ -168,7 +171,7 @@
 		    getCode = $(this).find('h3').click(function() {
 		      var example = $(this).parent('.example');
 		      var getCodeWindow = $('<div class="get-code-window"><h1>'+example.find('h3').text()+'</h1></div>');
-		      JS = $('<div class="highlight"><pre><code class="javascript">'+formatCode(example.find('script').html())+'</code></pre></div>');
+		      JS = $('<div class="highlight"><pre><code class="javascript">'+formatCode(example.find('script').eq(0).html())+'</code></pre></div>');
 
 		      CSS = example.find('style');
 		      if(CSS.length) {
