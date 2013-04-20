@@ -14,7 +14,7 @@ _site
 private-*
 __article/
 node_modules
-dist/
 _production
 all.min.css
 .sublime-*
+website/dist/

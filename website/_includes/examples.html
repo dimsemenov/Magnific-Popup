@@ -21,6 +21,9 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         <img src="http://farm9.staticflickr.com/8514/8589902684_da1978cf93_s.jpg" width="75" height="75" />
       </a>
     </div>
+    <div id="my-popup" class="mfp-hide white-popup">
+  My inline popup
+</div>
     <script type="text/javascript">
       $(document).ready(function() {
 
@@ -76,7 +79,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
   <div class="example gc3">
     <h3>Lightbox gallery</h3>
-    <p>For demonstration purpose lazy-loading is enabled only for the next image depending on move direction, but you can set any number. Also note, that you can put any HTML content in each gallery item, including iframes, it's not just for images.</p>
+    <p>For demonstration purpose lazy-loading is enabled only for the next image depending on move direction, but you can set any number. Also note, that you can put any HTML content in each gallery item and mix types (<a href="http://codepen.io/dimsemenov/pen/vKrqs">example</a>).</p>
     <div class="html-code grid-of-images">
       <div class="popup-gallery">
         <a href="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_b.jpg" title="The Cleaner"><img src="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_s.jpg" width="75" height="75" /></a>
@@ -190,7 +193,6 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
       $(document).ready(function() {
         $('.popup-with-zoom-anim').magnificPopup({
           type: 'inline',
-          disableOn:0,
 
           fixedContentPos: false,
           fixedBgPos: true,
@@ -201,14 +203,12 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           preloader: false,
           
           midClick: true,
-          animated: true,
           removalDelay: 300,
           mainClass: 'my-mfp-zoom-in'
         });
 
         $('.popup-with-move-anim').magnificPopup({
           type: 'inline',
-          disableOn:0,
 
           fixedContentPos: false,
           fixedBgPos: true,
@@ -219,7 +219,6 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           preloader: false,
           
           midClick: true,
-          animated: true,
           removalDelay: 300,
           mainClass: 'my-mfp-slide-bottom'
         });

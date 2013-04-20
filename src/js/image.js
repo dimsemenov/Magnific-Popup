@@ -1,18 +1,36 @@
-var _imgInterval;
+var _imgInterval,
+	_getTitle = function(item) {
+		if(item.data && item.data.title !== undefined) 
+			return item.data.title;
+
+		var src = mfp.st.image.titleSrc;
+
+		if(src) {
+			if($.isFunction(src)) {
+				return src.call(mfp, item);
+			} else if(item.el) {
+				return item.el.attr(src) || '';
+			}
+		}
+		return '';
+	};
 
 $.magnificPopup.registerModule('image', {
 
 	options: {
-		markup: '<div class="mfp-figure"><div class="mfp-close"></div><div class="mfp-img"></div><div class="mfp-title">%title%</div></div>',
-
+		markup: '<div class="mfp-figure">'+
+					'<div class="mfp-close"></div>'+
+					'<div class="mfp-img"></div>'+
+					'<div class="mfp-bottom-bar">'+
+						'<div class="mfp-title"></div>'+
+						'<div class="mfp-counter"></div>'+
+					'</div>'+
+				'</div>',
 		cursor: 'mfp-zoom-out-cur',
 		titleSrc: 'title', 
-
 		verticalFit: true,
-
 		tError: '<a href="%url%">The image</a> could not be loaded.'
 	},
-
 
 	proto: {
 		initImage: function() {
@@ -43,22 +61,26 @@ $.magnificPopup.registerModule('image', {
 			if(!item.img) return;
 			if(mfp.st.image.verticalFit) {
 				item.img.css('max-height', mfp.wH + 'px');
-
 			}
 		},
 		_onImageHasSize: function(item) {
 			if(item.img) {
-				if(item.imgHidden) {
-					mfp.content.removeClass('mfp-loading');
-				}
-
-				item.imgHidden = false;
+				
 				item.hasSize = true;
 
 				if(_imgInterval) {
 					clearInterval(_imgInterval);
 				}
+				
 				item.isCheckingImgSize = false;
+
+				_mfpTrigger('ImageHasSize', item);
+
+				if(item.imgHidden) {
+					mfp.content.removeClass('mfp-loading');
+					item.imgHidden = false;
+				}
+
 			}
 		},
 
@@ -66,7 +88,9 @@ $.magnificPopup.registerModule('image', {
 		 * Function that loops until image has size to display elements that rely on it asap
 		 */
 		findImageSize: function(item) {
+
 			var counter = 0,
+				img = item.img[0],
 				mfpSetInterval = function(delay) {
 
 					if(_imgInterval) {
@@ -74,9 +98,8 @@ $.magnificPopup.registerModule('image', {
 					}
 					// decelerating interval that checks for size of an image
 					_imgInterval = setInterval(function() {
-						// Opera mobile shows 22px height for not loaded image, IE - 30, FF - based on line-height (15-20), other browsers - 0. 
-						// Just in case we check for 40.
-						if(item.img.height() > 40) {
+
+						if(img.naturalWidth > 0) {
 							mfp._onImageHasSize(item);
 							return;
 						}
@@ -88,21 +111,18 @@ $.magnificPopup.registerModule('image', {
 						counter++;
 						if(counter === 3) {
 							mfpSetInterval(10);
-						} else if(counter === 15) {
-							mfpSetInterval(50);
 						} else if(counter === 40) {
-							mfpSetInterval(100);
+							mfpSetInterval(50);
 						} else if(counter === 100) {
 							mfpSetInterval(500);
 						}
 					}, delay);
 				};
+
 			mfpSetInterval(1);
 		},
 
 		getImage: function(item, template) {
-
-
 
 			var guard = 0,
 
@@ -114,6 +134,7 @@ $.magnificPopup.registerModule('image', {
 							
 							if(item === mfp.currItem){
 								mfp._onImageHasSize(item);
+
 								mfp.updateStatus('ready');
 							}
 
@@ -147,28 +168,7 @@ $.magnificPopup.registerModule('image', {
 						item.loadError = true;
 					}
 				},
-				imgSt = mfp.st.image,
-				title;
-
-
-			// parsing title
-			if(item.title) {
-				title = item.title;
-			} else {
-				title = imgSt.titleSrc;
-				if(title) {
-					if($.isFunction(title)) {
-						title = title.call(mfp, item);
-					} else if(item.el) {
-						title = item.el.attr(title);
-						if(!title) {
-							title = '';
-						}
-					}
-				} else {
-					title = '';
-				}
-			}
+				imgSt = mfp.st.image;
 
 
 			var el = template.find('.mfp-img');
@@ -179,19 +179,18 @@ $.magnificPopup.registerModule('image', {
 					.attr('src', item.src);
 
 				// without clone() "error" event is not firing when IMG is replaced by new IMG
-				// TODO: find a way to avoid this
+				// TODO: find a way to avoid such cloning
 				if(el.is('img')) {
 					item.img = item.img.clone();
 				}
 			}
 
 			mfp._parseMarkup(template, {
-				title: title,
+				title: _getTitle(item),
 				img_replaceWith: item.img
 			}, item);
 
 			mfp.resizeImage();
-			
 
 			if(item.hasSize) {
 				if(_imgInterval) clearInterval(_imgInterval);
@@ -206,10 +205,8 @@ $.magnificPopup.registerModule('image', {
 				return template;
 			}
 
-
 			mfp.updateStatus('loading');
 			item.loading = true;
-			
 
 			if(!item.hasSize) {
 				item.imgHidden = true;

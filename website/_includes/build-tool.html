@@ -2,7 +2,7 @@
 <div id="mfp-build-tool" class="mfp-hide">
   <h2>Magnific Popup v0.0.9 Buld Tool</h2>
   <form id="mfp-build-form">
-    <p class="help-block">Simply select what you need to include and click 'generate build' button, you'll generate optimized version of main JS file (`jquery.magnific-popup.js`).</p>
+    <p class="help-block">Here you can generate optimized version of main JS file. Please note that CSS you should download directly: <a href="">Sass version</a> or <a href="">CSS version</a>.</p>
      <label class="checkbox">
       <input type="checkbox" name="inline" checked> Inline
     </label>
@@ -17,6 +17,9 @@
     </label>
     <label class="checkbox">
       <input type="checkbox" name="gallery" checked> Gallery
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="retina" checked> High-DPI (retina) support for image type
     </label>
     <label class="checkbox">
       <input type="checkbox" name="fastclick" checked> Fast tap for gallery arrows
@@ -43,6 +46,24 @@
 		
 		$('.mfp-build-tool-link').magnificPopup({closeBtnInside:true, type:'inline', midClick: true});
 
+		var h = window.location.hash;
+		if(h.indexOf('build=') > -1) {
+			var formInputs = $('#mfp-build-form input');
+			
+		    if(h.indexOf('&') > 0) {
+		       h = h.substr(0, h.indexOf('&'));
+		    }
+		    var items = h.substr(h.indexOf('build=') + 6, h.length).split('+');
+		    for(var i = 0; i < items.length; i++) {
+		      var name = items[i];
+		      if(name) {
+		        formInputs.filter('[name="' +name+ '"]').addClass('present');
+		      }
+		    }
+	    	formInputs.not('.present').prop('checked', false);
+    	}
+
+
 	    var button = $('#mfp-build-button').click(function(e) {
 	    	e.preventDefault();
 
@@ -56,49 +77,43 @@
 	    	setStatus('Wait a moment please...', 'progress');
 	    	$('#mfp-build-tool-out').val( '' );
 
-	    	var checkHash = function() {
-	    		var formInputs = $('#mfp-build-form input');
-				var h = window.location.hash;
-			    if(h.indexOf('&') > 0) {
-			       h = h.substr(0, h.indexOf('&'));
-			    }
-			    var items = h.substr(h.indexOf('build=') + 6, h.length).split('+');
-			    for(var i = 0; i < items.length; i++) {
-			      var name = items[i];
-			      if(name) {
-			        formInputs.filter('[name="' +name+ '"]').prop('checked' , true);
-			      }
-			    }
-	    	};
-	    	checkHash();
+	    	
 
-	    	var minify = $('#mfp-minify').is(':checked');
+	    	var minify = $('#mfp-minify')[0].checked;
 	    	var removeModule = function(source, key) {
 			        source = source.replace(new RegExp("\\/\\*>>"+key+"\\*\\/[\\s|\\S]*?\\/\\*>>"+key+"\\*\\/", "ig"), "");
 			        return source;
 			    };
 
 
-	    	$.when(
-			    $.ajax({url:"dist/jquery.magnific-popup.js?v=0.0.6", dataType: 'text'}), 
 
-			    minify ? $.ajax({ url: "third-party-libs/uglify.js", dataType: "script", cache: true }) : ''
-			).then(function(src, a2){
-				
-				
 
-			    src = src[0];
+
+			var onError = function() {
+				setStatus("Error: Build tool wasn't able to GET the js file. Please try again or make file by yourself using Grunt.", 'error');
+			};
+
+			var version = '0.0.91';
+			var loadedScripts = [];
+		    var onScriptsLoaded = function() {
+
+		    	
+			    var src = loadedScripts[0];
 
 			    var hash = '',
 		            name;
+
 		        $('#mfp-build-form input').each(function() {
 		          name = $(this).attr('name');
-		          if( $(this).is(':checked') ) {
+
+		          if( this.checked ) {
 		            hash += name + '+';
 		          } else {
 		            src = removeModule(src, name);
 		          }
+
 		        });
+
 		        if(hash) {
 		        	hash = hash.substr(0, hash.length-1);
 		        }
@@ -106,23 +121,52 @@
 		        if(minify) {
 					src = uglify(src, ["--extra","--unsafe"]);
 		        }
-		        src = '// http://dimsemenov.com/plugins/magnific-popup/' + (hash ? '#build=' + hash : '') + "\n" + src;
+
+		        var output = '// Magnific Popup v'+version+' by Dmitry Semenov & Co' + "\n";
+		        output +=    '// http://bit.ly/magnific-popup' + (hash ? '#build=' + hash : '') + "\n" + src;
 		        if(!hash) {
 		        	hash = 'core';
 		        } else {
-		       	 hash = 'core+' + hash;
+		       		hash = 'core+' + hash;
 		        }
 
-		        $('#mfp-build-tool-out').val( src ).show();
-		        	button.removeAttr('disabled');
-		        	setStatus('Magnific Popup main js file successfully generated! You can copy generated code from textarea below.' + (hash ? (' Your build includes: <strong>' + hash.split('+').join(', ')) + '</strong>.' : ''), 'success');
+		        $('#mfp-build-tool-out').val( output ).show();
 
-		        
+		        button.removeAttr('disabled');
 
-			}, function() {
-				setStatus("Error: Build tool wasn't able to GET js file. Please try again or make file by yourself using Grunt.", 'error');
+		        setStatus('Magnific Popup main js file successfully generated! You can copy generated code from textarea below.' + (hash ? (' Your build includes: <strong>' + hash.split('+').join(', ')) + '</strong>. ' : ''), 'success');
+		    };
+
+
+		    $.ajax({
+			 	url:"dist/jquery.magnific-popup.js?v="+version, 
+			 	dataType: 'text',
+			 	success: function( data) {
+			 		loadedScripts.push(data);
+			 		if(loadedScripts.length > 1) {
+			 			onScriptsLoaded();
+			 		}
+			 	},
+			 	error: onError
 			});
-	    });
+
+			$.ajax({
+			 	url:"third-party-libs/uglify.js", 
+			 	dataType: 'script',
+			 	cache: true,
+			 	success: function(data) {
+			 		loadedScripts.push(data);
+			 		if(loadedScripts.length > 1) {
+			 			onScriptsLoaded();
+			 		}
+			 	},
+			 	error: onError
+			});
+
+		});
+		/* build tool END */
+
+
 
 
 
@@ -167,134 +211,59 @@
 		      hljs.highlightBlock(HTML.find('code')[0]);
 		  };
 
-		  $('.example').each(function() {
-		    getCode = $(this).find('h3').click(function() {
-		      var example = $(this).parent('.example');
-		      var getCodeWindow = $('<div class="get-code-window"><h1>'+example.find('h3').text()+'</h1></div>');
-		      JS = $('<div class="highlight"><pre><code class="javascript">'+formatCode(example.find('script').eq(0).html())+'</code></pre></div>');
+		$('.example').each(function() {
+		    $(this).find('h3').click(function() {
+				var example = $(this).parent('.example');
+				var getCodeWindow = $('<div class="get-code-window"><h1>'+example.find('h3').text()+'</h1></div>');
+				JS = $('<div class="highlight"><pre><code class="javascript">'+formatCode(example.find('script').eq(0).html())+'</code></pre></div>');
 
-		      CSS = example.find('style');
-		      if(CSS.length) {
-		        CSS = $('<div class="highlight"><pre><code class="css">'+formatCode(CSS.html())+'</code></pre></div>');
-		      } else {
-		        CSS = '';
-		      }
+				CSS = example.find('style');
+				if(CSS.length) {
+					CSS = $('<div class="highlight"><pre><code class="css">'+formatCode(CSS.html())+'</code></pre></div>');
+				} else {
+					CSS = '';
+				}
 
-		      HTML = example.find('.html-code');
-		      if(HTML.length) {
-		        HTML = $('<div class="highlight"><pre><code class="xml html">'+formatCode(HTML.html())+'</code></pre></div>');
-		      } else {
-		        HTML = '';
-		      }
+				HTML = example.find('.html-code');
+				if(HTML.length) {
+					HTML = $('<div class="highlight"><pre><code class="xml html">'+formatCode(HTML.html())+'</code></pre></div>');
+				} else {
+					HTML = '';
+				}
 
-		      if(!highlighterLoaded) {
-		        highlighterLoaded = true;
-		         var script = document.createElement("script"),
-		              $script = $(script);
-		              script.src = 'http://yandex.st/highlightjs/7.3/highlight.min.js';
-		        if(jQuery) {
-		        	$.getScript(script.src , function() {
-		        		highlight();
-		        	});
-		        } else {
-		        	$(script).appendTo("head").on("load", function() {
-			          highlight();
-			        });
-		        }
-		        
-		      } else {
-		        highlight();
-		      }
+				if(!highlighterLoaded) {
+					highlighterLoaded = true;
+					var script = document.createElement("script"),
+						$script = $(script);
+						script.src = 'http://yandex.st/highlightjs/7.3/highlight.min.js';
+					if(window.jQuery) {
+						$.getScript(script.src , function() {
+							highlight();
+						});
+					} else {
+						$(script).appendTo("head").on("load", function() {
+							highlight();
+						});
+					}
+				} else {
+					highlight();
+				}
 
-		      getCodeWindow.append(JS);
-		      getCodeWindow.append(HTML);
-		      getCodeWindow.append(CSS);
+				getCodeWindow.append(JS);
+				getCodeWindow.append(HTML);
+				getCodeWindow.append(CSS);
 
-		      getCodeWindow.append('<p>Code above is dynamically generated directly from the source of this example.<br/>Please read <a href="documentation.html">the documentation</a> before using it.</p>');
+				getCodeWindow.append('<p>Code above is dynamically generated directly from the source of this example.<br/>Please read <a href="documentation.html">the documentation</a> before using it.</p>');
 
-		      $.magnificPopup.open({
-		        src: getCodeWindow
-		      }, {
-		        type: 'inline'
-		      });
+				$.magnificPopup.open({
+					items: {
+						src: getCodeWindow,
+						type: 'inline'
+					}
+				});
 
-
-		      // $.magnificPopup.open(
-		      //   [
-		      //     {
-		      //       src: "site-assets/img/p1/1.jpg"
-		      //     },
-		      //     {
-		      //       src: "site-assets/img/p1/2.jpg"
-		      //     },
-		      //     {
-		      //       src: "site-assets/img/p1/3.jpg"
-		      //     }
-		      // ], {
-		      //   type: 'image'
-		      // });
-
-
-
-
-
-
-		      // FROM INLINE ELEMENT
-		      // .my-popup {
-		      //   background: white;
-		      //   max-width: 400px;
-		      //   width: 100%;
-		      //   margin: 0 auto;
-		      //   text-align: center;
-		      //   padding: 50px;
-		      //   position: relative;
-		      // }
-
-		      // $.magnificPopup.open({
-		      //   src: $('<div class="my-popup">Hello World!</div>'),
-		      //   type: 'inline'
-		      // }, {
-		      //   closeBtnInside: true
-		      // });
-
-
-
-		      // WORKS, GALLERY
-		      // $.magnificPopup.open(
-		      // [
-		      //   {
-		      //     src: "http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_b.jpg"
-		      //   },
-		      //   {
-		      //     src: "http://farm9.staticflickr.com/8382/8558295631_0f56c1284f_s.jpg"
-		      //   },
-		      //   {
-		      //     src: "http://www.youtube.com/watch?v=7HKoqNJtMTQ",
-		      //     type: 'iframe'
-		      //   }
-		      // ], {
-		      //   type: 'image',
-		      //   closeBtnInside: false,
-		      //   gallery: {
-		      //     enabled: true
-		      //   }
-		      // });
-
-
-		      // WORKS IFRAME
-		      // $.magnificPopup.open({
-		      //   src: "http://www.youtube.com/watch?v=7HKoqNJtMTQ",
-		      //   type: 'iframe'
-		      // }, {
-		      //   closeBtnInside: false
-		      // });
-
-
-
-		    });
-
-		  });
-
+		});
 
 	});
-	</script>
+});
+</script>

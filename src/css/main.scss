@@ -23,6 +23,8 @@ $shadow: 0 0 8px rgba(0, 0, 0, 0.6); // shadow on image or iframe
 $popup-padding-left: 8px; // Padding from left and from right side
 
 
+$z-index-base: 500;
+
 $include-arrows: true; // include styles for nav arrows
 $controls-opacity: 0.65;
 $controls-color: #FFF;
@@ -35,13 +37,15 @@ $IE7support: true;
 
 
 
+
+
 // Transluscent overlay
 .mfp-bg {
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 500;
+  z-index: $z-index-base + 2;
   overflow: hidden;
   position: fixed;
 
@@ -58,7 +62,7 @@ $IE7support: true;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 501;
+  z-index: $z-index-base + 3;
   position: fixed;
   outline: none !important;
   -webkit-backface-visibility: hidden; // fixes webkit bug that can cause "false" scrollbar
@@ -143,7 +147,6 @@ button.mfp-arrow {
   border: 0;
   -webkit-appearance: none;
   display: block;
-  z-index: 1;
   padding: 0;
 }
 button::-moz-focus-inner {
@@ -168,7 +171,6 @@ button::-moz-focus-inner {
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1000;
   text-decoration: none;
   text-align: center;
   opacity: $controls-opacity;
@@ -188,6 +190,7 @@ button::-moz-focus-inner {
   right: -6px;
   text-align: right;
   padding-right: 6px;
+  width: 100%;
 }
 .mfp-close:hover,
 .mfp-close:focus {
@@ -206,11 +209,8 @@ button::-moz-focus-inner {
   right: 0;
   color: $controls-text-color;
   font-size: 12px;
+  line-height: 18px;
 }
-
-
-
-
 
 
 @if $include-arrows {
@@ -302,7 +302,8 @@ button::-moz-focus-inner {
 .mfp-ajax-cur {
   cursor: progress;
 }
-.mfp-zoom-out-cur {
+.mfp-zoom-out-cur,
+.mfp-zoom-out-cur .mfp-image-holder .mfp-close {
   cursor: -moz-zoom-out;
   cursor: -webkit-zoom-out;
   cursor: zoom-out;
@@ -329,9 +330,8 @@ button::-moz-focus-inner {
 
 
 
-// Hide the title and close icon during the loading
-.mfp-loading .mfp-close,
-.mfp-loading .mfp-title {
+// Hide the image during the loading
+.mfp-loading.mfp-figure {
   display: none;
 }
 
@@ -401,6 +401,7 @@ button::-moz-focus-inner {
     padding: $image-padding-top 0 $image-padding-bottom;
     margin: 0 auto;
   }
+
   /* The shadow behind the image */
   .mfp-figure:after {
     content: '';
@@ -418,17 +419,18 @@ button::-moz-focus-inner {
   .mfp-figure {
     line-height: 0;
   }
-  .mfp-title {
-    text-align: left;
-    line-height: 18px;
+  .mfp-bottom-bar {
     margin-top:  -36px;
-    color: #F3F3F3;
-    padding: 0;
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
+    cursor: auto;
+  }
+  .mfp-title {
     text-align: left;
+    line-height: 18px;
+    color: #F3F3F3;
   }
 
   .mfp-figure small {
@@ -468,7 +470,7 @@ button::-moz-focus-inner {
           bottom: 0;
         }
 
-        .mfp-img-mobile .mfp-title {
+        .mfp-img-mobile .mfp-bottom-bar {
           background: rgba(0,0,0,0.6);
           bottom: 0;
           margin: 0;
@@ -479,7 +481,7 @@ button::-moz-focus-inner {
           -moz-box-sizing: border-box;
           box-sizing: border-box;
         }
-        .mfp-img-mobile .mfp-title:empty {
+        .mfp-img-mobile .mfp-bottom-bar:empty {
           padding: 0;
         }
         .mfp-img-mobile .mfp-counter {
@@ -533,7 +535,7 @@ button::-moz-focus-inner {
 
 @if $IE7support { 
   .mfp-ie7 {
-    .mfp-title {
+    .mfp-bottom-bar {
       width: 600px;
       left: 50%;
       margin-left: -300px;

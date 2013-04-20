@@ -429,7 +429,15 @@ h3 em {
   opacity: 0.3;
 }
 
-
+code.def {
+ padding: 0;
+background: #FFF;
+border: 0;
+display: block;
+margin-bottom: 8px;
+margin-top: -10px;
+color: #A3A3A3;
+}
 
 @media all and (max-width: 30em) {
 

@@ -70,6 +70,7 @@ module.exports = function(grunt) {
           'image',
           'iframe',
           'gallery',
+          'retina',
           'fastclick'
         ],
         basePath: 'src/js/',
@@ -117,7 +118,7 @@ module.exports = function(grunt) {
         tasks: ['jekyll:dev', 'copy:dev']
       },
       files: ['src/**'],
-      tasks: [ 'sass', 'mfpbuild', 'copy:dev']
+      tasks: [ 'sass', 'mfpbuild', 'copy:dev', 'uglify']
     },
 
     cssmin: {

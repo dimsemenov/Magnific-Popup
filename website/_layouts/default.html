@@ -16,15 +16,17 @@
       <link href="site-assets/site.css?v=0.0.9" rel="stylesheet" />
       <link href="dist/magnific-popup.css?v=0.0.9" rel="stylesheet" />
 
-      <!-- <script  src="third-party-libs/jquery.min.js"></script> -->
-      <!-- <script  src="third-party-libs/zepto.js"></script> -->
-
-      <script  src="third-party-libs/jquery.js"></script>
+      <script  src="third-party-libs/zepto.js"></script>
+      <!-- <script  src="third-party-libs/jquery.js"></script> -->
+      
       <script src="dist/jquery.magnific-popup.js?v=0.0.9"></script>
+    {% else %}
+      <link href="site-assets/all.min.css?v=0.0.9" rel="stylesheet" />
+      <script  src="third-party-libs/jquery.min.js"></script>
+      <script src="dist/jquery.magnific-popup.min.js?v=0.0.9"></script>
 
       <script type="text/javascript">
       WebFontConfig = { fontdeck: { id: '30976' } };
-
       (function() {
         var wf = document.createElement('script');
         wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
@@ -34,13 +36,9 @@
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(wf, s);
       })();
-      </script>
-
-    {% else %}
-      <link href="site-assets/all.min.css?v=0.0.9" rel="stylesheet" />
-      <script  src="third-party-libs/jquery.min.js"></script>
-      <script src="dist/jquery.magnific-popup.min.js?v=0.0.9"></script>
+     </script>
     {% endif %}
+    
   </head>
   <body>
     
