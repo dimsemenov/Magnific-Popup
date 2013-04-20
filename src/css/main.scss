@@ -30,6 +30,8 @@ $inner-close-icon-color: #333;
 $controls-text-color: #CCC;
 $controls-text-color-hover: #FFF;
 
+$z-index-base: 500; //set this to something higher than the highest z-index in your document
+
 $IE7support: true;
 
 
@@ -41,7 +43,7 @@ $IE7support: true;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 500;
+  z-index: $z-index-base + 2;
   overflow: hidden;
   position: fixed;
 
@@ -58,7 +60,7 @@ $IE7support: true;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 501;
+  z-index: $z-index-base + 3;
   position: fixed;
   outline: none !important;
   -webkit-backface-visibility: hidden; // fixes webkit bug that can cause "false" scrollbar
@@ -143,7 +145,7 @@ button.mfp-arrow {
   border: 0;
   -webkit-appearance: none;
   display: block;
-  z-index: 1;
+  z-index: $z-index-base + 1;
   padding: 0;
 }
 button::-moz-focus-inner {
@@ -168,7 +170,7 @@ button::-moz-focus-inner {
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1000;
+  z-index: $z-index-base + 4;
   text-decoration: none;
   text-align: center;
   opacity: $controls-opacity;
@@ -412,7 +414,7 @@ button::-moz-focus-inner {
     right: 0;
     width: auto;
     height: auto;
-    z-index: -1;
+    z-index: $z-index-base;
     box-shadow: $shadow;
   }
   .mfp-figure {
