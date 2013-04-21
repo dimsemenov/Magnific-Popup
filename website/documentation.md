@@ -117,7 +117,7 @@ $('.parent-container').magnificPopup({
 
 
 ### 3. Passing data through 'items' object
-`items` option makes Magnific Popup ignore all attributes on target DOM element and grab data only from it. It can be a single object or an array of objects with data for popup.
+`items` option defines data for popup item(s) and it makes Magnific Popup ignore all attributes on target DOM element. Value for `items` can be a single object or an array of objects.
 
 {% highlight javascript %}
 // Example with single object

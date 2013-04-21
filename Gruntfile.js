@@ -108,7 +108,11 @@ module.exports = function(grunt) {
       my_target: {
         files: {
           'dist/jquery.magnific-popup.min.js': ['dist/jquery.magnific-popup.js']
-        }
+        },
+        preserveComments: 'some'
+      },
+      options: {
+        preserveComments: 'some'
       }
     },
 
