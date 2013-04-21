@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.0.9 - 2013-04-20
+/*! Magnific Popup - v0.0.9 - 2013-04-21
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; Licensed MIT */
 ;(function($) {
@@ -789,21 +789,23 @@ $.fn.magnificPopup = function(options) {
 };
 
 
-// Quick Benchmark
-// var start = performance.now(),
-// 	i,
-// 	rounds = 1000;
+//Quick benchmark for stuff
+/*
+var start = performance.now(),
+	i,
+	rounds = 1000;
 
-// for(i = 0; i < rounds; i++) {
-// 	item.img.width()
-// }
-// console.log('Test #1:', performance.now() - start);
+for(i = 0; i < rounds; i++) {
 
-// start = performance.now();
-// for(i = 0; i < rounds; i++) {
-// 	item.img.naturalWidth
-// }
-// console.log('Test #2:', performance.now() - start);
+}
+console.log('Test #1:', performance.now() - start);
+
+start = performance.now();
+for(i = 0; i < rounds; i++) {
+
+}
+console.log('Test #2:', performance.now() - start);
+*/
 
 /*>>core*/
 
@@ -1431,6 +1433,7 @@ $.magnificPopup.registerModule('gallery', {
 				}).attr('src', item.src);
 			}
 
+
 			item.preloaded = true;
 		}
 	}
@@ -1496,7 +1499,7 @@ var RETINA_NS = 'retina';
 
 $.magnificPopup.registerModule(RETINA_NS, {
 	options: {
-		replaceSrc: function(item, ratio) {
+		replaceSrc: function(item) {
 			return item.src.replace(/\.\w+$/, function(m) { return '@2x' + m; });
 		},
 		ratio: 1 // Function or number.  Set to 1 to disable.
@@ -1518,7 +1521,7 @@ $.magnificPopup.registerModule(RETINA_NS, {
 						});
 					});
 					_mfpOn('ElementParse' + '.' + RETINA_NS, function(e, item) {
-						 item.src = st.replaceSrc(item, ratio);
+						item.src = st.replaceSrc(item, ratio);
 					});
 				}
 			}
@@ -1577,7 +1580,6 @@ $.magnificPopup.registerModule(RETINA_NS, {
 					numPointers;
 
 				elem.on('touchstart' + ns, function(e) {
-					var startTarget = e.target;
 					pointerMoved = false;
 					numPointers = 1;
 
@@ -1611,7 +1613,7 @@ $.magnificPopup.registerModule(RETINA_NS, {
 
 			}
 
-			elem.on('click' + ns, function(e) {
+			elem.on('click' + ns, function() {
 				if(!lock) {
 					callback();
 				}

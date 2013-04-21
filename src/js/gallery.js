@@ -100,8 +100,8 @@ $.magnificPopup.registerModule('gallery', {
 						_getEl('b', arrowRight[0], false, true);
 						_getEl('a', arrowRight[0], false, true);
 					}
-
-					mfp.container.append(mfp.counter, arrowLeft, arrowRight);
+					
+					mfp.container.append(mfp.counter.add(arrowLeft).add(arrowRight));
 				}
 			});
 
@@ -161,6 +161,7 @@ $.magnificPopup.registerModule('gallery', {
 					item.loadError = true;
 				}).attr('src', item.src);
 			}
+
 
 			item.preloaded = true;
 		}
