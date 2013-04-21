@@ -100,10 +100,11 @@ $.magnificPopup.registerModule('gallery', {
 						_getEl('b', arrowRight[0], false, true);
 						_getEl('a', arrowRight[0], false, true);
 					}
-					
-					mfp.container.append(mfp.counter.add(arrowLeft).add(arrowRight));
+
+					mfp.container.append(arrowLeft.add(arrowRight));
 				}
 			});
+
 
 			_mfpOn(CLOSE_EVENT+ns, function() {
 				_document.off(ns);
