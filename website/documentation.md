@@ -46,14 +46,14 @@ description: The complete guide on how to use Magnific Popup.
 }
 </style>
 
-<h3 style="color:#C00; text-align:center;">Warning! Plugin is in early beta and this documentation is not finished yet. Please send your suggestions about it via Twitter to <a href="http://twitter.com/dimsemenov">@dimsemenov</a>.</h3>
-
-Here you can find guide about how to use Magnific Popup. If you've found any mistake in this site or you know how to improve something, simply submit <a href="">commit on GitHub</a>.
+Here you can find guide about how to use Magnific Popup. If you've found any mistake in this site or you know how to improve some part of this documentation, simply submit <a href="https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md">commit on GitHub</a>.
 
 * This will become a table of contents (this text will be scraped).
 {:toc}
 
 ## Including files
+
+You can get Magnific Popup JS and CSS file from <a href="#mfp-build-tool" class="mfp-build-tool-link">build tool</a>, or from folder `dist/` of <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub repository</a> or by compiling it by yourself with Grunt.
 
 {% highlight html %}
 <!-- Magnific Popup core CSS file -->
@@ -116,7 +116,7 @@ $('.parent-container').magnificPopup({
 
 
 
-### 3. Passing data through 'items' object
+### 3. Passing data through "items object
 `items` option defines data for popup item(s) and it makes Magnific Popup ignore all attributes on target DOM element. Value for `items` can be a single object or an array of objects.
 
 {% highlight javascript %}
@@ -124,7 +124,7 @@ $('.parent-container').magnificPopup({
 $('#some-button').magnificPopup({
     items: {
       src: 'path-to-image-1.jpg'
-    }
+    },
     type: 'image' // this is default type
 });
 
@@ -669,9 +669,6 @@ View [example of retina popup on CodePen](http://codepen.io/dimsemenov/pen/Dohka
 
 
 
-## Styling
-
-
 ## API
 
 
@@ -739,21 +736,9 @@ callbacks: {
 
 
 
-
-
 ### Public methods
 
 Magnific Popup object is not attached to DOM element.
-
-
-
-
-
-
-
-## Extending
-
-## FAQ
 
 
 ## Translating
@@ -780,3 +765,7 @@ $.extend(true, $.magnificPopup.defaults, {
   }
 });
 {% endhighlight %}
+
+## FAQ
+
+Nothing in FAQ yet. If you think that something should be added, please submit <a href="https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md">commit to documentation on GitHub</a>.
