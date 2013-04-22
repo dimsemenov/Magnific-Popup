@@ -148,7 +148,6 @@ MagnificPopup.prototype = {
 		} else {
 			mfp.currTemplate = {};
 		}
-		
 
 
 
@@ -298,6 +297,9 @@ MagnificPopup.prototype = {
 		mfp.updateItemHTML();
 
 		// remove scrollbar, add padding e.t.c
+		
+
+
 		_body.css(bodyStyles);
 		
 		// add everything to DOM
@@ -371,7 +373,7 @@ MagnificPopup.prototype = {
 		mfp._removeClassFromMFP(classesToRemove);
 
 		if(mfp.fixedContentPos) {
-			var bodyStyles = {paddingRight: 'inherit'};
+			var bodyStyles = {paddingRight: 0};
 			if(mfp.isIE7) {
 				$('body, html').css('overflow', 'auto');
 			} else {
@@ -431,8 +433,7 @@ MagnificPopup.prototype = {
 		
 		mfp.currItem = item;
 
-		var type = item.type;
-		
+		var type = item.type;		
 		if(!mfp.currTemplate[type]) {
 			var markup = mfp.st[type] ? mfp.st[type].markup : false;
 			if(markup) {
@@ -477,6 +478,7 @@ MagnificPopup.prototype = {
 
 		_mfpTrigger(BEFORE_APPEND_EVENT);
 		mfp.container.addClass('mfp-'+type+'-holder');
+
 		mfp.contentContainer.html(mfp.content);
 	},
 
@@ -577,8 +579,6 @@ MagnificPopup.prototype = {
 
 	/**
 	 * Updates text on preloader
-	 * @param  {String}  txt     Preloader text
-	 * @param  {Boolean} isError Adds mfp-img-error class if enabled
 	 */
 	updateStatus: function(status, text) {
 
@@ -783,7 +783,7 @@ $.fn.magnificPopup = function(options) {
 };
 
 
-//Quick benchmark for stuff
+//Quick benchmark
 /*
 var start = performance.now(),
 	i,

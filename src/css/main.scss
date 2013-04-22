@@ -535,10 +535,15 @@ button::-moz-focus-inner {
 
 @if $IE7support { 
   .mfp-ie7 {
+    .mfp-img {
+      padding: 0;
+    }
     .mfp-bottom-bar {
       width: 600px;
       left: 50%;
       margin-left: -300px;
+      margin-top: 5px;
+      padding-bottom: 5px;
     }
     .mfp-container {
       padding: 0;

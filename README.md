@@ -39,4 +39,4 @@ Compile Magnific Popup
 
 ## License
 
-Script is MIT licensed and free and will always be kept this way. But has a small restriction from me - please do not create public WordPress plugin based on it(or at least contact me before creating it), because I will create it.
+Script is MIT licensed and free and will always be kept this way. But has a small restriction from me - please do not create public WordPress plugin based on it(or at least contact me before creating it), because I will create it ([want to get notified?](http://dimsemenov.com/subscribe.html)).

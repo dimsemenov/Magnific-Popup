@@ -85,7 +85,7 @@ $.magnificPopup.registerModule('image', {
 		},
 
 		/**
-		 * Function that loops until image has size to display elements that rely on it asap
+		 * Function that loops until the image has size to display elements that rely on it asap
 		 */
 		findImageSize: function(item) {
 
@@ -98,7 +98,6 @@ $.magnificPopup.registerModule('image', {
 					}
 					// decelerating interval that checks for size of an image
 					_imgInterval = setInterval(function() {
-
 						if(img.naturalWidth > 0) {
 							mfp._onImageHasSize(item);
 							return;

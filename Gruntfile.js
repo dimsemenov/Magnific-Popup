@@ -1,9 +1,7 @@
 /**
  * 
  * Run 'grunt' to generate JS and CSS in folder 'dist' and site in folder '_site'
- *
- * Run `grunt production` to generate production site in folder '_production_site'
- *
+ * *
  * Run 'grunt watch' to automatically regenerate '_site' when you change files in 'src' or in 'website'
  * 
  */
@@ -16,15 +14,17 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Metadata.
     pkg: grunt.file.readJSON('magnific-popup.jquery.json'),
+
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
       '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-      '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-      ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+      '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>; */\n',
+
     // Task configuration.
     clean: {
       files: ['dist']
     },
+    
     sass: {                            
       dist: {                      
         files: {      
@@ -133,8 +133,6 @@ module.exports = function(grunt) {
       }
     }
 
-
-
   });
 
 
@@ -186,6 +184,9 @@ module.exports = function(grunt) {
   });
 
 
+
+
+
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -194,18 +195,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
-
-
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-jekyll');
-   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // Default task.
   grunt.registerTask('default', ['sass', 'mfpbuild', 'uglify', 'copy', 'jekyll:dev']);
 
-
- grunt.registerTask('production', ['sass', 'mfpbuild', 'uglify', 'copy', 'cssmin', 'jekyll:production']);
- 
- grunt.registerTask('hint', ['jshint']);
+  grunt.registerTask('production', ['sass', 'mfpbuild', 'uglify', 'copy', 'cssmin', 'jekyll:production']);
+  grunt.registerTask('hint', ['jshint']);
 
 };

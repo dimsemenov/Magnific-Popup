@@ -1,8 +1,6 @@
 
 <script type="text/javascript">
-
   (function() {
-
     var canvas = document.getElementById('broken-glass'),
         context = canvas.getContext('2d'),
         width = canvas.width = Math.min(800, window.innerWidth),
@@ -13,13 +11,9 @@
         };
         
     window.drawTriangles = function(){
-      canvas.style.cssText = 'display:none';
-
       context.clearRect(0, 0, width, height);
-
       var hue = rand(0,360);
       var increment = 80 / numTriangles;
-
       for(var i = 0; i < numTriangles; i++) { 
           context.beginPath();      
           context.moveTo(rand(0,width), rand(0,height) );  
@@ -33,44 +27,15 @@
           hue+=increment;
           if(hue > 360) hue = 0;
       }
-
-      // var imageData = context.getImageData(0, 0, width, height);
-      // var pixels = imageData.data;
-
-      // // Apply random pixels
-      // var contrast = -50;
-      // for (var i = 0, il = pixels.length; i < il; i += 4) {
-        
-      //   var average = Math.round( ( pixels[i] + pixels[i+1] + pixels[i+2] ) / 3 );
-      //   if (average > 127){
-      //     pixels[i] += ( pixels[i]/average ) * contrast;
-      //     pixels[i+1] += ( pixels[i+1]/average ) * contrast;
-      //     pixels[i+2] += ( pixels[i+2]/average ) * contrast;
-      //   } else {
-      //     pixels[i] -= ( pixels[i]/average ) * contrast;
-      //     pixels[i+1] -= ( pixels[i+1]/average ) * contrast;
-      //     pixels[i+2] -= ( pixels[i+2]/average ) * contrast;
-      //   }
-      // }
-
-      // context.putImageData(imageData, 0, 0);
-      canvas.style.cssText = '-webkit-filter: contrast(110%);';
-
+      canvas.style.cssText = '-webkit-filter: contrast(115%);';
     };
 
     drawTriangles();
 
-    $(document).ready(function($) {
-      var alpha = 0.6;
-      var imageData = context.getImageData(0, 0, width, height);
-      var pixels = imageData.data;
+    var el = document.getElementById('logo');
+    el.onclick = function() {
+     drawTriangles();
+    };
 
-      // $('#tweet-link').mouseover(function() {
-      //  drawTriangles();
-      // });
-      $('#logo').click(function(e) {
-       drawTriangles();
-      });
-    });
   })();
 </script>

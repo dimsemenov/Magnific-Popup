@@ -1,52 +1,25 @@
 ---
 layout: default
 title: Magnific Popup Documentation
-description: The complete guide on how to use Magnific Popup.
+description: The complete guide on how to use Magnific Popup - an open source responsive lightbox plugin.
+addjs: true
+canonical_url: http://dimsemenov.com/plugins/magnific-popup/documentation.html
 ---
 
-# &nbsp;
 
+
+<style type="text/css">#main-wrapper{background: #FFF;}</style>
 <div id="documentation-intro">
   <h1><a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a> Documentation</h1>
   <p><a href="">Project on Github</a> &middot; <a href="#mfp-build-tool" class="mfp-build-tool-link">Build tool</a> &middot; <a href="http://twitter.com/dimsemenov">Twitter of developer</a> &middot; <a href="http://dimsemenov.com/subscribe.html">Newsletter of developer</a></p>
 </div>
-<style>
-#documentation-intro {
-  background: #2b2b2b;
-  text-align: center;
-  padding: 3em;
-  width: 100%;
-  margin-left: -3em;
-  margin-bottom: 3em;
-}
-#documentation-intro h1 {
-  color: #FFF;
-  width: 100%;
-  text-align: center;
-  font-size: 44px;
-  line-height: 1.1em;
-}
-#id1 {
-  display: none;
-}
-#main-wrapper {
-  background: #FFF;
-}
-#documentation-intro h1 a {
-  text-decoration: none;
-  color: #FFF;
-}
-#documentation-intro p a {
-  font-size: 15px;
-  color: #7CB5FF;
-}
-#documentation-intro a:hover {
-  opacity: 0.75;
-  text-decoration: underline;
-}
-</style>
+
 
 Here you can find guide about how to use Magnific Popup. If you've found any mistake in this site or you know how to improve some part of this documentation, simply submit <a href="https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md">commit on GitHub</a>.
+
+<h3 style="color:#C00; text-align:center;">Warning! Plugin is in early beta, please don't use it in live projects and wait until I finish it. Please send your suggestions about it via Twitter to <a href="http://twitter.com/dimsemenov">@dimsemenov</a>.</h3>
+
+# &nbsp;
 
 * This will become a table of contents (this text will be scraped).
 {:toc}
@@ -116,7 +89,7 @@ $('.parent-container').magnificPopup({
 
 
 
-### 3. Passing data through "items object
+### 3. Passing data through 'items' object
 `items` option defines data for popup item(s) and it makes Magnific Popup ignore all attributes on target DOM element. Value for `items` can be a single object or an array of objects.
 
 {% highlight javascript %}
@@ -738,7 +711,47 @@ callbacks: {
 
 ### Public methods
 
-Magnific Popup object is not attached to DOM element.
+
+{% highlight javascript %}
+// Open popup immediately
+$.magnificPopup.open({
+  items: {
+    src: 'someimage.jpg'
+  },
+  type: 'image'
+
+  // You may add options here, they're exactly the same as for $.fn.magnificPopup call
+  // Note that some settings that rely on click event (like disableOn or midClick) will not work here
+
+});
+
+// Close popup that is currently opened
+$.magnificPopup.close();
+
+
+
+/* 
+  Methods below don't have shorthand like "open" and "close".
+  They should be called through "instance" object.
+  For example: $.magnificPopup.instance.doSomething();
+*/
+
+var magnificPopup = $.magnificPopup.instance;
+
+// Close the current popup
+magnificPopup.close();
+
+// Navigation when gallery is enabled
+magnificPopup.next(); // go to next item
+magnificPopup.prev(); // go to prev item
+
+
+// Update status of popup ();
+// First param - message that will be displayed. 
+// Second one status key, can be: 'loading', 'error' or 'ready'.
+magnificPopup.updateStatus('The loading message', 'loading'); 
+{% endhighlight %}
+
 
 
 ## Translating

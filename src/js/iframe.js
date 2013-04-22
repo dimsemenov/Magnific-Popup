@@ -3,7 +3,7 @@ var IFRAME_NS = 'iframe',
 
 	// IE black screen bug fix
 	toggleIframeInIE = function(show) {
-		if(mfp.isIE7 && mfp.currItem.type === IFRAME_NS) {
+		if(mfp.isIE7 && mfp.currItem && mfp.currItem.type === IFRAME_NS) {
 			var el = mfp.content.find('iframe');
 			if(el.length) {
 				el.css('display', show ? 'block' : 'none');

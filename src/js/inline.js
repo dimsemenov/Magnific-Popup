@@ -39,8 +39,7 @@ $.magnificPopup.registerModule(INLINE_NS, {
 				}
 
 				if(!item.isElement && !item.inlinePlaceholder) {
-					_hasPlaceholder = true;
-					item.inlinePlaceholder = _getEl(mfp.st.inline.hiddenClass + ' mfp-placeholder-'+mfp.st.key + '-'+ item.index);
+					item.inlinePlaceholder = _getEl(mfp.st.inline.hiddenClass);
 				}
 				
 				if(item.isElement) {
@@ -50,8 +49,13 @@ $.magnificPopup.registerModule(INLINE_NS, {
 						item.inlineElement = $(item.src);
 					}
 				}
+
+				if(item.inlinePlaceholder) {
+					_hasPlaceholder = true;
+				}
 				
 				item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(mfp.st.inline.hiddenClass);
+				
 				return item.inlineElement;
 			} else {
 				mfp._parseMarkup(template, {}, item);

@@ -37,6 +37,9 @@ h1, h2, h3, h4, h5, h6 {
 .mfp-preloader {
   font-size: 13px;
 }
+img {
+  border: 0;
+}
 h1 {
   margin-bottom: 5px;
 }
@@ -652,7 +655,36 @@ pre .chunk {
   color: #aaa
 }
 
-
+#documentation-intro {
+  background: #2b2b2b;
+  text-align: center;
+  padding: 3em;
+  width: 100%;
+  margin-left: -3em;
+  margin-bottom: 3em;
+}
+#documentation-intro h1 {
+  color: #FFF;
+  width: 100%;
+  text-align: center;
+  font-size: 44px;
+  line-height: 1.1em;
+}
+#id1 {
+  display: none;
+}
+#documentation-intro h1 a {
+  text-decoration: none;
+  color: #FFF;
+}
+#documentation-intro p a {
+  font-size: 15px;
+  color: #7CB5FF;
+}
+#documentation-intro a:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
 
 /* Syntax highlighter */
 .hll{background-color:#ffc}.c{color:#998;font-style:italic}.err{color:#a61717;background-color:#e3d2d2}.k{color:#000;font-weight:bold}.o{color:#000;font-weight:bold}.cm{color:#998;font-style:italic}.cp{color:#999;font-weight:bold;font-style:italic}.c1{color:#998;font-style:italic}.cs{color:#999;font-weight:bold;font-style:italic}.gd{color:#000;background-color:#fdd}.ge{color:#000;font-style:italic}.gr{color:#a00}.gh{color:#999}.gi{color:#000;background-color:#dfd}.go{color:#888}.gp{color:#555}.gs{font-weight:bold}.gu{color:#aaa}.gt{color:#a00}.kc{color:#000;font-weight:bold}.kd{color:#000;font-weight:bold}.kn{color:#000;font-weight:bold}.kp{color:#000;font-weight:bold}.kr{color:#000;font-weight:bold}.kt{color:#458;font-weight:bold}.m{color:#099}.s{color:#d01040}.na{color:#008080}.nb{color:#0086b3}.nc{color:#458;font-weight:bold}.no{color:#008080}.nd{color:#3c5d5d;font-weight:bold}.ni{color:#800080}.ne{color:#900;font-weight:bold}.nf{color:#900;font-weight:bold}.nl{color:#900;font-weight:bold}.nn{color:#555}.nt{color:#000080}.nv{color:#008080}.ow{color:#000;font-weight:bold}.w{color:#bbb}.mf{color:#099}.mh{color:#099}.mi{color:#099}.mo{color:#099}.sb{color:#d01040}.sc{color:#d01040}.sd{color:#d01040}.s2{color:#d01040}.se{color:#d01040}.sh{color:#d01040}.si{color:#d01040}.sx{color:#d01040}.sr{color:#009926}.s1{color:#d01040}.ss{color:#990073}.bp{color:#999}.vc{color:#008080}.vg{color:#008080}.vi{color:#008080}.il{color:#099}

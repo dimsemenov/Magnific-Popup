@@ -1,7 +1,9 @@
 ---
 layout: default
 title: Magnific Popup&#58; Responsive jQuery Lightbox Plugin
-description: Light and open source responsive lightbox plugin with focus on performance and user experience, for jQuery and Zepto.js.
+description: Light and open source responsive lightbox plugin with focus on performance, for jQuery and Zepto.js. High-DPI (retina) display support, fast tap for touch devices.
+canonical_url: http://dimsemenov.com/plugins/magnific-popup/
+include_credit: true
 ---
 
 <div id="logo">
@@ -12,7 +14,7 @@ description: Light and open source responsive lightbox plugin with focus on perf
 <div>
   <h2 class="intro">Magnific Popup is a free responsive jQuery lightbox plugin that is focused on performance and providing best experience for user with any device (Zepto.js compatible).</h2>
   <div id="header-links">
-    <a href="documentation.html">Plugin documentation</a> &middot; <a href="https://github.com/dimsemenov/Magnific-Popup">view on GitHub</a><!-- &middot; <a href="https://github.com/dimsemenov/Magnific-Popup">star on GitHub</a> &middot; <a id="tweet-link" href="http://twitter.com/share?url=http://dimsemenov.com/plugins/magnific-popup/&text=Magnific Popup: responsive lightbox plugin&via=dimsemenov" class="tweet-link" rel="nofollow">tweet!</a> -->
+    <a href="documentation.html">Plugin documentation</a> &middot; <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub repository</a><!-- &middot; <a href="https://github.com/dimsemenov/Magnific-Popup">star on GitHub</a> &middot; <a id="tweet-link" href="http://twitter.com/share?url=http://dimsemenov.com/plugins/magnific-popup/&text=Magnific Popup: responsive lightbox plugin&via=dimsemenov" class="tweet-link" rel="nofollow">tweet!</a> -->
   </div>
 </div>
 
@@ -22,21 +24,19 @@ description: Light and open source responsive lightbox plugin with focus on perf
 
   <div class="gc3">
     <h3>Light and modular</h3>
-    <p>You can include in build only features that you need using <a href="#mfp-build-tool" class="mfp-build-tool-link popup-link">online build tool</a> or by compiling it by yourself with Grunt.js. Size of core JS file is <strong>2.8KB</strong> + each module weights about 0.5KB (gzipped). Sass CSS preprocessor is used for easier skinning, but you're not obligated to use it.</p>
+    <p>You can include in build only features that you need using <a href="#mfp-build-tool" class="mfp-build-tool-link popup-link">online build tool</a> or by compiling it by yourself with Grunt.js. Size of core JS file is about <strong>3KB</strong> + each module weights about 0.5KB (gzipped). Sass CSS preprocessor is used for easier skinning, but you're not obligated to use it.</p>
   </div>
-
   <div class="gc3">
     <h3>Content is resized with CSS</h3>
     <p>The majority of lightbox plugins require you to define size of it via JS option. Magnific Popup does not -  feel free to use relative units like EM's or resize lightbox with help of CSS media queries. Update content inside lightbox without worrying about how it'll resize and center.</p>
   </div>
-
   <div class="gc3">
     <h3>Fast</h3>
     <p>Magnific Popup displays images before they're completely loaded to take full advantage of progressive loading. For in and out transitions CSS3 is used instead of slow JavaScript animation.</p>
   </div>
   <div class="gc3">
-    <h3>No external graphics</h3>
-    <p>By default controls are made just with pure CSS, which makes them not just light, but also high-dpi screen (<strong>retina</strong>) ready. Surely, you can style everything by yourself however you wish.</p>
+    <h3>High-DPI (Retina) display support</h3>
+    <p>Default controls are made with pure CSS, without external graphics. For the main image there is a built in way to provide appropriate source for different pixel density displays.</p>
   </div>
   <div class="gc3">
     <h3>Conditional lightbox</h3>
@@ -50,8 +50,6 @@ description: Light and open source responsive lightbox plugin with focus on perf
 
 <h3 style="color:#C00; text-align:center;">Warning! Plugin is in early beta, please don't use it in live projects and wait until I finish it. Please send your suggestions about it via Twitter to <a href="http://twitter.com/dimsemenov">@dimsemenov</a>.</h3>
 
-
-<!-- <p id="conditional-lightbox-notice"><strong>Your screen size is small and lightbox disabled!</strong> Images, videos and maps now just open direct link to their sources.</p> -->
 {% include examples.html %}
 
 
@@ -65,7 +63,7 @@ description: Light and open source responsive lightbox plugin with focus on perf
 <ul>
   <li><a href="https://twitter.com/lokeshdhakar">Lokesh Dhakar</a> for creating original Lightbox script.</li>
   <li><a href="https://twitter.com/chriscoyier">Chris Coyier</a> for awesome CSS techniques.</li>
-  <li><a href="https://twitter.com/chriscoyier">Brad Frost</a> for conditional lightbox technique.</li>
+  <li><a href="https://twitter.com/brad_frost">Brad Frost</a> for conditional lightbox technique.</li>
 </uL>
 
 <h2>Browser support</h2>

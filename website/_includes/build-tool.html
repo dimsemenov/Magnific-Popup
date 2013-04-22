@@ -1,6 +1,6 @@
 <!-- Basic idea of such build tool is stolen from modernizr.com -->
 <div id="mfp-build-tool" class="mfp-hide">
-  <h2>Magnific Popup v0.0.92 Buld Tool</h2>
+  <h2>Magnific Popup v{{site.mfpversion}} Buld Tool</h2>
   <form id="mfp-build-form">
     <p class="help-block">Here you can generate optimized version of main JS file. Please note that CSS you should download directly: <a target="_blank"  href="https://raw.github.com/dimsemenov/Magnific-Popup/master/src/css/main.scss">Sass version</a> or <a target="_blank" href="https://raw.github.com/dimsemenov/Magnific-Popup/master/dist/magnific-popup.css">CSS version</a>.</p>
      <label class="checkbox">
@@ -93,7 +93,7 @@
 				setStatus("Error: Build tool wasn't able to GET the js file. Please try again or make file by yourself using Grunt.", 'error');
 			};
 
-			var version = '0.0.92';
+			var version = '{{site.mfpversion}}';
 			var loadedScripts = [];
 		    var onScriptsLoaded = function() {
 
@@ -114,16 +114,20 @@
 
 		        });
 
+		        var output = '';
+
 		        if(hash) {
 		        	hash = hash.substr(0, hash.length-1);
 		        }
 		        
 		        if(minify) {
 					src = uglify(src, ["--extra","--unsafe"]);
+					output = '// Magnific Popup v'+version+' by Dmitry Semenov' + "\n";
+		        	output += '// http://bit.ly/magnific-popup' + (hash ? '#build=' + hash : '') + "\n" + src;
+		        } else {
+		        	output = src;
 		        }
-
-		        var output = '// Magnific Popup v'+version+' by Dmitry Semenov & Co' + "\n";
-		        output +=    '// http://bit.ly/magnific-popup' + (hash ? '#build=' + hash : '') + "\n" + src;
+		        
 		        if(!hash) {
 		        	hash = 'core';
 		        } else {
@@ -142,8 +146,8 @@
 			 	url:"dist/jquery.magnific-popup.js?v="+version, 
 			 	dataType: 'text',
 			 	success: function( data) {
-			 		loadedScripts.push(data);
-			 		if(loadedScripts.length > 1) {
+			 		loadedScripts[0] = data;
+			 		if(loadedScripts[1]) {
 			 			onScriptsLoaded();
 			 		}
 			 	},
@@ -155,8 +159,8 @@
 			 	dataType: 'script',
 			 	cache: true,
 			 	success: function(data) {
-			 		loadedScripts.push(data);
-			 		if(loadedScripts.length > 1) {
+			 		loadedScripts[1] = data;
+			 		if(loadedScripts[0]) {
 			 			onScriptsLoaded();
 			 		}
 			 	},

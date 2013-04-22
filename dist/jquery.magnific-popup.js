@@ -1,6 +1,6 @@
-/*! Magnific Popup - v0.0.9 - 2013-04-21
+/*! Magnific Popup - v0.0.95 - 2013-04-22
 * http://dimsemenov.com/plugins/magnific-popup/
-* Copyright (c) 2013 Dmitry Semenov; Licensed MIT */
+* Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
 
 /*>>core*/
@@ -154,7 +154,6 @@ MagnificPopup.prototype = {
 		} else {
 			mfp.currTemplate = {};
 		}
-		
 
 
 
@@ -304,6 +303,9 @@ MagnificPopup.prototype = {
 		mfp.updateItemHTML();
 
 		// remove scrollbar, add padding e.t.c
+		
+
+
 		_body.css(bodyStyles);
 		
 		// add everything to DOM
@@ -377,7 +379,7 @@ MagnificPopup.prototype = {
 		mfp._removeClassFromMFP(classesToRemove);
 
 		if(mfp.fixedContentPos) {
-			var bodyStyles = {paddingRight: 'inherit'};
+			var bodyStyles = {paddingRight: 0};
 			if(mfp.isIE7) {
 				$('body, html').css('overflow', 'auto');
 			} else {
@@ -437,8 +439,7 @@ MagnificPopup.prototype = {
 		
 		mfp.currItem = item;
 
-		var type = item.type;
-		
+		var type = item.type;		
 		if(!mfp.currTemplate[type]) {
 			var markup = mfp.st[type] ? mfp.st[type].markup : false;
 			if(markup) {
@@ -483,6 +484,7 @@ MagnificPopup.prototype = {
 
 		_mfpTrigger(BEFORE_APPEND_EVENT);
 		mfp.container.addClass('mfp-'+type+'-holder');
+
 		mfp.contentContainer.html(mfp.content);
 	},
 
@@ -583,8 +585,6 @@ MagnificPopup.prototype = {
 
 	/**
 	 * Updates text on preloader
-	 * @param  {String}  txt     Preloader text
-	 * @param  {Boolean} isError Adds mfp-img-error class if enabled
 	 */
 	updateStatus: function(status, text) {
 
@@ -789,7 +789,7 @@ $.fn.magnificPopup = function(options) {
 };
 
 
-//Quick benchmark for stuff
+//Quick benchmark
 /*
 var start = performance.now(),
 	i,
@@ -851,8 +851,7 @@ $.magnificPopup.registerModule(INLINE_NS, {
 				}
 
 				if(!item.isElement && !item.inlinePlaceholder) {
-					_hasPlaceholder = true;
-					item.inlinePlaceholder = _getEl(mfp.st.inline.hiddenClass + ' mfp-placeholder-'+mfp.st.key + '-'+ item.index);
+					item.inlinePlaceholder = _getEl(mfp.st.inline.hiddenClass);
 				}
 				
 				if(item.isElement) {
@@ -862,8 +861,13 @@ $.magnificPopup.registerModule(INLINE_NS, {
 						item.inlineElement = $(item.src);
 					}
 				}
+
+				if(item.inlinePlaceholder) {
+					_hasPlaceholder = true;
+				}
 				
 				item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(mfp.st.inline.hiddenClass);
+				
 				return item.inlineElement;
 			} else {
 				mfp._parseMarkup(template, {}, item);
@@ -1043,7 +1047,7 @@ $.magnificPopup.registerModule('image', {
 		},
 
 		/**
-		 * Function that loops until image has size to display elements that rely on it asap
+		 * Function that loops until the image has size to display elements that rely on it asap
 		 */
 		findImageSize: function(item) {
 
@@ -1056,7 +1060,6 @@ $.magnificPopup.registerModule('image', {
 					}
 					// decelerating interval that checks for size of an image
 					_imgInterval = setInterval(function() {
-
 						if(img.naturalWidth > 0) {
 							mfp._onImageHasSize(item);
 							return;
@@ -1187,7 +1190,7 @@ var IFRAME_NS = 'iframe',
 
 	// IE black screen bug fix
 	toggleIframeInIE = function(show) {
-		if(mfp.isIE7 && mfp.currItem.type === IFRAME_NS) {
+		if(mfp.isIE7 && mfp.currItem && mfp.currItem.type === IFRAME_NS) {
 			var el = mfp.content.find('iframe');
 			if(el.length) {
 				el.css('display', show ? 'block' : 'none');

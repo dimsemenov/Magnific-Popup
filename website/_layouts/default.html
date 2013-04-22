@@ -1,64 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
 
     <title>{{ page.title }}</title>
-
+    
     <meta name="description" content="{{page.description}}"/>
     <meta name="viewport" content="width = device-width, initial-scale = 1.0" />
     <meta name="author" content="Dmitry Semenov">
-    
-        
-    <link rel="canonical" href="http://dimsemenov.com/plugins/magnific-popup/" />
+    <link rel="canonical" href="{{page.canonical_url}}" />
+
+    <meta property="og:url" content="{{page.canonical_url}}">
+    <meta property="og:title" content="{{page.title}}">
+    <meta property="og:description" content="{{page.description}}">
+    <meta property="og:image" content="http://dimsemenov.com/magnific-og-400x400.jpg">
+
+    <link href="https://plus.google.com/102586375605352607718" rel="publisher" />
 
     {% if site.url == 'local' %}
-      <link href="site-assets/site.css?v=0.0.9" rel="stylesheet" />
-      <link href="dist/magnific-popup.css?v=0.0.9" rel="stylesheet" />
-
-      <script  src="third-party-libs/zepto.js"></script>
-      <!-- <script  src="third-party-libs/jquery.js"></script> -->
-      
-      <script src="dist/jquery.magnific-popup.js?v=0.0.9"></script>
+      <link href="site-assets/site.css?v={{site.mfpversion}}" rel="stylesheet" />
+      <link href="dist/magnific-popup.css?v={{site.mfpversion}}" rel="stylesheet" />
     {% else %}
-      <link href="site-assets/all.min.css?v=0.0.91" rel="stylesheet" />
-      <script  src="third-party-libs/jquery.min.js"></script>
-      <script src="dist/jquery.magnific-popup.min.js?v=0.0.91"></script>
-
-      <!-- <script type="text/javascript">
-      WebFontConfig = { fontdeck: { id: '30976' } };
-      (function() {
-        var wf = document.createElement('script');
-        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-        wf.type = 'text/javascript';
-        wf.async = 'true';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wf, s);
-      })();
-     </script> -->
+      <link href="site-assets/all.min.css?v={{site.mfpversion}}" rel="stylesheet" />
     {% endif %}
-    
+
   </head>
+
   <body>
     
   <div id="main-wrapper">
 
-    
-
     {{ content | markdown }}
 
     <div id="footer">
-      Created by <a href="http://dimsemenov.com" rel="author">Dmitry Semenov</a>. Photography in demo by <a href="http://www.squiver.com">Marsel Van Oosten</a>
+      Created by <a href="http://dimsemenov.com" rel="author">Dmitry Semenov</a>.{% if page.include_credit %} Photography in demo by <a href="http://www.squiver.com">Marsel Van Oosten</a>{% endif %}
     </div>
 
   </div>
-{{page.footer}}
-{% include analytics.html %}
-{% include build-tool.html %}
+  
+  {{page.footer}}
+
+  {% if page.addjs %}
+    {% if site.url == 'local' %}
+      <script>
+        document.write('<script src=third-party-libs/' +
+        ('__proto__' in {} ? 'zepto' : 'jquery') +
+        '.js><\/script>')
+      </script>
+      <script src="dist/jquery.magnific-popup.js?v={{site.mfpversion}}"></script>
+    {% else %}
+      <script>
+        document.write('<script src=third-party-libs/' +
+        ('__proto__' in {} ? 'zepto' : 'jquery') +
+        '.min.js><\/script>')
+      </script>
+      <script src="dist/jquery.magnific-popup.min.js?v={{site.mfpversion}}"></script>
+    {% endif %}
+  {% endif %}
+
+  {% include analytics.html %}
+  {% include build-tool.html %}
   </body>
 </html>
 
 {% if site.url == 'local' %}
-      <strong style="display:block; width:100%;text-align:center;">This page is just for tests and should not be used for production!</strong>
-    {% endif %}
+  <strong style="display:block; width:100%;text-align:center;">This page is just for tests and should not be used for production!</strong>
+{% endif %}
