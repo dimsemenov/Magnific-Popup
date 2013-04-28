@@ -59,10 +59,10 @@ var _mfpOn = function(name, f) {
 		mfp.ev.triggerHandler(NS + e, data);
 
 		if(mfp.st.callbacks) {
-			// converts mfpEventName to eventName callback and triggers it if it's present
+			// converts "mfpEventName" to "eventName" callback and triggers it if it's present
 			e = e.charAt(0).toLowerCase() + e.slice(1);
 			if(mfp.st.callbacks[e]) {
-				mfp.st.callbacks[e].apply(mfp, data);
+				mfp.st.callbacks[e].apply(mfp, $.isArray(data) ? data : [data]);
 			}
 		}
 	},
@@ -321,10 +321,10 @@ MagnificPopup.prototype = {
 				mfp.bgOverlay.addClass(READY_CLASS);
 			}
 			
-			// Trap focus in popup
+			// Trap the focus in popup
 			_document.on('focusin' + EVENT_NS, function (e) {
 				if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
-					mfp.wrap.focus();
+					_setFocus();
 					return false;
 				}
 			});
@@ -468,7 +468,9 @@ MagnificPopup.prototype = {
 		if(newContent) {
 			if(mfp.st.closeBtnInside && mfp.currTemplate[type] === true) {
 				// if there is no markup, we just append close button element inside
-				mfp.content.append(_getCloseBtn());
+				if(!mfp.content.find('.mfp-close').length) {
+					mfp.content.append(_getCloseBtn());
+				}
 			} else {
 				mfp.content = newContent;
 			}
@@ -731,13 +733,17 @@ $.magnificPopup = {
 	},
 
 	defaults: {   
+
+		// Info about options is docs:
+		// http://dimsemenov.com/plugins/magnific-popup/documentation.html#options
+		
 		disableOn: 0,	
+
+		key: null,
 
 		midClick: false,
 
 		mainClass: '',
-
-		minHeight: 200,
 
 		preloader: true,
 
@@ -745,26 +751,24 @@ $.magnificPopup = {
 		
 		closeOnContentClick: false,
 
-		closeBtnInside: true,
+		closeBtnInside: true, 
 
 		alignTop: false,
-
-		overlay: true,
 	
 		removalDelay: 0,
-
-		mobileMediaQuery: '(max-width: 800px) and (orientation:landscape), screen and (max-height: 300px)',
 		
-		fixedContentPos: 'auto', // "auto", true, false. "Auto" will automatically disable this option when browser doesn't support fixed position properly.
+		fixedContentPos: 'auto', 
 	
-		fixedBgPos: 'auto', // 'auto', true, false. It's recommended to set it to true when you animate background with CSS3 transitions and when content is less likely to be zoomed.
+		fixedBgPos: 'auto',
 
-		overflowY: 'auto', // CSS property of slider wrapper: 'auto', 'scroll', 'hidden'. Doesn't apply when fixedContentPos is on.
+		overflowY: 'auto',
 
 		closeMarkup: '<button title="%title%" type="button" class="mfp-close">&times;</button>',
 
 		tClose: 'Close (Esc)',
+
 		tLoading: 'Loading...'
+
 	}
 };
 

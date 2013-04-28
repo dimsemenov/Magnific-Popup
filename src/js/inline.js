@@ -5,7 +5,8 @@ var INLINE_NS = 'inline',
 $.magnificPopup.registerModule(INLINE_NS, {
 	options: {
 		hiddenClass: NS+'-hide',
-		markup: ''
+		markup: '',
+		tNotFound: 'Content not found'
 	},
 	proto: {
 
@@ -33,28 +34,33 @@ $.magnificPopup.registerModule(INLINE_NS, {
 			mfp.updateStatus('ready');
 
 			if(item.src) {
+				var inlineSt = mfp.st.inline;
 				// items.src can be String-CSS-selector or jQuery element
 				if(typeof item.src !== 'string') {
 					item.isElement = true;
 				}
 
 				if(!item.isElement && !item.inlinePlaceholder) {
-					item.inlinePlaceholder = _getEl(mfp.st.inline.hiddenClass);
+					item.inlinePlaceholder = _getEl(inlineSt.hiddenClass);
 				}
 				
 				if(item.isElement) {
 					item.inlineElement = item.src;
-				} else {
-					if(!item.inlineElement) {
-						item.inlineElement = $(item.src);
+				} else if(!item.inlineElement) {
+					item.inlineElement = $(item.src);
+					if(!item.inlineElement.length) {
+						mfp.updateStatus('error', inlineSt.tNotFound);
+						item.inlineElement = $('<div>');
 					}
 				}
 
 				if(item.inlinePlaceholder) {
 					_hasPlaceholder = true;
 				}
+
 				
-				item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(mfp.st.inline.hiddenClass);
+				
+				item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(inlineSt.hiddenClass);
 				
 				return item.inlineElement;
 			} else {

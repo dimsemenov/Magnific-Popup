@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.0.95 - 2013-04-22
+/*! Magnific Popup - v0.8.1 - 2013-04-28
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -65,10 +65,10 @@ var _mfpOn = function(name, f) {
 		mfp.ev.triggerHandler(NS + e, data);
 
 		if(mfp.st.callbacks) {
-			// converts mfpEventName to eventName callback and triggers it if it's present
+			// converts "mfpEventName" to "eventName" callback and triggers it if it's present
 			e = e.charAt(0).toLowerCase() + e.slice(1);
 			if(mfp.st.callbacks[e]) {
-				mfp.st.callbacks[e].apply(mfp, data);
+				mfp.st.callbacks[e].apply(mfp, $.isArray(data) ? data : [data]);
 			}
 		}
 	},
@@ -327,10 +327,10 @@ MagnificPopup.prototype = {
 				mfp.bgOverlay.addClass(READY_CLASS);
 			}
 			
-			// Trap focus in popup
+			// Trap the focus in popup
 			_document.on('focusin' + EVENT_NS, function (e) {
 				if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
-					mfp.wrap.focus();
+					_setFocus();
 					return false;
 				}
 			});
@@ -474,7 +474,9 @@ MagnificPopup.prototype = {
 		if(newContent) {
 			if(mfp.st.closeBtnInside && mfp.currTemplate[type] === true) {
 				// if there is no markup, we just append close button element inside
-				mfp.content.append(_getCloseBtn());
+				if(!mfp.content.find('.mfp-close').length) {
+					mfp.content.append(_getCloseBtn());
+				}
 			} else {
 				mfp.content = newContent;
 			}
@@ -737,13 +739,17 @@ $.magnificPopup = {
 	},
 
 	defaults: {   
+
+		// Info about options is docs:
+		// http://dimsemenov.com/plugins/magnific-popup/documentation.html#options
+		
 		disableOn: 0,	
+
+		key: null,
 
 		midClick: false,
 
 		mainClass: '',
-
-		minHeight: 200,
 
 		preloader: true,
 
@@ -751,26 +757,24 @@ $.magnificPopup = {
 		
 		closeOnContentClick: false,
 
-		closeBtnInside: true,
+		closeBtnInside: true, 
 
 		alignTop: false,
-
-		overlay: true,
 	
 		removalDelay: 0,
-
-		mobileMediaQuery: '(max-width: 800px) and (orientation:landscape), screen and (max-height: 300px)',
 		
-		fixedContentPos: 'auto', // "auto", true, false. "Auto" will automatically disable this option when browser doesn't support fixed position properly.
+		fixedContentPos: 'auto', 
 	
-		fixedBgPos: 'auto', // 'auto', true, false. It's recommended to set it to true when you animate background with CSS3 transitions and when content is less likely to be zoomed.
+		fixedBgPos: 'auto',
 
-		overflowY: 'auto', // CSS property of slider wrapper: 'auto', 'scroll', 'hidden'. Doesn't apply when fixedContentPos is on.
+		overflowY: 'auto',
 
 		closeMarkup: '<button title="%title%" type="button" class="mfp-close">&times;</button>',
 
 		tClose: 'Close (Esc)',
+
 		tLoading: 'Loading...'
+
 	}
 };
 
@@ -817,7 +821,8 @@ var INLINE_NS = 'inline',
 $.magnificPopup.registerModule(INLINE_NS, {
 	options: {
 		hiddenClass: NS+'-hide',
-		markup: ''
+		markup: '',
+		tNotFound: 'Content not found'
 	},
 	proto: {
 
@@ -845,28 +850,33 @@ $.magnificPopup.registerModule(INLINE_NS, {
 			mfp.updateStatus('ready');
 
 			if(item.src) {
+				var inlineSt = mfp.st.inline;
 				// items.src can be String-CSS-selector or jQuery element
 				if(typeof item.src !== 'string') {
 					item.isElement = true;
 				}
 
 				if(!item.isElement && !item.inlinePlaceholder) {
-					item.inlinePlaceholder = _getEl(mfp.st.inline.hiddenClass);
+					item.inlinePlaceholder = _getEl(inlineSt.hiddenClass);
 				}
 				
 				if(item.isElement) {
 					item.inlineElement = item.src;
-				} else {
-					if(!item.inlineElement) {
-						item.inlineElement = $(item.src);
+				} else if(!item.inlineElement) {
+					item.inlineElement = $(item.src);
+					if(!item.inlineElement.length) {
+						mfp.updateStatus('error', inlineSt.tNotFound);
+						item.inlineElement = $('<div>');
 					}
 				}
 
 				if(item.inlinePlaceholder) {
 					_hasPlaceholder = true;
 				}
+
 				
-				item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(mfp.st.inline.hiddenClass);
+				
+				item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(inlineSt.hiddenClass);
 				
 				return item.inlineElement;
 			} else {
@@ -1134,10 +1144,10 @@ $.magnificPopup.registerModule('image', {
 
 			var el = template.find('.mfp-img');
 			if(el.length) {
-				item.img = $('<img class="mfp-img" />')
-					.on('load.mfploader', onLoadComplete)
-					.on('error.mfploader', onLoadError)
-					.attr('src', item.src);
+				var img = new Image();
+				img.className = 'mfp-img';
+				item.img = $(img).on('load.mfploader', onLoadComplete).on('error.mfploader', onLoadError);
+				img.src = item.src;
 
 				// without clone() "error" event is not firing when IMG is replaced by new IMG
 				// TODO: find a way to avoid such cloning
