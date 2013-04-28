@@ -38,7 +38,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 				url: item.src,
 				success: function(data, textStatus, jqXHR) {
 
-					_mfpTrigger('ParseAjax', jqXHR);
+					_mfpTrigger('ParseAjax', [ jqXHR ]);
 
 					mfp.appendContent( $(jqXHR.responseText), AJAX_NS );
 
