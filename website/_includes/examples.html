@@ -23,6 +23,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
 -->
 <h2 id="examples">Examples</h2>
+
 <div class="grid-c">
 
   <div class="example gc3">
@@ -39,9 +40,6 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         <img src="http://farm9.staticflickr.com/8514/8589902684_da1978cf93_s.jpg" width="75" height="75" />
       </a>
     </div>
-    <div id="my-popup" class="mfp-hide white-popup">
-      My inline popup
-    </div>
     <script type="text/javascript">
       $(document).ready(function() {
 
@@ -52,6 +50,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           image: {
             verticalFit: true
           }
+          
         });
 
         $('.image-popup-fit-width').magnificPopup({
@@ -97,7 +96,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
   <div class="example gc3">
     <h3>Lightbox gallery</h3>
-    <p>For demonstration purpose lazy-loading is enabled only for the next image depending on move direction, but you can set any number. Also note, that you can put any HTML content in each gallery item and mix types (<a href="http://codepen.io/dimsemenov/pen/vKrqs">example</a>).</p>
+    <p>You may put any HTML content in each gallery item and mix content types (<a href="http://codepen.io/dimsemenov/pen/vKrqs">example</a>). In this example lazy-loading of images is enabled only for the next item based on move direction.</p>
     <div class="html-code grid-of-images">
       <div class="popup-gallery">
         <a href="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_b.jpg" title="The Cleaner"><img src="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_s.jpg" width="75" height="75" /></a>
@@ -138,7 +137,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
   <div class="example gc3">
     <h3>Popup with video or map</h3>
-    <p>Lightbox is automatically disabled on small screen sizes and default behavior of link is triggered.</p>
+    <p>In this example lightboxes are automatically disabled on small screen sizes and default behavior of link is triggered.</p>
     <div class="html-code">
       <a class="popup-youtube" href="http://www.youtube.com/watch?v=7HKoqNJtMTQ" >Open YouTube video</a><br/>
       <a class="popup-vimeo" href="https://vimeo.com/45830194" >Open Vimeo video</a><br/>
@@ -385,6 +384,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
   <div class="example gc3">
     <h3>Popup with form</h3>
+    <p>Entered data is not lost if you open and close the popup or if you go to another page and then press back browser button.</p>
     <div class="html-code">
       <!-- link that opens popup -->
       <a class="popup-with-form" href="#test-form">Open form</a>
@@ -393,11 +393,11 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
       <form id="test-form" class="mfp-hide white-popup-block">
         <h1>Form</h1>
         <fieldset style="border:0;">
-          <p>Magnific Popup has an option to automatically focus on first input. Entered data is not lost if you open and close the popup or if you go to another page and then press back browser button.</p>
+          <p>Lightbox has an option to automatically focus on the first input. It's strongly recommended to use <code>inline</code> popup type for lightboxes with form instead of <code>ajax</code> (to keep entered data if the user accidentally refreshed the page).</p>
           <ol>
             <li>
               <label for="name">Name</label>
-              <input id="name" name="name" type="text" placeholder="First and last name" required autofocus>
+              <input id="name" name="name" type="text" placeholder="Name" required>
             </li>
             <li>
               <label for="email">Email</label>
@@ -409,7 +409,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
             </li>
             <li>
               <label for="textarea">Textarea</label><br/>
-              <textarea id="textarea">Try to resize me.</textarea>
+              <textarea id="textarea"></textarea>
             </li>
           </ol>
         </fieldset>
@@ -420,7 +420,19 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         $('.popup-with-form').magnificPopup({
           type: 'inline',
           preloader: false,
-          focus: '#name'
+          focus: '#name',
+
+          // When elemened is focused, some mobile browsers in some cases zoom in
+          // It looks not nice, so we disable it:
+          callbacks: {
+            beforeOpen: function() {
+              if($(window).width() < 700) {
+                this.st.focus = false;
+              } else {
+                this.st.focus = '#name';
+              }
+            }
+          }
         });
       });
     </script>
@@ -432,6 +444,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
   <div class="example gc3">
     <h3>Ajax popup</h3>
+    <p>You have a full control of what's displayed in popup, align it to any side via CSS, enable or disable scroll on right side of window, - whatever.</p>
     <div class="html-code">
       <a class="simple-ajax-popup-align-top" href="site-assets/ajax/test-ajax.html" >Load content via ajax</a><br/>
       <a class="simple-ajax-popup" href="site-assets/ajax/test-ajax-2.html" >Load another content via ajax</a>
@@ -442,6 +455,11 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         $('.simple-ajax-popup-align-top').magnificPopup({
           type: 'ajax',
           alignTop: true,
+          // callbacks: {
+          //   parseAjax: function(jqXHR) {
+          //     jqXHR.responseText = $('<div>HELLO</div>');
+          //   }
+          // },
           overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default
         });
 
@@ -459,8 +477,9 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
   <div class="example gc3">
     <h3>Error handling</h3>
+    <p>This is just basic example of how error messages are displayed. Surely, you can change text or style them.</p>
     <div class="html-code">
-      <!-- classes mfp-image and mfp-ajax define type of popup -->
+      <!-- classes mfp-image and mfp-ajax define type of the popup -->
       <a id="broken-image" class="mfp-image" href="http://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Blois_Loire_Panorama_-_July_2011.jpg/640px-Blois_Loire_Panorama_-_July_2011-fake.jpg" >Broken image</a><br/>
       <a id="broken-ajax" class="mfp-ajax" href="http://example.com/fakeg" >Broken ajax request</a>
     </div>

@@ -8,13 +8,13 @@ include_credit: true
 
 <div id="logo">
   <canvas id="broken-glass"></canvas>
-  <h1>Magnific Popup</h1>
+  <h1 id="logo-title">Magnific Popup</h1>
 </div>
 {% include logo.html %}
 <div>
   <h2 class="intro">Magnific Popup is a free responsive jQuery lightbox plugin that is focused on performance and providing best experience for user with any device (Zepto.js compatible).</h2>
   <div id="header-links">
-    <a href="documentation.html">Plugin documentation</a> &middot; <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub repository</a><!-- &middot; <a href="https://github.com/dimsemenov/Magnific-Popup">star on GitHub</a> &middot; <a id="tweet-link" href="http://twitter.com/share?url=http://dimsemenov.com/plugins/magnific-popup/&text=Magnific Popup: responsive lightbox plugin&via=dimsemenov" class="tweet-link" rel="nofollow">tweet!</a> -->
+    <a href="documentation.html">Plugin documentation</a> &middot; <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub repository</a>
   </div>
 </div>
 
@@ -44,35 +44,80 @@ include_credit: true
   </div>
   <div class="gc3">
     <h3>Memory management</h3>
-    <p>Popup has an extendable micro templating engine that reuses existing DOM elements (<a href="http://codepen.io/dimsemenov/pen/sHoxp">example</a>), which is expecially useful when you have same pattern for each popup.</p>
+    <p>Popup has an extendable micro templating engine that reuses existing DOM elements (<a href="http://codepen.io/dimsemenov/pen/sHoxp">example</a>), which is expecially useful when your popups same pattern.</p>
   </div>
 </div><br/>
 
-<h3 style="color:#C00; text-align:center;">Warning! Plugin is in early beta, please don't use it in live projects and wait until I finish it. Please send your suggestions about it via Twitter to <a href="http://twitter.com/dimsemenov">@dimsemenov</a>.</h3>
+<div>
+<!-- <p id="smashing">Check out <a href="">my new article</a> about lightboxes in general on the <a class="smashing-link" href="">Smashing Magazine</a>.</p>
+<script type="text/javascript">
+var _ref = document.referrer;
+if(_ref && _ref.indexOf('smashingmag') > -1) {
+  document.getElementById('smashing').innerHTML = 'Join <a href="">the discussion</a> of this ligthbox plugin on the <a href="" id="hackernews" class="smashing-link">Hacker News</a>.'; // HAHA!
+}
+</script> -->
+</div>
 
 {% include examples.html %}
 
-
 <h2 id="license">License</h2>
-<p>Script is available under MIT license. But please do me a favor and do not create public WordPress plugin based on it,  because I will make it soon (<a href="http://dimsemenov.com/subscribe.html">want to get notified?</a>).
+<p>Script is available under MIT license and will always be kept this way.<br/>But please do me a favor and do not create public WordPress plugin based on it,  because I will make it soon and it will be open souce too (<a href="http://dimsemenov.com/subscribe.html">want to get notified?</a>).
 </p>
 
 <h2>Contributors</h2>
-<p>To get in here contribute to Magnific Popup script or just improve this site on <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub</a>. Even tiniest optimizations are very welcome. Special thanks to:</p>
-
+<p>Even the tiniest contributions to the script or to the documentation are very welcome. Special thanks to:</p>
 <ul>
-  <li><a href="https://twitter.com/lokeshdhakar">Lokesh Dhakar</a> for creating original Lightbox script.</li>
+  <li><a href="https://twitter.com/lokeshdhakar">Lokesh Dhakar</a> for original Lightbox script.</li>
   <li><a href="https://twitter.com/chriscoyier">Chris Coyier</a> for awesome CSS techniques.</li>
   <li><a href="https://twitter.com/brad_frost">Brad Frost</a> for conditional lightbox technique.</li>
 </uL>
 
 <h2>Browser support</h2>
-<p>Modern browsers, IE8, partial support of IE7 (just works). Tested on mobile: Android 2.3+, iOS5+, Blackberry
-10+, WP7+.</p>
+<p>Tested on desktop: Chrome, Safari, FF, Opera, IE8+, partial support of IE7 (works, but some visual layout features, like vertical centering, are missing). Mobile: default browser in Android 2.3+, iOS5+, Blackberry
+10+, WP7+, mobile Opera and Chrome on Android. If you've found any bug, please open <a href="https://github.com/dimsemenov/Magnific-Popup/issues?state=open">issue on GitHub</a></p>
 
 <h2>Updates</h2>
-<p>If you wish to get notified about important plugin updates, you may follow <a href="http://twitter.com/dimsemenov">me on Twitter</a>, or join my tiny Mailchimp <a href="http://dimsemenov.com/subscribe.html">email newsletter</a>.</p>
+<p>If you wish to get notified about important plugin updates, you may star and watch the repository on <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub</a>, follow <a href="http://twitter.com/dimsemenov">me on Twitter</a>, or join my tiny Mailchimp <a href="http://dimsemenov.com/subscribe.html">email newsletter</a> that I send 3-4 times a year.</p>
 
-<!-- <h3>Want to help?</h3>
-<div>If you like this script and wish it to be always up to date, please spread the word share it with your collegues.</div>
-<div>Improve script via GitHub, any optimization even the tiniest one is very welcome.</div> -->
+
+<!-- <div class="share-buttons">
+  <h2>Please spread the word if you find the plugin useful</h2>
+  <div id="buttons-row">
+    <a id="tweet" rel="nofollow" href="https://twitter.com/intent/tweet?text=Magnific%20Popup%20-%20responsive%20lightbox%20plugin&amp;url=http%3A%2F%2Fbit.ly%2Fmagnificpopup&amp;via=dimsemenov">Tweet!</a>
+    <a id="like" rel="nofollow" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fdimsemenov.com%2Fplugins%2Fmagnific-popup%2F%3Futm_source%3Dfb%26utm_medium%3Dsocial%26utm_campaign%3Dmfp">Like? Like!</a> 
+    <a id="gplus" rel="nofollow" href="https://plus.google.com/share?url=http%3A%2F%2Fdimsemenov.com%2Fplugins%2Fmagnific-popup%2F%3Futm_source%3Dgplus%26utm_medium%3Dsocial%26utm_campaign%3Dmfp">+1</a>
+  </div>
+</div>
+<script>
+(function(){
+  var openWindowPopup = function(e) {
+    if(!e) return;
+    e.preventDefault();
+    window.open(e.target.href, "intent", "scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=550,height=420,left=" + (window.screen ? Math.round(screen.width / 2 - 275) : 50) + ",top=" + 100);
+  };
+  var tweet = document.getElementById('tweet');
+  tweet.onclick = openWindowPopup;
+    
+  var like = document.getElementById('like');
+  like.onclick = openWindowPopup;
+
+  var gplus = document.getElementById('gplus');
+  gplus.onclick = openWindowPopup;
+
+  // experiment
+  var l = window.navigator.language;
+  if(l) {
+    l = l.toLowerCase();
+    var lang = 'ru';
+    if( l === lang || l.indexOf(lang+'-') > -1 ) {
+
+      var aTag = document.createElement('a');
+      aTag.href = "http://vkontakte.ru/share.php?url=http%3A%2F%2Fdimsemenov.com%2Fplugins%2Fmagnific-popup%2F%3Futm_source%3Dvkcom%26utm_medium%3Dsocial%26utm_campaign%3Dmfp";
+      aTag.id = 'vkcom';
+      aTag.innerHTML = "Share on VK.com";
+      aTag.onclick = openWindowPopup;
+      document.getElementById('buttons-row').appendChild(aTag);
+    }
+  }
+})();
+</script> -->

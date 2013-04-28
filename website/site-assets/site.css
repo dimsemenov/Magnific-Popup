@@ -1,4 +1,4 @@
-/* Demo site CSS:; not semantic, not mobile first, made for 20 minutes, mess */
+/* Demo site CSS. Not mobile first, not semantic, not optimized, made for 20 minutes, mess */
 html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, ol, ul, li, form, fieldset, legend, label, table, header, footer, nav, section, figure {
   margin: 0;
   padding: 0; 
@@ -32,7 +32,7 @@ h1, h2, h3, h4, h5, h6 {
   text-rendering: optimizelegibility;
 
   color: #282B30;
-  font-family:"Museo Sans 100", Calibri, 'Helvetica Neue', Arial
+  font-family:Calibri, 'Helvetica Neue', Arial
 }
 .mfp-preloader {
   font-size: 13px;
@@ -156,7 +156,6 @@ top: 0;
   color: #000;
   position: absolute;
   left: 0;
-  color: rgba(250, 250, 250, 0.95);
   -webkit-user-select: none;
   -moz-user-select: none;
   cursor: pointer;
@@ -397,6 +396,7 @@ a.popup-link:hover {
   margin: 5em 0 0;
   width: 100%;
   text-align: center;
+  opacity: 0.9;
 }
 
 #conditional-lightbox-notice {
@@ -442,6 +442,13 @@ margin-top: -10px;
 color: #A3A3A3;
 }
 
+@media all and (max-width: 50em) {
+  #logo h1 {
+    font-size: 52px;
+    margin-top: 36px;
+  }
+}
+
 @media all and (max-width: 30em) {
 
   .gc3 { 
@@ -452,6 +459,7 @@ color: #A3A3A3;
   }
   #main-wrapper { 
     padding: 1em;
+    margin-top: 0;
   }
   .highlight {
     padding: 0.2em 1em;
@@ -459,13 +467,18 @@ color: #A3A3A3;
   }
   #logo {
     height: 95px;
-    width: 70%;
+    width: 100%;
+    padding: 0;
     margin: 0 auto;
     margin-top: 0;
     margin-bottom: 2em;
   }
   #logo h1 {
-    font-size: 30px;
+    font-size: 32px;
+  margin-top: 23px;
+  }
+  h2.intro {
+    font-size: 20px;
   }
 }
 
@@ -534,6 +547,87 @@ margin-left: -18px;
 }
 #mfp-build-status .progress {
   color: #000;
+}
+
+
+#smashing {
+  text-align: center;
+  font-weight: bold;
+}
+#smashing a {
+  color: #EF4A35;
+}
+#smashing a:hover {
+  color: #FF9369;
+}
+#smashing strong {
+  color: #EF4A35;
+}
+.smashing-link {
+  margin-left: 29px;
+  position: relative;
+}
+.smashing-link:before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: url("http://dimsemenov.com/images/sm-logo-24x24.png");
+  position: absolute;
+  top: -4px;
+  left: -28px;
+}
+#hackernews {
+  margin-left: 24px;
+}
+#hackernews:before {
+  background: url("http://dimsemenov.com/images/hn-logo-18x18.gif");
+  width: 18px;
+  height: 18px;
+  top: -1px;
+  left: -22px;
+}
+
+
+.share-buttons {
+  text-align: center;
+}
+.share-buttons h2 {
+  text-align: center;
+  border: 0;
+  
+}
+.share-buttons {
+  position: relative;
+  margin: 70px 0;
+}
+.share-buttons a {
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  color: #FFF;
+  text-decoration: none;
+  background: #5AAF63;
+  font-size: 16px;
+  line-height: 22px;
+  cursor: pointer;
+}
+.share-buttons a:hover {
+  opacity: 0.7;
+}
+#tweet {
+  background: #0096c4;
+}
+#like {
+  background: #3b5998;
+}
+#gplus {
+  background: #d34836;
+}
+#vkcom {
+  background: #6e8fb1;
 }
 
 
