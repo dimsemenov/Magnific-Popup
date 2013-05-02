@@ -67,7 +67,8 @@ There are three ways to initialize popup:
 
 {% highlight javascript %}
 $('.test-popup-link').magnificPopup({ 
-	// options
+  type: 'image'
+	// other options
 });
 {% endhighlight %}
 
@@ -86,7 +87,8 @@ Same as first one, but use this method if you are creating popup from list of el
 
 {% highlight javascript %}
 $('.parent-container').magnificPopup({
-  delegate: 'a' // child items selector, by clicking on it popup will open
+  delegate: 'a', // child items selector, by clicking on it popup will open
+  type: 'image'
   // other options
 });
 {% endhighlight %}
