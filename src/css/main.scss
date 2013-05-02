@@ -1,43 +1,73 @@
-////////////////////////
 /* Magnific Popup CSS */
+
+////////////////////////
+//
+// Contents:
+// 
+// 1. Variables
+// 2. General styles
+//    - Transluscent overlay
+//    - Containers, wrappers
+//    - Cursors
+//    - Helper classes
+// 3. Appearance
+//    - Preloader & text that displays error messages
+//    - CSS reset for buttons
+//    - Close icon
+//    - "1 of X" counter
+//    - Navigation (left/right) arrows
+//    - Iframe content type styles
+//    - Image content type styles
+//    - Media query where size of arrows is reduced
+//    - IE7 support
+//    
 ////////////////////////
 
 
-$overlay-color: #0b0b0b;
-$overlay-opacity: 0.8;
-
-$include-image-type: true;
-$image-padding-top: 40px;
-$image-padding-bottom: 40px;
-$include-mobile-layout-for-image: true;
 
 
+////////////////////////
+// 1. Variables
+////////////////////////
+
+$overlay-color: #0b0b0b; 
+$overlay-opacity: 0.8; 
+$shadow: 0 0 8px rgba(0, 0, 0, 0.6); // shadow on image or iframe
+$popup-padding-left: 8px; // Padding from left and from right side
+$popup-padding-left-mobile: 6px; // Same as above, but is applied when width of window is less than 800px
+
+$z-index-base: 500; // Base z-index of popup
+$include-arrows: true; // include styles for nav arrows
+$controls-opacity: 0.65;
+$controls-color: #FFF;
+$inner-close-icon-color: #333;
+$controls-text-color: #CCC; // Color of preloader and "1 of X" indicator
+$controls-text-color-hover: #FFF;
+$IE7support: true; // Very basic IE7 support
+
+// Iframe-type options
 $include-iframe-type: true;
 $iframe-padding-top: 40px;
 $iframe-background: #000;
 $iframe-max-width: 900px;
 $iframe-ratio: 9/16;
 
-$shadow: 0 0 8px rgba(0, 0, 0, 0.6); // shadow on image or iframe
+// Image-type options
+$include-image-type: true;
+$image-padding-top: 40px;
+$image-padding-bottom: 40px;
+$include-mobile-layout-for-image: true; // Removes paddings from top and bottom
 
-$popup-padding-left: 8px; // Padding from left and from right side
-
-
-$z-index-base: 500;
-
-$include-arrows: true; // include styles for nav arrows
-$controls-opacity: 0.65;
-$controls-color: #FFF;
-$inner-close-icon-color: #333;
-$controls-text-color: #CCC;
-$controls-text-color-hover: #FFF;
-
-$IE7support: true;
+// Image caption options
+$caption-title-color: #F3F3F3;
+$caption-subtitle-color: #BDBDBD;
 
 
 
 
-
+////////////////////////
+// 2. General styles
+////////////////////////
 
 // Transluscent overlay
 .mfp-bg {
@@ -68,7 +98,7 @@ $IE7support: true;
   -webkit-backface-visibility: hidden; // fixes webkit bug that can cause "false" scrollbar
 }
 
-// Root holder of content
+// Root container
 .mfp-container {
   height: 100%;
   text-align: center;
@@ -77,7 +107,12 @@ $IE7support: true;
   height: 100%;
   left: 0;
   top: 0;
+  padding: 0 $popup-padding-left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
+
 // Vertical centerer helper
 .mfp-container:before {
   content: '';
@@ -85,18 +120,13 @@ $IE7support: true;
   height: 100%;
   vertical-align: middle;
 }
+
+// Remove vertical centering when popup has class `mfp-align-top`
 .mfp-align-top .mfp-container:before {
   display: none;
 }
-.mfp-container {
-  padding: 0 $popup-padding-left;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
 
-
-// Holds popup content itself
+// Popup content holder
 .mfp-content {
   position: relative;
   display: inline-block;
@@ -104,10 +134,56 @@ $IE7support: true;
   margin: 0 auto;
   text-align: left;
 }
+.mfp-inline-holder .mfp-content,
+.mfp-ajax-holder .mfp-content {
+  width: 100%;
+  cursor: auto;
+}
+
+// Cursors
+.mfp-ajax-cur {
+  cursor: progress;
+}
+.mfp-zoom-out-cur,
+.mfp-zoom-out-cur .mfp-image-holder .mfp-close {
+  cursor: -moz-zoom-out;
+  cursor: -webkit-zoom-out;
+  cursor: zoom-out;
+}
+.mfp-zoom {
+  cursor: pointer;
+  cursor: -webkit-zoom-in;
+  cursor: -moz-zoom-in;
+  cursor: zoom-in;
+}
+.mfp-auto-cursor .mfp-content {
+  cursor: auto;
+}
+
+.mfp-close,
+.mfp-arrow,
+.mfp-preloader,
+.mfp-counter {
+  -webkit-user-select:none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+// Hide the image during the loading
+.mfp-loading.mfp-figure {
+  display: none;
+}
+
+// Helper class that hides stuff
+.mfp-hide {
+  display: none;
+}
 
 
 
-
+////////////////////////
+// 3. Appearance
+////////////////////////
 
 // Preloader and text that displays error messages
 .mfp-preloader {
@@ -138,8 +214,7 @@ $IE7support: true;
 } 
 
 
-
-// CSS reset for buttons
+// CSS-reset for buttons
 button.mfp-close,
 button.mfp-arrow {
   overflow: visible;
@@ -154,13 +229,6 @@ button::-moz-focus-inner {
     padding: 0;
     border: 0
 }
-
-.mfp-inline-holder .mfp-content,
-.mfp-ajax-holder .mfp-content {
-  width: 100%;
-  cursor: auto;
-}
-
 
 
 // Close icon
@@ -181,6 +249,15 @@ button::-moz-focus-inner {
   font-style: normal;
   font-size: 28px;
   font-family: Arial, Baskerville, monospace;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+
+  &:active {
+    top: 1px; 
+  }
 }
 .mfp-close-btn-in .mfp-close {
   color: $inner-close-icon-color;
@@ -193,17 +270,8 @@ button::-moz-focus-inner {
   padding-right: 6px;
   width: 100%;
 }
-.mfp-close:hover,
-.mfp-close:focus {
-  opacity: 1;
-}
-.mfp-close:active {
-  top: 1px;
-}
 
-
-
-
+// "1 of X" counter
 .mfp-counter {
   position: absolute;
   top:0;
@@ -213,7 +281,7 @@ button::-moz-focus-inner {
   line-height: 18px;
 }
 
-
+// Navigation arrows
 @if $include-arrows {
   .mfp-arrow {
     position: absolute;
@@ -299,56 +367,7 @@ button::-moz-focus-inner {
 
 
 
-// Cursors
-.mfp-ajax-cur {
-  cursor: progress;
-}
-.mfp-zoom-out-cur,
-.mfp-zoom-out-cur .mfp-image-holder .mfp-close {
-  cursor: -moz-zoom-out;
-  cursor: -webkit-zoom-out;
-  cursor: zoom-out;
-}
-.mfp-zoom {
-  cursor: pointer;
-  cursor: -webkit-zoom-in;
-  cursor: -moz-zoom-in;
-}
-.mfp-auto-cursor .mfp-content {
-  cursor: auto;
-}
-
-
-
-.mfp-close,
-.mfp-arrow,
-.mfp-preloader,
-.mfp-counter {
-  -webkit-user-select:none;
-  -moz-user-select: none;
-  user-select: none;
-}
-
-
-
-// Hide the image during the loading
-.mfp-loading.mfp-figure {
-  display: none;
-}
-
-// Helper class hides stuff
-.mfp-hide {
-  display: none;
-}
-
-
-
-
-/**
- *
- * Iframe content type
- * 
- */
+// Iframe content type
 @if $include-iframe-type {
   .mfp-iframe-holder {
     padding-top: $iframe-padding-top;
@@ -382,11 +401,8 @@ button::-moz-focus-inner {
 
 
 
-/**
- *
- * Image content type
- * 
- */
+
+// Image content type
 @if $include-image-type {
 
   /* Main image in popup */
@@ -431,11 +447,11 @@ button::-moz-focus-inner {
   .mfp-title {
     text-align: left;
     line-height: 18px;
-    color: #F3F3F3;
+    color: $caption-title-color;
   }
 
   .mfp-figure small {
-    color: #BDBDBD;
+    color: $caption-subtitle-color;
     display: block;
     font-size: 12px;
     line-height: 14px;
@@ -447,9 +463,6 @@ button::-moz-focus-inner {
   .mfp-gallery .mfp-image-holder .mfp-figure {
     cursor: pointer;
   }
-
-
-
 
 
   @if $include-mobile-layout-for-image {
@@ -511,7 +524,7 @@ button::-moz-focus-inner {
 
 
 
-
+// Scale navigation arrows and reduce padding from sides
 @media all and (max-width: 800px) {
   .mfp-arrow {
     -webkit-transform: scale(0.75); 
@@ -526,14 +539,14 @@ button::-moz-focus-inner {
     transform-origin: 100%;
   }
   .mfp-container {
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: $popup-padding-left-mobile;
+    padding-right: $popup-padding-left-mobile;
   }
 } 
 
 
-
-
+// IE7 support
+// Styles that make popup look nicier in old IE
 @if $IE7support { 
   .mfp-ie7 {
     .mfp-img {
@@ -559,5 +572,8 @@ button::-moz-focus-inner {
     }
   }
 }
+
+
+
 
 

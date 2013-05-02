@@ -61,7 +61,6 @@ $.magnificPopup.registerModule(INLINE_NS, {
 				
 				
 				item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(inlineSt.hiddenClass);
-				
 				return item.inlineElement;
 			} else {
 				mfp._parseMarkup(template, {}, item);

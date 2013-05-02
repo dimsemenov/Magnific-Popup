@@ -30,7 +30,8 @@ var mfp, // As we have only one instance of MagnificPopup object, we define it l
 	_body,
 	_document,
 	_prevContentType,
-	_wrapClasses;
+	_wrapClasses,
+	_currPopupType;
 
 
 /**
@@ -69,7 +70,6 @@ var _mfpOn = function(name, f) {
 	_setFocus = function() {
 		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
 	},
-	_currPopupType,
 	_getCloseBtn = function(type) {
 		if(type !== _currPopupType || !mfp.currTemplate.closeBtn) {
 			mfp.currTemplate.closeBtn = $( mfp.st.closeMarkup.replace('%title%', mfp.st.tClose ) );
@@ -593,15 +593,15 @@ MagnificPopup.prototype = {
 				text = mfp.st.tLoading;
 			}
 
-			var eObj = {
+			var data = {
 				status: status,
 				text: text
 			};
 			// allows to modify status
-			_mfpTrigger('UpdateStatus', eObj);
+			_mfpTrigger('UpdateStatus', data);
 
-			status = eObj.status;
-			text = eObj.text;
+			status = data.status;
+			text = data.text;
 
 			mfp.preloader.html(text);
 
