@@ -1,6 +1,10 @@
 # Magnific Popup GitHub Repository
 
-Fast, light and responsive lightbox plugin. Demos are on [official site](http://dimsemenov.com/plugins/magnific-popup/), [http://dimsemenov.com/plugins/magnific-popup/documentation.html](documentation and getting started guide) too.
+Fast, light and responsive lightbox plugin. 
+
+- [Documentation and getting started guide](http://dimsemenov.com/plugins/magnific-popup/documentation.html)
+- [Examples and plugin home page](http://dimsemenov.com/plugins/magnific-popup/)
+- More examples on [CodePen](http://codepen.io/collection/nLcqo)
 
 Project is under development, please wait until I finish it.
 

@@ -1,13 +1,20 @@
 ---
+
 layout: default
+
 title: Magnific Popup Documentation
+
 description: The complete guide on how to use Magnific Popup - the open source responsive lightbox plugin.
+
 addjs: true
+
 canonical_url: http://dimsemenov.com/plugins/magnific-popup/documentation.html
+
 ---
 
-<style type="text/css">#main-wrapper{background: #FFF;}</style>
+
 <div id="documentation-intro">
+  <style type="text/css">#main-wrapper{background: #FFF;}</style>
   <h1><a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a> Documentation</h1>
   <p><a href="">Project on Github</a> &middot; <a href="#mfp-build-tool" class="mfp-build-tool-link">Build tool</a> &middot; <a href="http://twitter.com/dimsemenov">Twitter of developer</a> &middot; <a href="http://dimsemenov.com/subscribe.html">Newsletter of developer</a></p>
 </div>
@@ -17,8 +24,6 @@ canonical_url: http://dimsemenov.com/plugins/magnific-popup/documentation.html
 
 
 Here you can find the guide on how to use Magnific Popup. Besides this docs page, you can <a href="http://codepen.io/collection/nLcqo">play with examples on CodePen</a>. If you've found any mistake in this site or you know how to improve some part of this documentation - please <a href="https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md">commit on GitHub</a>.
-
-<h3 style="color:#C00; text-align:center;">Warning! Plugin is in early beta, please don't use it in live projects and wait until I finish it. Please send your suggestions about it via Twitter to <a href="http://twitter.com/dimsemenov">@dimsemenov</a>.</h3>
 
 # &nbsp;
 
@@ -704,7 +709,7 @@ View [example of retina popup on CodePen](http://codepen.io/dimsemenov/pen/Dohka
 
 ### Events
 
-Callbacks that are defined inside `callbacks` option will automatically be called if they exist. All Magnific Popup events are also dispatched using `triggerHandler` on target element (or to document if the element doesn't exist).
+Callbacks that are defined inside `callbacks` option will automatically be called. Besides that, all Magnific Popup events are also dispatched using `triggerHandler` on target element (or to document if the element doesn't exist). 
 
 {% highlight javascript %}
 $('.image-link').magnificPopup({
@@ -731,7 +736,7 @@ $('.image-link').on('mfpOpen', function(e /*, params */) {
 });
 {% endhighlight %}
 
-Full list of callbacks:
+List of callbacks:
 
 {% highlight javascript %}
 callbacks: {
@@ -756,12 +761,24 @@ callbacks: {
   close: function() {
     console.log('Popup is closed');
   },
-
+  updateStatus: function(data) {
+    console.log('Status changed', data);
+    // "data" is an object that has two properties:
+    // "data.status" - current status type, can be "loading", "error", "ready"
+    // "data.text" - text that will be displayed (e.g. "Loading...")
+    // you may modify this properties to change current status or its text dynamically
+  },
+  elementParse: function(item) {
+    console.log('Parsing element:', item);
+    // triggers only once for each item
+    // here you may modify URL, type, or any other data
+  },  
 
   // Only for ajax
   parseAjax: function(jqXHR) {
     console.log('Loading of ajax content finished. Object:', jqXHR);
-    // You can modify value of jqXHR.responseText here. It's used as content for popup.
+    // Allows you modify value of jqXHR.responseText here. It's used as content for popup.
+    // jqXHR.responseText can be a String or a jQuery object
   }
 }
 {% endhighlight %}
@@ -781,7 +798,6 @@ $.magnificPopup.open({
 
   // You may add options here, they're exactly the same as for $.fn.magnificPopup call
   // Note that some settings that rely on click event (like disableOn or midClick) will not work here
-
 });
 
 // Close popup that is currently opened
@@ -792,6 +808,7 @@ $.magnificPopup.close();
 /* 
   Methods below don't have shorthand like "open" and "close".
   They should be called through "instance" object.
+  "instance" is available only when at least one popup was opened.
   For example: $.magnificPopup.instance.doSomething();
 */
 
@@ -805,13 +822,32 @@ magnificPopup.next(); // go to next item
 magnificPopup.prev(); // go to prev item
 
 
-// Update status of popup ();
-// First param - message that will be displayed. 
-// Second one status key, can be: 'loading', 'error' or 'ready'.
-magnificPopup.updateStatus('The loading message', 'loading'); 
+// Update status of popup
+// First param: status type, can be: 'loading', 'error' or 'ready'.
+// Second param: message that will be displayed.  
+magnificPopup.updateStatus('loading', 'The loading text...'); 
 {% endhighlight %}
 
 
+
+### Public properties
+
+Most properties are available only after the popup is opened. Here are listed only most used, there is much bigger list. If you think that something should be added here - please commit to docs on GitHub.
+
+{% highlight javascript %}
+var magnificPopup = $.magnificPopup.instance;
+
+
+magnificPopup.items // array that holds data for popup items
+magnificPopup.currItem // data for current item
+magnificPopup.index // current item index (integer)
+
+
+magnificPopup.bgOverlay // transluscent overlay
+magnificPopup.wrap // container that holds all controls and contentContainer
+magnificPopup.contentContainer // container that holds popup content, child of wrap
+
+{% endhighlight %}
 
 ## Translating
 
