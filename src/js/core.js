@@ -550,9 +550,12 @@ MagnificPopup.prototype = {
 						}
 					}
 				}
-
+					
 				e.preventDefault();
 				options.el = $(this);
+				if(options.delegate) {
+					options.items = el.find(options.delegate);
+				}
 				mfp.open(options);
 			}
 			
@@ -569,7 +572,6 @@ MagnificPopup.prototype = {
 		} else {
 			options.isObj = false;
 			if(options.delegate) {
-				options.items = el.find(options.delegate);
 				el.off(eName).on(eName, options.delegate , eHandler);
 			} else {
 				options.items = el;

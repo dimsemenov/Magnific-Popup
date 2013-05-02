@@ -19,7 +19,7 @@
   "dependencies": {
     "jquery": ">=1.7.2"
   },
-  "keywords": ["lightbox","popup","modal","window","ui","gallery","slideshow","video","image","ajax"],
+  "keywords": ["lightbox","popup","modal","window","ui","gallery","slideshow","video","image","ajax","html5"],
   "licenses": [
     {
       "type": "MIT",
