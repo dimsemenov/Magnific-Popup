@@ -50,12 +50,6 @@ include_credit: true
 
 <div>
 <p id="smashing">Check out <a href="http://coding.smashingmagazine.com/2013/05/02/truly-responsive-lightbox/">my new article</a> about lightboxes in general on the <a class="smashing-link" href="http://coding.smashingmagazine.com/2013/05/02/truly-responsive-lightbox/">Smashing Magazine</a>.</p>
-<script type="text/javascript">
-var _ref = document.referrer;
-if(_ref && _ref.indexOf('smashingmag') > -1) {
-  document.getElementById('smashing').innerHTML = 'Join <a href="https://news.ycombinator.com/item?id=5643801">the discussion</a> of this ligthbox plugin on the <a href="https://news.ycombinator.com/item?id=5643801" id="hackernews" class="smashing-link">Hacker News</a>.'; // HAHA!
-}
-</script>
 </div>
 
 {% include examples.html %}
@@ -96,29 +90,9 @@ if(_ref && _ref.indexOf('smashingmag') > -1) {
     e.preventDefault();
     window.open(e.target.href, "intent", "scrollbars=yes,resizable=yes,toolbar=no,location=yes,width=550,height=420,left=" + (window.screen ? Math.round(screen.width / 2 - 275) : 50) + ",top=" + 100);
   };
-  var tweet = document.getElementById('tweet');
-  tweet.onclick = openWindowPopup;
-    
-  var like = document.getElementById('like');
-  like.onclick = openWindowPopup;
-
-  var gplus = document.getElementById('gplus');
-  gplus.onclick = openWindowPopup;
-
-  // experiment
-  var l = window.navigator.language;
-  if(l) {
-    l = l.toLowerCase();
-    var lang = 'ru';
-    if( l === lang || l.indexOf(lang+'-') > -1 ) {
-
-      var aTag = document.createElement('a');
-      aTag.href = "http://vkontakte.ru/share.php?url=http%3A%2F%2Fdimsemenov.com%2Fplugins%2Fmagnific-popup%2F%3Futm_source%3Dvkcom%26utm_medium%3Dsocial%26utm_campaign%3Dmfp";
-      aTag.id = 'vkcom';
-      aTag.innerHTML = "Share on VK.com";
-      aTag.onclick = openWindowPopup;
-      document.getElementById('buttons-row').appendChild(aTag);
-    }
+  var ids = ['tweet', 'like', 'gplus'];
+  for(var i = 0; i < ids.length; i++) {
+    document.getElementById(ids[i]).onclick = openWindowPopup;
   }
 })();
 </script>
