@@ -53,7 +53,7 @@ It's not required, but recommended to put CSS files in `<head>`. JavaScript file
 Popup initialization code should be executed after document ready, for example:
 {% highlight javascript %}
 $(document).ready(function() {
-  $('.image-link').magnificPopup();
+  $('.image-link').magnificPopup({type:'image'});
 });
 {% endhighlight %}
 
@@ -356,6 +356,8 @@ I have created two examples on CodePen that will help you better understand how 
 ## Ajax Type      
 
 To create such type of popup, first of define the path to the file that you wish to display and select `ajax` type of the popup. Popup itself should be styled in exactly the same way as an [inline popup type](#inline_type).
+
+**Important note:** in HTML file that you load there should be only one root element.
 
 {% highlight html %}
 <a href="path-to-file.html" class="ajax-popup-link">Show inline popup</a>
