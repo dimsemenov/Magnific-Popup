@@ -425,7 +425,7 @@ $('.some-link').magnificPopup({
 });
 {% endhighlight %}
 
-Options for specific modules are explained in their sections of documentation (e.g. related to text are in <a href="#translating">tanslating section</a>, related to gallery are in <a href="#gallery">gallery section</a>. Here you can find the list of general options:
+Options for specific modules are explained in their sections of documentation (e.g. related to text are in <a href="#translating">translating section</a>, related to gallery are in <a href="#gallery">gallery section</a>. Here you can find the list of general options:
 
 ### disableOn
 
@@ -452,7 +452,7 @@ disableOn: function() {
 
 "Key" option is a unique identifier of a single or a group of popups with the same structure. If you will not define it, DOM elements will be created and destroyed each time when you open and close popup.
 
-You may (and should) set an equal key to different popups if their markup matches. By markup I mean options that change HTML strucutre of the popup (e.g. close icon placement and HTML code of it). 
+You may (and should) set an equal key to different popups if their markup matches. By markup I mean options that change HTML structure of the popup (e.g. close icon placement and HTML code of it).
 
 For example: you have many popups that show title, some text and button - you may use one key for all of them, so only one instance of this element is created. Same for popup that always contains image and caption.
 
