@@ -85,7 +85,7 @@
   display: none; }
 
 .mfp-hide {
-  display: none; }
+  display: none !important; }
 
 .mfp-preloader {
   color: #cccccc;

@@ -176,7 +176,7 @@ $caption-subtitle-color: #BDBDBD;
 
 // Helper class that hides stuff
 .mfp-hide {
-  display: none;
+  display: none !important;
 }
 
 
