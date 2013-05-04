@@ -10,6 +10,8 @@ addjs: true
 
 canonical_url: http://dimsemenov.com/plugins/magnific-popup/documentation.html
 
+buildtool: true
+
 ---
 
 

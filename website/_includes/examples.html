@@ -1,6 +1,6 @@
 {% if site.url == 'local' %}
    <!-- <script  src="third-party-libs/zepto.js"></script> -->
-   <script  src="third-party-libs/jquery.js"></script>
+   <script  src="third-party-libs/zepto.js"></script>
    <!-- <script>
     document.write('<script src=third-party-libs/' +
     ('__proto__' in {} ? 'zepto' : 'jquery') +
@@ -25,6 +25,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 <h2 id="examples">Examples</h2>
 
 <div class="grid-c">
+
 
   <div class="example gc3">
     <h3>Single image lightbox</h3> 
@@ -200,7 +201,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
       <a class="popup-with-move-anim" href="#small-dialog" >Open with fade-slide animation</a>
 
       <!-- dialog itself, mfp-hide class is required to make dialog hidden -->
-      <div id="small-dialog" class="mfp-hide">
+      <div id="small-dialog" class="zoom-anim-dialog mfp-hide">
         <h1>Dialog example</h1>
         <p>This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.</p>
       </div>
@@ -259,7 +260,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
        */
       
       /* start state */
-      .my-mfp-zoom-in #small-dialog {
+      .my-mfp-zoom-in .zoom-anim-dialog {
         opacity: 0;
 
         -webkit-transition: all 0.2s ease-in-out; 
@@ -277,7 +278,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
       }
 
       /* animate in */
-      .my-mfp-zoom-in.mfp-ready #small-dialog {
+      .my-mfp-zoom-in.mfp-ready .zoom-anim-dialog {
         opacity: 1;
 
         -webkit-transform: scale(1); 
@@ -288,7 +289,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
       }
 
       /* animate out */
-      .my-mfp-zoom-in.mfp-removing #small-dialog {
+      .my-mfp-zoom-in.mfp-removing .zoom-anim-dialog {
         -webkit-transform: scale(0.8); 
         -moz-transform: scale(0.8); 
         -ms-transform: scale(0.8); 
@@ -322,7 +323,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
        */
       
       /* at start */
-      .my-mfp-slide-bottom #small-dialog {
+      .my-mfp-slide-bottom .zoom-anim-dialog {
         opacity: 0;
         -webkit-transition: all 0.2s ease-out;
         -moz-transition: all 0.2s ease-out;
@@ -338,7 +339,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
       }
       
       /* animate in */
-      .my-mfp-slide-bottom.mfp-ready #small-dialog {
+      .my-mfp-slide-bottom.mfp-ready .zoom-anim-dialog {
         opacity: 1;
         -webkit-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
         -moz-transform: translateY(0) perspective( 600px ) rotateX( 0 ); 
@@ -348,7 +349,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
       }
 
       /* animate out */
-      .my-mfp-slide-bottom.mfp-removing #small-dialog {
+      .my-mfp-slide-bottom.mfp-removing .zoom-anim-dialog {
         opacity: 0;
 
         -webkit-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg ); 

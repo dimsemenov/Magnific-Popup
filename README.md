@@ -1,10 +1,10 @@
 # Magnific Popup GitHub Repository
 
-Fast, light and responsive lightbox plugin. 
+Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 
 - [Documentation and getting started guide](http://dimsemenov.com/plugins/magnific-popup/documentation.html)
 - [Examples and plugin home page](http://dimsemenov.com/plugins/magnific-popup/)
-- More examples on [CodePen](http://codepen.io/collection/nLcqo). Feel free to email me more CodePen examples, I'd gladly add them to this collection.
+- More examples on [CodePen](http://codepen.io/collection/nLcqo). Feel free to email me more CodePen's, I'd gladly add them to this collection.
 
 ## About this repository:
 
@@ -37,7 +37,7 @@ To compile Magnific Popup by yourself:
 
 	grunt
 
-(Optionally run `grunt watch` to automatically regenerate `_site when you change files in `src/` or in `website/`).
+(Optionally run `grunt watch` to automatically regenerate `_site` when you change files in `src/` or in `website/`).
 
 ## License
 

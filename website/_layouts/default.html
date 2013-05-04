@@ -59,7 +59,10 @@
   {% endif %}
 
   {% include analytics.html %}
-  {% include build-tool.html %}
+
+  {% if page.buildtool %}
+    {% include build-tool.html %}
+  {% endif %}
   </body>
 </html>
 
