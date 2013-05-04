@@ -15,29 +15,24 @@ Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 
 ## Build 
 
-To compile Magnific Popup by yourself:
+To compile Magnific Popup by yourself, first of make sure that you have [Node.js](http://nodejs.org/), [Grunt.js](https://github.com/cowboy/grunt), [Ruby](http://www.ruby-lang.org/) and [Jekyll](https://github.com/mojombo/jekyll/) installed, then:
 
 1) Copy repository
 
 	git clone https://github.com/dimsemenov/Magnific-Popup.git
 
-2) Install grunt globally (if you haven't yet)
-
-	npm install -g grunt-cli
-
-3) Go inside Magnific Popup folder and install Node dependencies
+2) Go inside Magnific Popup folder that you fetched and install Node dependencies
 
 	cd Magnific-Popup && npm install
 
-4) Make sure you that you have grunt installed by testing:
-
-	grunt -version
-
-5) Now simply run `grunt` to generate JS and CSS in folder `dist` and site in folder `_site/`.
+3) Now simply run `grunt` to generate JS and CSS in folder `dist` and site in folder `_site/`.
 
 	grunt
 
-(Optionally run `grunt watch` to automatically regenerate `_site` when you change files in `src/` or in `website/`).
+Optionally:
+
+- Run `grunt watch` to automatically rebuild script when you change files in `src/` or in `website/`.
+- If you don't have and don't want to install Jekyll, run `grunt nosite` to just build JS and CSS files related to popup in `dist/`.
 
 ## License
 

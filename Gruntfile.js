@@ -203,6 +203,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['sass', 'mfpbuild', 'uglify', 'copy', 'jekyll:dev']);
 
   grunt.registerTask('production', ['sass', 'mfpbuild', 'uglify', 'copy', 'cssmin', 'jekyll:production']);
+  grunt.registerTask('nosite', ['sass', 'mfpbuild', 'uglify']);
   grunt.registerTask('hint', ['jshint']);
 
 };
