@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.8.1 - 2013-05-02
+/*! Magnific Popup - v0.8.1 - 2013-05-04
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -273,7 +273,7 @@ MagnificPopup.prototype = {
 		
 		var bodyStyles = {};
 
-		if( mfp.fixedContentPos ) {
+		if( mfp.fixedContentPos && mfp.st.overflowY !== 'scroll' ) {
 			var s = mfp._getScrollbarSize();
 			if(s) {
 				bodyStyles.paddingRight = s;

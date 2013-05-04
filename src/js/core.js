@@ -267,7 +267,7 @@ MagnificPopup.prototype = {
 		
 		var bodyStyles = {};
 
-		if( mfp.fixedContentPos ) {
+		if( mfp.fixedContentPos && mfp.st.overflowY !== 'scroll' ) {
 			var s = mfp._getScrollbarSize();
 			if(s) {
 				bodyStyles.paddingRight = s;
