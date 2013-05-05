@@ -187,11 +187,11 @@ MagnificPopup.prototype = {
 
 			mfp.container = _getEl('container', mfp.wrap);
 		}
+		
+		mfp.contentContainer = _getEl('content');
 		if(mfp.st.preloader) {
 			mfp.preloader = _getEl('preloader', mfp.container, mfp.st.tLoading);
 		}
-		mfp.contentContainer = _getEl('content', mfp.container);
-
 
 
 		// Initializing modules
@@ -427,6 +427,9 @@ MagnificPopup.prototype = {
 	updateItemHTML: function() {
 		var item = mfp.items[mfp.index];
 
+		// Detach and perform modifications
+		mfp.contentContainer.detach();
+
 		if(!item.parsed) {
 			item = mfp.parseEl( mfp.index );
 		}
@@ -448,7 +451,7 @@ MagnificPopup.prototype = {
 		if(_prevContentType && _prevContentType !== item.type) {
 			mfp.container.removeClass('mfp-'+_prevContentType+'-holder');
 		}
-
+		
 		var newContent = mfp['get' + type.charAt(0).toUpperCase() + type.slice(1)](item, mfp.currTemplate[type]);
 		mfp.appendContent(newContent, type);
 
@@ -456,6 +459,9 @@ MagnificPopup.prototype = {
 
 		_mfpTrigger(CHANGE_EVENT, item);
 		_prevContentType = item.type;
+		
+		// Append container back after its content changed
+		mfp.container.prepend(mfp.contentContainer);
 	},
 
 
