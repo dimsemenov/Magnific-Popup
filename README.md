@@ -34,6 +34,18 @@ Optionally:
 - Run `grunt watch` to automatically rebuild script when you change files in `src/` or in `website/`.
 - If you don't have and don't want to install Jekyll, run `grunt nosite` to just build JS and CSS files related to popup in `dist/`.
 
+
+## Changelog
+
+### 0.8.2 (May 5, 2013)
+
+- Added !important to mfp-hide class
+- Fix gallery rendering issue in Opera
+- Fix padding to body with overflow:scroll
+
+
+
+
 ## License
 
 Script is MIT licensed and free and will always be kept this way. But has a small restriction from me - please do not create public WordPress plugin based on it(or at least contact me before creating it), because I will make it and it'll be open source too ([want to get notified?](http://dimsemenov.com/subscribe.html)).

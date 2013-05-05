@@ -6,4 +6,4 @@ exclude: [".json", ".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changel
 auto: true
 pygments: true
 
-mfpversion: 0.8.1
+mfpversion: 0.8.2

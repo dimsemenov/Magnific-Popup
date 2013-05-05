@@ -48,7 +48,8 @@
   display: inline-block;
   vertical-align: middle;
   margin: 0 auto;
-  text-align: left; }
+  text-align: left;
+  z-index: 505; }
 
 .mfp-inline-holder .mfp-content,
 .mfp-ajax-holder .mfp-content {
@@ -95,7 +96,8 @@
   text-align: center;
   margin-top: -0.8em;
   left: 8px;
-  right: 8px; }
+  right: 8px;
+  z-index: 504; }
 
 .mfp-preloader a {
   color: #cccccc; }
@@ -117,7 +119,8 @@ button.mfp-arrow {
   border: 0;
   -webkit-appearance: none;
   display: block;
-  padding: 0; }
+  padding: 0;
+  z-index: 506; }
 
 button::-moz-focus-inner {
   padding: 0;

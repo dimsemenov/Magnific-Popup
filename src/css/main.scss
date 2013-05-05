@@ -133,6 +133,7 @@ $caption-subtitle-color: #BDBDBD;
   vertical-align: middle;
   margin: 0 auto;
   text-align: left;
+  z-index: $z-index-base + 5;
 }
 .mfp-inline-holder .mfp-content,
 .mfp-ajax-holder .mfp-content {
@@ -195,6 +196,7 @@ $caption-subtitle-color: #BDBDBD;
   margin-top: -0.8em;
   left: 8px;
   right: 8px;
+  z-index: $z-index-base + 4;
 }
 .mfp-preloader a {
   color: $controls-text-color;
@@ -224,6 +226,7 @@ button.mfp-arrow {
   -webkit-appearance: none;
   display: block;
   padding: 0;
+  z-index: $z-index-base + 6;
 }
 button::-moz-focus-inner {
     padding: 0;
