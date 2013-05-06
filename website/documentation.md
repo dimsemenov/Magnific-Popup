@@ -359,7 +359,7 @@ I have created two examples on CodePen that will help you better understand how 
 
 To create such type of popup, first of define the path to the file that you wish to display and select `ajax` type of the popup. Popup itself should be styled in exactly the same way as an [inline popup type](#inline_type).
 
-**Important note:** in HTML file that you load there should be only one root element.
+**Important note!** The contents of the file that you load is already a popup itself, so there must be **only one root element**. 
 
 {% highlight html %}
 <a href="path-to-file.html" class="ajax-popup-link">Show inline popup</a>
@@ -386,14 +386,16 @@ ajax: {
 }
 {% endhighlight %}
 
-To modify content after it's loaded, but before it's added to popup there is `parseAjax` callback:
+To modify content after it's loaded, or to select and show just specific element from loaded file, there is a `parseAjax` callback:
 
 {% highlight javascript %}
 callbacks: {
   parseAjax: function(jqXHR) {
     console.log('Loading of ajax content finished. Object:', jqXHR);
     // You can modify value of jqXHR.responseText here. It's used as a content for popup.
-    // e.g. jqXHR.responseText = $(jqXHR.responseText).find('.some-element');
+    
+    // For example, to show just #some-element:
+    // jqXHR.responseText = $(jqXHR.responseText).find('#some-element');
   }
 }
 {% endhighlight %}
