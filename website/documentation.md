@@ -170,7 +170,7 @@ Method #2: From `data-mfp-src` attribute (overrides first method):
 Method #3: From <code>items</code> option
 
 {% highlight javascript %}
-$.magnificPopup.open(
+$.magnificPopup.open({
   items: {
     src: 'some-image.jpg'
   },
