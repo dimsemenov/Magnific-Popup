@@ -175,11 +175,21 @@ MagnificPopup.prototype = {
 				if(mfp.st.closeOnContentClick) {
 					mfp.close();
 				} else {
+					// determine if click is contained in content
+					var containsContent = false;
+					if (mfp.content) {
+						$.each(mfp.content, function(index, oneContent) {
+							if ($.contains(oneContent, target)) {
+								containsContent = true;
+							}
+						});
+					}
+
 					// close popup if click is not on a content, on close button, or content does not exist
 					if( !mfp.content || 
 						$(target).hasClass('mfp-close') ||
 						(mfp.preloader && e.target === mfp.preloader[0]) || 
-						(target !== mfp.content[0] && !$.contains(mfp.content[0], target)) ) {
+						(target !== mfp.content[0] && !containsContent) ) {
 						mfp.close();
 					}
 				}
