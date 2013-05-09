@@ -338,15 +338,39 @@ $('.open-popup-link').magnificPopup({
 });
 {% endhighlight %}
 
-You can also create popup from an element that is not attached to DOM:
+Here are some other ways to initialize popup:
 
 {% highlight javascript %}
+// From HTML string
 $('button').magnificPopup({
   items: {
-      src: '<div class="white-popup">Dynamically created popup</div>', // can be a HTML string, jQuery object, or CSS selector
+      src: '<div class="white-popup">Dynamically created popup</div>',
       type: 'inline'
-  },
-  closeBtnInside: true
+  }
+});
+
+// From an element with ID #popup
+$('button').magnificPopup({
+  items: {
+      src: '#popup',
+      type: 'inline'
+  }
+});
+
+// From jQuery object
+$('button').magnificPopup({
+  items: {
+      src: $('<div class="white-popup">Dynamically created popup</div>'),
+      type: 'inline'
+  }
+});
+
+// Open directly via API
+$.magnificPopup.open({
+  items: {
+    src: '<div class="white-popup">Dynamically created popup</div>', // can be a HTML string, jQuery object, or CSS selector
+    type: 'inline'
+  }
 });
 {% endhighlight %}
 
@@ -795,7 +819,6 @@ callbacks: {
 
 ### Public methods
 
-
 {% highlight javascript %}
 // Open popup immediately
 $.magnificPopup.open({
@@ -805,6 +828,7 @@ $.magnificPopup.open({
   type: 'image'
 
   // You may add options here, they're exactly the same as for $.fn.magnificPopup call
+  // Learn more about it in Initializing Popup section
   // Note that some settings that rely on click event (like disableOn or midClick) will not work here
 });
 
@@ -908,4 +932,10 @@ $('.some-button').magnificPopup({
 
 ## FAQ
 
-Nothing in FAQ yet. If you think that something should be added, please submit <a href="https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md">commit to documentation on GitHub</a>.
+### How to place gallery navigation arrows "inside" the image?
+
+See [example on CodePen](http://codepen.io/dimsemenov/pen/JGjHK).
+
+<h2 id="contribute">Make Magnific Popup better!</h2>
+
+Improve this documentation page <a href="https://github.com/dimsemenov/Magnific-Popup/edit/master/website/documentation.md">via GitHub</a> (simply submit commit). Any improvements, including your own CodePen examples are very welcome.
