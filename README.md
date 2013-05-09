@@ -37,6 +37,13 @@ Optionally:
 
 ## Changelog
 
+### 0.8.3 (May 9, 2013)
+
+- Added: `goTo` public method.
+- Custom events that are added to popup are now not lost when navigating through gallery.
+- If `delegate` option is used, events are now dispatched on main element instead of children.
+
+
 ### 0.8.2 (May 5, 2013)
 
 - Added !important to mfp-hide class

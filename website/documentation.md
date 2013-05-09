@@ -740,7 +740,7 @@ $('.image-link').magnificPopup({
 // Name of event should start from  `mfp` and the first letter should be uppercase. 
 // e.g. 'open' becomes 'mfpOpen', 'beforeOpen' becomes 'mfpBeforeOpen'.
 $('.image-link').on('mfpOpen', function(e /*, params */) {
-  console.log('Popup opened');
+  console.log('Popup opened',  $.magnificPopup.instance);
 });
 {% endhighlight %}
 
@@ -828,6 +828,7 @@ magnificPopup.close();
 // Navigation when gallery is enabled
 magnificPopup.next(); // go to next item
 magnificPopup.prev(); // go to prev item
+magnificPopup.goTo(4); // go to item #4
 
 
 // Update status of popup

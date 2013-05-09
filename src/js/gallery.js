@@ -70,17 +70,8 @@ $.magnificPopup.registerModule('gallery', {
 				values.counter = l ? _replaceCurrTotal(gSt.tCounter, item.index, l) : '';
 			});
 
-			_mfpOn(CHANGE_EVENT+ns, function() {
-
-				if(mfp._preloadTimeout) clearTimeout(mfp._preloadTimeout);
-
-				mfp._preloadTimeout = setTimeout(function() {
-					mfp.preloadNearbyImages();
-					mfp._preloadTimeout = null;
-				}, 16);		
-
+			_mfpOn('BuildControls' + ns, function() {
 				if(gSt.arrows && !mfp.arrowLeft) {
-
 					var markup = gSt.arrowMarkup,
 						arrowLeft = mfp.arrowLeft = $( markup.replace('%title%', gSt.tPrev).replace('%dir%', 'left') ).addClass(PREVENT_CLOSE_CLASS),			
 						arrowRight = mfp.arrowRight = $( markup.replace('%title%', gSt.tNext).replace('%dir%', 'right') ).addClass(PREVENT_CLOSE_CLASS);
@@ -105,6 +96,15 @@ $.magnificPopup.registerModule('gallery', {
 				}
 			});
 
+			_mfpOn(CHANGE_EVENT+ns, function() {
+				if(mfp._preloadTimeout) clearTimeout(mfp._preloadTimeout);
+
+				mfp._preloadTimeout = setTimeout(function() {
+					mfp.preloadNearbyImages();
+					mfp._preloadTimeout = null;
+				}, 16);		
+			});
+
 
 			_mfpOn(CLOSE_EVENT+ns, function() {
 				_document.off(ns);
@@ -125,6 +125,11 @@ $.magnificPopup.registerModule('gallery', {
 		prev: function() {
 			mfp.direction = false;
 			mfp.index = _getLoopedId(mfp.index - 1);
+			mfp.updateItemHTML();
+		},
+		goTo: function(newIndex) {
+			mfp.direction = (newIndex >= mfp.index);
+			mfp.index = newIndex;
 			mfp.updateItemHTML();
 		},
 		preloadNearbyImages: function() {

@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.8.2 - 2013-05-05
+/*! Magnific Popup - v0.8.3 - 2013-05-09
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -302,10 +302,10 @@ MagnificPopup.prototype = {
 		// add content
 		mfp.updateItemHTML();
 
+		_mfpTrigger('BuildControls');
+
+
 		// remove scrollbar, add padding e.t.c
-		
-
-
 		_body.css(bodyStyles);
 		
 		// add everything to DOM
@@ -406,6 +406,7 @@ MagnificPopup.prototype = {
 		if(mfp._lastFocusedEl) {
 			$(mfp._lastFocusedEl).focus(); // put tab focus back
 		}	
+		mfp.content = null;
 		mfp.currTemplate = null;
 		mfp.prevHeight = 0;
 	},
@@ -434,7 +435,12 @@ MagnificPopup.prototype = {
 		var item = mfp.items[mfp.index];
 
 		// Detach and perform modifications
+		
+
 		mfp.contentContainer.detach();
+
+		if(mfp.content)
+			mfp.content.detach();
 
 		if(!item.parsed) {
 			item = mfp.parseEl( mfp.index );
@@ -445,8 +451,11 @@ MagnificPopup.prototype = {
 		var type = item.type;		
 		if(!mfp.currTemplate[type]) {
 			var markup = mfp.st[type] ? mfp.st[type].markup : false;
+
+			// allows to modify markup
+			_mfpTrigger('FirstMarkupParse', markup);
+
 			if(markup) {
-				_mfpTrigger('FirstMarkupParse', markup);
 				mfp.currTemplate[type] = $(markup);
 			} else {
 				// if there is no markup found we just define that template is parsed
@@ -493,7 +502,7 @@ MagnificPopup.prototype = {
 		_mfpTrigger(BEFORE_APPEND_EVENT);
 		mfp.container.addClass('mfp-'+type+'-holder');
 
-		mfp.contentContainer.html(mfp.content);
+		mfp.contentContainer.append(mfp.content);
 	},
 
 
@@ -565,6 +574,7 @@ MagnificPopup.prototype = {
 					
 				e.preventDefault();
 				options.el = $(this);
+				options.mainEl = el;
 				if(options.delegate) {
 					options.items = el.find(options.delegate);
 				}
@@ -1056,7 +1066,9 @@ $.magnificPopup.registerModule('image', {
 				_mfpTrigger('ImageHasSize', item);
 
 				if(item.imgHidden) {
-					mfp.content.removeClass('mfp-loading');
+					if(mfp.content)
+						mfp.content.removeClass('mfp-loading');
+					
 					item.imgHidden = false;
 				}
 
@@ -1361,17 +1373,8 @@ $.magnificPopup.registerModule('gallery', {
 				values.counter = l ? _replaceCurrTotal(gSt.tCounter, item.index, l) : '';
 			});
 
-			_mfpOn(CHANGE_EVENT+ns, function() {
-
-				if(mfp._preloadTimeout) clearTimeout(mfp._preloadTimeout);
-
-				mfp._preloadTimeout = setTimeout(function() {
-					mfp.preloadNearbyImages();
-					mfp._preloadTimeout = null;
-				}, 16);		
-
+			_mfpOn('BuildControls' + ns, function() {
 				if(gSt.arrows && !mfp.arrowLeft) {
-
 					var markup = gSt.arrowMarkup,
 						arrowLeft = mfp.arrowLeft = $( markup.replace('%title%', gSt.tPrev).replace('%dir%', 'left') ).addClass(PREVENT_CLOSE_CLASS),			
 						arrowRight = mfp.arrowRight = $( markup.replace('%title%', gSt.tNext).replace('%dir%', 'right') ).addClass(PREVENT_CLOSE_CLASS);
@@ -1396,6 +1399,15 @@ $.magnificPopup.registerModule('gallery', {
 				}
 			});
 
+			_mfpOn(CHANGE_EVENT+ns, function() {
+				if(mfp._preloadTimeout) clearTimeout(mfp._preloadTimeout);
+
+				mfp._preloadTimeout = setTimeout(function() {
+					mfp.preloadNearbyImages();
+					mfp._preloadTimeout = null;
+				}, 16);		
+			});
+
 
 			_mfpOn(CLOSE_EVENT+ns, function() {
 				_document.off(ns);
@@ -1416,6 +1428,11 @@ $.magnificPopup.registerModule('gallery', {
 		prev: function() {
 			mfp.direction = false;
 			mfp.index = _getLoopedId(mfp.index - 1);
+			mfp.updateItemHTML();
+		},
+		goTo: function(newIndex) {
+			mfp.direction = (newIndex >= mfp.index);
+			mfp.index = newIndex;
 			mfp.updateItemHTML();
 		},
 		preloadNearbyImages: function() {

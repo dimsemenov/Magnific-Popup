@@ -296,10 +296,10 @@ MagnificPopup.prototype = {
 		// add content
 		mfp.updateItemHTML();
 
+		_mfpTrigger('BuildControls');
+
+
 		// remove scrollbar, add padding e.t.c
-		
-
-
 		_body.css(bodyStyles);
 		
 		// add everything to DOM
@@ -400,6 +400,7 @@ MagnificPopup.prototype = {
 		if(mfp._lastFocusedEl) {
 			$(mfp._lastFocusedEl).focus(); // put tab focus back
 		}	
+		mfp.content = null;
 		mfp.currTemplate = null;
 		mfp.prevHeight = 0;
 	},
@@ -428,7 +429,12 @@ MagnificPopup.prototype = {
 		var item = mfp.items[mfp.index];
 
 		// Detach and perform modifications
+		
+
 		mfp.contentContainer.detach();
+
+		if(mfp.content)
+			mfp.content.detach();
 
 		if(!item.parsed) {
 			item = mfp.parseEl( mfp.index );
@@ -439,8 +445,11 @@ MagnificPopup.prototype = {
 		var type = item.type;		
 		if(!mfp.currTemplate[type]) {
 			var markup = mfp.st[type] ? mfp.st[type].markup : false;
+
+			// allows to modify markup
+			_mfpTrigger('FirstMarkupParse', markup);
+
 			if(markup) {
-				_mfpTrigger('FirstMarkupParse', markup);
 				mfp.currTemplate[type] = $(markup);
 			} else {
 				// if there is no markup found we just define that template is parsed
@@ -487,7 +496,7 @@ MagnificPopup.prototype = {
 		_mfpTrigger(BEFORE_APPEND_EVENT);
 		mfp.container.addClass('mfp-'+type+'-holder');
 
-		mfp.contentContainer.html(mfp.content);
+		mfp.contentContainer.append(mfp.content);
 	},
 
 
@@ -559,6 +568,7 @@ MagnificPopup.prototype = {
 					
 				e.preventDefault();
 				options.el = $(this);
+				options.mainEl = el;
 				if(options.delegate) {
 					options.items = el.find(options.delegate);
 				}

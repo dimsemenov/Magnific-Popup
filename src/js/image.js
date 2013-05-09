@@ -77,7 +77,9 @@ $.magnificPopup.registerModule('image', {
 				_mfpTrigger('ImageHasSize', item);
 
 				if(item.imgHidden) {
-					mfp.content.removeClass('mfp-loading');
+					if(mfp.content)
+						mfp.content.removeClass('mfp-loading');
+					
 					item.imgHidden = false;
 				}
 
