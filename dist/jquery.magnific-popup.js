@@ -5,9 +5,9 @@
 
 /*>>core*/
 /**
- * 
+ *
  * Magnific Popup Core JS file
- * 
+ *
  */
 
 
@@ -27,7 +27,7 @@ var CLOSE_EVENT = 'Close',
 
 
 /**
- * Private vars 
+ * Private vars
  */
 var mfp, // As we have only one instance of MagnificPopup object, we define it locally to not to use 'this'
 	MagnificPopup = function(){},
@@ -94,12 +94,12 @@ MagnificPopup.prototype = {
 	constructor: MagnificPopup,
 
 	/**
-	 * Initializes Magnific Popup plugin. 
+	 * Initializes Magnific Popup plugin.
 	 * This function is triggered only once when $.fn.magnificPopup or $.magnificPopup is executed
 	 */
 	init: function() {
 		var appVersion = navigator.appVersion;
-		mfp.isIE7 = appVersion.indexOf("MSIE 7.") !== -1; 
+		mfp.isIE7 = appVersion.indexOf("MSIE 7.") !== -1;
 		mfp.isAndroid = (/android/gi).test(appVersion);
 		mfp.isIOS = (/iphone|ipad|ipod/gi).test(appVersion);
 
@@ -122,9 +122,9 @@ MagnificPopup.prototype = {
 
 		var i;
 
-		mfp.types = []; 
+		mfp.types = [];
 		_wrapClasses = '';
-		
+
 		mfp.ev = data.el || _document;
 
 		if(data.isObj) {
@@ -157,9 +157,9 @@ MagnificPopup.prototype = {
 
 
 
-		mfp.st = $.extend(true, {}, $.magnificPopup.defaults, data ); 
+		mfp.st = $.extend(true, {}, $.magnificPopup.defaults, data );
 		mfp.fixedContentPos = mfp.st.fixedContentPos === 'auto' ? !mfp.probablyMobile : mfp.st.fixedContentPos;
-		
+
 		mfp.items = data.items.length ? data.items : [data.items];
 
 		// Building markup
@@ -182,9 +182,9 @@ MagnificPopup.prototype = {
 					mfp.close();
 				} else {
 					// close popup if click is not on a content, on close button, or content does not exist
-					if( !mfp.content || 
+					if( !mfp.content ||
 						$(target).hasClass('mfp-close') ||
-						(mfp.preloader && e.target === mfp.preloader[0]) || 
+						(mfp.preloader && e.target === mfp.preloader[0]) ||
 						(target !== mfp.content[0] && !$.contains(mfp.content[0], target)) ) {
 						mfp.close();
 					}
@@ -193,7 +193,7 @@ MagnificPopup.prototype = {
 
 			mfp.container = _getEl('container', mfp.wrap);
 		}
-		
+
 		mfp.contentContainer = _getEl('content');
 		if(mfp.st.preloader) {
 			mfp.preloader = _getEl('preloader', mfp.container, mfp.st.tLoading);
@@ -224,7 +224,7 @@ MagnificPopup.prototype = {
 			_wrapClasses += ' mfp-align-top';
 		}
 
-	
+
 
 		if(mfp.fixedContentPos) {
 			mfp.wrap.css({
@@ -233,7 +233,7 @@ MagnificPopup.prototype = {
 				overflowY: mfp.st.overflowY
 			});
 		} else {
-			mfp.wrap.css({ 
+			mfp.wrap.css({
 				top: _window.scrollTop(),
 				position: 'absolute'
 			});
@@ -245,7 +245,7 @@ MagnificPopup.prototype = {
 			});
 		}
 
-		
+
 
 		// Close on ESC key
 		_document.on('keyup' + EVENT_NS, function(e) {
@@ -262,7 +262,7 @@ MagnificPopup.prototype = {
 		if(!mfp.st.closeOnContentClick) {
 			_wrapClasses += ' mfp-auto-cursor';
 		}
-		
+
 		if(_wrapClasses)
 			mfp.wrap.addClass(_wrapClasses);
 
@@ -270,7 +270,7 @@ MagnificPopup.prototype = {
 		// this triggers recalculation of layout, so we get it once to not to trigger twice
 		var windowHeight = mfp.wH = _window.height();
 
-		
+
 		var bodyStyles = {};
 
 		if( mfp.fixedContentPos && mfp.st.overflowY !== 'scroll' ) {
@@ -289,8 +289,8 @@ MagnificPopup.prototype = {
 			}
 		}
 
-		
-		
+
+
 		var classesToadd = mfp.st.mainClass;
 		if(mfp.isIE7) {
 			classesToadd += ' mfp-ie7';
@@ -307,7 +307,7 @@ MagnificPopup.prototype = {
 
 		// remove scrollbar, add padding e.t.c
 		_body.css(bodyStyles);
-		
+
 		// add everything to DOM
 		mfp.bgOverlay.add(mfp.wrap).prependTo( document.body );
 
@@ -315,10 +315,10 @@ MagnificPopup.prototype = {
 
 		// Save last focused element
 		mfp._lastFocusedEl = document.activeElement;
-		
+
 		// Wait for next cycle to allow CSS transition
 		setTimeout(function() {
-			
+
 			if(mfp.content) {
 				mfp._addClassToMFP(READY_CLASS);
 				_setFocus();
@@ -326,7 +326,7 @@ MagnificPopup.prototype = {
 				// if content is not defined (not loaded e.t.c) we add class only for BG
 				mfp.bgOverlay.addClass(READY_CLASS);
 			}
-			
+
 			// Trap the focus in popup
 			_document.on('focusin' + EVENT_NS, function (e) {
 				if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
@@ -387,7 +387,7 @@ MagnificPopup.prototype = {
 			}
 			_body.css(bodyStyles);
 		}
-		
+
 		_document.off('keyup' + EVENT_NS + ' focusin' + EVENT_NS);
 		mfp.ev.off(EVENT_NS);
 
@@ -405,12 +405,12 @@ MagnificPopup.prototype = {
 
 		if(mfp._lastFocusedEl) {
 			$(mfp._lastFocusedEl).focus(); // put tab focus back
-		}	
+		}
 		mfp.content = null;
 		mfp.currTemplate = null;
 		mfp.prevHeight = 0;
 	},
-	
+
 	updateSize: function(winHeight) {
 
 		if(mfp.isIOS) {
@@ -435,7 +435,7 @@ MagnificPopup.prototype = {
 		var item = mfp.items[mfp.index];
 
 		// Detach and perform modifications
-		
+
 
 		mfp.contentContainer.detach();
 
@@ -445,10 +445,10 @@ MagnificPopup.prototype = {
 		if(!item.parsed) {
 			item = mfp.parseEl( mfp.index );
 		}
-		
+
 		mfp.currItem = item;
 
-		var type = item.type;		
+		var type = item.type;
 		if(!mfp.currTemplate[type]) {
 			var markup = mfp.st[type] ? mfp.st[type].markup : false;
 
@@ -466,7 +466,7 @@ MagnificPopup.prototype = {
 		if(_prevContentType && _prevContentType !== item.type) {
 			mfp.container.removeClass('mfp-'+_prevContentType+'-holder');
 		}
-		
+
 		var newContent = mfp['get' + type.charAt(0).toUpperCase() + type.slice(1)](item, mfp.currTemplate[type]);
 		mfp.appendContent(newContent, type);
 
@@ -474,7 +474,7 @@ MagnificPopup.prototype = {
 
 		_mfpTrigger(CHANGE_EVENT, item);
 		_prevContentType = item.type;
-		
+
 		// Append container back after its content changed
 		mfp.container.prepend(mfp.contentContainer);
 	},
@@ -485,7 +485,7 @@ MagnificPopup.prototype = {
 	 */
 	appendContent: function(newContent, type) {
 		mfp.content = newContent;
-		
+
 		if(newContent) {
 			if(mfp.st.closeBtnInside && mfp.currTemplate[type] === true) {
 				// if there is no markup, we just append close button element inside
@@ -507,7 +507,7 @@ MagnificPopup.prototype = {
 
 
 
-	
+
 	/**
 	 * Creates Magnific Popup data object based on given data
 	 * @param  {int} index Index of item to parse
@@ -515,7 +515,7 @@ MagnificPopup.prototype = {
 	parseEl: function(index) {
 		var item = mfp.items[index],
 			type = item.type;
-		
+
 
 		if(item.tagName) {
 			item = { el: $(item) };
@@ -571,7 +571,7 @@ MagnificPopup.prototype = {
 						}
 					}
 				}
-					
+
 				e.preventDefault();
 				options.el = $(this);
 				options.mainEl = el;
@@ -580,12 +580,12 @@ MagnificPopup.prototype = {
 				}
 				mfp.open(options);
 			}
-			
+
 		};
 
 		if(!options) {
 			options = {};
-		} 
+		}
 
 		var eName = 'click.magnificPopup';
 		if(options.items) {
@@ -639,8 +639,8 @@ MagnificPopup.prototype = {
 	},
 
 
-	
-	
+
+
 
 
 
@@ -659,7 +659,7 @@ MagnificPopup.prototype = {
 	},
 	_hasScrollBar: function(winHeight) {
 		if(document.body.clientHeight > (winHeight || _window.height()) ) {
-            return true;    
+            return true;
         }
         return false;
 	},
@@ -733,12 +733,12 @@ $.magnificPopup = {
 			mfp = new MagnificPopup();
 			mfp.init();
 			$.magnificPopup.instance = mfp;
-		}	
+		}
 
 		if(!options) {
 			options = {};
 		}
-		
+
 		options.isObj = true;
 		options.index = index === undefined ? 0 : index;
 		return this.instance.open(options);
@@ -752,16 +752,16 @@ $.magnificPopup = {
 		if(module.options) {
 			$.magnificPopup.defaults[name] = module.options;
 		}
-		$.extend(this.proto, module.proto);			
+		$.extend(this.proto, module.proto);
 		this.modules.push(name);
 	},
 
-	defaults: {   
+	defaults: {
 
 		// Info about options is docs:
 		// http://dimsemenov.com/plugins/magnific-popup/documentation.html#options
-		
-		disableOn: 0,	
+
+		disableOn: 0,
 
 		key: null,
 
@@ -772,17 +772,17 @@ $.magnificPopup = {
 		preloader: true,
 
 		focus: '', // CSS selector of input to focus after popup is opened
-		
+
 		closeOnContentClick: false,
 
-		closeBtnInside: true, 
+		closeBtnInside: true,
 
 		alignTop: false,
-	
+
 		removalDelay: 0,
-		
-		fixedContentPos: 'auto', 
-	
+
+		fixedContentPos: 'auto',
+
 		fixedBgPos: 'auto',
 
 		overflowY: 'auto',
@@ -877,7 +877,7 @@ $.magnificPopup.registerModule(INLINE_NS, {
 				if(!item.isElement && !item.inlinePlaceholder) {
 					item.inlinePlaceholder = _getEl(inlineSt.hiddenClass);
 				}
-				
+
 				if(item.isElement) {
 					item.inlineElement = item.src;
 				} else if(!item.inlineElement) {
@@ -892,8 +892,8 @@ $.magnificPopup.registerModule(INLINE_NS, {
 					_hasPlaceholder = true;
 				}
 
-				
-				
+
+
 				item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(inlineSt.hiddenClass);
 				return item.inlineElement;
 			} else {
@@ -949,7 +949,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 
 					_mfpTrigger('ParseAjax', jqXHR);
 
-					mfp.appendContent( $(jqXHR.responseText), AJAX_NS );
+					mfp.appendContent( $($.parseHTML(jqXHR.responseText)), AJAX_NS );
 
 					item.finished = true;
 
@@ -982,14 +982,14 @@ $.magnificPopup.registerModule(AJAX_NS, {
 
 
 
-	
+
 
 /*>>ajax*/
 
 /*>>image*/
 var _imgInterval,
 	_getTitle = function(item) {
-		if(item.data && item.data.title !== undefined) 
+		if(item.data && item.data.title !== undefined)
 			return item.data.title;
 
 		var src = mfp.st.image.titleSrc;
@@ -1016,7 +1016,7 @@ $.magnificPopup.registerModule('image', {
 					'</div>'+
 				'</div>',
 		cursor: 'mfp-zoom-out-cur',
-		titleSrc: 'title', 
+		titleSrc: 'title',
 		verticalFit: true,
 		tError: '<a href="%url%">The image</a> could not be loaded.'
 	},
@@ -1054,13 +1054,13 @@ $.magnificPopup.registerModule('image', {
 		},
 		_onImageHasSize: function(item) {
 			if(item.img) {
-				
+
 				item.hasSize = true;
 
 				if(_imgInterval) {
 					clearInterval(_imgInterval);
 				}
-				
+
 				item.isCheckingImgSize = false;
 
 				_mfpTrigger('ImageHasSize', item);
@@ -1068,7 +1068,7 @@ $.magnificPopup.registerModule('image', {
 				if(item.imgHidden) {
 					if(mfp.content)
 						mfp.content.removeClass('mfp-loading');
-					
+
 					item.imgHidden = false;
 				}
 
@@ -1121,7 +1121,7 @@ $.magnificPopup.registerModule('image', {
 					if(item) {
 						if (item.img[0].complete) {
 							item.img.off('.mfploader');
-							
+
 							if(item === mfp.currItem){
 								mfp._onImageHasSize(item);
 
@@ -1130,7 +1130,7 @@ $.magnificPopup.registerModule('image', {
 
 							item.hasSize = true;
 							item.loaded = true;
-							
+
 						}
 						else {
 							// if image complete check fails 200 times (20 sec), we assume that there was an error.
@@ -1202,7 +1202,7 @@ $.magnificPopup.registerModule('image', {
 				item.imgHidden = true;
 				template.addClass('mfp-loading');
 				mfp.findImageSize(item);
-			} 
+			}
 
 			return template;
 		}
@@ -1240,8 +1240,8 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 		// we don't care and support only one default type of URL by default
 		patterns: {
 			youtube: {
-				index: 'youtube.com', 
-				id: 'v=', 
+				index: 'youtube.com',
+				id: 'v=',
 				src: '//www.youtube.com/embed/%id%?autoplay=1'
 			},
 			vimeo: {
@@ -1268,7 +1268,7 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 		getIframe: function(item, template) {
 			var embedSrc = item.src;
 			var iframeSt = mfp.st.iframe;
-				
+
 			$.each(iframeSt.patterns, function() {
 				if(embedSrc.indexOf( this.index ) > -1) {
 					if(this.id) {
@@ -1282,7 +1282,7 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 					return false; // break;
 				}
 			});
-			
+
 			var dataObj = {};
 			if(iframeSt.srcAction) {
 				dataObj[iframeSt.srcAction] = embedSrc;
@@ -1339,7 +1339,7 @@ $.magnificPopup.registerModule('gallery', {
 				supportsFastClick = Boolean($.fn.mfpFastClick);
 
 			mfp.direction = true; // true - next, false - prev
-			
+
 			if(!gSt || !gSt.enabled ) return false;
 
 			_wrapClasses += ' mfp-gallery';
@@ -1376,16 +1376,16 @@ $.magnificPopup.registerModule('gallery', {
 			_mfpOn('BuildControls' + ns, function() {
 				if(gSt.arrows && !mfp.arrowLeft) {
 					var markup = gSt.arrowMarkup,
-						arrowLeft = mfp.arrowLeft = $( markup.replace('%title%', gSt.tPrev).replace('%dir%', 'left') ).addClass(PREVENT_CLOSE_CLASS),			
+						arrowLeft = mfp.arrowLeft = $( markup.replace('%title%', gSt.tPrev).replace('%dir%', 'left') ).addClass(PREVENT_CLOSE_CLASS),
 						arrowRight = mfp.arrowRight = $( markup.replace('%title%', gSt.tNext).replace('%dir%', 'right') ).addClass(PREVENT_CLOSE_CLASS);
 
 					var eName = supportsFastClick ? 'mfpFastClick' : 'click';
 					arrowLeft[eName](function() {
 						mfp.prev();
-					});			
+					});
 					arrowRight[eName](function() {
 						mfp.next();
-					});	
+					});
 
 					// Polyfill for :before and :after (adds elements with classes mfp-a and mfp-b)
 					if(mfp.isIE7) {
@@ -1405,21 +1405,21 @@ $.magnificPopup.registerModule('gallery', {
 				mfp._preloadTimeout = setTimeout(function() {
 					mfp.preloadNearbyImages();
 					mfp._preloadTimeout = null;
-				}, 16);		
+				}, 16);
 			});
 
 
 			_mfpOn(CLOSE_EVENT+ns, function() {
 				_document.off(ns);
 				mfp.wrap.off('click'+ns);
-			
+
 				if(supportsFastClick) {
 					mfp.arrowLeft.add(mfp.arrowRight).destroyMfpFastClick();
 				}
 				mfp.arrowRight = mfp.arrowLeft = null;
 			});
 
-		}, 
+		},
 		next: function() {
 			mfp.direction = true;
 			mfp.index = _getLoopedId(mfp.index + 1);
@@ -1583,11 +1583,11 @@ $.magnificPopup.registerModule(RETINA_NS, {
  *
  * To unbind:
  * $('.your-el').destroyMfpFastClick();
- * 
- * 
+ *
+ *
  * Note that it's a very basic and simple implementation, it blocks ghost click on the same element where it was bound.
  * If you need something more advanced, use plugin by FT Labs https://github.com/ftlabs/fastclick
- * 
+ *
  */
 
 (function() {
