@@ -95,6 +95,9 @@ body {
 .grid-c h3 {
   margin-top: 0;
 }
+.grid-c {
+  clear: both;
+}
 .grid-c p {
   margin-bottom: .5em;
 }
