@@ -560,6 +560,7 @@ MagnificPopup.prototype = {
 	 */
 	addGroup: function(el, options) {
 		var eHandler = function(e) {
+			e.mfpEl = this;
 			mfp._openClick(e, el, options);
 		};
 
@@ -603,7 +604,7 @@ MagnificPopup.prototype = {
 			if(e.type)
 				e.preventDefault();
 
-			options.el = $(e.target);
+			options.el = $(e.mfpEl);
 			if(options.delegate) {
 				options.items = el.find(options.delegate);
 			}
@@ -817,7 +818,7 @@ $.fn.magnificPopup = function(options) {
 				}
 				items = items.eq( index );
 			}
-			mfp._openClick({target:items}, jqEl, itemOpts);
+			mfp._openClick({mfpEl:items}, jqEl, itemOpts);
 		} else {
 			if(mfp.isOpen)
 				mfp[options].apply(mfp, Array.prototype.slice.call(arguments, 1));
