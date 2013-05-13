@@ -25,6 +25,7 @@ var CLOSE_EVENT = 'Close',
  */
 var mfp, // As we have only one instance of MagnificPopup object, we define it locally to not to use 'this'
 	MagnificPopup = function(){},
+	_isJQ = !!(window.jQuery),
 	_prevStatus,
 	_window = $(window),
 	_body,
@@ -120,7 +121,12 @@ MagnificPopup.prototype = {
 	 */
 	open: function(data) {
 
-		if(mfp.isOpen) return;
+		mfp.items = data.items.length ? data.items : [data.items];
+		
+		if(mfp.isOpen) {
+			mfp.updateItemHTML();
+			return;
+		}
 
 		var i;
 
@@ -162,7 +168,7 @@ MagnificPopup.prototype = {
 		mfp.st = $.extend(true, {}, $.magnificPopup.defaults, data ); 
 		mfp.fixedContentPos = mfp.st.fixedContentPos === 'auto' ? !mfp.probablyMobile : mfp.st.fixedContentPos;
 		
-		mfp.items = data.items.length ? data.items : [data.items];
+		
 
 		// Building markup
 		// main containers are created only once
@@ -429,7 +435,6 @@ MagnificPopup.prototype = {
 
 	},
 
-
 	/**
 	 * Set content of popup based on current index
 	 */
@@ -642,15 +647,6 @@ MagnificPopup.prototype = {
 		}
 	},
 
-	destroy: function() {
-
-	},
-	
-	
-
-
-
-
 
 	/*
 		"Private" helpers that aren't private at all
@@ -809,7 +805,7 @@ $.fn.magnificPopup = function(options) {
 
 		if(options === 'open') {
 			var items,
-				itemOpts = jqEl.data('magnificPopup'),
+				itemOpts = _isJQ ? jqEl.data('magnificPopup') : jqEl[0].magnificPopup,
 				index = parseInt(arguments[1], 10) || 0;
 
 			if(itemOpts.items) {
@@ -829,7 +825,17 @@ $.fn.magnificPopup = function(options) {
 
 	} else {
 
-		jqEl.data('magnificPopup', options);
+		/*
+		 * As Zepto doesn't support .data() method for objects 
+		 * and it works only in normal browsers
+		 * we assign "options" object directly to the DOM element. FTW!
+		 */
+		if(_isJQ) {
+			jqEl.data('magnificPopup', options);
+		} else {
+			jqEl[0].magnificPopup = options;
+		}
+
 		mfp.addGroup(jqEl, options);
 
 	}
