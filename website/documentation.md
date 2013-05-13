@@ -155,6 +155,8 @@ Type of popup can be defined in a two ways:
 
 Second option always overrides first one, so you may initialize popups with multiple content types from one call.
 
+The `inline` is default one (from v0.8.4) - so you may skip its definition.
+
 <br/>
 
 **The source of the the popup content** (e.g. path to image, path to HTML file, path to video page) can be defined in a few ways:
@@ -738,10 +740,11 @@ View [example of retina popup on CodePen](http://codepen.io/dimsemenov/pen/Dohka
 
 ## API
 
+There is a much bigger list of public events, methods and variables than provided here which is used for module development, look inside code or type in console `$.magnificPopup.instance.` to find them, if you think that something should be added to docs - please submit commit.
 
 ### Events
 
-Callbacks that are defined inside `callbacks` option will automatically be called. Besides that, all Magnific Popup events are also dispatched using `triggerHandler` on target element (or to document if the element doesn't exist). 
+You can define callbacks in `callbacks` option. Besides that, all Magnific Popup events are also dispatched using `triggerHandler` on target element (or to document if the element doesn't exist). 
 
 {% highlight javascript %}
 $('.image-link').magnificPopup({
@@ -820,7 +823,9 @@ callbacks: {
 ### Public methods
 
 {% highlight javascript %}
-// Open popup immediately
+// Open popup immediately. If popup is already opened - it'll just overwite the content (but old options will be kept).
+// - first parameter: options object
+// - second parameter (optional): index of item to open
 $.magnificPopup.open({
   items: {
     src: 'someimage.jpg'
@@ -828,12 +833,10 @@ $.magnificPopup.open({
   type: 'image'
 
   // You may add options here, they're exactly the same as for $.fn.magnificPopup call
-  // Learn more about it in Initializing Popup section
   // Note that some settings that rely on click event (like disableOn or midClick) will not work here
-});
+}, 0);
 
-// Close popup that is currently opened
-$.magnificPopup.close();
+$.magnificPopup.close(); // Close popup that is currently opened (shorthand)
 
 
 
@@ -844,15 +847,19 @@ $.magnificPopup.close();
   For example: $.magnificPopup.instance.doSomething();
 */
 
-var magnificPopup = $.magnificPopup.instance;
+var magnificPopup = $.magnificPopup.instance; // save instance in magnificPopup variable
 
-// Close the current popup
-magnificPopup.close();
+
+magnificPopup.close(); // Close popup that is currently opened
+
 
 // Navigation when gallery is enabled
 magnificPopup.next(); // go to next item
 magnificPopup.prev(); // go to prev item
 magnificPopup.goTo(4); // go to item #4
+
+
+magnificPopup.updateItemHTML(); // updates the popup content. Useful after you change "items" array
 
 
 // Update status of popup
@@ -861,6 +868,29 @@ magnificPopup.goTo(4); // go to item #4
 magnificPopup.updateStatus('loading', 'The loading text...'); 
 {% endhighlight %}
 
+You may also call ANY method via `$.fn.magnificPopup('methodName' /*, param1, param2 ... */)` after you initialized the popup, for example:
+
+{% highlight javascript %}
+// First of make sure that you initialized popup on element $('.element-with-popup')
+
+// Then
+$('.element-with-popup').magnificPopup('open'); // Will open the popup
+$('.element-with-popup').magnificPopup('open', 5); // Will open popup with 5th item
+$('.element-with-popup').magnificPopup('next');
+$('.element-with-popup').magnificPopup('goTo', 3);
+{% endhighlight %}
+
+You may also open the popup directly at initialization:
+
+{% highlight javascript %}
+$('.element-with-popup').magnificPopup({
+  items: {
+    src: 'path-to-image.jpg',
+    type: 'image'
+  }
+  // (optionally) other options
+}).magnificPopup('open');
+{% endhighlight %}
 
 
 ### Public properties
@@ -879,6 +909,9 @@ magnificPopup.index // current item index (integer)
 magnificPopup.bgOverlay // transluscent overlay
 magnificPopup.wrap // container that holds all controls and contentContainer
 magnificPopup.contentContainer // container that holds popup content, child of wrap
+
+magnificPopup.isIE7
+magnificPopup.isIOS
 
 {% endhighlight %}
 

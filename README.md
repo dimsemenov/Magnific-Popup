@@ -37,6 +37,14 @@ Optionally:
 
 ## Changelog
 
+### 0.8.4 (May 13, 2013)
+
+- You can now call any public method directly from jQuery DOM element, e.g.: `$('.some-el-with-popup').magnificPopup('methodName', /*, arguments */)`. 
+- Optimized inline module. Now target element is replaced with placeholder only when it has a defined parent node.
+- `inline` type is now set as a default, so you may skip it.
+- Now content is just replaced when you call `open()` on popup that is already opened.
+
+
 ### 0.8.3 (May 9, 2013)
 
 - Added: `goTo` public method.

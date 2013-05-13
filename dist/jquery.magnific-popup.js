@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.8.3 - 2013-05-09
+/*! Magnific Popup - v0.8.4 - 2013-05-13
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -31,6 +31,7 @@ var CLOSE_EVENT = 'Close',
  */
 var mfp, // As we have only one instance of MagnificPopup object, we define it locally to not to use 'this'
 	MagnificPopup = function(){},
+	_isJQ = !!(window.jQuery),
 	_prevStatus,
 	_window = $(window),
 	_body,
@@ -82,6 +83,14 @@ var _mfpOn = function(name, f) {
 			_currPopupType = type;
 		}
 		return mfp.currTemplate.closeBtn;
+	},
+	// Initialize Magnific Popup only when called at least once
+	_checkInstance = function() {
+		if(!$.magnificPopup.instance) {
+			mfp = new MagnificPopup();
+			mfp.init();
+			$.magnificPopup.instance = mfp;
+		}
 	};
 
 
@@ -118,7 +127,12 @@ MagnificPopup.prototype = {
 	 */
 	open: function(data) {
 
-		if(mfp.isOpen) return;
+		mfp.items = data.items.length ? data.items : [data.items];
+		
+		if(mfp.isOpen) {
+			mfp.updateItemHTML();
+			return;
+		}
 
 		var i;
 
@@ -160,7 +174,7 @@ MagnificPopup.prototype = {
 		mfp.st = $.extend(true, {}, $.magnificPopup.defaults, data ); 
 		mfp.fixedContentPos = mfp.st.fixedContentPos === 'auto' ? !mfp.probablyMobile : mfp.st.fixedContentPos;
 		
-		mfp.items = data.items.length ? data.items : [data.items];
+		
 
 		// Building markup
 		// main containers are created only once
@@ -427,7 +441,6 @@ MagnificPopup.prototype = {
 
 	},
 
-
 	/**
 	 * Set content of popup based on current index
 	 */
@@ -435,8 +448,6 @@ MagnificPopup.prototype = {
 		var item = mfp.items[mfp.index];
 
 		// Detach and perform modifications
-		
-
 		mfp.contentContainer.detach();
 
 		if(mfp.content)
@@ -540,7 +551,7 @@ MagnificPopup.prototype = {
 			}
 		}
 
-		item.type = type || mfp.st.type;
+		item.type = type || mfp.st.type || 'inline';
 		item.index = index;
 		item.parsed = true;
 		mfp.items[index] = item;
@@ -555,32 +566,7 @@ MagnificPopup.prototype = {
 	 */
 	addGroup: function(el, options) {
 		var eHandler = function(e) {
-
-			var midClick = options.midClick !== undefined ? options.midClick : $.magnificPopup.defaults.midClick;
-			if( midClick || e.which !== 2 ) {
-				var disableOn = options.disableOn !== undefined ? options.disableOn : $.magnificPopup.defaults.disableOn;
-
-				if(disableOn) {
-					if($.isFunction(disableOn)) {
-						if( !disableOn.call(mfp) ) {
-							return true;
-						}
-					} else { // else it's number
-						if( $(window).width() < disableOn ) {
-							return true;
-						}
-					}
-				}
-					
-				e.preventDefault();
-				options.el = $(this);
-				options.mainEl = el;
-				if(options.delegate) {
-					options.items = el.find(options.delegate);
-				}
-				mfp.open(options);
-			}
-			
+			mfp._openClick(e, el, options);
 		};
 
 		if(!options) {
@@ -588,6 +574,8 @@ MagnificPopup.prototype = {
 		} 
 
 		var eName = 'click.magnificPopup';
+		options.mainEl = el;
+		
 		if(options.items) {
 			options.isObj = true;
 			el.off(eName).on(eName, eHandler);
@@ -599,6 +587,33 @@ MagnificPopup.prototype = {
 				options.items = el;
 				el.off(eName).on(eName, eHandler);
 			}
+		}
+	},
+	_openClick: function(e, el, options) {
+		var midClick = options.midClick !== undefined ? options.midClick : $.magnificPopup.defaults.midClick;
+		if( midClick || e.which !== 2 ) {
+			var disableOn = options.disableOn !== undefined ? options.disableOn : $.magnificPopup.defaults.disableOn;
+
+			if(disableOn) {
+				if($.isFunction(disableOn)) {
+					if( !disableOn.call(mfp) ) {
+						return true;
+					}
+				} else { // else it's number
+					if( _window.width() < disableOn ) {
+						return true;
+					}
+				}
+			}
+			
+			if(e.type)
+				e.preventDefault();
+
+			options.el = $(e.target);
+			if(options.delegate) {
+				options.items = el.find(options.delegate);
+			}
+			mfp.open(options);
 		}
 	},
 
@@ -637,13 +652,6 @@ MagnificPopup.prototype = {
 			_prevStatus = status;
 		}
 	},
-
-
-	
-	
-
-
-
 
 
 	/*
@@ -729,18 +737,13 @@ $.magnificPopup = {
 	modules: [],
 
 	open: function(options, index) {
-		if(!$.magnificPopup.instance) {
-			mfp = new MagnificPopup();
-			mfp.init();
-			$.magnificPopup.instance = mfp;
-		}	
+		_checkInstance();	
 
-		if(!options) {
+		if(!options) 
 			options = {};
-		}
-		
+
 		options.isObj = true;
-		options.index = index === undefined ? 0 : index;
+		options.index = index || 0;
 		return this.instance.open(options);
 	},
 
@@ -758,7 +761,7 @@ $.magnificPopup = {
 
 	defaults: {   
 
-		// Info about options is docs:
+		// Info about options is in docs:
 		// http://dimsemenov.com/plugins/magnific-popup/documentation.html#options
 		
 		disableOn: 0,	
@@ -799,15 +802,50 @@ $.magnificPopup = {
 
 
 $.fn.magnificPopup = function(options) {
-	// Initialize Magnific Popup only when called at least once
-	if(!$.magnificPopup.instance) {
-		mfp = new MagnificPopup();
-		mfp.init();
-		$.magnificPopup.instance = mfp;
-	}
+	_checkInstance();
 
-	mfp.addGroup($(this), options);
-	return $(this);
+	var jqEl = $(this);
+
+	// We call some API method of first param is a string
+	if (typeof options === "string" ) {
+
+		if(options === 'open') {
+			var items,
+				itemOpts = _isJQ ? jqEl.data('magnificPopup') : jqEl[0].magnificPopup,
+				index = parseInt(arguments[1], 10) || 0;
+
+			if(itemOpts.items) {
+				items = itemOpts.items[index];
+			} else {
+				items = jqEl;
+				if(itemOpts.delegate) {
+					items = items.find(itemOpts.delegate);
+				}
+				items = items.eq( index );
+			}
+			mfp._openClick({target:items}, jqEl, itemOpts);
+		} else {
+			if(mfp.isOpen)
+				mfp[options].apply(mfp, Array.prototype.slice.call(arguments, 1));
+		}
+
+	} else {
+
+		/*
+		 * As Zepto doesn't support .data() method for objects 
+		 * and it works only in normal browsers
+		 * we assign "options" object directly to the DOM element. FTW!
+		 */
+		if(_isJQ) {
+			jqEl.data('magnificPopup', options);
+		} else {
+			jqEl[0].magnificPopup = options;
+		}
+
+		mfp.addGroup(jqEl, options);
+
+	}
+	return jqEl;
 };
 
 
@@ -834,11 +872,19 @@ console.log('Test #2:', performance.now() - start);
 /*>>inline*/
 
 var INLINE_NS = 'inline',
-	_hasPlaceholder;
+	_hiddenClass,
+	_inlinePlaceholder, 
+	_lastInlineElement,
+	_putInlineElementsBack = function() {
+		if(_lastInlineElement) {
+			_inlinePlaceholder.after( _lastInlineElement.addClass(_hiddenClass) ).detach();
+			_lastInlineElement = null;
+		}
+	};
 
 $.magnificPopup.registerModule(INLINE_NS, {
 	options: {
-		hiddenClass: NS+'-hide',
+		hiddenClass: 'hide', // will be appended with `mfp-` prefix
 		markup: '',
 		tNotFound: 'Content not found'
 	},
@@ -846,60 +892,46 @@ $.magnificPopup.registerModule(INLINE_NS, {
 
 		initInline: function() {
 			mfp.types.push(INLINE_NS);
-			_hasPlaceholder = false;
 
 			_mfpOn(CLOSE_EVENT+'.'+INLINE_NS, function() {
-				var item = mfp.currItem;
-				if(item.type === INLINE_NS) {
-					if(_hasPlaceholder) {
-						for(var i = 0; i < mfp.items.length; i++) {
-							item = mfp.items[i];
-							if(item && item.inlinePlaceholder){
-								item.inlinePlaceholder.after( item.inlineElement.addClass(mfp.st.inline.hiddenClass) ).detach();
-							}
-						}
-					}
-					item.inlinePlaceholder = item.inlineElement = null;
-				}
+				_putInlineElementsBack();
 			});
 		},
 
 		getInline: function(item, template) {
-			mfp.updateStatus('ready');
+
+			_putInlineElementsBack();
 
 			if(item.src) {
-				var inlineSt = mfp.st.inline;
-				// items.src can be String-CSS-selector or jQuery element
-				if(typeof item.src !== 'string') {
-					item.isElement = true;
-				}
+				var inlineSt = mfp.st.inline,
+					el = $(item.src);
 
-				if(!item.isElement && !item.inlinePlaceholder) {
-					item.inlinePlaceholder = _getEl(inlineSt.hiddenClass);
-				}
-				
-				if(item.isElement) {
-					item.inlineElement = item.src;
-				} else if(!item.inlineElement) {
-					item.inlineElement = $(item.src);
-					if(!item.inlineElement.length) {
-						mfp.updateStatus('error', inlineSt.tNotFound);
-						item.inlineElement = $('<div>');
+				if(el.length) {
+
+					// If target element has parent - we replace it with placeholder and put it back after popup is closed
+					if(el[0].parentNode !== null) {
+						if(!_inlinePlaceholder) {
+							_hiddenClass = inlineSt.hiddenClass;
+							_inlinePlaceholder = _getEl(_hiddenClass);
+							_hiddenClass = 'mfp-'+_hiddenClass;
+						}
+						// replace target inline element with placeholder
+						_lastInlineElement = el.after(_inlinePlaceholder).detach().removeClass(_hiddenClass);
 					}
+
+					mfp.updateStatus('ready');
+				} else {
+					mfp.updateStatus('error', inlineSt.tNotFound);
+					el = $('<div>');
 				}
 
-				if(item.inlinePlaceholder) {
-					_hasPlaceholder = true;
-				}
-
-				
-				
-				item.inlineElement.after(item.inlinePlaceholder).detach().removeClass(inlineSt.hiddenClass);
-				return item.inlineElement;
-			} else {
-				mfp._parseMarkup(template, {}, item);
-				return template;
+				item.inlineElement = el;
+				return el;
 			}
+
+			mfp.updateStatus('ready');
+			mfp._parseMarkup(template, {}, item);
+			return template;
 		}
 	}
 });
