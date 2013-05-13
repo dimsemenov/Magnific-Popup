@@ -102,7 +102,8 @@ MagnificPopup.prototype = {
 	 */
 	init: function() {
 		var appVersion = navigator.appVersion;
-		mfp.isIE7 = appVersion.indexOf("MSIE 7.") !== -1; 
+		mfp.isIE7 = appVersion.indexOf("MSIE 7.") !== -1;
+		mfp.isIE = appVersion.indexOf("MSIE") !== -1;
 		mfp.isAndroid = (/android/gi).test(appVersion);
 		mfp.isIOS = (/iphone|ipad|ipod/gi).test(appVersion);
 
