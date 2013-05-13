@@ -540,7 +540,7 @@ MagnificPopup.prototype = {
 			}
 		}
 
-		item.type = type || mfp.st.type;
+		item.type = type || mfp.st.type || 'inline';
 		item.index = index;
 		item.parsed = true;
 		mfp.items[index] = item;
