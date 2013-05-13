@@ -76,6 +76,14 @@ var _mfpOn = function(name, f) {
 			_currPopupType = type;
 		}
 		return mfp.currTemplate.closeBtn;
+	},
+	// Initialize Magnific Popup only when called at least once
+	_checkInstance = function() {
+		if(!$.magnificPopup.instance) {
+			mfp = new MagnificPopup();
+			mfp.init();
+			$.magnificPopup.instance = mfp;
+		}
 	};
 
 
@@ -429,8 +437,6 @@ MagnificPopup.prototype = {
 		var item = mfp.items[mfp.index];
 
 		// Detach and perform modifications
-		
-
 		mfp.contentContainer.detach();
 
 		if(mfp.content)
@@ -549,32 +555,7 @@ MagnificPopup.prototype = {
 	 */
 	addGroup: function(el, options) {
 		var eHandler = function(e) {
-
-			var midClick = options.midClick !== undefined ? options.midClick : $.magnificPopup.defaults.midClick;
-			if( midClick || e.which !== 2 ) {
-				var disableOn = options.disableOn !== undefined ? options.disableOn : $.magnificPopup.defaults.disableOn;
-
-				if(disableOn) {
-					if($.isFunction(disableOn)) {
-						if( !disableOn.call(mfp) ) {
-							return true;
-						}
-					} else { // else it's number
-						if( $(window).width() < disableOn ) {
-							return true;
-						}
-					}
-				}
-					
-				e.preventDefault();
-				options.el = $(this);
-				options.mainEl = el;
-				if(options.delegate) {
-					options.items = el.find(options.delegate);
-				}
-				mfp.open(options);
-			}
-			
+			mfp._openClick(e, el, options);
 		};
 
 		if(!options) {
@@ -582,6 +563,8 @@ MagnificPopup.prototype = {
 		} 
 
 		var eName = 'click.magnificPopup';
+		options.mainEl = el;
+		
 		if(options.items) {
 			options.isObj = true;
 			el.off(eName).on(eName, eHandler);
@@ -593,6 +576,33 @@ MagnificPopup.prototype = {
 				options.items = el;
 				el.off(eName).on(eName, eHandler);
 			}
+		}
+	},
+	_openClick: function(e, el, options) {
+		var midClick = options.midClick !== undefined ? options.midClick : $.magnificPopup.defaults.midClick;
+		if( midClick || e.which !== 2 ) {
+			var disableOn = options.disableOn !== undefined ? options.disableOn : $.magnificPopup.defaults.disableOn;
+
+			if(disableOn) {
+				if($.isFunction(disableOn)) {
+					if( !disableOn.call(mfp) ) {
+						return true;
+					}
+				} else { // else it's number
+					if( _window.width() < disableOn ) {
+						return true;
+					}
+				}
+			}
+			
+			if(e.type)
+				e.preventDefault();
+
+			options.el = $(e.target);
+			if(options.delegate) {
+				options.items = el.find(options.delegate);
+			}
+			mfp.open(options);
 		}
 	},
 
@@ -632,7 +642,9 @@ MagnificPopup.prototype = {
 		}
 	},
 
+	destroy: function() {
 
+	},
 	
 	
 
@@ -723,18 +735,13 @@ $.magnificPopup = {
 	modules: [],
 
 	open: function(options, index) {
-		if(!$.magnificPopup.instance) {
-			mfp = new MagnificPopup();
-			mfp.init();
-			$.magnificPopup.instance = mfp;
-		}	
+		_checkInstance();	
 
-		if(!options) {
+		if(!options) 
 			options = {};
-		}
-		
+
 		options.isObj = true;
-		options.index = index === undefined ? 0 : index;
+		options.index = index || 0;
 		return this.instance.open(options);
 	},
 
@@ -752,7 +759,7 @@ $.magnificPopup = {
 
 	defaults: {   
 
-		// Info about options is docs:
+		// Info about options is in docs:
 		// http://dimsemenov.com/plugins/magnific-popup/documentation.html#options
 		
 		disableOn: 0,	
@@ -793,15 +800,40 @@ $.magnificPopup = {
 
 
 $.fn.magnificPopup = function(options) {
-	// Initialize Magnific Popup only when called at least once
-	if(!$.magnificPopup.instance) {
-		mfp = new MagnificPopup();
-		mfp.init();
-		$.magnificPopup.instance = mfp;
-	}
+	_checkInstance();
 
-	mfp.addGroup($(this), options);
-	return $(this);
+	var jqEl = $(this);
+
+	// We call some API method of first param is a string
+	if (typeof options === "string" ) {
+
+		if(options === 'open') {
+			var items,
+				itemOpts = jqEl.data('magnificPopup'),
+				index = parseInt(arguments[1], 10) || 0;
+
+			if(itemOpts.items) {
+				items = itemOpts.items[index];
+			} else {
+				items = jqEl;
+				if(itemOpts.delegate) {
+					items = items.find(itemOpts.delegate);
+				}
+				items = items.eq( index );
+			}
+			mfp._openClick({target:items}, jqEl, itemOpts);
+		} else {
+			if(mfp.isOpen)
+				mfp[options].apply(mfp, Array.prototype.slice.call(arguments, 1));
+		}
+
+	} else {
+
+		jqEl.data('magnificPopup', options);
+		mfp.addGroup(jqEl, options);
+
+	}
+	return jqEl;
 };
 
 
