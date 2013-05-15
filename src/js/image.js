@@ -52,15 +52,22 @@ $.magnificPopup.registerModule('image', {
 				_window.off('resize' + EVENT_NS);
 			});
 
-			_mfpOn('Resize'+ns, function() {
-				mfp.resizeImage();
-			});
+			_mfpOn('Resize'+ns, mfp.resizeImage);
+			if(mfp.isLowIE) {
+				_mfpOn('AfterChange', mfp.resizeImage);
+			}
 		},
 		resizeImage: function() {
 			var item = mfp.currItem;
 			if(!item.img) return;
+
 			if(mfp.st.image.verticalFit) {
-				item.img.css('max-height', mfp.wH + 'px');
+				var decr = 0;
+				// fix box-sizing in ie7/8
+				if(mfp.isLowIE) {
+					decr = parseInt(item.img.css('padding-top'), 10) + parseInt(item.img.css('padding-bottom'),10);
+				}
+				item.img.css('max-height', mfp.wH-decr);
 			}
 		},
 		_onImageHasSize: function(item) {

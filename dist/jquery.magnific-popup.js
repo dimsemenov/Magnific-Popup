@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.8.4 - 2013-05-13
+/*! Magnific Popup - v0.8.5 - 2013-05-15
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -91,6 +91,38 @@ var _mfpOn = function(name, f) {
 			mfp.init();
 			$.magnificPopup.instance = mfp;
 		}
+	},
+	// Check to close popup or not
+	// "target" is an element that was clicked
+	_checkIfClose = function(target) {
+
+		if($(target).hasClass(PREVENT_CLOSE_CLASS)) {
+			return;
+		}
+
+		var closeOnContent = mfp.st.closeOnContentClick;
+		var closeOnBg = mfp.st.closeOnBgClick;
+
+		if(closeOnContent && closeOnBg) {
+			return true;
+		} else {
+
+			// We close the popup if click is on close button or on preloader. Or if there is no content.
+			if(!mfp.content || $(target).hasClass('mfp-close') || (mfp.preloader && target === mfp.preloader[0]) ) {
+				return true;
+			}
+			
+			// if click is outside the content
+			if(  (target !== mfp.content[0] && !$.contains(mfp.content[0], target))  ) {
+				if(closeOnBg) {
+					return true;
+				}
+			} else if(closeOnContent) {
+				return true;
+			}
+
+		}
+		return false;
 	};
 
 
@@ -109,9 +141,10 @@ MagnificPopup.prototype = {
 	init: function() {
 		var appVersion = navigator.appVersion;
 		mfp.isIE7 = appVersion.indexOf("MSIE 7.") !== -1; 
+		mfp.isIE8 = appVersion.indexOf("MSIE 8.") !== -1,
+		mfp.isLowIE = mfp.isIE7 || mfp.isIE8;
 		mfp.isAndroid = (/android/gi).test(appVersion);
 		mfp.isIOS = (/iphone|ipad|ipod/gi).test(appVersion);
-
 		// We disable fixed positioned lightbox on devices that don't handle it nicely.
 		// If you know a better way of detecting this - let me know.
 		mfp.probablyMobile = (mfp.isAndroid || mfp.isIOS || /(Opera Mini)|Kindle|webOS|BlackBerry|(Opera Mobi)|(Windows Phone)|IEMobile/i.test(navigator.userAgent) );
@@ -186,22 +219,8 @@ MagnificPopup.prototype = {
 			});
 
 			mfp.wrap = _getEl('wrap').attr('tabindex', -1).on('click'+EVENT_NS, function(e) {
-
-				var target = e.target;
-				if($(target).hasClass(PREVENT_CLOSE_CLASS)) {
-					return;
-				}
-
-				if(mfp.st.closeOnContentClick) {
+				if(_checkIfClose(e.target)) {
 					mfp.close();
-				} else {
-					// close popup if click is not on a content, on close button, or content does not exist
-					if( !mfp.content || 
-						$(target).hasClass('mfp-close') ||
-						(mfp.preloader && e.target === mfp.preloader[0]) || 
-						(target !== mfp.content[0] && !$.contains(mfp.content[0], target)) ) {
-						mfp.close();
-					}
 				}
 			});
 
@@ -364,7 +383,7 @@ MagnificPopup.prototype = {
 
 		mfp.isOpen = false;
 		// for CSS3 animation
-		if(mfp.st.removalDelay)  {
+		if(mfp.st.removalDelay && !mfp.isLowIE)  {
 			mfp._addClassToMFP(REMOVING_CLASS);
 			setTimeout(function() {
 				mfp._close();
@@ -419,7 +438,8 @@ MagnificPopup.prototype = {
 
 		if(mfp._lastFocusedEl) {
 			$(mfp._lastFocusedEl).focus(); // put tab focus back
-		}	
+		}
+		mfp.currItem = null;	
 		mfp.content = null;
 		mfp.currTemplate = null;
 		mfp.prevHeight = 0;
@@ -456,10 +476,19 @@ MagnificPopup.prototype = {
 		if(!item.parsed) {
 			item = mfp.parseEl( mfp.index );
 		}
+
+		var type = item.type;	
+
+		_mfpTrigger('BeforeChange', [mfp.currItem ? mfp.currItem.type : '', type]);
+		// BeforeChange event works like so:
+		// _mfpOn('BeforeChange', function(e, prevType, newType) { });
 		
 		mfp.currItem = item;
 
-		var type = item.type;		
+		
+
+		
+
 		if(!mfp.currTemplate[type]) {
 			var markup = mfp.st[type] ? mfp.st[type].markup : false;
 
@@ -488,6 +517,8 @@ MagnificPopup.prototype = {
 		
 		// Append container back after its content changed
 		mfp.container.prepend(mfp.contentContainer);
+
+		_mfpTrigger('AfterChange');
 	},
 
 
@@ -778,6 +809,8 @@ $.magnificPopup = {
 		focus: '', // CSS selector of input to focus after popup is opened
 		
 		closeOnContentClick: false,
+
+		closeOnBgClick: true,
 
 		closeBtnInside: true, 
 
@@ -1074,15 +1107,22 @@ $.magnificPopup.registerModule('image', {
 				_window.off('resize' + EVENT_NS);
 			});
 
-			_mfpOn('Resize'+ns, function() {
-				mfp.resizeImage();
-			});
+			_mfpOn('Resize'+ns, mfp.resizeImage);
+			if(mfp.isLowIE) {
+				_mfpOn('AfterChange', mfp.resizeImage);
+			}
 		},
 		resizeImage: function() {
 			var item = mfp.currItem;
 			if(!item.img) return;
+
 			if(mfp.st.image.verticalFit) {
-				item.img.css('max-height', mfp.wH + 'px');
+				var decr = 0;
+				// fix box-sizing in ie7/8
+				if(mfp.isLowIE) {
+					decr = parseInt(item.img.css('padding-top'), 10) + parseInt(item.img.css('padding-bottom'),10);
+				}
+				item.img.css('max-height', mfp.wH-decr);
 			}
 		},
 		_onImageHasSize: function(item) {
@@ -1249,13 +1289,21 @@ $.magnificPopup.registerModule('image', {
 /*>>iframe*/
 
 var IFRAME_NS = 'iframe',
+	_emptyPage = '//about:blank',
+	
+	_fixIframeBugs = function(isShowing) {
+		if(mfp.currTemplate[IFRAME_NS]) {
+			var el = mfp.currTemplate[IFRAME_NS].find('iframe');
+			if(el.length) { 
+				// reset src after the popup is closed to avoid "video keeps playing after popup is closed" bug
+				if(!isShowing) {
+					el[0].src = _emptyPage;
+				}
 
-	// IE black screen bug fix
-	toggleIframeInIE = function(show) {
-		if(mfp.isIE7 && mfp.currItem && mfp.currItem.type === IFRAME_NS) {
-			var el = mfp.content.find('iframe');
-			if(el.length) {
-				el.css('display', show ? 'block' : 'none');
+				// IE8 black screen bug fix
+				if(mfp.isIE8) {
+					el.css('display', isShowing ? 'block' : 'none');
+				}
 			}
 		}
 	};
@@ -1265,7 +1313,7 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 	options: {
 		markup: '<div class="mfp-iframe-scaler">'+
 					'<div class="mfp-close"></div>'+
-					'<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
+					'<iframe class="mfp-iframe" src="//about:blank" frameborder="0" allowfullscreen></iframe>'+
 				'</div>',
 
 		srcAction: 'iframe_src',
@@ -1292,10 +1340,20 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 	proto: {
 		initIframe: function() {
 			mfp.types.push(IFRAME_NS);
-			toggleIframeInIE(true);
-			_mfpOn(CLOSE_EVENT + '.' + IFRAME_NS, function() {
-				toggleIframeInIE();
+
+			_mfpOn('BeforeChange', function(e, prevType, newType) {
+				if(prevType !== newType) {
+					if(prevType === IFRAME_NS) {
+						_fixIframeBugs(); // iframe if removed
+					} else if(newType === IFRAME_NS) {
+						_fixIframeBugs(true); // iframe is showing
+					} 
+				}// else {
+					// iframe source is switched, don't do anything
+				//}
 			});
+
+			_mfpOn(CLOSE_EVENT + '.' + IFRAME_NS, _fixIframeBugs);
 		},
 
 		getIframe: function(item, template) {

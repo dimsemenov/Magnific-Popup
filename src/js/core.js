@@ -85,6 +85,38 @@ var _mfpOn = function(name, f) {
 			mfp.init();
 			$.magnificPopup.instance = mfp;
 		}
+	},
+	// Check to close popup or not
+	// "target" is an element that was clicked
+	_checkIfClose = function(target) {
+
+		if($(target).hasClass(PREVENT_CLOSE_CLASS)) {
+			return;
+		}
+
+		var closeOnContent = mfp.st.closeOnContentClick;
+		var closeOnBg = mfp.st.closeOnBgClick;
+
+		if(closeOnContent && closeOnBg) {
+			return true;
+		} else {
+
+			// We close the popup if click is on close button or on preloader. Or if there is no content.
+			if(!mfp.content || $(target).hasClass('mfp-close') || (mfp.preloader && target === mfp.preloader[0]) ) {
+				return true;
+			}
+			
+			// if click is outside the content
+			if(  (target !== mfp.content[0] && !$.contains(mfp.content[0], target))  ) {
+				if(closeOnBg) {
+					return true;
+				}
+			} else if(closeOnContent) {
+				return true;
+			}
+
+		}
+		return false;
 	};
 
 
@@ -103,9 +135,10 @@ MagnificPopup.prototype = {
 	init: function() {
 		var appVersion = navigator.appVersion;
 		mfp.isIE7 = appVersion.indexOf("MSIE 7.") !== -1; 
+		mfp.isIE8 = appVersion.indexOf("MSIE 8.") !== -1,
+		mfp.isLowIE = mfp.isIE7 || mfp.isIE8;
 		mfp.isAndroid = (/android/gi).test(appVersion);
 		mfp.isIOS = (/iphone|ipad|ipod/gi).test(appVersion);
-
 		// We disable fixed positioned lightbox on devices that don't handle it nicely.
 		// If you know a better way of detecting this - let me know.
 		mfp.probablyMobile = (mfp.isAndroid || mfp.isIOS || /(Opera Mini)|Kindle|webOS|BlackBerry|(Opera Mobi)|(Windows Phone)|IEMobile/i.test(navigator.userAgent) );
@@ -180,22 +213,8 @@ MagnificPopup.prototype = {
 			});
 
 			mfp.wrap = _getEl('wrap').attr('tabindex', -1).on('click'+EVENT_NS, function(e) {
-
-				var target = e.target;
-				if($(target).hasClass(PREVENT_CLOSE_CLASS)) {
-					return;
-				}
-
-				if(mfp.st.closeOnContentClick) {
+				if(_checkIfClose(e.target)) {
 					mfp.close();
-				} else {
-					// close popup if click is not on a content, on close button, or content does not exist
-					if( !mfp.content || 
-						$(target).hasClass('mfp-close') ||
-						(mfp.preloader && e.target === mfp.preloader[0]) || 
-						(target !== mfp.content[0] && !$.contains(mfp.content[0], target)) ) {
-						mfp.close();
-					}
 				}
 			});
 
@@ -358,7 +377,7 @@ MagnificPopup.prototype = {
 
 		mfp.isOpen = false;
 		// for CSS3 animation
-		if(mfp.st.removalDelay)  {
+		if(mfp.st.removalDelay && !mfp.isLowIE)  {
 			mfp._addClassToMFP(REMOVING_CLASS);
 			setTimeout(function() {
 				mfp._close();
@@ -413,7 +432,8 @@ MagnificPopup.prototype = {
 
 		if(mfp._lastFocusedEl) {
 			$(mfp._lastFocusedEl).focus(); // put tab focus back
-		}	
+		}
+		mfp.currItem = null;	
 		mfp.content = null;
 		mfp.currTemplate = null;
 		mfp.prevHeight = 0;
@@ -450,10 +470,19 @@ MagnificPopup.prototype = {
 		if(!item.parsed) {
 			item = mfp.parseEl( mfp.index );
 		}
+
+		var type = item.type;	
+
+		_mfpTrigger('BeforeChange', [mfp.currItem ? mfp.currItem.type : '', type]);
+		// BeforeChange event works like so:
+		// _mfpOn('BeforeChange', function(e, prevType, newType) { });
 		
 		mfp.currItem = item;
 
-		var type = item.type;		
+		
+
+		
+
 		if(!mfp.currTemplate[type]) {
 			var markup = mfp.st[type] ? mfp.st[type].markup : false;
 
@@ -482,6 +511,8 @@ MagnificPopup.prototype = {
 		
 		// Append container back after its content changed
 		mfp.container.prepend(mfp.contentContainer);
+
+		_mfpTrigger('AfterChange');
 	},
 
 
@@ -772,6 +803,8 @@ $.magnificPopup = {
 		focus: '', // CSS selector of input to focus after popup is opened
 		
 		closeOnContentClick: false,
+
+		closeOnBgClick: true,
 
 		closeBtnInside: true, 
 
