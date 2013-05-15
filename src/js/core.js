@@ -105,7 +105,7 @@ var _mfpOn = function(name, f) {
 			if(!mfp.content || $(target).hasClass('mfp-close') || (mfp.preloader && target === mfp.preloader[0]) ) {
 				return true;
 			}
-			
+
 			// if click is outside the content
 			if(  (target !== mfp.content[0] && !$.contains(mfp.content[0], target))  ) {
 				if(closeOnBg) {
@@ -300,7 +300,7 @@ MagnificPopup.prototype = {
 		
 		var bodyStyles = {};
 
-		if( mfp.fixedContentPos && mfp.st.overflowY !== 'scroll' ) {
+		if( mfp.fixedContentPos ) {
 			var s = mfp._getScrollbarSize();
 			if(s) {
 				bodyStyles.paddingRight = s;
