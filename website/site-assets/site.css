@@ -453,7 +453,9 @@ color: #A3A3A3;
 }
 
 @media all and (max-width: 30em) {
-
+  #examples:after {
+    display: none;
+  }
   .gc3 { 
     width: 100%;
   }

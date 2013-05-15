@@ -27,6 +27,8 @@ buildtool: true
 
 Here you can find the guide on how to use Magnific Popup. Besides this docs page, you can <a href="http://codepen.io/collection/nLcqo">play with examples on CodePen</a>. If you've found any mistake in this site or you know how to improve some part of this documentation - please <a href="https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md">commit on GitHub</a>.
 
+Please ask general questions through <a href="http://stackoverflow.com/questions/ask?tags=magnific-popup">StackOverflow</a> tagged with `magnific-popup`.
+
 # &nbsp;
 
 * This will become a table of contents (this text will be scraped).
@@ -554,6 +556,14 @@ String with CSS selector of an element inside popup that should be focused. Idea
 
 Close popup when user clicks on content of it. It's recommended to enable this option when you have only image in popup.
 
+
+### closeOnBgClick
+
+<code class="def">true</code>
+
+Close the popup when user clicks on the dark overlay.
+
+
 ### closeBtnInside
 
 <code class="def">false</code>
@@ -895,7 +905,7 @@ $('.element-with-popup').magnificPopup({
 
 ### Public properties
 
-Most properties are available only after the popup is opened. Here are listed only most used, there is much bigger list. If you think that something should be added here - please commit to docs on GitHub.
+Most properties are available only after the popup is opened. Only most used are listed here.
 
 {% highlight javascript %}
 var magnificPopup = $.magnificPopup.instance;
