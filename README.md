@@ -44,6 +44,7 @@ closed
 - Fix #51 - In IE9 YouTube HTML5 video keeps playing after iframe is
 removed from page
 - Bugfix - box-sizing on IMG in low IE behaves incorrectly
+- Fix #57 - padding on body is not added with overflow:Y:'scroll'
 - removalDelay option is now ignored in IE
 - Added an option closeOnBgClick
 - Added BeforeChange callback
