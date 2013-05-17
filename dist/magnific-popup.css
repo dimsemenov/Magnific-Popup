@@ -296,7 +296,8 @@ img.mfp-img {
 .mfp-title {
   text-align: left;
   line-height: 18px;
-  color: #f3f3f3; }
+  color: #f3f3f3;
+  word-break: break-word; }
 
 .mfp-figure small {
   color: #bdbdbd;
