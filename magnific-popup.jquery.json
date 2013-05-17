@@ -1,8 +1,8 @@
 {
   "name": "magnific-popup",
   "title": "Magnific Popup",
-  "description": "Fast, light and responsive lightbox plugin with focus on performance",
-  "version": "0.8.3",
+  "description": "Fast, light and responsive lightbox plugin with focus on performance. Easily add in/out animations with help of CSS3 transitions.",
+  "version": "0.8.5",
   "homepage": "http://dimsemenov.com/plugins/magnific-popup/",
   "demo": "http://dimsemenov.com/plugins/magnific-popup/",
   "docs": "http://dimsemenov.com/plugins/magnific-popup/documentation.html",
@@ -19,7 +19,7 @@
   "dependencies": {
     "jquery": ">=1.7.2"
   },
-  "keywords": ["lightbox","popup","modal","window","ui","gallery","slideshow","video","image","ajax","html5"],
+  "keywords": ["lightbox","popup","modal","window","ui","gallery","slideshow","video","image","ajax","html5","animation","jquery"],
   "licenses": [
     {
       "type": "MIT",

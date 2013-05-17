@@ -27,6 +27,8 @@ buildtool: true
 
 Here you can find the guide on how to use Magnific Popup. Besides this docs page, you can <a href="http://codepen.io/collection/nLcqo">play with examples on CodePen</a>. If you've found any mistake in this site or you know how to improve some part of this documentation - please <a href="https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md">commit on GitHub</a>.
 
+Please ask general questions through <a href="http://stackoverflow.com/questions/ask?tags=magnific-popup">StackOverflow</a> tagged with `magnific-popup`.
+
 # &nbsp;
 
 * This will become a table of contents (this text will be scraped).
@@ -154,6 +156,8 @@ Type of popup can be defined in a two ways:
 2. Using `mfp-TYPE` CSS class (where `TYPE` is desired content type). E.g.: `<a class="mfp-image image-link">Open image</a>`, `$('.image-link').magnificPopup()`.
 
 Second option always overrides first one, so you may initialize popups with multiple content types from one call.
+
+The `inline` is default one (from v0.8.4) - so you may skip its definition.
 
 <br/>
 
@@ -552,6 +556,14 @@ String with CSS selector of an element inside popup that should be focused. Idea
 
 Close popup when user clicks on content of it. It's recommended to enable this option when you have only image in popup.
 
+
+### closeOnBgClick
+
+<code class="def">true</code>
+
+Close the popup when user clicks on the dark overlay.
+
+
 ### closeBtnInside
 
 <code class="def">false</code>
@@ -651,11 +663,11 @@ For example:
 {% highlight javascript %}
 // Initialize popup as usual
 $('.popup-link').magnificPopup({ 
-	// Delay in milliseconds before popup is removed
-	removalDelay: 300,
+  // Delay in milliseconds before popup is removed
+  removalDelay: 300,
 
-	// Class that is added to body when popup is open. 
-	// make it unique to apply your CSS animations just to this exact popup
+  // Class that is added to popup wrapper and background
+  // make it unique to apply your CSS animations just to this exact popup
   mainClass: 'mfp-fade'
 });
 {% endhighlight %}
@@ -734,14 +746,13 @@ $('.image-link').magnificPopup({
 
 View [example of retina popup on CodePen](http://codepen.io/dimsemenov/pen/Dohka).
 
-
-
 ## API
 
+There is a much bigger list of public events, methods and variables than provided here which is used for module development, look inside code or type in console `$.magnificPopup.instance.` to find them, if you think that something should be added to docs - please submit commit.
 
 ### Events
 
-Callbacks that are defined inside `callbacks` option will automatically be called. Besides that, all Magnific Popup events are also dispatched using `triggerHandler` on target element (or to document if the element doesn't exist). 
+You can define callbacks in `callbacks` option. Besides that, all Magnific Popup events are also dispatched using `triggerHandler` on target element (or to document if the element doesn't exist). 
 
 {% highlight javascript %}
 $('.image-link').magnificPopup({
@@ -793,6 +804,10 @@ callbacks: {
   close: function() {
     console.log('Popup is closed');
   },
+  markupParse: function(template, values, item) {
+    // Triggers each time when content of popup changes
+    // console.log('Parsing:', template, values, item);
+  }
   updateStatus: function(data) {
     console.log('Status changed', data);
     // "data" is an object that has two properties:
@@ -820,7 +835,9 @@ callbacks: {
 ### Public methods
 
 {% highlight javascript %}
-// Open popup immediately
+// Open popup immediately. If popup is already opened - it'll just overwite the content (but old options will be kept).
+// - first parameter: options object
+// - second parameter (optional): index of item to open
 $.magnificPopup.open({
   items: {
     src: 'someimage.jpg'
@@ -828,12 +845,10 @@ $.magnificPopup.open({
   type: 'image'
 
   // You may add options here, they're exactly the same as for $.fn.magnificPopup call
-  // Learn more about it in Initializing Popup section
   // Note that some settings that rely on click event (like disableOn or midClick) will not work here
-});
+}, 0);
 
-// Close popup that is currently opened
-$.magnificPopup.close();
+$.magnificPopup.close(); // Close popup that is currently opened (shorthand)
 
 
 
@@ -844,15 +859,19 @@ $.magnificPopup.close();
   For example: $.magnificPopup.instance.doSomething();
 */
 
-var magnificPopup = $.magnificPopup.instance;
+var magnificPopup = $.magnificPopup.instance; // save instance in magnificPopup variable
 
-// Close the current popup
-magnificPopup.close();
+
+magnificPopup.close(); // Close popup that is currently opened
+
 
 // Navigation when gallery is enabled
 magnificPopup.next(); // go to next item
 magnificPopup.prev(); // go to prev item
 magnificPopup.goTo(4); // go to item #4
+
+
+magnificPopup.updateItemHTML(); // updates the popup content. Useful after you change "items" array
 
 
 // Update status of popup
@@ -861,11 +880,34 @@ magnificPopup.goTo(4); // go to item #4
 magnificPopup.updateStatus('loading', 'The loading text...'); 
 {% endhighlight %}
 
+You may also call ANY method via `$.fn.magnificPopup('methodName' /*, param1, param2 ... */)` after you initialized the popup, for example:
+
+{% highlight javascript %}
+// First of make sure that you initialized popup on element $('.element-with-popup')
+
+// Then
+$('.element-with-popup').magnificPopup('open'); // Will open the popup
+$('.element-with-popup').magnificPopup('open', 5); // Will open popup with 5th item
+$('.element-with-popup').magnificPopup('next');
+$('.element-with-popup').magnificPopup('goTo', 3);
+{% endhighlight %}
+
+You may also open the popup directly at initialization:
+
+{% highlight javascript %}
+$('.element-with-popup').magnificPopup({
+  items: {
+    src: 'path-to-image.jpg',
+    type: 'image'
+  }
+  // (optionally) other options
+}).magnificPopup('open');
+{% endhighlight %}
 
 
 ### Public properties
 
-Most properties are available only after the popup is opened. Here are listed only most used, there is much bigger list. If you think that something should be added here - please commit to docs on GitHub.
+Most properties are available only after the popup is opened. Only most used are listed here.
 
 {% highlight javascript %}
 var magnificPopup = $.magnificPopup.instance;
@@ -879,6 +921,9 @@ magnificPopup.index // current item index (integer)
 magnificPopup.bgOverlay // transluscent overlay
 magnificPopup.wrap // container that holds all controls and contentContainer
 magnificPopup.contentContainer // container that holds popup content, child of wrap
+
+magnificPopup.isIE7
+magnificPopup.isIOS
 
 {% endhighlight %}
 

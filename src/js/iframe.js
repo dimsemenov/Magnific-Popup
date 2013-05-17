@@ -1,12 +1,20 @@
 
 var IFRAME_NS = 'iframe',
+	_emptyPage = '//about:blank',
+	
+	_fixIframeBugs = function(isShowing) {
+		if(mfp.currTemplate[IFRAME_NS]) {
+			var el = mfp.currTemplate[IFRAME_NS].find('iframe');
+			if(el.length) { 
+				// reset src after the popup is closed to avoid "video keeps playing after popup is closed" bug
+				if(!isShowing) {
+					el[0].src = _emptyPage;
+				}
 
-	// IE black screen bug fix
-	toggleIframeInIE = function(show) {
-		if(mfp.isIE7 && mfp.currItem && mfp.currItem.type === IFRAME_NS) {
-			var el = mfp.content.find('iframe');
-			if(el.length) {
-				el.css('display', show ? 'block' : 'none');
+				// IE8 black screen bug fix
+				if(mfp.isIE8) {
+					el.css('display', isShowing ? 'block' : 'none');
+				}
 			}
 		}
 	};
@@ -16,7 +24,7 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 	options: {
 		markup: '<div class="mfp-iframe-scaler">'+
 					'<div class="mfp-close"></div>'+
-					'<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
+					'<iframe class="mfp-iframe" src="//about:blank" frameborder="0" allowfullscreen></iframe>'+
 				'</div>',
 
 		srcAction: 'iframe_src',
@@ -43,10 +51,20 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 	proto: {
 		initIframe: function() {
 			mfp.types.push(IFRAME_NS);
-			toggleIframeInIE(true);
-			_mfpOn(CLOSE_EVENT + '.' + IFRAME_NS, function() {
-				toggleIframeInIE();
+
+			_mfpOn('BeforeChange', function(e, prevType, newType) {
+				if(prevType !== newType) {
+					if(prevType === IFRAME_NS) {
+						_fixIframeBugs(); // iframe if removed
+					} else if(newType === IFRAME_NS) {
+						_fixIframeBugs(true); // iframe is showing
+					} 
+				}// else {
+					// iframe source is switched, don't do anything
+				//}
 			});
+
+			_mfpOn(CLOSE_EVENT + '.' + IFRAME_NS, _fixIframeBugs);
 		},
 
 		getIframe: function(item, template) {

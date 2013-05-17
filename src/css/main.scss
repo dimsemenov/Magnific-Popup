@@ -452,6 +452,7 @@ button::-moz-focus-inner {
     line-height: 18px;
     color: $caption-title-color;
     word-break: break-word;
+    padding-right: 36px; // leave some space for counter at right side
   }
 
   .mfp-figure small {

@@ -37,6 +37,27 @@ Optionally:
 
 ## Changelog
 
+### 0.8.5 (May 15, 2013)
+
+- Fix #43 - In IE8 whole window becomes black when YouTube iframe is
+closed
+- Fix #51 - In IE9 YouTube HTML5 video keeps playing after iframe is
+removed from page
+- Bugfix - box-sizing on IMG in low IE behaves incorrectly
+- Fix #57 - padding on body is not added with overflow:Y:'scroll'
+- removalDelay option is now ignored in IE
+- Added an option closeOnBgClick
+- Added BeforeChange callback
+- Added AfterChange callback
+
+### 0.8.4 (May 13, 2013)
+
+- You can now call any public method directly from jQuery DOM element, e.g.: `$('.some-el-with-popup').magnificPopup('methodName', /*, arguments */)`. 
+- Optimized inline module. Now target element is replaced with placeholder only when it has a defined parent node.
+- `inline` type is now set as a default, so you may skip it.
+- Now content is just replaced when you call `open()` on popup that is already opened.
+
+
 ### 0.8.3 (May 9, 2013)
 
 - Added: `goTo` public method.
