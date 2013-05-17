@@ -663,11 +663,11 @@ For example:
 {% highlight javascript %}
 // Initialize popup as usual
 $('.popup-link').magnificPopup({ 
-	// Delay in milliseconds before popup is removed
-	removalDelay: 300,
+  // Delay in milliseconds before popup is removed
+  removalDelay: 300,
 
-	// Class that is added to body when popup is open. 
-	// make it unique to apply your CSS animations just to this exact popup
+  // Class that is added to popup wrapper and background
+  // make it unique to apply your CSS animations just to this exact popup
   mainClass: 'mfp-fade'
 });
 {% endhighlight %}
@@ -746,8 +746,6 @@ $('.image-link').magnificPopup({
 
 View [example of retina popup on CodePen](http://codepen.io/dimsemenov/pen/Dohka).
 
-
-
 ## API
 
 There is a much bigger list of public events, methods and variables than provided here which is used for module development, look inside code or type in console `$.magnificPopup.instance.` to find them, if you think that something should be added to docs - please submit commit.
@@ -806,6 +804,10 @@ callbacks: {
   close: function() {
     console.log('Popup is closed');
   },
+  markupParse: function(template, values, item) {
+    // Triggers each time when content of popup changes
+    // console.log('Parsing:', template, values, item);
+  }
   updateStatus: function(data) {
     console.log('Status changed', data);
     // "data" is an object that has two properties:
