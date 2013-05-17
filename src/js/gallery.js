@@ -11,7 +11,7 @@ var _getLoopedId = function(index) {
 		return index;
 	},
 	_replaceCurrTotal = function(text, curr, total) {
-		return text.replace('%curr%', curr + 1).replace('%total%', total);
+		return (total == 1) ? '' : text.replace('%curr%', curr + 1).replace('%total%', total);
 	};
 
 $.magnificPopup.registerModule('gallery', {
