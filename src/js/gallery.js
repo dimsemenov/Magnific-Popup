@@ -11,7 +11,7 @@ var _getLoopedId = function(index) {
 		return index;
 	},
 	_replaceCurrTotal = function(text, curr, total) {
-		return text.replace('%curr%', curr + 1).replace('%total%', total);
+		return (total == 1) ? '' : text.replace('%curr%', curr + 1).replace('%total%', total);
 	};
 
 $.magnificPopup.registerModule('gallery', {
@@ -71,28 +71,32 @@ $.magnificPopup.registerModule('gallery', {
 			});
 
 			_mfpOn('BuildControls' + ns, function() {
-				if(gSt.arrows && !mfp.arrowLeft) {
-					var markup = gSt.arrowMarkup,
-						arrowLeft = mfp.arrowLeft = $( markup.replace('%title%', gSt.tPrev).replace('%dir%', 'left') ).addClass(PREVENT_CLOSE_CLASS),			
-						arrowRight = mfp.arrowRight = $( markup.replace('%title%', gSt.tNext).replace('%dir%', 'right') ).addClass(PREVENT_CLOSE_CLASS);
+				if(mfp.items.length != 1){ // check there is more than one image in the gallery
+					if(gSt.arrows && !mfp.arrowLeft) {
+						var markup = gSt.arrowMarkup,
+							arrowLeft = mfp.arrowLeft = $( markup.replace('%title%', gSt.tPrev).replace('%dir%', 'left') ).addClass(PREVENT_CLOSE_CLASS),			
+							arrowRight = mfp.arrowRight = $( markup.replace('%title%', gSt.tNext).replace('%dir%', 'right') ).addClass(PREVENT_CLOSE_CLASS);
 
-					var eName = supportsFastClick ? 'mfpFastClick' : 'click';
-					arrowLeft[eName](function() {
-						mfp.prev();
-					});			
-					arrowRight[eName](function() {
-						mfp.next();
-					});	
+						var eName = supportsFastClick ? 'mfpFastClick' : 'click';
+						arrowLeft[eName](function() {
+							mfp.prev();
+						});			
+						arrowRight[eName](function() {
+							mfp.next();
+						});	
 
-					// Polyfill for :before and :after (adds elements with classes mfp-a and mfp-b)
-					if(mfp.isIE7) {
-						_getEl('b', arrowLeft[0], false, true);
-						_getEl('a', arrowLeft[0], false, true);
-						_getEl('b', arrowRight[0], false, true);
-						_getEl('a', arrowRight[0], false, true);
+						// Polyfill for :before and :after (adds elements with classes mfp-a and mfp-b)
+						if(mfp.isIE7) {
+							_getEl('b', arrowLeft[0], false, true);
+							_getEl('a', arrowLeft[0], false, true);
+							_getEl('b', arrowRight[0], false, true);
+							_getEl('a', arrowRight[0], false, true);
+						}
+
+						mfp.container.append(arrowLeft.add(arrowRight));
 					}
-
-					mfp.container.append(arrowLeft.add(arrowRight));
+				}else{
+					var markup = ''; // render no controls
 				}
 			});
 
@@ -111,7 +115,9 @@ $.magnificPopup.registerModule('gallery', {
 				mfp.wrap.off('click'+ns);
 			
 				if(supportsFastClick) {
-					mfp.arrowLeft.add(mfp.arrowRight).destroyMfpFastClick();
+					if(mfp.items.length != 1){
+						mfp.arrowLeft.add(mfp.arrowRight).destroyMfpFastClick();
+					}
 				}
 				mfp.arrowRight = mfp.arrowLeft = null;
 			});
