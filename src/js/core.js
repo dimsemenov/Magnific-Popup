@@ -154,19 +154,25 @@ MagnificPopup.prototype = {
 	 */
 	open: function(data) {
 
-		mfp.items = data.items.length ? data.items : [data.items];
-		
+		var i;
+
+		if(data.isObj === false) { 
+			// convert jQuery collection to array to avoid conflicts later
+			mfp.items = data.items.toArray();
+		} else {
+			mfp.items = $.isArray(data.items) ? data.items : [data.items];
+		}
+
+		// if popup is already opened - we just update the content
 		if(mfp.isOpen) {
 			mfp.updateItemHTML();
 			return;
 		}
 
-		var i;
-
+		
 		mfp.types = []; 
 		_wrapClasses = '';
-		
-		mfp.ev = data.el || _document;
+		mfp.ev = data.mainEl || _document;
 
 		if(data.isObj) {
 			mfp.index = data.index || 0;
@@ -551,7 +557,6 @@ MagnificPopup.prototype = {
 	parseEl: function(index) {
 		var item = mfp.items[index],
 			type = item.type;
-		
 
 		if(item.tagName) {
 			item = { el: $(item) };
