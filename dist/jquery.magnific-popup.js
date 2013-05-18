@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.8.5 - 2013-05-15
+/*! Magnific Popup - v0.8.6 - 2013-05-18
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -160,19 +160,25 @@ MagnificPopup.prototype = {
 	 */
 	open: function(data) {
 
-		mfp.items = data.items.length ? data.items : [data.items];
-		
+		var i;
+
+		if(data.isObj === false) { 
+			// convert jQuery collection to array to avoid conflicts later
+			mfp.items = data.items.toArray();
+		} else {
+			mfp.items = $.isArray(data.items) ? data.items : [data.items];
+		}
+
+		// if popup is already opened - we just update the content
 		if(mfp.isOpen) {
 			mfp.updateItemHTML();
 			return;
 		}
 
-		var i;
-
+		
 		mfp.types = []; 
 		_wrapClasses = '';
-		
-		mfp.ev = data.el || _document;
+		mfp.ev = data.mainEl || _document;
 
 		if(data.isObj) {
 			mfp.index = data.index || 0;
@@ -557,7 +563,6 @@ MagnificPopup.prototype = {
 	parseEl: function(index) {
 		var item = mfp.items[index],
 			type = item.type;
-		
 
 		if(item.tagName) {
 			item = { el: $(item) };
@@ -1439,8 +1444,10 @@ $.magnificPopup.registerModule('gallery', {
 
 				if(gSt.navigateByImgClick) {
 					mfp.wrap.on('click'+ns, '.mfp-img', function() {
-						mfp.next();
-						return false;
+						if(mfp.items.length > 1) {
+							mfp.next();
+							return false;
+						}
 					});
 				}
 
@@ -1461,11 +1468,11 @@ $.magnificPopup.registerModule('gallery', {
 
 			_mfpOn(MARKUP_PARSE_EVENT+ns, function(e, element, values, item) {
 				var l = mfp.items.length;
-				values.counter = l ? _replaceCurrTotal(gSt.tCounter, item.index, l) : '';
+				values.counter = l > 1 ? _replaceCurrTotal(gSt.tCounter, item.index, l) : '';
 			});
 
 			_mfpOn('BuildControls' + ns, function() {
-				if(gSt.arrows && !mfp.arrowLeft) {
+				if(mfp.items.length > 1 && gSt.arrows && !mfp.arrowLeft) {
 					var markup = gSt.arrowMarkup,
 						arrowLeft = mfp.arrowLeft = $( markup.replace('%title%', gSt.tPrev).replace('%dir%', 'left') ).addClass(PREVENT_CLOSE_CLASS),			
 						arrowRight = mfp.arrowRight = $( markup.replace('%title%', gSt.tNext).replace('%dir%', 'right') ).addClass(PREVENT_CLOSE_CLASS);
@@ -1504,7 +1511,7 @@ $.magnificPopup.registerModule('gallery', {
 				_document.off(ns);
 				mfp.wrap.off('click'+ns);
 			
-				if(supportsFastClick) {
+				if(mfp.arrowLeft && supportsFastClick) {
 					mfp.arrowLeft.add(mfp.arrowRight).destroyMfpFastClick();
 				}
 				mfp.arrowRight = mfp.arrowLeft = null;

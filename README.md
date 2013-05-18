@@ -37,18 +37,25 @@ Optionally:
 
 ## Changelog
 
+### 0.8.6 (May 18, 2013)
+
+- Controls are now removed when there is only one element in gallery.
+- Fixed issue that could cause incorrect main event element.
+- Public property `items` is now always an array (previously it could be jQuery object collection).
+- Added `word-break: break-word` to caption.
+
 ### 0.8.5 (May 15, 2013)
 
 - Fix #43 - In IE8 whole window becomes black when YouTube iframe is
-closed
+closed.
 - Fix #51 - In IE9 YouTube HTML5 video keeps playing after iframe is
-removed from page
-- Bugfix - box-sizing on IMG in low IE behaves incorrectly
-- Fix #57 - padding on body is not added with overflow:Y:'scroll'
-- removalDelay option is now ignored in IE
-- Added an option closeOnBgClick
-- Added BeforeChange callback
-- Added AfterChange callback
+removed from page.
+- Bugfix - box-sizing on IMG in low IE behaves incorrectly.
+- Fix #57 - padding on body is not added with overflowY:'scroll'.
+- removalDelay option is now ignored in IE.
+- Added an option closeOnBgClick.
+- Added BeforeChange callback.
+- Added AfterChange callback.
 
 ### 0.8.4 (May 13, 2013)
 
@@ -67,9 +74,9 @@ removed from page
 
 ### 0.8.2 (May 5, 2013)
 
-- Added !important to mfp-hide class
-- Fix gallery rendering issue in Opera
-- Fix padding to body with overflow:scroll
+- Added !important to mfp-hide class.
+- Fix gallery rendering issue in Opera.
+- Fix padding to body with overflow:scroll.
 
 
 
@@ -78,4 +85,4 @@ removed from page
 
 Script is MIT licensed and free and will always be kept this way. But has a small restriction from me - please do not create public WordPress plugin based on it(or at least contact me before creating it), because I will make it and it'll be open source too ([want to get notified?](http://dimsemenov.com/subscribe.html)).
 
-Created by [@dimsemenov](http://twitter.com/dimsemenov).
+Created by [@dimsemenov](http://twitter.com/dimsemenov) & [contributors](https://github.com/dimsemenov/Magnific-Popup/contributors).
