@@ -45,8 +45,10 @@ $.magnificPopup.registerModule('gallery', {
 
 				if(gSt.navigateByImgClick) {
 					mfp.wrap.on('click'+ns, '.mfp-img', function() {
-						mfp.next();
-						return false;
+						if(mfp.items.length > 1) {
+							mfp.next();
+							return false;
+						}
 					});
 				}
 
@@ -67,11 +69,11 @@ $.magnificPopup.registerModule('gallery', {
 
 			_mfpOn(MARKUP_PARSE_EVENT+ns, function(e, element, values, item) {
 				var l = mfp.items.length;
-				values.counter = l ? _replaceCurrTotal(gSt.tCounter, item.index, l) : '';
+				values.counter = l > 1 ? _replaceCurrTotal(gSt.tCounter, item.index, l) : '';
 			});
 
 			_mfpOn('BuildControls' + ns, function() {
-				if(gSt.arrows && !mfp.arrowLeft) {
+				if(mfp.items.length > 1 && gSt.arrows && !mfp.arrowLeft) {
 					var markup = gSt.arrowMarkup,
 						arrowLeft = mfp.arrowLeft = $( markup.replace('%title%', gSt.tPrev).replace('%dir%', 'left') ).addClass(PREVENT_CLOSE_CLASS),			
 						arrowRight = mfp.arrowRight = $( markup.replace('%title%', gSt.tNext).replace('%dir%', 'right') ).addClass(PREVENT_CLOSE_CLASS);
@@ -110,7 +112,7 @@ $.magnificPopup.registerModule('gallery', {
 				_document.off(ns);
 				mfp.wrap.off('click'+ns);
 			
-				if(supportsFastClick) {
+				if(mfp.arrowLeft && supportsFastClick) {
 					mfp.arrowLeft.add(mfp.arrowRight).destroyMfpFastClick();
 				}
 				mfp.arrowRight = mfp.arrowLeft = null;
