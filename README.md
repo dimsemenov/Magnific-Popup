@@ -37,6 +37,10 @@ Optionally:
 
 ## Changelog
 
+### 0.8.7 (May 19, 2013)
+
+- Fixed #62 - IE9 HTML5 YouTube player playing audio after pop up closed
+
 ### 0.8.6 (May 18, 2013)
 
 - Controls are now removed when there is only one element in gallery.
