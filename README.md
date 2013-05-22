@@ -1,4 +1,4 @@
-# Magnific Popup GitHub Repository
+# Magnific Popup Repository
 
 Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 
@@ -6,9 +6,9 @@ Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 - [Examples and plugin home page](http://dimsemenov.com/plugins/magnific-popup/)
 - More examples on [CodePen](http://codepen.io/collection/nLcqo). Feel free to email me more CodePen's, I'd gladly add them to this collection.
 
-## About this repository:
+## Location of stuff
 
-- Generated popup JS and CSS files are in folder `dist/`.
+- Generated popup JS and CSS files are in folder `dist/`. (Online build tool is on [documentation page](http://dimsemenov.com/plugins/magnific-popup/documentation.html)).
 - Source files are in folder `src/` (edit them if you wish to submit commit).
 - Website (examples & documentation) is in folder `website/`.
 - Documentation page itself is in `website/documentation.md` (contributions to it are very welcome).
