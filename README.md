@@ -8,10 +8,10 @@ Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 
 ## Location of stuff
 
-- Generated popup JS and CSS files are in folder `dist/`. (Online build tool is on [documentation page](http://dimsemenov.com/plugins/magnific-popup/documentation.html)).
-- Source files are in folder `src/` (edit them if you wish to submit commit).
-- Website (examples & documentation) is in folder `website/`.
-- Documentation page itself is in `website/documentation.md` (contributions to it are very welcome).
+- Generated popup JS and CSS files are in folder [dist/](https://github.com/dimsemenov/Magnific-Popup/tree/master/dist). (Online build tool is on [documentation page](http://dimsemenov.com/plugins/magnific-popup/documentation.html)).
+- Source files are in folder [src/](https://github.com/dimsemenov/Magnific-Popup/tree/master/src). They include [Sass CSS file](https://github.com/dimsemenov/Magnific-Popup/blob/master/src/css/main.scss) and js parts (edit them if you wish to submit commit). 
+- Website (examples & documentation) is in folder [website/](https://github.com/dimsemenov/Magnific-Popup/tree/master/website).
+- Documentation page itself is in [website/documentation.md](https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md) (contributions to it are very welcome).
 
 ## Build 
 
