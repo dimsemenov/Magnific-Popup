@@ -37,6 +37,11 @@ Optionally:
 
 ## Changelog
 
+### 0.8.8 (May 24, 2013)
+
+- Fix: you can now put link inside popup that will open another popup - http://codepen.io/dimsemenov/pen/hwIng
+- Fix: incorrect index when opening popup that is already opened from multiple DOM elements.
+
 ### 0.8.7 (May 19, 2013)
 
 - Fixed #62 - IE9 HTML5 YouTube player playing audio after pop up closed
