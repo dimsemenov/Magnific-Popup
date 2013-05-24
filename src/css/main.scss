@@ -30,37 +30,37 @@
 // 1. Variables
 ////////////////////////
 
-$overlay-color: #0b0b0b; 
-$overlay-opacity: 0.8; 
-$shadow: 0 0 8px rgba(0, 0, 0, 0.6); // shadow on image or iframe
-$popup-padding-left: 8px; // Padding from left and from right side
-$popup-padding-left-mobile: 6px; // Same as above, but is applied when width of window is less than 800px
+$overlay-color:                   #0b0b0b !default;
+$overlay-opacity:                 0.8 !default;
+$shadow:                          0 0 8px rgba(0, 0, 0, 0.6) !default; // shadow on image or iframe
+$popup-padding-left:              8px !default; // Padding from left and from right side
+$popup-padding-left-mobile:       6px !default; // Same as above, but is applied when width of window is less than 800px
 
-$z-index-base: 500; // Base z-index of popup
-$include-arrows: true; // include styles for nav arrows
-$controls-opacity: 0.65;
-$controls-color: #FFF;
-$inner-close-icon-color: #333;
-$controls-text-color: #CCC; // Color of preloader and "1 of X" indicator
-$controls-text-color-hover: #FFF;
-$IE7support: true; // Very basic IE7 support
+$z-index-base:                    500 !default; // Base z-index of popup
+$include-arrows:                  true !default; // include styles for nav arrows
+$controls-opacity:                0.65 !default;
+$controls-color:                  #FFF !default;
+$inner-close-icon-color:          #333 !default;
+$controls-text-color:             #CCC !default; // Color of preloader and "1 of X" indicator
+$controls-text-color-hover:       #FFF !default;
+$IE7support:                      true !default; // Very basic IE7 support
 
 // Iframe-type options
-$include-iframe-type: true;
-$iframe-padding-top: 40px;
-$iframe-background: #000;
-$iframe-max-width: 900px;
-$iframe-ratio: 9/16;
+$include-iframe-type:             true !default;
+$iframe-padding-top:              40px !default;
+$iframe-background:               #000 !default;
+$iframe-max-width:                900px !default;
+$iframe-ratio:                    9/16 !default;
 
 // Image-type options
-$include-image-type: true;
-$image-padding-top: 40px;
-$image-padding-bottom: 40px;
-$include-mobile-layout-for-image: true; // Removes paddings from top and bottom
+$include-image-type:              true !default;
+$image-padding-top:               40px !default;
+$image-padding-bottom:            40px !default;
+$include-mobile-layout-for-image: true !default; // Removes paddings from top and bottom
 
 // Image caption options
-$caption-title-color: #F3F3F3;
-$caption-subtitle-color: #BDBDBD;
+$caption-title-color:             #F3F3F3 !default;
+$caption-subtitle-color:          #BDBDBD !default;
 
 
 
@@ -259,7 +259,7 @@ button::-moz-focus-inner {
   }
 
   &:active {
-    top: 1px; 
+    top: 1px;
   }
 }
 .mfp-close-btn-in .mfp-close {
@@ -314,7 +314,7 @@ button::-moz-focus-inner {
     .mfp-a {
       content: '';
       display: block;
-      width: 0; 
+      width: 0;
       height: 0;
       position: absolute;
       left: 0;
@@ -385,14 +385,14 @@ button::-moz-focus-inner {
     width: 100%;
     height: 0;
     overflow: hidden;
-    padding-top: $iframe-ratio * 100%;       
+    padding-top: $iframe-ratio * 100%;
   }
-  .mfp-iframe-scaler iframe {  
-    position: absolute;              
-    top: -3px;                          
-    left: 0;                         
-    width: 100%;                     
-    height: 100%;  
+  .mfp-iframe-scaler iframe {
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 100%;
+    height: 100%;
     box-shadow: $shadow;
     background: $iframe-background;
   }  
@@ -532,15 +532,15 @@ button::-moz-focus-inner {
 // Scale navigation arrows and reduce padding from sides
 @media all and (max-width: 800px) {
   .mfp-arrow {
-    -webkit-transform: scale(0.75); 
-    transform: scale(0.75); 
+    -webkit-transform: scale(0.75);
+    transform: scale(0.75);
   }
   .mfp-arrow-left {
-    -webkit-transform-origin: 0; 
+    -webkit-transform-origin: 0;
     transform-origin: 0;
   }
   .mfp-arrow-right {
-     -webkit-transform-origin: 100%; 
+     -webkit-transform-origin: 100%;
     transform-origin: 100%;
   }
   .mfp-container {
