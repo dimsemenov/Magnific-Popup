@@ -1,0 +1,40 @@
+////////////////////////
+//      Settings      //
+////////////////////////
+
+// overlay
+$overlay-color:                   #0b0b0b;                    // Color of overlay screen
+$overlay-opacity:                 0.8;                        // Opacity of overlay screen
+$shadow:                          0 0 8px rgba(0, 0, 0, 0.6); // Shadow on image or iframe
+
+// spacing
+$popup-padding-left:              8px;                        // Padding from left and from right side
+$popup-padding-left-mobile:       6px;                        // Same as above, but is applied when width of window is less than 800px
+
+$z-index-base:                    500;                        // Base z-index of popup
+
+// controls
+$include-arrows:                  true;                       // Include styles for nav arrows
+$controls-opacity:                0.65;                       // Opacity of controls
+$controls-color:                  #FFF;                       // Color of controls
+$inner-close-icon-color:          #333;                       // Color of close button when inside
+$controls-text-color:             #CCC;                       // Color of preloader and "1 of X" indicator
+$controls-text-color-hover:       #FFF;                       // Hover color of preloader and "1 of X" indicator
+$IE7support:                      true;                       // Very basic IE7 support
+
+// Iframe-type options
+$include-iframe-type:             true;                       // Enable Iframe-type popups
+$iframe-padding-top:              40px;                       // Iframe padding top
+$iframe-background:               #000;                       // Background color of iframes
+$iframe-max-width:                900px;                      // Maximum width of iframes
+$iframe-ratio:                    9/16;                       // Ratio of iframe (9/16 = widescreen, 3/4 = standard, etc.)
+
+// Image-type options
+$include-image-type:              true;                       // Enable Image-type popups
+$image-padding-top:               40px;                       // Image padding top
+$image-padding-bottom:            40px;                       // Image padding bottom
+$include-mobile-layout-for-image: true;                       // Removes paddings from top and bottom
+
+// Image caption options
+$caption-title-color:             #F3F3F3;                    // Caption title color
+$caption-subtitle-color:          #BDBDBD;                    // Caption subtitle color

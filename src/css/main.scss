@@ -1,10 +1,12 @@
 /* Magnific Popup CSS */
 
+@import "settings";
+
 ////////////////////////
 //
 // Contents:
 // 
-// 1. Variables
+// 1. Default Settings
 // 2. General styles
 //    - Transluscent overlay
 //    - Containers, wrappers
@@ -25,9 +27,8 @@
 
 
 
-
 ////////////////////////
-// 1. Variables
+// 1. Default Settings
 ////////////////////////
 
 $overlay-color:                   #0b0b0b !default;
@@ -61,7 +62,6 @@ $include-mobile-layout-for-image: true !default; // Removes paddings from top an
 // Image caption options
 $caption-title-color:             #F3F3F3 !default;
 $caption-subtitle-color:          #BDBDBD !default;
-
 
 
 
@@ -213,7 +213,7 @@ $caption-subtitle-color:          #BDBDBD !default;
 // Hide content when it was not loaded
 .mfp-s-error .mfp-content {
   display: none;
-} 
+}
 
 
 // CSS-reset for buttons
@@ -395,13 +395,11 @@ button::-moz-focus-inner {
     height: 100%;
     box-shadow: $shadow;
     background: $iframe-background;
-  }  
+  }
   .mfp-iframe-holder .mfp-close {
     top: -43px;
   }
 }
-
-
 
 
 
@@ -547,7 +545,8 @@ button::-moz-focus-inner {
     padding-left: $popup-padding-left-mobile;
     padding-right: $popup-padding-left-mobile;
   }
-} 
+}
+
 
 
 // IE7 support
@@ -577,8 +576,3 @@ button::-moz-focus-inner {
     }
   }
 }
-
-
-
-
-
