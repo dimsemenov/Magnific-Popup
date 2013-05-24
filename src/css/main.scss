@@ -135,10 +135,26 @@ $caption-subtitle-color:          #BDBDBD !default;
   text-align: left;
   z-index: $z-index-base + 5;
 }
-.mfp-inline-holder .mfp-content,
-.mfp-ajax-holder .mfp-content {
-  width: 100%;
-  cursor: auto;
+
+.mfp-inline-holder, .mfp-ajax-holder {
+  .mfp-content {
+    width: 100%;
+    cursor: auto;
+    // Popup shadows for inline and ajax types
+    &:after {
+      content: '';
+      display: block;
+      width: auto;
+      height: auto;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: -1;
+      box-shadow: $shadow;
+    }
+  }
 }
 
 // Cursors
