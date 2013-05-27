@@ -212,21 +212,21 @@ button::-moz-focus-inner {
   left: 0; }
   .mfp-arrow-left:after,
   .mfp-arrow-left .mfp-a {
-    border-right: 12px solid black;
+    border-right: 12px solid #000;
     left: 5px; }
   .mfp-arrow-left:before,
   .mfp-arrow-left .mfp-b {
-    border-right: 20px solid white; }
+    border-right: 20px solid #FFF; }
 
 .mfp-arrow-right {
   right: 0; }
   .mfp-arrow-right:after,
   .mfp-arrow-right .mfp-a {
-    border-left: 12px solid black;
+    border-left: 12px solid #000;
     left: 3px; }
   .mfp-arrow-right:before,
   .mfp-arrow-right .mfp-b {
-    border-left: 20px solid white; }
+    border-left: 20px solid #FFF; }
 
 .mfp-iframe-holder {
   padding-top: 40px;

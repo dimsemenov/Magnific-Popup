@@ -135,7 +135,7 @@ MagnificPopup.prototype = {
 	init: function() {
 		var appVersion = navigator.appVersion;
 		mfp.isIE7 = appVersion.indexOf("MSIE 7.") !== -1; 
-		mfp.isIE8 = appVersion.indexOf("MSIE 8.") !== -1,
+		mfp.isIE8 = appVersion.indexOf("MSIE 8.") !== -1;
 		mfp.isLowIE = mfp.isIE7 || mfp.isIE8;
 		mfp.isAndroid = (/android/gi).test(appVersion);
 		mfp.isIOS = (/iphone|ipad|ipod/gi).test(appVersion);
@@ -302,11 +302,13 @@ MagnificPopup.prototype = {
 		var bodyStyles = {};
 
 		if( mfp.fixedContentPos ) {
-			var s = mfp._getScrollbarSize();
-			if(s) {
-				bodyStyles.paddingRight = s;
-			}
-		}
+            if(mfp._hasScrollBar()){
+                var s = mfp._getScrollbarSize();
+                if(s) {
+                    bodyStyles.paddingRight = s;
+                }
+            }
+        }
 
 		if(mfp.fixedContentPos) {
 			if(!mfp.isIE7) {
@@ -699,10 +701,7 @@ MagnificPopup.prototype = {
 		mfp.wrap.removeClass(cName);
 	},
 	_hasScrollBar: function(winHeight) {
-		if(document.body.clientHeight > (winHeight || _window.height()) ) {
-            return true;    
-        }
-        return false;
+		return (document.body.clientHeight > (winHeight || _window.height()) )
 	},
 
 	_parseMarkup: function(template, values, item) {
