@@ -701,7 +701,7 @@ MagnificPopup.prototype = {
 		mfp.wrap.removeClass(cName);
 	},
 	_hasScrollBar: function(winHeight) {
-		return (document.body.clientHeight > (winHeight || _window.height()) )
+		return ( $(document).height() > (winHeight || _window.height()) )
 	},
 
 	_parseMarkup: function(template, values, item) {
