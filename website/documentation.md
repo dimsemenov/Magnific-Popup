@@ -570,6 +570,34 @@ Close the popup when user clicks on the dark overlay.
 
 If enabled, Magnific Popup will put close button inside content of popup, and wrapper will get class `mfp-close-btn-in` (which in default CSS file makes color of it change). If markup of popup item is defined element with class `mfp-close` will be replaced with this button, otherwise close button will be appended directly.
 
+
+### showCloseBtn
+
+<code class="def">true</code>
+
+Controls whether the close button will be displayed or not.
+
+
+### enableEscapeKey
+
+<code class="def">true</code>
+
+Controls whether pressing the escape key will dismiss the active popup or
+not.
+
+
+### modal
+
+<code class="def">false</code>
+
+When set to `true`, the popup will have a modal-like behavior: it won't be
+possible to dismiss it by usual means (close button, escape key, or
+clicking in the overlay).
+
+This is is a shortcut to set ``closeOnContentClick``, ``closeOnBgClick``,
+``showCloseBtn``, and ``enableEscapeKey`` to ``false``.
+
+
 ### alignTop
 
 <code class="def">false</code>
