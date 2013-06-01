@@ -20,3 +20,4 @@ all.min.css
 website/dist/
 *.idea
 /.idea
+.node-version
