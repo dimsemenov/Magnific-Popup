@@ -2,7 +2,7 @@
   "name": "magnific-popup",
   "title": "Magnific Popup",
   "description": "Fast, light, mobile-friendly and responsive lightbox plugin with focus on performance. Open inline HTML, ajax loaded content, image, form, iframe (YouTube and Vimeo video, Google Maps), photo gallery. Easily add in/out animation effects with help of CSS3 transitions.",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "homepage": "http://dimsemenov.com/plugins/magnific-popup/",
   "demo": "http://dimsemenov.com/plugins/magnific-popup/",
   "docs": "http://dimsemenov.com/plugins/magnific-popup/documentation.html",

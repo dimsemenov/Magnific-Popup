@@ -18,3 +18,5 @@ _production
 all.min.css
 .sublime-*
 website/dist/
+*.idea
+/.idea

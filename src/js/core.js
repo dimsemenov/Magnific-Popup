@@ -135,7 +135,7 @@ MagnificPopup.prototype = {
 	init: function() {
 		var appVersion = navigator.appVersion;
 		mfp.isIE7 = appVersion.indexOf("MSIE 7.") !== -1; 
-		mfp.isIE8 = appVersion.indexOf("MSIE 8.") !== -1,
+		mfp.isIE8 = appVersion.indexOf("MSIE 8.") !== -1;
 		mfp.isLowIE = mfp.isIE7 || mfp.isIE8;
 		mfp.isAndroid = (/android/gi).test(appVersion);
 		mfp.isIOS = (/iphone|ipad|ipod/gi).test(appVersion);
@@ -159,24 +159,7 @@ MagnificPopup.prototype = {
 		if(data.isObj === false) { 
 			// convert jQuery collection to array to avoid conflicts later
 			mfp.items = data.items.toArray();
-		} else {
-			mfp.items = $.isArray(data.items) ? data.items : [data.items];
-		}
 
-		// if popup is already opened - we just update the content
-		if(mfp.isOpen) {
-			mfp.updateItemHTML();
-			return;
-		}
-
-		
-		mfp.types = []; 
-		_wrapClasses = '';
-		mfp.ev = data.mainEl || _document;
-
-		if(data.isObj) {
-			mfp.index = data.index || 0;
-		} else {
 			mfp.index = 0;
 			var items = data.items,
 				item;
@@ -190,8 +173,20 @@ MagnificPopup.prototype = {
 					break;
 				}
 			}
+		} else {
+			mfp.items = $.isArray(data.items) ? data.items : [data.items];
+			mfp.index = data.index || 0;
 		}
 
+		// if popup is already opened - we just update the content
+		if(mfp.isOpen) {
+			mfp.updateItemHTML();
+			return;
+		}
+		
+		mfp.types = []; 
+		_wrapClasses = '';
+		mfp.ev = data.mainEl || _document;
 
 		if(data.key) {
 			if(!mfp.popupsCache[data.key]) {
@@ -307,11 +302,13 @@ MagnificPopup.prototype = {
 		var bodyStyles = {};
 
 		if( mfp.fixedContentPos ) {
-			var s = mfp._getScrollbarSize();
-			if(s) {
-				bodyStyles.paddingRight = s;
-			}
-		}
+            if(mfp._hasScrollBar()){
+                var s = mfp._getScrollbarSize();
+                if(s) {
+                    bodyStyles.paddingRight = s;
+                }
+            }
+        }
 
 		if(mfp.fixedContentPos) {
 			if(!mfp.isIE7) {
@@ -637,8 +634,15 @@ MagnificPopup.prototype = {
 				}
 			}
 			
-			if(e.type)
+			if(e.type) {
 				e.preventDefault();
+
+				// This will prevent popup from closing if element is inside and popup is already opened
+				if(mfp.isOpen) {
+					e.stopPropagation();
+				}
+			}
+				
 
 			options.el = $(e.mfpEl);
 			if(options.delegate) {
@@ -697,10 +701,7 @@ MagnificPopup.prototype = {
 		mfp.wrap.removeClass(cName);
 	},
 	_hasScrollBar: function(winHeight) {
-		if(document.body.clientHeight > (winHeight || _window.height()) ) {
-            return true;    
-        }
-        return false;
+		return (document.body.clientHeight > (winHeight || _window.height()) )
 	},
 
 	_parseMarkup: function(template, values, item) {

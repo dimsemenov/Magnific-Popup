@@ -633,6 +633,19 @@ gallery: {
 }
 {% endhighlight %}
 
+### Multiple galleries
+
+To have multiple galleries on a page, you need to create a new instance of Magnific Popup for each seperate gallery. The below example can be used:
+
+{% highlight javascript %}
+$('.gallery').each(function() { // the containers for all your galleries shoudl ahve the class gallery
+    $(this).magnificPopup({
+        delegate: 'a', // the container for each your gallery items
+        type: 'image',
+        gallery:{enabled:true}
+    });
+}); 
+{% endhighlight %}
 
 ### Lazy-loading
 
