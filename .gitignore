@@ -21,3 +21,4 @@ website/dist/
 *.idea
 /.idea
 .node-version
+.sass-cache/

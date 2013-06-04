@@ -9,9 +9,9 @@
     "jquery": ">=1.8.0"
   },
   "ignore": [
-    "node_modules",
-    "components",
-    "website",
-    "libs"
+    "node_modules/",
+    "components/",
+    "website/",
+    "libs/"
   ]
 }
