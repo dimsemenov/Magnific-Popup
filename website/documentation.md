@@ -792,7 +792,7 @@ $('.image-link').on('mfpOpen', function(e /*, params */) {
 });
 {% endhighlight %}
 
-List of callbacks:
+List of callbacks. In each callback `this` is `$.magnificPopup.instance`, so you can execute methods (`this.close()`) or access public variables  (`this.currItem`).
 
 {% highlight javascript %}
 callbacks: {
@@ -805,7 +805,7 @@ callbacks: {
   },
   change: function() {
     console.log('Content changed');
-    console.log('Triggers');
+    console.log(this.content); // Direct reference to your popup element
   },
   resize: function() {
     console.log('Popup resized');
@@ -930,7 +930,7 @@ magnificPopup.items // array that holds data for popup items
 magnificPopup.currItem // data for current item
 magnificPopup.index // current item index (integer)
 
-
+magnificPopup.content // direct reference to jQuery DOM element that you open in popup
 magnificPopup.bgOverlay // transluscent overlay
 magnificPopup.wrap // container that holds all controls and contentContainer
 magnificPopup.contentContainer // container that holds popup content, child of wrap
