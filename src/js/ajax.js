@@ -37,12 +37,14 @@ $.magnificPopup.registerModule(AJAX_NS, {
 			var opts = $.extend({
 				url: item.src,
 				success: function(data, textStatus, jqXHR) {
+					var temp = {
+						data:data,
+						xhr:jqXHR
+					};
 
-					var data = {responseText:jqXHR.responseText};
+					_mfpTrigger('ParseAjax', temp);
 
-					_mfpTrigger('ParseAjax', data);
-
-					mfp.appendContent( $(data.responseText), AJAX_NS );
+					mfp.appendContent( $(temp.data), AJAX_NS );
 
 					item.finished = true;
 
@@ -55,7 +57,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 					}, 16);
 
 					mfp.updateStatus('ready');
-					
+
 					_mfpTrigger('AjaxContentAdded');
 				},
 				error: function() {
