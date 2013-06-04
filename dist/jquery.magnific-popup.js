@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.8.8 - 2013-05-26
+/*! Magnific Popup - v0.8.8 - 2013-06-04
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -308,7 +308,7 @@ MagnificPopup.prototype = {
 		var bodyStyles = {};
 
 		if( mfp.fixedContentPos ) {
-            if(mfp._hasScrollBar()){
+            if(mfp._hasScrollBar(windowHeight)){
                 var s = mfp._getScrollbarSize();
                 if(s) {
                     bodyStyles.paddingRight = s;
@@ -415,11 +415,11 @@ MagnificPopup.prototype = {
 		mfp._removeClassFromMFP(classesToRemove);
 
 		if(mfp.fixedContentPos) {
-			var bodyStyles = {paddingRight: 0};
+			var bodyStyles = {paddingRight: ''};
 			if(mfp.isIE7) {
-				$('body, html').css('overflow', 'auto');
+				$('body, html').css('overflow', '');
 			} else {
-				bodyStyles.overflow = 'visible';
+				bodyStyles.overflow = '';
 			}
 			_body.css(bodyStyles);
 		}
@@ -707,9 +707,8 @@ MagnificPopup.prototype = {
 		mfp.wrap.removeClass(cName);
 	},
 	_hasScrollBar: function(winHeight) {
-		return (document.body.clientHeight > (winHeight || _window.height()) )
+		return (  (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) )
 	},
-
 	_parseMarkup: function(template, values, item) {
 		var arr;
 		if(item.data) {

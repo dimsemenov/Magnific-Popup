@@ -409,11 +409,11 @@ MagnificPopup.prototype = {
 		mfp._removeClassFromMFP(classesToRemove);
 
 		if(mfp.fixedContentPos) {
-			var bodyStyles = {paddingRight: 0};
+			var bodyStyles = {paddingRight: ''};
 			if(mfp.isIE7) {
-				$('body, html').css('overflow', 'auto');
+				$('body, html').css('overflow', '');
 			} else {
-				bodyStyles.overflow = 'visible';
+				bodyStyles.overflow = '';
 			}
 			_body.css(bodyStyles);
 		}
