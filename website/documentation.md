@@ -815,7 +815,10 @@ callbacks: {
     console.log('Popup is opened');
   },
   close: function() {
-    console.log('Popup is closed');
+    console.log('Popup close has been initiated');
+  },
+  afterClose: function() {
+    console.log('Popup is completely closed');
   },
   markupParse: function(template, values, item) {
     // Triggers each time when content of popup changes
