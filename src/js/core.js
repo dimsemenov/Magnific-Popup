@@ -222,7 +222,7 @@ MagnificPopup.prototype = {
 
 			mfp.container = _getEl('container', mfp.wrap);
 		}
-		
+
 		mfp.contentContainer = _getEl('content');
 		if(mfp.st.preloader) {
 			mfp.preloader = _getEl('preloader', mfp.container, mfp.st.tLoading);
@@ -455,6 +455,10 @@ MagnificPopup.prototype = {
 			mfp.wH = height;
 		} else {
 			mfp.wH = winHeight || _window.height();
+		}
+		// Fixes #84: popup incorrectly positioned with position:relative on body
+		if(!mfp.fixedContentPos) {
+			mfp.wrap.css('height', mfp.wH);
 		}
 
 		_mfpTrigger('Resize');
