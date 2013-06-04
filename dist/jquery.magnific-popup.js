@@ -949,7 +949,8 @@ $.magnificPopup.registerModule(INLINE_NS, {
 				if(el.length) {
 
 					// If target element has parent - we replace it with placeholder and put it back after popup is closed
-					if(el[0].parentNode !== null) {
+					var parent = el[0].parentNode;
+					if(parent && parent.tagName) {
 						if(!_inlinePlaceholder) {
 							_hiddenClass = inlineSt.hiddenClass;
 							_inlinePlaceholder = _getEl(_hiddenClass);
