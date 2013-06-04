@@ -6,6 +6,8 @@ Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 - [Examples and plugin home page](http://dimsemenov.com/plugins/magnific-popup/)
 - More examples on [CodePen](http://codepen.io/collection/nLcqo). Feel free to email me more CodePen's, I'd gladly add them to this collection.
 
+Optionally, install via Bower: `bower install magnific-popup`.
+
 ## Location of stuff
 
 - Generated popup JS and CSS files are in folder [dist/](https://github.com/dimsemenov/Magnific-Popup/tree/master/dist). (Online build tool is on [documentation page](http://dimsemenov.com/plugins/magnific-popup/documentation.html)).
@@ -36,6 +38,18 @@ Optionally:
 
 
 ## Changelog
+
+### 0.8.9 (Jun 4, 2013)
+
+- Fix: inline element that is created dynamically causes exception in jQuery 1.8.x.
+- Fix: incorrect detection of `_hasScrollBar` if body has defined height style.
+- Fix: body styles are kept after popup is closed.
+- Fix: close icon is aligned incorrectly with iframe type.
+- **responseText is deprected**. Argument of callback `parseAjax` - `obj.responseText` is now deprected, but you can still access it via `obj.xhr.responseText`. Instead of it, please use `obj.data` to modify your output.
+- Sass: changed variables to be default declarations to support front-loaded settings. i.e. You can override options by adding `_settings.scss` file near `main.scss` with your new options.
+- Added: `afterClose` event.
+- Added: `ajaxContentLoaded` event.
+- Added: [Bower](https://github.com/bower/bower) support.
 
 ### 0.8.8 (May 24, 2013)
 

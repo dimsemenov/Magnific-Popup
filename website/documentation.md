@@ -418,17 +418,20 @@ To modify content after it's loaded, or to select and show just specific element
 
 {% highlight javascript %}
 callbacks: {
-  parseAjax: function(data) {
-    console.log('Loading of ajax content finished. Object:', data.responseText);
-    // data.responseText contains HTML text that will be inserted to DOM
-    // You may modify it however you wish
-    // data.responseText can be a String or a DOM (jQuery) element
-    
+  parseAjax: function(mfpResponse) {
+    // mfpResponse.data is a "data" object from ajax "success" callback
+    // for simple HTML file, it will be just String
+    // You may modify it to change contents of the popup
     // For example, to show just #some-element:
-    // data.responseText = $(data.responseText).find('#some-element');
+    // mfpResponse.data = $(mfpResponse.data).find('#some-element');
+    
+    // mfpResponse.data must be a String or a DOM (jQuery) element
+    
+    console.log('Ajax content loaded:', mfpResponse);
   },
   ajaxContentAdded: function() {
-    console.log('Content is in DOM:', this.content);
+    // Ajax content is loaded and appended to DOM
+    console.log(this.content);
   }
 }
 {% endhighlight %}
@@ -842,15 +845,18 @@ callbacks: {
     // here you may modify URL, type, or any other data
   },  
 
-  // Only for ajax
-  parseAjax: function(data) {
-    console.log('Loading of ajax content finished. Object:', data.responseText);
-    // data.responseText contains HTML text that will be inserted to DOM
-    // You may modify it however you wish
-    // data.responseText can be a String or a DOM (jQuery) element
 
+  // Only for ajax popup type
+  parseAjax: function(mfpResponse) {
+    // mfpResponse.data is a "data" object from ajax "success" callback
+    // for simple HTML file, it will be just String
+    // You may modify it to change contents of the popup
     // For example, to show just #some-element:
-    // data.responseText = $(data.responseText).find('#some-element');
+    // mfpResponse.data = $(mfpResponse.data).find('#some-element');
+    
+    // mfpResponse.data must be a String or a DOM (jQuery) element
+    
+    console.log('Ajax content loaded:', mfpResponse);
   },
   ajaxContentAdded: function() {
     // Ajax content is loaded and appended to DOM

@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.8.8 - 2013-06-04
+/*! Magnific Popup - v0.8.9 - 2013-06-04
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -228,7 +228,7 @@ MagnificPopup.prototype = {
 
 			mfp.container = _getEl('container', mfp.wrap);
 		}
-		
+
 		mfp.contentContainer = _getEl('content');
 		if(mfp.st.preloader) {
 			mfp.preloader = _getEl('preloader', mfp.container, mfp.st.tLoading);
@@ -461,6 +461,10 @@ MagnificPopup.prototype = {
 			mfp.wH = height;
 		} else {
 			mfp.wH = winHeight || _window.height();
+		}
+		// Fixes #84: popup incorrectly positioned with position:relative on body
+		if(!mfp.fixedContentPos) {
+			mfp.wrap.css('height', mfp.wH);
 		}
 
 		_mfpTrigger('Resize');
@@ -1022,12 +1026,14 @@ $.magnificPopup.registerModule(AJAX_NS, {
 			var opts = $.extend({
 				url: item.src,
 				success: function(data, textStatus, jqXHR) {
+					var temp = {
+						data:data,
+						xhr:jqXHR
+					};
 
-					var data = {responseText:jqXHR.responseText};
+					_mfpTrigger('ParseAjax', temp);
 
-					_mfpTrigger('ParseAjax', data);
-
-					mfp.appendContent( $(data.responseText), AJAX_NS );
+					mfp.appendContent( $(temp.data), AJAX_NS );
 
 					item.finished = true;
 
@@ -1040,7 +1046,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 					}, 16);
 
 					mfp.updateStatus('ready');
-					
+
 					_mfpTrigger('AjaxContentAdded');
 				},
 				error: function() {

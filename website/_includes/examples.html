@@ -25,8 +25,6 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 <h2 id="examples">Examples</h2>
 
 <div class="grid-c">
-
-
   <div class="example gc3">
     <h3>Single image lightbox</h3> 
     <p>Three simple popups with different scaling settings. First one fits in area horizontally and vertically, second one - only horizontally, third one - has no gaps and close button is always in top right corner.</p>
@@ -456,21 +454,6 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         $('.simple-ajax-popup-align-top').magnificPopup({
           type: 'ajax',
           alignTop: true,
-          // callbacks: {
-          //   parseAjax: function(data) {
-          //     console.log('Loading of ajax content finished. Object:', data.responseText);
-          //     // data.responseText contains HTML text that will be inserted to DOM
-          //     // You may modify it however you wish
-          //     // data.responseText can be a String or a DOM (jQuery) element
-              
-          //     // For example, to show just #some-element:
-          //     // data.responseText = $(data.responseText).find('#some-element');
-          //   },
-          //   ajaxContentAdded: function() {
-          //     // Ajax content is loaded and appended to DOM
-          //     console.log(this.content);
-          //   }
-          // },
           overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
         });
 
