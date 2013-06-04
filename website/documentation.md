@@ -418,12 +418,17 @@ To modify content after it's loaded, or to select and show just specific element
 
 {% highlight javascript %}
 callbacks: {
-  parseAjax: function(jqXHR) {
-    console.log('Loading of ajax content finished. Object:', jqXHR);
-    // You can modify value of jqXHR.responseText here. It's used as a content for popup.
+  parseAjax: function(data) {
+    console.log('Loading of ajax content finished. Object:', data.responseText);
+    // data.responseText contains HTML text that will be inserted to DOM
+    // You may modify it however you wish
+    // data.responseText can be a String or a DOM (jQuery) element
     
     // For example, to show just #some-element:
-    // jqXHR.responseText = $(jqXHR.responseText).find('#some-element');
+    // data.responseText = $(data.responseText).find('#some-element');
+  },
+  ajaxContentAdded: function() {
+    console.log('Content is in DOM:', this.content);
   }
 }
 {% endhighlight %}
@@ -838,10 +843,18 @@ callbacks: {
   },  
 
   // Only for ajax
-  parseAjax: function(jqXHR) {
-    console.log('Loading of ajax content finished. Object:', jqXHR);
-    // Allows you modify value of jqXHR.responseText here. It's used as content for popup.
-    // jqXHR.responseText can be a String or a jQuery object
+  parseAjax: function(data) {
+    console.log('Loading of ajax content finished. Object:', data.responseText);
+    // data.responseText contains HTML text that will be inserted to DOM
+    // You may modify it however you wish
+    // data.responseText can be a String or a DOM (jQuery) element
+
+    // For example, to show just #some-element:
+    // data.responseText = $(data.responseText).find('#some-element');
+  },
+  ajaxContentAdded: function() {
+    // Ajax content is loaded and appended to DOM
+    console.log(this.content);
   }
 }
 {% endhighlight %}

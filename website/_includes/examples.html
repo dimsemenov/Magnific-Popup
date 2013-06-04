@@ -457,8 +457,18 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           type: 'ajax',
           alignTop: true,
           // callbacks: {
-          //   parseAjax: function(jqXHR) {
-          //     jqXHR.responseText = $('<div>HELLO</div>');
+          //   parseAjax: function(data) {
+          //     console.log('Loading of ajax content finished. Object:', data.responseText);
+          //     // data.responseText contains HTML text that will be inserted to DOM
+          //     // You may modify it however you wish
+          //     // data.responseText can be a String or a DOM (jQuery) element
+              
+          //     // For example, to show just #some-element:
+          //     // data.responseText = $(data.responseText).find('#some-element');
+          //   },
+          //   ajaxContentAdded: function() {
+          //     // Ajax content is loaded and appended to DOM
+          //     console.log(this.content);
           //   }
           // },
           overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
