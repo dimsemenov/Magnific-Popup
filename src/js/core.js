@@ -302,7 +302,7 @@ MagnificPopup.prototype = {
 		var bodyStyles = {};
 
 		if( mfp.fixedContentPos ) {
-            if(mfp._hasScrollBar()){
+            if(mfp._hasScrollBar(windowHeight)){
                 var s = mfp._getScrollbarSize();
                 if(s) {
                     bodyStyles.paddingRight = s;
@@ -701,9 +701,8 @@ MagnificPopup.prototype = {
 		mfp.wrap.removeClass(cName);
 	},
 	_hasScrollBar: function(winHeight) {
-		return (document.body.clientHeight > (winHeight || _window.height()) )
+		return (  (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) )
 	},
-
 	_parseMarkup: function(template, values, item) {
 		var arr;
 		if(item.data) {
