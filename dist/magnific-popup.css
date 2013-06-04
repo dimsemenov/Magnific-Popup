@@ -245,7 +245,8 @@ button::-moz-focus-inner {
 
 .mfp-iframe-scaler iframe {
   position: absolute;
-  top: -3px;
+  display: block;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -253,7 +254,7 @@ button::-moz-focus-inner {
   background: black; }
 
 .mfp-iframe-holder .mfp-close {
-  top: -43px; }
+  top: -40px; }
 
 /* Main image in popup */
 img.mfp-img {
