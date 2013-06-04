@@ -15,6 +15,7 @@
  * Private static constants
  */
 var CLOSE_EVENT = 'Close',
+	AFTER_CLOSE_EVENT = 'AfterClose',
 	BEFORE_APPEND_EVENT = 'BeforeAppend',
 	MARKUP_PARSE_EVENT = 'MarkupParse',
 	OPEN_EVENT = 'Open',
@@ -446,6 +447,8 @@ MagnificPopup.prototype = {
 		mfp.content = null;
 		mfp.currTemplate = null;
 		mfp.prevHeight = 0;
+
+		_mfpTrigger(AFTER_CLOSE_EVENT);
 	},
 	
 	updateSize: function(winHeight) {
@@ -1020,9 +1023,11 @@ $.magnificPopup.registerModule(AJAX_NS, {
 				url: item.src,
 				success: function(data, textStatus, jqXHR) {
 
-					_mfpTrigger('ParseAjax', jqXHR);
+					var data = {responseText:jqXHR.responseText};
 
-					mfp.appendContent( $(jqXHR.responseText), AJAX_NS );
+					_mfpTrigger('ParseAjax', data);
+
+					mfp.appendContent( $(data.responseText), AJAX_NS );
 
 					item.finished = true;
 
@@ -1035,7 +1040,8 @@ $.magnificPopup.registerModule(AJAX_NS, {
 					}, 16);
 
 					mfp.updateStatus('ready');
-
+					
+					_mfpTrigger('AjaxContentAdded');
 				},
 				error: function() {
 					_removeAjaxCursor();
