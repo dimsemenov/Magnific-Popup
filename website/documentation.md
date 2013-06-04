@@ -803,9 +803,12 @@ callbacks: {
     console.log('Parsing content. Item object that is being parsed:', item, ' Triggered by preloader:', preload);
     // feel free to modify here item object
   },
-  change: function() {
+  change: function(item) {
     console.log('Content changed');
     console.log('Triggers');
+    // item is an object containing information about the popup content:
+    // item.inlineElement is a direct reference to the appended DOM
+    // log item in the console to see the full list of data
   },
   resize: function() {
     console.log('Popup resized');
