@@ -9,6 +9,7 @@
  * Private static constants
  */
 var CLOSE_EVENT = 'Close',
+	BEFORE_CLOSE_EVENT = 'BeforeClose',
 	AFTER_CLOSE_EVENT = 'AfterClose',
 	BEFORE_APPEND_EVENT = 'BeforeAppend',
 	MARKUP_PARSE_EVENT = 'MarkupParse',
@@ -378,6 +379,7 @@ MagnificPopup.prototype = {
 	 */
 	close: function() {
 		if(!mfp.isOpen) return;
+		_mfpTrigger(BEFORE_CLOSE_EVENT);
 
 		mfp.isOpen = false;
 		// for CSS3 animation
