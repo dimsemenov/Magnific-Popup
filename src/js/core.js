@@ -71,7 +71,7 @@ var _mfpOn = function(name, f) {
 		}
 	},
 	_setFocus = function() {
-		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
+		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).trigger('focus');
 	},
 	_getCloseBtn = function(type) {
 		if(type !== _currPopupType || !mfp.currTemplate.closeBtn) {
@@ -437,7 +437,7 @@ MagnificPopup.prototype = {
 
 
 		if(mfp._lastFocusedEl) {
-			$(mfp._lastFocusedEl).focus(); // put tab focus back
+			$(mfp._lastFocusedEl).trigger('focus'); // put tab focus back
 		}
 		mfp.currItem = null;	
 		mfp.content = null;
@@ -688,7 +688,7 @@ MagnificPopup.prototype = {
 
 			mfp.preloader.html(text);
 
-			mfp.preloader.find('a').click(function(e) {
+			mfp.preloader.find('a').on('click', function(e) {
 				e.stopImmediatePropagation();
 			});
 
