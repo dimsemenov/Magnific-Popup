@@ -148,6 +148,8 @@ $.magnificPopup.registerModule('image', {
 
 							item.hasSize = true;
 							item.loaded = true;
+
+							_mfpTrigger('ImageLoadComplete');
 							
 						}
 						else {
