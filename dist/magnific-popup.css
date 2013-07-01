@@ -22,7 +22,6 @@
   -webkit-backface-visibility: hidden; }
 
 .mfp-container {
-  height: 100%;
   text-align: center;
   position: absolute;
   width: 100%;
@@ -167,7 +166,6 @@ button::-moz-focus-inner {
 
 .mfp-arrow {
   position: absolute;
-  top: 0;
   opacity: 0.65;
   margin: 0;
   top: 50%;
