@@ -5,7 +5,7 @@
 ////////////////////////
 //
 // Contents:
-// 
+//
 // 1. Default Settings
 // 2. General styles
 //    - Transluscent overlay
@@ -22,7 +22,7 @@
 //    - Image content type styles
 //    - Media query where size of arrows is reduced
 //    - IE7 support
-//    
+//
 ////////////////////////
 
 
@@ -81,7 +81,7 @@ $caption-subtitle-color:          #BDBDBD !default;
 
   background: $overlay-color;
   opacity: $overlay-opacity;
-  @if $IE7support { 
+  @if $IE7support {
     filter: alpha(opacity=$overlay-opacity*100);
   }
 }
@@ -100,7 +100,6 @@ $caption-subtitle-color:          #BDBDBD !default;
 
 // Root container
 .mfp-container {
-  height: 100%;
   text-align: center;
   position: absolute;
   width: 100%;
@@ -265,7 +264,7 @@ button::-moz-focus-inner {
 .mfp-close-btn-in .mfp-close {
   color: $inner-close-icon-color;
 }
-.mfp-image-holder .mfp-close, 
+.mfp-image-holder .mfp-close,
 .mfp-iframe-holder .mfp-close {
   color: $controls-color;
   right: -6px;
@@ -288,7 +287,6 @@ button::-moz-focus-inner {
 @if $include-arrows {
   .mfp-arrow {
     position: absolute;
-    top: 0;
     opacity: $controls-opacity;
     margin: 0;
     top: 50%;
@@ -331,7 +329,7 @@ button::-moz-focus-inner {
       border-bottom-width: 12px;
       top:8px;
     }
-    
+
     &:before,
     .mfp-b {
       border-top-width: 20px;
@@ -353,7 +351,7 @@ button::-moz-focus-inner {
        border-right: 20px solid #FFF;
     }
   }
-  
+
   .mfp-arrow-right {
     right: 0;
     &:after,
@@ -552,7 +550,7 @@ button::-moz-focus-inner {
 
 // IE7 support
 // Styles that make popup look nicier in old IE
-@if $IE7support { 
+@if $IE7support {
   .mfp-ie7 {
     .mfp-img {
       padding: 0;
