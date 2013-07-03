@@ -644,37 +644,41 @@ MagnificPopup.prototype = {
 	},
 	_openClick: function(e, el, options) {
 		var midClick = options.midClick !== undefined ? options.midClick : $.magnificPopup.defaults.midClick;
-		if( midClick || e.which !== 2 ) {
-			var disableOn = options.disableOn !== undefined ? options.disableOn : $.magnificPopup.defaults.disableOn;
 
-			if(disableOn) {
-				if($.isFunction(disableOn)) {
-					if( !disableOn.call(mfp) ) {
-						return true;
-					}
-				} else { // else it's number
-					if( _window.width() < disableOn ) {
-						return true;
-					}
-				}
-			}
-			
-			if(e.type) {
-				e.preventDefault();
 
-				// This will prevent popup from closing if element is inside and popup is already opened
-				if(mfp.isOpen) {
-					e.stopPropagation();
-				}
-			}
-				
-
-			options.el = $(e.mfpEl);
-			if(options.delegate) {
-				options.items = el.find(options.delegate);
-			}
-			mfp.open(options);
+		if(!midClick && ( e.which === 2 || e.ctrlKey || e.metaKey ) ) {
+			return;
 		}
+
+		var disableOn = options.disableOn !== undefined ? options.disableOn : $.magnificPopup.defaults.disableOn;
+
+		if(disableOn) {
+			if($.isFunction(disableOn)) {
+				if( !disableOn.call(mfp) ) {
+					return true;
+				}
+			} else { // else it's number
+				if( _window.width() < disableOn ) {
+					return true;
+				}
+			}
+		}
+		
+		if(e.type) {
+			e.preventDefault();
+
+			// This will prevent popup from closing if element is inside and popup is already opened
+			if(mfp.isOpen) {
+				e.stopPropagation();
+			}
+		}
+			
+
+		options.el = $(e.mfpEl);
+		if(options.delegate) {
+			options.items = el.find(options.delegate);
+		}
+		mfp.open(options);
 	},
 
 

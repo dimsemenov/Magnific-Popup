@@ -514,7 +514,7 @@ You can delete cached templates like so:
 
 <code class="def">false</code>
 
-If set to `true` lightbox is opened if the user clicked on the middle mouse button. Option works only when you initialize Magnific Popup from DOM element.
+If set to `true` lightbox is opened if the user clicked on the middle mouse button, or click with command/ctrl key. Option works only when you initialize Magnific Popup from DOM element.
 
 
 ### mainClass
