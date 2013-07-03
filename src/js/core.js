@@ -188,7 +188,11 @@ MagnificPopup.prototype = {
 		
 		mfp.types = []; 
 		_wrapClasses = '';
-		mfp.ev = data.mainEl || _document;
+		if(data.mainEl && data.mainEl.length) {
+			mfp.ev = data.mainEl.eq(0);
+		} else {
+			mfp.ev = _document;
+		}
 
 		if(data.key) {
 			if(!mfp.popupsCache[data.key]) {
