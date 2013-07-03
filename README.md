@@ -41,7 +41,7 @@ Optionally:
 
 ### 0.9.0 (Jul 3, 2013)
 
-- Added `modal` option which disables all default ways to close the popup, learn more in [docs](http://mfp-production/documentation.html#modal). Thanks to [Julen Ruiz Aizpuru](https://github.com/julen).
+- Added `modal` option which disables all default ways to close the popup, learn more in [docs](http://dimsemenov.com/plugins/magnific-popup/documentation.html#modal). Thanks to [Julen Ruiz Aizpuru](https://github.com/julen).
 - Added `beforeClose` event.
 - Added `imageLoadComplete` event.
 - Removed jQuery event alias calls. Thanks to [Albert Casademont](https://github.com/acasademont).
