@@ -4,7 +4,7 @@ Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 
 - [Documentation and getting started guide](http://dimsemenov.com/plugins/magnific-popup/documentation.html)
 - [Examples and plugin home page](http://dimsemenov.com/plugins/magnific-popup/)
-- More examples on [CodePen](http://codepen.io/collection/nLcqo). Feel free to email me more CodePen's, I'd gladly add them to this collection.
+- More examples in official [CodePen collection](http://codepen.io/collection/nLcqo). Feel free to [email me](http://dimsemenov.com) more pen's with unusual usage of the script.
 
 Optionally, install via Bower: `bower install magnific-popup`.
 
@@ -38,6 +38,14 @@ Optionally:
 
 
 ## Changelog
+
+### 0.9.0 (Jul 3, 2013)
+
+- Added `modal` option which disables all default ways to close the popup, learn more in [docs](http://mfp-production/documentation.html#modal). Thanks to [Julen Ruiz Aizpuru](https://github.com/julen).
+- Added `beforeClose` event.
+- Added `imageLoadComplete` event.
+- Removed jQuery event alias calls. Thanks to [Albert Casademont](https://github.com/acasademont).
+- Cleaned some duplicate styles in CSS. Thanks to [Yann Abgrall](https://github.com/yannabgrall).
 
 ### 0.8.9 (Jun 4, 2013)
 

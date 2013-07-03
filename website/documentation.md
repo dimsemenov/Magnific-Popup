@@ -850,12 +850,18 @@ callbacks: {
   open: function() {
     console.log('Popup is opened');
   },
-  close: function() {
+
+  beforeClose: function() {
+    // Callback available since v0.9.0
     console.log('Popup close has been initiated');
+  },
+  close: function() {
+    console.log('Popup removal initiated (after removalDelay timer finished)');
   },
   afterClose: function() {
     console.log('Popup is completely closed');
   },
+
   markupParse: function(template, values, item) {
     // Triggers each time when content of popup changes
     // console.log('Parsing:', template, values, item);
@@ -872,6 +878,12 @@ callbacks: {
     // triggers only once for each item
     // here you may modify URL, type, or any other data
   },  
+
+  imageLoadComplete: function() {
+    // fires when image in current popup finished loading
+    // avaiable since v0.9.0
+    console.log('Image loaded');
+  },
 
 
   // Only for ajax popup type
