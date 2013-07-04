@@ -345,11 +345,12 @@ button::-moz-focus-inner {
     &:after,
     .mfp-a {
       border-right: 17px solid #FFF;
-      left: 6px;
+      margin-left: 31px;
     }
     &:before,
     .mfp-b {
-       border-right: 27px solid #3f3f3f;
+      margin-left: 25px;
+      border-right: 27px solid #3f3f3f;
     }
   }
 
@@ -358,7 +359,7 @@ button::-moz-focus-inner {
     &:after,
     .mfp-a {
       border-left: 17px solid #FFF;
-      left: 4px;
+      margin-left: 39px
     }
     &:before,
     .mfp-b {
