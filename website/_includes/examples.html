@@ -27,16 +27,20 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 <div class="grid-c">
   <div class="example gc3">
     <h3>Single image lightbox</h3> 
-    <p>Three simple popups with different scaling settings. First one fits in area horizontally and vertically, second one - only horizontally, third one - has no gaps and close button is always in top right corner.</p>
+    <p>Three simple popups with different scaling settings.<br/>
+      1 &mdash; fits horizontally and vertically,<br/>
+      2 &mdash; only horizontally,<br/>
+      3 &mdash; no gaps, zoom animation, close icon in top-right corner.<br/>
+    </p>
     <div class="html-code grid-of-images">
-      <a class="image-popup-vertical-fit" href="http://farm9.staticflickr.com/8241/8589392310_7b6127e243_b.jpg" title="Caption. Can be aligned it to any side.">
+      <a class="image-popup-vertical-fit" href="http://farm9.staticflickr.com/8241/8589392310_7b6127e243_b.jpg" title="Caption. Can be aligned it to any side and contain any HTML.">
         <img src="http://farm9.staticflickr.com/8241/8589392310_7b6127e243_s.jpg" width="75" height="75" />
       </a>
       <a class="image-popup-fit-width" href="http://farm9.staticflickr.com/8379/8588290361_ecf8c27021_b.jpg" title="This image fits only horizontally.">
         <img src="http://farm9.staticflickr.com/8379/8588290361_ecf8c27021_s.jpg" width="75" height="75" />
       </a>
-      <a class="image-popup-no-margins" href="http://farm9.staticflickr.com/8514/8589902684_da1978cf93_b.jpg" >
-        <img src="http://farm9.staticflickr.com/8514/8589902684_da1978cf93_s.jpg" width="75" height="75" />
+      <a class="image-popup-no-margins" href="http://farm4.staticflickr.com/3721/9207329484_ba28755ec4_o.jpg">
+        <img src="http://farm4.staticflickr.com/3721/9207329484_ba28755ec4_o.jpg" width="107" height="75" />
       </a>
     </div>
     <script type="text/javascript">
@@ -64,9 +68,14 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           type: 'image',
           closeOnContentClick: true,
           closeBtnInside: false,
-          mainClass: 'mfp-no-margins', // class to remove default margin from left and right side
+          fixedContentPos: true,
+          mainClass: 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
           image: {
             verticalFit: true
+          },
+          zoom: {
+            enabled: true,
+            duration: 300 // don't foget to change the duration also in CSS
           }
         });
 
@@ -86,6 +95,38 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
     .mfp-no-margins .mfp-container {
       padding: 0;
     }
+
+
+    /* 
+
+    for zoom animation 
+    uncomment this part if you haven't added this code anywhere else
+
+    */
+    /*
+    
+    .mfp-with-zoom .mfp-container,
+    .mfp-with-zoom.mfp-bg {
+      opacity: 0;
+      -webkit-backface-visibility: hidden;
+      -webkit-transition: all 0.3s ease-out; 
+      -moz-transition: all 0.3s ease-out; 
+      -o-transition: all 0.3s ease-out; 
+      transition: all 0.3s ease-out;
+    }
+    
+    .mfp-with-zoom.mfp-ready .mfp-container {
+        opacity: 1;
+    }
+    .mfp-with-zoom.mfp-ready.mfp-bg {
+        opacity: 0.8;
+    }
+    
+    .mfp-with-zoom.mfp-removing .mfp-container, 
+    .mfp-with-zoom.mfp-removing.mfp-bg {
+      opacity: 0;
+    }
+    */
     </style>
   </div>
 
@@ -95,7 +136,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 
   <div class="example gc3">
     <h3>Lightbox gallery</h3>
-    <p>You may put any HTML content in each gallery item and mix content types (<a href="http://codepen.io/dimsemenov/pen/vKrqs">example</a>). In this example lazy-loading of images is enabled only for the next item based on move direction.</p>
+    <p>You may put any HTML content in each gallery item and <a href="http://codepen.io/dimsemenov/pen/vKrqs">mix content types</a>. In this example lazy-loading of images is enabled for the next image based on move direction. If you wish to add touch-swipe support, check <a href="http://coding.smashingmagazine.com/2013/05/02/truly-responsive-lightbox/">my article</a> on the Smashing Magazine.</p>
     <div class="html-code grid-of-images">
       <div class="popup-gallery">
         <a href="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_b.jpg" title="The Cleaner"><img src="http://farm9.staticflickr.com/8242/8558295633_f34a55c1c6_s.jpg" width="75" height="75" /></a>
@@ -128,6 +169,90 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
         });
       });
     </script>
+  </div>
+
+
+
+
+
+  <div class="example gc3">
+    <h3>Zoom-gallery</h3> 
+    <p>If you wish to open the popup only after image is fully loaded, you may preload image via JS. Or use scaled down image instead of thumbnail. Zoom effect works only with images, for now.</p>
+    <div class="html-code grid-of-images">
+      <div class="zoom-gallery">
+        <!--
+
+        Width/height ratio of thumbnail and the main image must match to avoid glitches.
+
+        If ratios are different, you may add CSS3 opacity transition to the main image to make the change less noticable.
+
+         -->
+        <a href="http://farm4.staticflickr.com/3763/9204547649_0472680945_o.jpg" data-source="http://500px.com/photo/32736307" title="Into The Blue" style="width:193px;height:125px;">
+          <img src="http://farm4.staticflickr.com/3763/9204547649_7de96ee188_t.jpg" width="193" height="125" />
+        </a>
+        <a href="http://farm3.staticflickr.com/2856/9207329420_7f2a668b06_o.jpg" data-source="http://500px.com/photo/32554131" title="Light Sabre" style="width:82px;height:125px;">
+          <img src="http://farm3.staticflickr.com/2856/9207329420_e485948b01_t.jpg" width="82px" height="125" />
+        </a>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('.zoom-gallery').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          closeOnContentClick: false,
+          closeBtnInside: false,
+          mainClass: 'mfp-with-zoom mfp-img-mobile',
+          image: {
+            verticalFit: true,
+            titleSrc: function(item) {
+              return item.el.attr('title') + ' &middot; <a class="image-source-link" href="'+item.el.attr('data-source')+'" target="_blank">image source</a>';
+            }
+          },
+          gallery: {
+            enabled: true
+          },
+          zoom: {
+            enabled: true,
+            duration: 300, // don't foget to change the duration also in CSS
+            opener: function(element) {
+              return element.find('img');
+            }
+          }
+          
+        });
+      });
+    </script>
+    <style type="text/css">
+    .image-source-link {
+      color: #98C3D1;
+    }
+
+    .mfp-with-zoom .mfp-container,
+    .mfp-with-zoom.mfp-bg {
+      opacity: 0;
+      -webkit-backface-visibility: hidden;
+      /* ideally, transition speed should match zoom duration */
+      -webkit-transition: all 0.3s ease-out; 
+      -moz-transition: all 0.3s ease-out; 
+      -o-transition: all 0.3s ease-out; 
+      transition: all 0.3s ease-out;
+    }
+    
+    .mfp-with-zoom.mfp-ready .mfp-container {
+        opacity: 1;
+    }
+    .mfp-with-zoom.mfp-ready.mfp-bg {
+        opacity: 0.8;
+    }
+    
+    .mfp-with-zoom.mfp-removing .mfp-container, 
+    .mfp-with-zoom.mfp-removing.mfp-bg {
+      opacity: 0;
+    }
+
+
+    </style>
   </div>
 
 
@@ -408,7 +533,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
             </li>
             <li>
               <label for="textarea">Textarea</label><br/>
-              <textarea id="textarea"></textarea>
+              <textarea id="textarea">Try to resize me to see how popup CSS-based resizing works.</textarea>
             </li>
           </ol>
         </fieldset>
@@ -433,6 +558,34 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
             }
           }
         });
+      });
+    </script>
+  </div>
+
+
+
+
+
+  <div class="example gc3">
+    <h3>Ajax popup</h3>
+    <p>You have full control of what is displayed in popup, align it to any side via CSS, enable or disable scroll on right side of window - whatever.</p>
+    <div class="html-code">
+      <a class="simple-ajax-popup-align-top" href="site-assets/ajax/test-ajax.html" >Load content via ajax</a><br/>
+      <a class="simple-ajax-popup" href="site-assets/ajax/test-ajax-2.html" >Load another content via ajax</a>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+
+        $('.simple-ajax-popup-align-top').magnificPopup({
+          type: 'ajax',
+          alignTop: true,
+          overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
+        });
+
+        $('.simple-ajax-popup').magnificPopup({
+          type: 'ajax'
+        });
+        
       });
     </script>
   </div>
@@ -467,33 +620,6 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           e.preventDefault();
           $.magnificPopup.close();
         });
-      });
-    </script>
-  </div>
-
-
-
-
-  <div class="example gc3">
-    <h3>Ajax popup</h3>
-    <p>You have full control of what is displayed in popup, align it to any side via CSS, enable or disable scroll on right side of window - whatever.</p>
-    <div class="html-code">
-      <a class="simple-ajax-popup-align-top" href="site-assets/ajax/test-ajax.html" >Load content via ajax</a><br/>
-      <a class="simple-ajax-popup" href="site-assets/ajax/test-ajax-2.html" >Load another content via ajax</a>
-    </div>
-    <script type="text/javascript">
-      $(document).ready(function() {
-
-        $('.simple-ajax-popup-align-top').magnificPopup({
-          type: 'ajax',
-          alignTop: true,
-          overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
-        });
-
-        $('.simple-ajax-popup').magnificPopup({
-          type: 'ajax'
-        });
-        
       });
     </script>
   </div>

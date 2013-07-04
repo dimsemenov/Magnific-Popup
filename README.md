@@ -39,6 +39,17 @@ Optionally:
 
 ## Changelog
 
+### 0.9.1 (Jul 4, 2013)
+
+- Added zoom module effect for images, go to Magnific Popup [website](http://dimsemenov.com/plugins/magnific-popup/) to view demos. More info in [docs](http://dimsemenov.com/plugins/magnific-popup/documentation.html#zoom_effect).
+- `removalDelay` now applies only when browser supports CSS transitions.
+- Fix: removed tiny blink when switching between gallery images, or opening images that are already cached.
+- Changed the default appearance of gallery arrows (now its white triangle with black border, was vice-versa).
+- Added solid background to the image when its loading.
+
+
+
+
 ### 0.9.0 (Jul 3, 2013)
 
 - Added `modal` option which disables all default ways to close the popup, learn more in [docs](http://dimsemenov.com/plugins/magnific-popup/documentation.html#modal). Thanks to [Julen Ruiz Aizpuru](https://github.com/julen).

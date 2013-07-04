@@ -122,15 +122,21 @@ var _mfpOn = function(name, f) {
 	},
 	// CSS transition detection, http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr
 	supportsTransitions = function() {
-	    var s = document.createElement('p').style, // 's' for style. better to create an element if body yet to exist
-        	v = ['ms','O','Moz','Webkit']; // 'v' for vendor
+		var s = document.createElement('p').style, // 's' for style. better to create an element if body yet to exist
+			v = ['ms','O','Moz','Webkit']; // 'v' for vendor
 
-	    if( s['transition'] !== undefined ) return true; // check first for prefixed-free support
-	    while( v.length ) // now go over the list of vendor prefixes and check support until one is found
-	        if( v.pop() + 'Transition' in s )
-	            return true;
-	    return false;
-	}
+		if( s['transition'] !== undefined ) {
+			return true; 
+		}
+			
+		while( v.length ) {
+			if( v.pop() + 'Transition' in s ) {
+				return true;
+			}
+		}
+				
+		return false;
+	};
 
 
 
@@ -743,7 +749,7 @@ MagnificPopup.prototype = {
 		mfp.wrap.removeClass(cName);
 	},
 	_hasScrollBar: function(winHeight) {
-		return (  (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) )
+		return (  (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) );
 	},
 	_parseMarkup: function(template, values, item) {
 		var arr;

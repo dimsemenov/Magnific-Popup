@@ -33,17 +33,17 @@ $.magnificPopup.registerModule('zoom', {
 						transition = 'all '+(zoomSt.duration/1000)+'s ' + zoomSt.easing,
 						cssObj = {
 							position: 'fixed',
-	    					zIndex: 9999,
-	    					left: 0,
-	    					top: 0,
-	    					'-webkit-backface-visibility': 'hidden'
+							zIndex: 9999,
+							left: 0,
+							top: 0,
+							'-webkit-backface-visibility': 'hidden'
 						},
 						t = 'transition';
 
 					cssObj['-webkit'+t] = cssObj['-moz'+t] = cssObj['-o'+t] = cssObj[t] = transition;
 
 					newImg.css(cssObj);
-					return newImg
+					return newImg;
 				},
 				showMainContent = function() {
 					mfp.content.css('visibility', 'visible');
@@ -174,7 +174,7 @@ $.magnificPopup.registerModule('zoom', {
 				obj.top = offset.top;
 			}
 			return obj;
-		},
+		}
 
 	}
 });
