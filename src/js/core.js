@@ -119,7 +119,18 @@ var _mfpOn = function(name, f) {
 
 		}
 		return false;
-	};
+	},
+	// CSS transition detection, http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr
+	supportsTransitions = function() {
+	    var s = document.createElement('p').style, // 's' for style. better to create an element if body yet to exist
+        	v = ['ms','O','Moz','Webkit']; // 'v' for vendor
+
+	    if( s['transition'] !== undefined ) return true; // check first for prefixed-free support
+	    while( v.length ) // now go over the list of vendor prefixes and check support until one is found
+	        if( v.pop() + 'Transition' in s )
+	            return true;
+	    return false;
+	}
 
 
 
@@ -141,6 +152,8 @@ MagnificPopup.prototype = {
 		mfp.isLowIE = mfp.isIE7 || mfp.isIE8;
 		mfp.isAndroid = (/android/gi).test(appVersion);
 		mfp.isIOS = (/iphone|ipad|ipod/gi).test(appVersion);
+		mfp.supportsTransition = supportsTransitions();
+
 		// We disable fixed positioned lightbox on devices that don't handle it nicely.
 		// If you know a better way of detecting this - let me know.
 		mfp.probablyMobile = (mfp.isAndroid || mfp.isIOS || /(Opera Mini)|Kindle|webOS|BlackBerry|(Opera Mobi)|(Windows Phone)|IEMobile/i.test(navigator.userAgent) );
@@ -397,7 +410,7 @@ MagnificPopup.prototype = {
 
 		mfp.isOpen = false;
 		// for CSS3 animation
-		if(mfp.st.removalDelay && !mfp.isLowIE)  {
+		if(mfp.st.removalDelay && !mfp.isLowIE && mfp.supportsTransition )  {
 			mfp._addClassToMFP(REMOVING_CLASS);
 			setTimeout(function() {
 				mfp._close();
