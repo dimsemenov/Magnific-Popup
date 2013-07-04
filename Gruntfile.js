@@ -68,6 +68,7 @@ module.exports = function(grunt) {
           'inline',
           'ajax',
           'image',
+          'zoom',
           'iframe',
           'gallery',
           'retina',
