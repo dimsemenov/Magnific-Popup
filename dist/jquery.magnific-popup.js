@@ -1382,7 +1382,7 @@ $.magnificPopup.registerModule('zoom', {
 		initZoom: function() {
 			var zoomSt = mfp.st.zoom,
 				ns = '.zoom';
-
+				
 			if(!zoomSt.enabled || !mfp.supportsTransition) {
 				return;
 			}
@@ -1400,7 +1400,7 @@ $.magnificPopup.registerModule('zoom', {
 						},
 						t = 'transition';
 
-					cssObj['-webkit'+t] = cssObj['-moz'+t] = cssObj['-o'+t] = cssObj[t] = transition;
+					cssObj['-webkit-'+t] = cssObj['-moz-'+t] = cssObj['-o-'+t] = cssObj[t] = transition;
 
 					newImg.css(cssObj);
 					return newImg;
