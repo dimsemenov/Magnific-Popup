@@ -193,6 +193,9 @@ $.magnificPopup.registerModule('image', {
 				if(el.is('img')) {
 					item.img = item.img.clone();
 				}
+				if(item.img[0].naturalWidth > 0) {
+					item.hasSize = true;
+				}
 			}
 
 			mfp._parseMarkup(template, {
