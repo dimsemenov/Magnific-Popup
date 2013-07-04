@@ -55,6 +55,7 @@ $iframe-ratio:                    9/16 !default;
 
 // Image-type options
 $include-image-type:              true !default;
+$image-background:                #444 !default;
 $image-padding-top:               40px !default;
 $image-padding-bottom:            40px !default;
 $include-mobile-layout-for-image: true !default; // Removes paddings from top and bottom
@@ -324,16 +325,16 @@ button::-moz-focus-inner {
 
     &:after,
     .mfp-a {
-      opacity: $overlay-opacity;
-      border-top-width: 12px;
-      border-bottom-width: 12px;
+      
+      border-top-width: 13px;
+      border-bottom-width: 13px;
       top:8px;
     }
 
     &:before,
     .mfp-b {
-      border-top-width: 20px;
-      border-bottom-width: 20px;
+      border-top-width: 21px;
+      border-bottom-width: 21px;
     }
 
   }
@@ -343,12 +344,12 @@ button::-moz-focus-inner {
 
     &:after,
     .mfp-a {
-      border-right: 12px solid #000;
-      left: 5px;
+      border-right: 17px solid #FFF;
+      left: 6px;
     }
     &:before,
     .mfp-b {
-       border-right: 20px solid #FFF;
+       border-right: 27px solid #3f3f3f;
     }
   }
 
@@ -356,12 +357,12 @@ button::-moz-focus-inner {
     right: 0;
     &:after,
     .mfp-a {
-      border-left: 12px solid #000;
-      left: 3px;
+      border-left: 17px solid #FFF;
+      left: 4px;
     }
     &:before,
     .mfp-b {
-      border-left: 20px solid #FFF;
+      border-left: 27px solid #3f3f3f;
     }
   }
 }
@@ -432,6 +433,7 @@ button::-moz-focus-inner {
     height: auto;
     z-index: -1;
     box-shadow: $shadow;
+    background: $image-background;
   }
   .mfp-figure {
     line-height: 0;
@@ -527,7 +529,7 @@ button::-moz-focus-inner {
 
 
 // Scale navigation arrows and reduce padding from sides
-@media all and (max-width: 800px) {
+@media all and (max-width: 900px) {
   .mfp-arrow {
     -webkit-transform: scale(0.75);
     transform: scale(0.75);

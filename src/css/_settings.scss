@@ -31,6 +31,7 @@ $iframe-ratio:                    9/16;                       // Ratio of iframe
 
 // Image-type options
 $include-image-type:              true;                       // Enable Image-type popups
+$image-background:                #444 !default;
 $image-padding-top:               40px;                       // Image padding top
 $image-padding-bottom:            40px;                       // Image padding bottom
 $include-mobile-layout-for-image: true;                       // Removes paddings from top and bottom
