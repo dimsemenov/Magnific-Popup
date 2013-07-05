@@ -164,7 +164,7 @@ $.magnificPopup.registerModule('zoom', {
 			var obj = {
 				width: el.width(),
 				// fix Zepto height+padding issue
-				height: _isJQ ? el.innerHeight() : el[0].offsetHeight - paddingBottom - paddingTop
+				height: (_isJQ ? el.innerHeight() : el[0].offsetHeight) - paddingBottom - paddingTop
 			};
 
 			// I hate to do this, but there is no another option
