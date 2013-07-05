@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.9.1 - 2013-07-04
+/*! Magnific Popup - v0.9.2 - 2013-07-05
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -1523,7 +1523,8 @@ $.magnificPopup.registerModule('zoom', {
 			 */
 			var obj = {
 				width: el.width(),
-				height: el.height() - paddingBottom - paddingTop
+				// fix Zepto height+padding issue
+				height: _isJQ ? el.innerHeight() : el[0].offsetHeight - paddingBottom - paddingTop
 			};
 
 			// I hate to do this, but there is no another option
