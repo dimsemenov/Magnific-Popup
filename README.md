@@ -39,6 +39,10 @@ Optionally:
 
 ## Changelog
 
+### 0.9.2 (Jul 5, 2013)
+
+- Fixed bug in new zoom module, that could cause incorrect calculation of image height, when jQuery is used instead of Zepto.
+
 ### 0.9.1 (Jul 4, 2013)
 
 - Added zoom module effect for images, go to Magnific Popup [website](http://dimsemenov.com/plugins/magnific-popup/) to view demos. More info in [docs](http://dimsemenov.com/plugins/magnific-popup/documentation.html#zoom_effect).
