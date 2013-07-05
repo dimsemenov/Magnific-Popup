@@ -37,7 +37,7 @@ $shadow:                          0 0 8px rgba(0, 0, 0, 0.6) !default; // shadow
 $popup-padding-left:              8px !default; // Padding from left and from right side
 $popup-padding-left-mobile:       6px !default; // Same as above, but is applied when width of window is less than 800px
 
-$z-index-base:                    500 !default; // Base z-index of popup
+$z-index-base:                    1040 !default; // Base z-index of popup
 $include-arrows:                  true !default; // include styles for nav arrows
 $controls-opacity:                0.65 !default;
 $controls-color:                  #FFF !default;

@@ -11,7 +11,7 @@ $shadow:                          0 0 8px rgba(0, 0, 0, 0.6); // Shadow on image
 $popup-padding-left:              8px;                        // Padding from left and from right side
 $popup-padding-left-mobile:       6px;                        // Same as above, but is applied when width of window is less than 800px
 
-$z-index-base:                    500;                        // Base z-index of popup
+$z-index-base:                    1040;                        // Base z-index of popup
 
 // controls
 $include-arrows:                  true;                       // Include styles for nav arrows
