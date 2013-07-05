@@ -340,20 +340,20 @@ MagnificPopup.prototype = {
 		var windowHeight = mfp.wH = _window.height();
 
 		
-		var bodyStyles = {};
+		var windowStyles = {};
 
 		if( mfp.fixedContentPos ) {
             if(mfp._hasScrollBar(windowHeight)){
                 var s = mfp._getScrollbarSize();
                 if(s) {
-                    bodyStyles.paddingRight = s;
+                    windowStyles.paddingRight = s;
                 }
             }
         }
 
 		if(mfp.fixedContentPos) {
 			if(!mfp.isIE7) {
-				bodyStyles.overflow = 'hidden';
+				windowStyles.overflow = 'hidden';
 			} else {
 				// ie7 double-scroll bug
 				$('body, html').css('overflow', 'hidden');
@@ -377,7 +377,7 @@ MagnificPopup.prototype = {
 
 
 		// remove scrollbar, add padding e.t.c
-		_body.css(bodyStyles);
+		$('html').css(windowStyles);
 		
 		// add everything to DOM
 		mfp.bgOverlay.add(mfp.wrap).prependTo( document.body );
@@ -451,13 +451,13 @@ MagnificPopup.prototype = {
 		mfp._removeClassFromMFP(classesToRemove);
 
 		if(mfp.fixedContentPos) {
-			var bodyStyles = {paddingRight: ''};
+			var windowStyles = {paddingRight: ''};
 			if(mfp.isIE7) {
 				$('body, html').css('overflow', '');
 			} else {
-				bodyStyles.overflow = '';
+				windowStyles.overflow = '';
 			}
-			_body.css(bodyStyles);
+			$('html').css(windowStyles);
 		}
 		
 		_document.off('keyup' + EVENT_NS + ' focusin' + EVENT_NS);

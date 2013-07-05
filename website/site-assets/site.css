@@ -3,6 +3,9 @@ html, body, div, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, ol, ul, 
   margin: 0;
   padding: 0; 
 }
+html {
+  overflow-y: scroll;
+}
 body {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
