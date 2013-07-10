@@ -167,6 +167,7 @@ $.magnificPopup.registerModule('gallery', {
 				}).on('error.mfploader', function() {
 					item.hasSize = true;
 					item.loadError = true;
+					_mfpTrigger('LazyLoadError', item);
 				}).attr('src', item.src);
 			}
 
