@@ -938,7 +938,7 @@ callbacks: {
   markupParse: function(template, values, item) {
     // Triggers each time when content of popup changes
     // console.log('Parsing:', template, values, item);
-  }
+  },
   updateStatus: function(data) {
     console.log('Status changed', data);
     // "data" is an object that has two properties:
