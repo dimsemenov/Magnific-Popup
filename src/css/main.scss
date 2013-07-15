@@ -237,7 +237,7 @@ button::-moz-focus-inner {
 // Close icon
 .mfp-close {
   width: 44px;
-  height:44px;
+  height: 44px;
   line-height: 44px;
 
   position: absolute;
@@ -277,7 +277,7 @@ button::-moz-focus-inner {
 // "1 of X" counter
 .mfp-counter {
   position: absolute;
-  top:0;
+  top: 0;
   right: 0;
   color: $controls-text-color;
   font-size: 12px;
@@ -325,7 +325,7 @@ button::-moz-focus-inner {
 
     &:after,
     .mfp-a {
-      
+
       border-top-width: 13px;
       border-bottom-width: 13px;
       top:8px;
@@ -540,7 +540,7 @@ button::-moz-focus-inner {
     transform-origin: 0;
   }
   .mfp-arrow-right {
-     -webkit-transform-origin: 100%;
+    -webkit-transform-origin: 100%;
     transform-origin: 100%;
   }
   .mfp-container {
