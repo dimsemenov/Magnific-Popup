@@ -39,6 +39,15 @@ Optionally:
 
 ## Changelog
 
+
+### 0.9.3 (Jul 16, 2013)
+
+- Fixed blurry arrows in FF (#142)
+- Added `lazyLoadError` callback.
+- Popup now prevents closing if the clicked element is remvoved from DOM.
+- `overflow:hidden` is now applied to `html` instead of `body`.
+- Increased default z-index to from 500 to 1040.
+
 ### 0.9.2 (Jul 5, 2013)
 
 - Fixed bug in new zoom module, that could cause incorrect calculation of image height, when jQuery is used instead of Zepto.
