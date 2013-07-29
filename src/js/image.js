@@ -183,7 +183,7 @@ $.magnificPopup.registerModule('image', {
 
 			var el = template.find('.mfp-img');
 			if(el.length) {
-				var img = new Image();
+				var img = document.createElement('img');
 				img.className = 'mfp-img';
 				item.img = $(img).on('load.mfploader', onLoadComplete).on('error.mfploader', onLoadError);
 				img.src = item.src;
