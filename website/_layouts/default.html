@@ -63,9 +63,9 @@
   {% if page.buildtool %}
     {% include build-tool.html %}
   {% endif %}
+
+  {% if site.url == 'local' %}
+    <strong style="display:block; width:100%;text-align:center;">This page is just for tests and should not be used for production!</strong>
+  {% endif %}
   </body>
 </html>
-
-{% if site.url == 'local' %}
-  <strong style="display:block; width:100%;text-align:center;">This page is just for tests and should not be used for production!</strong>
-{% endif %}

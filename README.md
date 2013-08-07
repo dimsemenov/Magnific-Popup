@@ -39,6 +39,10 @@ Optionally:
 
 ## Changelog
 
+### 0.9.4 (Aug 7, 2013)
+
+- Fixed bug: error in IE7 when minified version of script is used with some versions of jQuery, #156.
+- Fixed bug: DOM exception in Chrome when using gallery mode with some versions of jQuery, #177.
 
 ### 0.9.3 (Jul 16, 2013)
 

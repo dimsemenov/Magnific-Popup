@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.9.3 - 2013-07-16
+/*! Magnific Popup - v0.9.4 - 2013-08-07
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -1183,7 +1183,7 @@ $.magnificPopup.registerModule('image', {
 		},
 		resizeImage: function() {
 			var item = mfp.currItem;
-			if(!item.img) return;
+			if(!item || !item.img) return;
 
 			if(mfp.st.image.verticalFit) {
 				var decr = 0;
@@ -1307,7 +1307,7 @@ $.magnificPopup.registerModule('image', {
 
 			var el = template.find('.mfp-img');
 			if(el.length) {
-				var img = new Image();
+				var img = document.createElement('img');
 				img.className = 'mfp-img';
 				item.img = $(img).on('load.mfploader', onLoadComplete).on('error.mfploader', onLoadError);
 				img.src = item.src;
