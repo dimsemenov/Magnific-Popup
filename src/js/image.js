@@ -59,7 +59,7 @@ $.magnificPopup.registerModule('image', {
 		},
 		resizeImage: function() {
 			var item = mfp.currItem;
-			if(!item.img) return;
+			if(!item || !item.img) return;
 
 			if(mfp.st.image.verticalFit) {
 				var decr = 0;
