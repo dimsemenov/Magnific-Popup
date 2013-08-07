@@ -451,7 +451,7 @@ button::-moz-focus-inner {
     text-align: left;
     line-height: 18px;
     color: $caption-title-color;
-    word-break: break-word;
+    word-wrap: break-word;
     padding-right: 36px; // leave some space for counter at right side
   }
 
