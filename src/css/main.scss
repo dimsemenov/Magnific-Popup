@@ -227,6 +227,8 @@ button.mfp-arrow {
   display: block;
   padding: 0;
   z-index: $z-index-base + 6;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 button::-moz-focus-inner {
     padding: 0;
