@@ -1070,6 +1070,12 @@ magnificPopup.bgOverlay // transluscent overlay
 magnificPopup.wrap // container that holds all controls and contentContainer
 magnificPopup.contentContainer // container that holds popup content, child of wrap
 
+
+magnificPopup.st.el // Target clicked element that opened popup (works if popup is initialized from DOM element)
+magnificPopup.st.mainEl // Main element (or collection of elements) from which popup was initialized (--''--)
+
+
+
 magnificPopup.isIE7
 magnificPopup.isIOS
 
