@@ -908,8 +908,8 @@ callbacks: {
   beforeOpen: function() {
     console.log('Start of popup initialization');
   },
-  contentParse: function(item, preload) {
-    console.log('Parsing content. Item object that is being parsed:', item, ' Triggered by preloader:', preload);
+  elementParse: function(item) {
+    console.log('Parsing content. Item object that is being parsed:', item);
     // feel free to modify here item object
   },
   change: function() {
