@@ -527,13 +527,14 @@ MagnificPopup.prototype = {
 		// _mfpOn('BeforeChange', function(e, prevType, newType) { });
 		
 		mfp.currItem = item;
-
-		
-
 		
 
 		if(!mfp.currTemplate[type]) {
+			
 			var markup = mfp.st[type] ? mfp.st[type].markup : false;
+
+			// If there's a title on the element, and a %title% in the markup, do a quick replace.
+			markup = markup ? markup.replace('%title%', mfp.currItem.el.eq(0).attr('title'), 'gi') : markup;
 
 			// allows to modify markup
 			_mfpTrigger('FirstMarkupParse', markup);
