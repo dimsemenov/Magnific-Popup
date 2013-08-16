@@ -240,7 +240,6 @@ button::-moz-focus-inner {
 .mfp-iframe-scaler {
   width: 100%;
   height: 0;
-  overflow: hidden;
   padding-top: 56.25%; }
 
 .mfp-iframe-scaler iframe {
