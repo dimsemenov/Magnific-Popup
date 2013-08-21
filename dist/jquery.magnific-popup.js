@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.9.4 - 2013-08-07
+/*! Magnific Popup - v0.9.5 - 2013-08-21
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -77,7 +77,7 @@ var _mfpOn = function(name, f) {
 		}
 	},
 	_setFocus = function() {
-		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).trigger('focus');
+		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
 	},
 	_getCloseBtn = function(type) {
 		if(type !== _currPopupType || !mfp.currTemplate.closeBtn) {
@@ -480,7 +480,7 @@ MagnificPopup.prototype = {
 
 
 		if(mfp._lastFocusedEl) {
-			$(mfp._lastFocusedEl).trigger('focus'); // put tab focus back
+			$(mfp._lastFocusedEl).focus(); // put tab focus back
 		}
 		mfp.currItem = null;	
 		mfp.content = null;
