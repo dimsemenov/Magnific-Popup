@@ -562,8 +562,7 @@ button::-moz-focus-inner {
     transform-origin: 100%;
   }
   .mfp-container {
-    padding-left: $popup-padding-left-mobile;
-    padding-right: $popup-padding-left-mobile;
+    padding: 0 $popup-padding-left-mobile;
   }
 }
 
