@@ -36,7 +36,7 @@ Please ask general questions through <a href="http://stackoverflow.com/questions
 
 ## Including files
 
-You can get Magnific Popup JS and CSS file from <a href="#mfp-build-tool" class="mfp-build-tool-link">build tool</a>, or from folder `dist/` of <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub repository</a> or by compiling it by yourself with Grunt.
+You can get Magnific Popup JS and CSS file from the <a href="#mfp-build-tool" class="mfp-build-tool-link">build tool</a>, from the `dist/` folder in the <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub repository</a>, or by compiling it yourself with Grunt.
 
 {% highlight html %}
 <!-- Magnific Popup core CSS file -->
@@ -49,7 +49,7 @@ You can get Magnific Popup JS and CSS file from <a href="#mfp-build-tool" class=
 <script src="magnific-popup/jquery.magnific-popup.js"></script> 
 {% endhighlight %}
     
-It's not required, but recommended to put CSS files in `<head>`. JavaScript files and initialization code - in footer of your site (before closing `</body>` tag).<br/> If you already have `jquery.js` on your site - don't include it second time, or use `jQuery.noConflict();` mode. Optionally, you can include [Zepto.js](http://zeptojs.com/) instead of [jQuery](http://jquery.com), or [choose which one to include](http://stackoverflow.com/questions/8725905/zepto-fallback-to-jquery) based on browser support.
+It's not required, but we recommend placing CSS files in `<head>` and JavaScript files and initialization code in the footer of your site (before the closing `</body>` tag).<br/> If you already have `jquery.js` on your site, don't include it a second time, or use `jQuery.noConflict();` mode. Optionally, you can include [Zepto.js](http://zeptojs.com/) instead of [jQuery](http://jquery.com), or [choose which one to include](http://stackoverflow.com/questions/8725905/zepto-fallback-to-jquery) based on browser support.
 
 
 ## Initializing popup
@@ -61,9 +61,9 @@ $(document).ready(function() {
 });
 {% endhighlight %}
 
-There are three ways to initialize popup:
+There are three ways to initialize a popup:
 
-### 1. From HTML element
+### 1. From an HTML element
 
 {% highlight html %}
 <a class="test-popup-link" href="path-to-image.jpg">Open popup</a>
@@ -79,7 +79,7 @@ $('.test-popup-link').magnificPopup({
     
 
 ### 2. From a group of elements with one parent
-Same as first one, but use this method if you are creating popup from list of elements in one container. Note that this method does not enable gallery, it just reduces number of click event handlers, and each item will be opened as a single popup. If you wish to enable gallery add `gallery:{enabled:true}` option.
+Same as first one, but use this method if you are creating a popup from a list of elements in one container. Note that this method does not enable gallery mode, it just reduces the number of click event handlers; each item will be opened as a single popup. If you wish to enable gallery, add the `gallery:{enabled:true}` option.
 
 {% highlight html %}
 <div class="parent-container">
@@ -99,8 +99,8 @@ $('.parent-container').magnificPopup({
 
 
 
-### 3. From 'items' option
-`items` option defines data for the popup item(s) and it makes Magnific Popup ignore all attributes on the target DOM element. Value for `items` can be a single object or an array of objects.
+### 3. From the 'items' option
+The `items` option defines data for the popup item(s) and makes Magnific Popup ignore all attributes on the target DOM element. The value for `items` can be a single object or an array of objects.
 
 {% highlight javascript %}
 // Example with single object
@@ -147,31 +147,31 @@ Play with [this example on CodePen](http://codepen.io/dimsemenov/pen/vKrqs).
 
 ## Content Types
 
-By default Magnific Popup has 4 types of content `image`, `iframe`, `inline`, `ajax`. There is no any "auto-detection" of type based on URL, so you should define it manually.
+By default, Magnific Popup has 4 types of content: `image`, `iframe`, `inline`, and `ajax`. There is no any "auto-detection" of type based on URL, so you should define it manually.
 
-Type of popup can be defined in a two ways:
+The type of a popup can be defined in a two ways:
 
-1. Using `type` option. E.g.: `$('.image-link').magnificPopup({type:'image'})`.
+1. Using the `type` option. E.g.: `$('.image-link').magnificPopup({type:'image'})`.
 
-2. Using `mfp-TYPE` CSS class (where `TYPE` is desired content type). E.g.: `<a class="mfp-image image-link">Open image</a>`, `$('.image-link').magnificPopup()`.
+2. Using the `mfp-TYPE` CSS class (where `TYPE` is the desired content type). For example: `<a class="mfp-image image-link">Open image</a>`, `$('.image-link').magnificPopup()`.
 
-Second option always overrides first one, so you may initialize popups with multiple content types from one call.
+The second option always overrides the first, so you may initialize popups with multiple content types from one call.
 
-The `inline` is default one (from v0.8.4) - so you may skip its definition.
+`inline` is the default content type (from v0.8.4), so you may skip its definition.
 
 <br/>
 
-**The source of the the popup content** (e.g. path to image, path to HTML file, path to video page) can be defined in a few ways:
+**The source of the the popup content** (for example, a path to an image, a path to an HTML file, a path to a video page) can be defined in a few ways:
 
-Method #1: From `href` attribute:
+Method #1: From the `href` attribute:
 
 {% highlight html %}<a href="image-for-popup.jpg">Open image</a>{% endhighlight %}
 
-Method #2: From `data-mfp-src` attribute (overrides first method):
+Method #2: From the `data-mfp-src` attribute (overrides the first method):
 
 {% highlight html %}<a href="some-image.jpg" data-mfp-src="image-for-popup.jpg">Open image</a>{% endhighlight %}
 
-Method #3: From <code>items</code> option
+Method #3: From the <code>items</code> option
 
 {% highlight javascript %}
 $.magnificPopup.open({
@@ -183,7 +183,7 @@ $.magnificPopup.open({
 {% endhighlight %}
 
 
-If you want to modify a way how the source is parsed, you may hook into `elementParse` callback. For example:
+If you want to modify how the source is parsed, you may hook into the `elementParse` callback. For example:
 
 {% highlight javascript %}
 $('.image-link').magnificPopup({
@@ -200,17 +200,9 @@ $('.image-link').magnificPopup({
 });
 {% endhighlight %}
 
-
-
-
-
-
-
-
-
 ## Image Type
 
-The path to the image must be set as a main source if you selected this type. If your popup doesn't have an image source and doesn't have an image that shouldn't be preloaded (& retinized etc.) - use inline type.
+The path to the image must be set as the main source if you selected this type. If your popup doesn't have an image source and doesn't have an image that shouldn't be preloaded (and retina-ized, etc.), use the `inline` type.
 
 {% highlight javascript %}
 image: {
@@ -239,7 +231,7 @@ image: {
 }
 {% endhighlight %}
 
-Please note that Magnific Popup doesn't implement any JS-based clint-side caching for images. So make sure that your server [adds expires headers](https://developers.google.com/speed/docs/best-practices/caching#LeverageBrowserCaching), so image won't be downloaded each time. 
+Please note that Magnific Popup doesn't implement any Javascript-based clint-side caching for images. So make sure that your server [adds expires headers](https://developers.google.com/speed/docs/best-practices/caching#LeverageBrowserCaching) so the image won't be downloaded each time. 
 
 
 ## Iframe Type
