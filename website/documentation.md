@@ -231,7 +231,7 @@ image: {
 }
 {% endhighlight %}
 
-Please note that Magnific Popup doesn't implement any Javascript-based clint-side caching for images. So make sure that your server [adds expires headers](https://developers.google.com/speed/docs/best-practices/caching#LeverageBrowserCaching) so the image won't be downloaded each time. 
+Please note that Magnific Popup doesn't implement any Javascript-based client-side caching for images. So make sure that your server [adds expires headers](https://developers.google.com/speed/docs/best-practices/caching#LeverageBrowserCaching) so the image won't be downloaded each time. 
 
 
 ## Iframe Type
