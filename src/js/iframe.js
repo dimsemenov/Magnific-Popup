@@ -45,7 +45,9 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 				index: '//maps.google.',
 				src: '%id%&output=embed'
 			}
-		}
+		},
+
+		disablePatterns: false
 	},
 
 	proto: {
@@ -72,20 +74,22 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 		getIframe: function(item, template) {
 			var embedSrc = item.src;
 			var iframeSt = mfp.st.iframe;
-				
-			$.each(iframeSt.patterns, function() {
-				if(embedSrc.indexOf( this.index ) > -1) {
-					if(this.id) {
-						if(typeof this.id === 'string') {
-							embedSrc = embedSrc.substr(embedSrc.lastIndexOf(this.id)+this.id.length, embedSrc.length);
-						} else {
-							embedSrc = this.id.call( this, embedSrc );
+
+			if (!iframeSt.disablePatterns) {
+				$.each(iframeSt.patterns, function() {
+					if(embedSrc.indexOf( this.index ) > -1) {
+						if(this.id) {
+							if(typeof this.id === 'string') {
+								embedSrc = embedSrc.substr(embedSrc.lastIndexOf(this.id)+this.id.length, embedSrc.length);
+							} else {
+								embedSrc = this.id.call( this, embedSrc );
+							}
 						}
+						embedSrc = this.src.replace('%id%', embedSrc );
+						return false; // break;
 					}
-					embedSrc = this.src.replace('%id%', embedSrc );
-					return false; // break;
-				}
-			});
+				});
+			}
 			
 			var dataObj = {};
 			if(iframeSt.srcAction) {
