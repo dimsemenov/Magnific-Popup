@@ -458,7 +458,7 @@ button::-moz-focus-inner {
     line-height: 0;
   }
   .mfp-bottom-bar {
-    margin-top:  -36px;
+    margin-top: -$image-padding-bottom + 4;
     position: absolute;
     top: 100%;
     left: 0;
