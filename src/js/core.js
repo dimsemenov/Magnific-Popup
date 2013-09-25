@@ -830,7 +830,7 @@ $.magnificPopup = {
 	},
 
 	close: function() {
-		return $.magnificPopup.instance.close();
+		return $.magnificPopup.instance && $.magnificPopup.instance.close();
 	},
 
 	registerModule: function(name, module) {
