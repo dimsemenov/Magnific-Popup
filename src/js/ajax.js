@@ -19,7 +19,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 			mfp.types.push(AJAX_NS);
 			_ajaxCur = mfp.st.ajax.cursor;
 
-			_mfpOn(CLOSE_EVENT+'.'+AJAX_NS, function() {
+			_mfpOn(CLOSE_EVENT+'.'+AJAX_NS + ' BeforeChange.' + AJAX_NS, function() {
 				_removeAjaxCursor();
 				if(mfp.req) {
 					mfp.req.abort();
