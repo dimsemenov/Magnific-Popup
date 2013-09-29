@@ -21,7 +21,8 @@ $.magnificPopup.registerModule('zoom', {
 
 		initZoom: function() {
 			var zoomSt = mfp.st.zoom,
-				ns = '.zoom';
+				ns = '.zoom',
+				image;
 				
 			if(!zoomSt.enabled || !mfp.supportsTransition) {
 				return;
@@ -125,6 +126,7 @@ $.magnificPopup.registerModule('zoom', {
 					if(animatedImg) {
 						animatedImg.remove();
 					}
+					image = null;
 				}	
 			});
 		},
