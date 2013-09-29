@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.9.5 - 2013-08-21
+/*! Magnific Popup - v0.9.6 - 2013-09-29
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -414,6 +414,8 @@ MagnificPopup.prototype = {
 		mfp.isOpen = true;
 		mfp.updateSize(windowHeight);
 		_mfpTrigger(OPEN_EVENT);
+
+		return data;
 	},
 
 	/**
@@ -827,8 +829,12 @@ $.magnificPopup = {
 	open: function(options, index) {
 		_checkInstance();	
 
-		if(!options) 
+		if(!options) {
 			options = {};
+		} else {
+			options = $.extend(true, {}, options);
+		}
+			
 
 		options.isObj = true;
 		options.index = index || 0;
@@ -836,7 +842,7 @@ $.magnificPopup = {
 	},
 
 	close: function() {
-		return $.magnificPopup.instance.close();
+		return $.magnificPopup.instance && $.magnificPopup.instance.close();
 	},
 
 	registerModule: function(name, module) {
@@ -926,7 +932,9 @@ $.fn.magnificPopup = function(options) {
 		}
 
 	} else {
-
+		// clone options obj
+		options = $.extend(true, {}, options);
+		
 		/*
 		 * As Zepto doesn't support .data() method for objects 
 		 * and it works only in normal browsers
@@ -1058,7 +1066,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 			mfp.types.push(AJAX_NS);
 			_ajaxCur = mfp.st.ajax.cursor;
 
-			_mfpOn(CLOSE_EVENT+'.'+AJAX_NS, function() {
+			_mfpOn(CLOSE_EVENT+'.'+AJAX_NS + ' BeforeChange.' + AJAX_NS, function() {
 				_removeAjaxCursor();
 				if(mfp.req) {
 					mfp.req.abort();
@@ -1384,7 +1392,8 @@ $.magnificPopup.registerModule('zoom', {
 
 		initZoom: function() {
 			var zoomSt = mfp.st.zoom,
-				ns = '.zoom';
+				ns = '.zoom',
+				image;
 				
 			if(!zoomSt.enabled || !mfp.supportsTransition) {
 				return;
@@ -1488,6 +1497,7 @@ $.magnificPopup.registerModule('zoom', {
 					if(animatedImg) {
 						animatedImg.remove();
 					}
+					image = null;
 				}	
 			});
 		},
