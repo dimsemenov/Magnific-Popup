@@ -1,5 +1,7 @@
 # Magnific Popup Repository
 
+[![Build Status](https://travis-ci.org/dimsemenov/Magnific-Popup.png)](https://travis-ci.org/dimsemenov/Magnific-Popup)
+
 Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 
 - [Documentation and getting started guide](http://dimsemenov.com/plugins/magnific-popup/documentation.html)
