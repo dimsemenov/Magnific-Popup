@@ -4,6 +4,12 @@ var AJAX_NS = 'ajax',
 		if(_ajaxCur) {
 			_body.removeClass(_ajaxCur);
 		}
+	},
+	_destroyAjaxRequest = function() {
+		_removeAjaxCursor();
+		if(mfp.req) {
+			mfp.req.abort();
+		}
 	};
 
 $.magnificPopup.registerModule(AJAX_NS, {
@@ -19,14 +25,9 @@ $.magnificPopup.registerModule(AJAX_NS, {
 			mfp.types.push(AJAX_NS);
 			_ajaxCur = mfp.st.ajax.cursor;
 
-			_mfpOn(CLOSE_EVENT+'.'+AJAX_NS + ' BeforeChange.' + AJAX_NS, function() {
-				_removeAjaxCursor();
-				if(mfp.req) {
-					mfp.req.abort();
-				}
-			});
+			_mfpOn(CLOSE_EVENT+'.'+AJAX_NS, _destroyAjaxRequest);
+			_mfpOn('BeforeChange.' + AJAX_NS, _destroyAjaxRequest);
 		},
-
 		getAjax: function(item) {
 
 			if(_ajaxCur)
