@@ -1,9 +1,0 @@
-isLocal : false
-
-permalink: /:title/
-
-exclude: [".json", ".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "compiler.jar", "private", 'magnific-popup.sublime-project', 'magnific-popup.sublime-workspace', ".htaccess"]
-auto: true
-pygments: true
-
-mfpversion: 0.9.6

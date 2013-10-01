@@ -10,6 +10,14 @@ module.exports = function(grunt) {
 
   'use strict';
 
+  var jekyllConfig = "my_setting: 'string1' \r\n"+
+"isLocal : false \r\n"+
+"permalink: /:title/ \r\n"+
+"exclude: ['.json', '.rvmrc', '.rbenv-version', 'README.md', 'Rakefile', 'changelog.md', 'compiler.jar', 'private', 'magnific-popup.sublime-project', 'magnific-popup.sublime-workspace', '.htaccess'] \r\n"+
+"auto: true \r\n"+
+"mfpversion: <%= pkg.version %> \r\n"+
+"pygments: true \r\n";
+
   // Project configuration.
   grunt.initConfig({
     // Metadata.
@@ -83,12 +91,14 @@ module.exports = function(grunt) {
       dev: {
         src: 'website',
         dest: '_site',
-        url: 'local'
+        url: 'local',
+        raw: jekyllConfig + "url: local"
       },
       production: {
         src: 'website',
         dest: '_production',
-        url: 'production'
+        url: 'production',
+        raw: jekyllConfig + "url: production"
       }
     },
 
