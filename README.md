@@ -1,5 +1,7 @@
 # Magnific Popup Repository
 
+Hi!, just get to known about pull request, sorry!
+
 Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 
 - [Documentation and getting started guide](http://dimsemenov.com/plugins/magnific-popup/documentation.html)
