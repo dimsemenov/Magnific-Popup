@@ -41,6 +41,12 @@ Optionally:
 
 ## Changelog
 
+### 0.9.7 (Oct 10, 2013)
+
+- CSS: removed outline on buttons (thanks to @OriginalEXE).
+- Allow multiple string tokens to be passed in gallery variables like `%curr% of %total%` and `%title%` (#234, thanks to Petr Marek).
+- A few small changes to Grunt build, `grunt-contrib-sass` > `grunt-sass`.  (thanks to @nschonni).
+
 ### 0.9.6 (Sep 29, 2013)
 
 - Fixed bug: options object that you pass to popup gets modified after the initialization (#217, #203).
