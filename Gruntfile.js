@@ -42,33 +42,14 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      all: ['Gruntfile.js', 'src/js/*.js'],
+      all: [
+        'Gruntfile.js',
+        'src/js/*.js'
+      ],
       options: {
-        "curly": false,
-        "eqeqeq": true,
-        "immed": true,
-        "latedef": true,
-        "newcap": true,
-        "noarg": true,
-        "sub": true,
-        "undef": false,
-        "unused": true,
-        "boss": true,
-        "eqnull": true,
-        "browser": true,
-
-        "predef": [
-          "jQuery",
-          "define",
-          "module",
-          "console",
-          "mfp",
-          "$"
-        ]
+        jshintrc: '.jshintrc'
       }
-
     },
-
 
     mfpbuild: {
       all: {
