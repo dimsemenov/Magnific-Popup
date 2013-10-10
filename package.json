@@ -1,5 +1,5 @@
 {
-  "name": "jquery-plugin",
+  "name": "magnific-popup",
   "version": "0.0.0-ignored",
   "engines": {
     "node": ">= 0.8.0"
@@ -17,6 +17,10 @@
     "grunt-contrib-cssmin": "~0.4.1",
     "grunt-contrib-copy": "~0.4.0",
     "grunt-jekyll": "~0.3.9",
-    "grunt-contrib-sass": "~0.2.2"
+    "grunt-sass": "~0.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nschonni/Magnific-Popup.git"
   }
 }
