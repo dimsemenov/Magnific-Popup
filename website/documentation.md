@@ -223,8 +223,6 @@ image: {
   //   return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
   // }
 
-  verticalGap:88,
-
   verticalFit: true, // Fits image in area vertically
 
   tError: '<a href="%url%">The image</a> could not be loaded.' // Error message
