@@ -111,8 +111,6 @@ $use-visuallyhidden:              false !default; // Hide content from browsers,
   left: 0;
   top: 0;
   padding: 0 $popup-padding-left;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -158,15 +156,11 @@ $use-visuallyhidden:              false !default; // Hide content from browsers,
 }
 .mfp-zoom-out-cur {
   &, .mfp-image-holder .mfp-close {
-    cursor: -moz-zoom-out;
-    cursor: -webkit-zoom-out;
     cursor: zoom-out;
   }
 }
 .mfp-zoom {
   cursor: pointer;
-  cursor: -webkit-zoom-in;
-  cursor: -moz-zoom-in;
   cursor: zoom-in;
 }
 .mfp-auto-cursor {
@@ -179,8 +173,6 @@ $use-visuallyhidden:              false !default; // Hide content from browsers,
 .mfp-arrow,
 .mfp-preloader,
 .mfp-counter {
-  -webkit-user-select:none;
-  -moz-user-select: none;
   user-select: none;
 }
 
@@ -261,7 +253,6 @@ button {
     outline: none;
     padding: 0;
     z-index: $z-index-base + 6;
-    -webkit-box-shadow: none;
     box-shadow: none;
   }
   &::-moz-focus-inner {
@@ -452,8 +443,6 @@ button {
       height: auto;
       display: block;
       line-height: 0;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
       box-sizing: border-box;
       padding: $image-padding-top 0 $image-padding-bottom;
       margin: 0 auto;
@@ -551,8 +540,6 @@ button {
           top: auto;
           padding: 3px 5px;
           position: fixed;
-          -webkit-box-sizing: border-box;
-          -moz-box-sizing: border-box;
           box-sizing: border-box;
           &:empty {
             padding: 0;
@@ -583,15 +570,12 @@ button {
 // Scale navigation arrows and reduce padding from sides
 @media all and (max-width: 900px) {
   .mfp-arrow {
-    -webkit-transform: scale(0.75);
     transform: scale(0.75);
   }
   .mfp-arrow-left {
-    -webkit-transform-origin: 0;
     transform-origin: 0;
   }
   .mfp-arrow-right {
-    -webkit-transform-origin: 100%;
     transform-origin: 100%;
   }
   .mfp-container {
