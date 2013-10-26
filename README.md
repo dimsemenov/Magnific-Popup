@@ -41,6 +41,14 @@ Optionally:
 
 ## Changelog
 
+
+### 0.9.8 (Oct 26, 2013)
+
+- Added figure and figcaption elements to image markup (#233, thanks to @pjackson28).
+- To avoid "jump" of content background, gap from right side (that "replaces" the scrollbar) is added with help of `margin`, instead of `padding`, (closes #125, thanks to @chodorowicz).
+- Function that checks if the clicked element should close popup or not is now public (so it can be overriden with your own logic), e.g. `$.magnificPopup.proto._checkIfClose = function(clickedTarget) { /* your logic, return true if close, clickedTarget is the element that was clicked. */ return true; };`.
+- Working on a new module: the exact copy of native iOS gallery, with touch/zoom/pan e.t.c., will publish branch soon :)
+
 ### 0.9.7 (Oct 10, 2013)
 
 - CSS: removed outline on buttons (thanks to @OriginalEXE).

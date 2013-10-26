@@ -641,7 +641,7 @@ Markup of close button. %title% will be replaced with option `tClose`.
 
 ## Gallery
 
-Basically all galery module does is allows you to switch content of popup and adds navigation arrows. It can switch and mix any types of content, not just images. 
+Basically all galery module does is allows you to switch content of popup and adds navigation arrows. It can switch and mix any types of content, not just images. Gallery options: 
 
 {% highlight javascript %}
 gallery: {
@@ -659,19 +659,47 @@ gallery: {
 }
 {% endhighlight %}
 
-### Multiple galleries
-
-To have multiple galleries on a page, you need to create a new instance of Magnific Popup for each seperate gallery. The below example can be used:
+Example:
 
 {% highlight javascript %}
-$('.gallery').each(function() { // the containers for all your galleries should have the class gallery
+// This will create a single gallery from all elements that have class "gallery-item"
+$('.gallery-item').magnificPopup({
+  type: 'image',
+  gallery:{
+    enabled:true
+  }
+});
+{% endhighlight %}
+
+### Multiple galleries
+
+To have multiple galleries on a page, you need to create a new instance of Magnific Popup for each seperate gallery. For example
+
+{% highlight html %}
+<div class="gallery">
+    <a href="path-to-image.jpg">Open image 1 (gallery #1)</a>
+    <a href="path-to-image.jpg">Open image 2 (gallery #1)</a>
+</div>
+<div class="gallery">
+    <a href="path-to-image.jpg">Open image 1 (gallery #2)</a>
+    <a href="path-to-image.jpg">Open image 2 (gallery #2)</a>
+    <a href="http://vimeo.com/123123" class="mfp-iframe">Open video (gallery #2). Class mfp-iframe forces "iframe" content type on this item.</a>
+</div>
+{% endhighlight %}
+
+{% highlight javascript %}
+$('.gallery').each(function() { // the containers for all your galleries
     $(this).magnificPopup({
-        delegate: 'a', // the container for each your gallery items
+        delegate: 'a', // the selector for gallery item
         type: 'image',
-        gallery:{enabled:true}
+        gallery: {
+          enabled:true
+        }
     });
 }); 
 {% endhighlight %}
+
+You don't necessarily need to use `delegate` option, it can be just `$(this).find('a').magnificPopup( ...`.
 
 ### Lazy-loading
 
@@ -1124,6 +1152,17 @@ $('.some-button').magnificPopup({
 ### How to place gallery navigation arrows "inside" the image?
 
 See [example on CodePen](http://codepen.io/dimsemenov/pen/JGjHK).
+
+### How to override some function without modifying the source files?
+
+Rewrite the function that you wish to modify in Magnific Popup class prototype object, for example to override function that sets focus on some element (add this code after popup JS file is included, but before popup is initialized):
+
+{% highlight javascript %}
+$.magnificPopup.proto._setFocus = function() {
+  (mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
+};
+{% endhighlight %}
+
 
 <h2 id="contribute">Make Magnific Popup better!</h2>
 
