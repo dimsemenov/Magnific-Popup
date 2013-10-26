@@ -1155,14 +1155,16 @@ See [example on CodePen](http://codepen.io/dimsemenov/pen/JGjHK).
 
 ### How to override some function without modifying the source files?
 
-Rewrite the function that you wish to modify in Magnific Popup class prototype object, for example to override function that sets focus on some element (add this code after popup JS file is included, but before popup is initialized):
+Rewrite the function that you wish to modify by editing Magnific Popup class prototype, you can access it like so `$.magnificPopup.proto`. For example to override function that sets focus on some element:
 
 {% highlight javascript %}
+// add this code after popup JS file is included, but before popup is initialized
 $.magnificPopup.proto._setFocus = function() {
   (mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
 };
 {% endhighlight %}
 
+You may override any public function, just note that this change applies globally.
 
 <h2 id="contribute">Make Magnific Popup better!</h2>
 
