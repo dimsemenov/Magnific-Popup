@@ -88,41 +88,6 @@ var _mfpOn = function(name, f) {
 			$.magnificPopup.instance = mfp;
 		}
 	},
-	// Check to close popup or not
-	// "target" is an element that was clicked
-	_checkIfClose = function(target) {
-
-		if($(target).hasClass(PREVENT_CLOSE_CLASS)) {
-			return;
-		}
-
-		var closeOnContent = mfp.st.closeOnContentClick;
-		var closeOnBg = mfp.st.closeOnBgClick;
-
-		if(closeOnContent && closeOnBg) {
-			return true;
-		} else {
-
-			// We close the popup if click is on close button or on preloader. Or if there is no content.
-			if(!mfp.content || $(target).hasClass('mfp-close') || (mfp.preloader && target === mfp.preloader[0]) ) {
-				return true;
-			}
-
-			// if click is outside the content
-			if(  (target !== mfp.content[0] && !$.contains(mfp.content[0], target))  ) {
-				if(closeOnBg) {
-					// last check, if the clicked element is in DOM, (in case it's removed onclick)
-					if( $.contains(document, target) ) {
-						return true;
-					}
-				}
-			} else if(closeOnContent) {
-				return true;
-			}
-
-		}
-		return false;
-	},
 	// CSS transition detection, http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr
 	supportsTransitions = function() {
 		var s = document.createElement('p').style, // 's' for style. better to create an element if body yet to exist
@@ -248,7 +213,7 @@ MagnificPopup.prototype = {
 			});
 
 			mfp.wrap = _getEl('wrap').attr('tabindex', -1).on('click'+EVENT_NS, function(e) {
-				if(_checkIfClose(e.target)) {
+				if(mfp._checkIfClose(e.target)) {
 					mfp.close();
 				}
 			});
@@ -745,6 +710,41 @@ MagnificPopup.prototype = {
 	/*
 		"Private" helpers that aren't private at all
 	 */
+	// Check to close popup or not
+	// "target" is an element that was clicked
+	_checkIfClose: function(target) {
+
+		if($(target).hasClass(PREVENT_CLOSE_CLASS)) {
+			return;
+		}
+
+		var closeOnContent = mfp.st.closeOnContentClick;
+		var closeOnBg = mfp.st.closeOnBgClick;
+
+		if(closeOnContent && closeOnBg) {
+			return true;
+		} else {
+
+			// We close the popup if click is on close button or on preloader. Or if there is no content.
+			if(!mfp.content || $(target).hasClass('mfp-close') || (mfp.preloader && target === mfp.preloader[0]) ) {
+				return true;
+			}
+
+			// if click is outside the content
+			if(  (target !== mfp.content[0] && !$.contains(mfp.content[0], target))  ) {
+				if(closeOnBg) {
+					// last check, if the clicked element is in DOM, (in case it's removed onclick)
+					if( $.contains(document, target) ) {
+						return true;
+					}
+				}
+			} else if(closeOnContent) {
+				return true;
+			}
+
+		}
+		return false;
+	},
 	_addClassToMFP: function(cName) {
 		mfp.bgOverlay.addClass(cName);
 		mfp.wrap.addClass(cName);
