@@ -4,11 +4,19 @@
 
 Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 
-- [Documentation and getting started guide](http://dimsemenov.com/plugins/magnific-popup/documentation.html)
-- [Examples and plugin home page](http://dimsemenov.com/plugins/magnific-popup/)
-- More examples in official [CodePen collection](http://codepen.io/collection/nLcqo). Feel free to [email me](http://dimsemenov.com) more pen's with unusual usage of the script.
+- [Documentation and getting started guide](http://dimsemenov.com/plugins/magnific-popup/documentation.html).
+- [Examples and plugin home page](http://dimsemenov.com/plugins/magnific-popup/).
+- More examples in [CodePen collection](http://codepen.io/collection/nLcqo).
 
 Optionally, install via Bower: `bower install magnific-popup`.
+
+## Extensions
+
+- WordPress plugin - [under development](http://dimsemenov.com/plugins/magnific-popup/wordpress.html).
+- [Drupal module](https://drupal.org/project/magnific_popup).
+- [Ruby gem](https://rubygems.org/gems/magnific-popup-rails), `gem install magnific-popup-rails`.
+
+If you created a popup extension for something, email me and I'll add it to this list.
 
 ## Location of stuff
 
