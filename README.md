@@ -46,8 +46,8 @@ Optionally:
 
 - Added figure and figcaption elements to image markup (#233, thanks to @pjackson28).
 - To avoid "jump" of content background, gap from right side (that "replaces" the scrollbar) is added with help of `margin`, instead of `padding`, (closes #125, thanks to @chodorowicz).
-- Function that checks if the clicked element should close popup or not is now public (so it can be overriden with your own logic), e.g. `$.magnificPopup.proto._checkIfClose = function(clickedTarget) { /* your logic, return true if close, clickedTarget is the element that was clicked. */ return true; };`.
-- Working on a new module: the exact copy of native iOS gallery, with touch/zoom/pan e.t.c., will publish branch soon :)
+- Function that checks if the clicked element should close popup or not is now public (so it <a href="http://dimsemenov.com/plugins/magnific-popup/documentation.html#how_to_override_some_function_without_modifying_the_source_files">can be overridden with your own logic</a>).
+- Working on a new module: the exact copy of native fullscreen Android/iOS gallery, with touch/zoom/pan e.t.c., will publish branch soon (&copy;Blizzard).
 
 ### 0.9.7 (Oct 10, 2013)
 
