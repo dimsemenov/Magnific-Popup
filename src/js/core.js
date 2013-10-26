@@ -343,7 +343,7 @@ MagnificPopup.prototype = {
             if(mfp._hasScrollBar(windowHeight)){
                 var s = mfp._getScrollbarSize();
                 if(s) {
-                    windowStyles.paddingRight = s;
+                    windowStyles.marginRight = s;
                 }
             }
         }
@@ -373,7 +373,7 @@ MagnificPopup.prototype = {
 		_mfpTrigger('BuildControls');
 
 
-		// remove scrollbar, add padding e.t.c
+		// remove scrollbar, add margin e.t.c
 		$('html').css(windowStyles);
 		
 		// add everything to DOM
@@ -450,7 +450,7 @@ MagnificPopup.prototype = {
 		mfp._removeClassFromMFP(classesToRemove);
 
 		if(mfp.fixedContentPos) {
-			var windowStyles = {paddingRight: ''};
+			var windowStyles = {marginRight: ''};
 			if(mfp.isIE7) {
 				$('body, html').css('overflow', '');
 			} else {
