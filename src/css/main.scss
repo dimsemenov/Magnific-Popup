@@ -462,6 +462,7 @@ button {
 
   /* The shadow behind the image */
   .mfp-figure {
+    margin: 0;
     line-height: 0;
     &:after {
       content: '';
