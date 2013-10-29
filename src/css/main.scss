@@ -299,6 +299,12 @@ button {
     top: 1px;
   }
 }
+
+html[dir="rtl"] .mfp-close {
+  right: auto;
+  left: 0;
+}
+
 .mfp-close-btn-in {
   .mfp-close {
     color: $inner-close-icon-color;
