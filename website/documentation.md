@@ -927,8 +927,11 @@ callbacks: {
     console.log('Start of popup initialization');
   },
   elementParse: function(item) {
+    // Function will fire for each target element
+    // "item.el" is a target DOM element (if present)
+    // "item.src" is a source that you may modify
+
     console.log('Parsing content. Item object that is being parsed:', item);
-    // feel free to modify here item object
   },
   change: function() {
     console.log('Content changed');
@@ -964,12 +967,6 @@ callbacks: {
     // "data.text" - text that will be displayed (e.g. "Loading...")
     // you may modify this properties to change current status or its text dynamically
   },
-  elementParse: function(item) {
-    console.log('Parsing element:', item);
-    // triggers only once for each item
-    // here you may modify URL, type, or any other data
-  },  
-
   imageLoadComplete: function() {
     // fires when image in current popup finished loading
     // avaiable since v0.9.0
@@ -1155,17 +1152,29 @@ See [example on CodePen](http://codepen.io/dimsemenov/pen/JGjHK).
 
 ### How to override some function without modifying the source files?
 
-Rewrite the function that you wish to modify by editing Magnific Popup class prototype, you can access it like so `$.magnificPopup.proto`. For example to override function that sets focus on some element:
+Rewrite the function that you wish to modify by editing Magnific Popup object, you can access it like so `$.magnificPopup.instance`. For example to override function that goes to "next" item in gallery:
 
 {% highlight javascript %}
-// add this code after popup JS file is included, but before popup is initialized
-$.magnificPopup.proto._setFocus = function() {
-  (mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
+// add this code after popup JS file is included
+$.magnificPopup.instance.next = function() {
+
+  // Do something
+
+  // You may call parent ("original") method like so:
+  $.magnificPopup.proto.next.call(this /*, optional arguments */);
 };
 {% endhighlight %}
 
 You may override any public function, just note that this change applies globally.
 
+### Known issues
+
+### Text input in [Select2](http://ivaynberg.github.io/select2/) plugin is inactive when added inside popup
+
+Refer to [this discussion on GitHub](https://github.com/dimsemenov/Magnific-Popup/issues/280).
+
 <h2 id="contribute">Make Magnific Popup better!</h2>
 
-Improve this documentation page <a href="https://github.com/dimsemenov/Magnific-Popup/edit/master/website/documentation.md">via GitHub</a> (simply submit commit). Any improvements, including your own CodePen examples are very welcome.
+Improve this documentation page <a href="https://github.com/dimsemenov/Magnific-Popup/edit/master/website/documentation.md">via GitHub</a> (simply submit commit). Any improvements, including your own CodePen examples are very welcome. And, lastly, don't forget to star the script on GitHub:
+
+<iframe src="http://ghbtns.com/github-btn.html?user=dimsemenov&amp;repo=magnific-popup&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
