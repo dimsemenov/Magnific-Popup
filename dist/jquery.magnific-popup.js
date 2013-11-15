@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.9.8 - 2013-10-26
+/*! Magnific Popup - v0.9.9 - 2013-11-15
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -75,9 +75,6 @@ var _mfpOn = function(name, f) {
 				mfp.st.callbacks[e].apply(mfp, $.isArray(data) ? data : [data]);
 			}
 		}
-	},
-	_setFocus = function() {
-		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
 	},
 	_getCloseBtn = function(type) {
 		if(type !== _currPopupType || !mfp.currTemplate.closeBtn) {
@@ -360,19 +357,14 @@ MagnificPopup.prototype = {
 			
 			if(mfp.content) {
 				mfp._addClassToMFP(READY_CLASS);
-				_setFocus();
+				mfp._setFocus();
 			} else {
 				// if content is not defined (not loaded e.t.c) we add class only for BG
 				mfp.bgOverlay.addClass(READY_CLASS);
 			}
 			
 			// Trap the focus in popup
-			_document.on('focusin' + EVENT_NS, function (e) {
-				if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
-					_setFocus();
-					return false;
-				}
-			});
+			_document.on('focusin' + EVENT_NS, mfp._onFocusIn);
 
 		}, 16);
 
@@ -762,6 +754,15 @@ MagnificPopup.prototype = {
 	_hasScrollBar: function(winHeight) {
 		return (  (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) );
 	},
+	_setFocus: function() {
+		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
+	},
+	_onFocusIn: function(e) {
+		if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
+			mfp._setFocus();
+			return false;
+		}
+	},
 	_parseMarkup: function(template, values, item) {
 		var arr;
 		if(item.data) {
@@ -1098,7 +1099,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 
 					_removeAjaxCursor();
 
-					_setFocus();
+					mfp._setFocus();
 
 					setTimeout(function() {
 						mfp.wrap.addClass(READY_CLASS);
@@ -2038,4 +2039,4 @@ $.magnificPopup.registerModule(RETINA_NS, {
 })();
 
 /*>>fastclick*/
-})(window.jQuery || window.Zepto);
+ _checkInstance(); })(window.jQuery || window.Zepto);
