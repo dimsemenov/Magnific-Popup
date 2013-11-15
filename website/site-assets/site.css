@@ -186,7 +186,9 @@ h2.intro {
 }*/
 
 
-
+#magnific_popup_docs {
+  display: none;
+}
 .maruku_toc {
   position: fixed;
   left: 0;
@@ -194,6 +196,9 @@ h2.intro {
   padding: 20px 20px;
   background: rgba(255, 255, 255, 0.71);
   -webkit-backface-visibility:hidden;
+}
+.maruku_toc ul {
+  list-style: none;
 }
 .maruku_toc ul ul {
   display: none;

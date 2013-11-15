@@ -10,8 +10,7 @@ module.exports = function(grunt) {
 
   'use strict';
 
-  var jekyllConfig = "my_setting: 'string1' \r\n"+
-"isLocal : false \r\n"+
+  var jekyllConfig = "isLocal : false \r\n"+
 "permalink: /:title/ \r\n"+
 "exclude: ['.json', '.rvmrc', '.rbenv-version', 'README.md', 'Rakefile', 'changelog.md', 'compiler.jar', 'private', 'magnific-popup.sublime-project', 'magnific-popup.sublime-workspace', '.htaccess'] \r\n"+
 "auto: true \r\n"+

@@ -29,7 +29,7 @@ Here you can find the guide on how to use Magnific Popup. Besides this docs page
 
 Please ask general questions through <a href="http://stackoverflow.com/questions/ask?tags=magnific-popup">StackOverflow</a> tagged with `magnific-popup`.
 
-# &nbsp;
+# magnific popup docs
 
 * This will become a table of contents (this text will be scraped).
 {:toc}
@@ -1167,7 +1167,7 @@ $.magnificPopup.instance.next = function() {
 
 You may override any public function, just note that this change applies globally.
 
-### Known issues
+## Known issues
 
 ### Text input in [Select2](http://ivaynberg.github.io/select2/) plugin is inactive when added inside popup
 
@@ -1177,4 +1177,6 @@ Refer to [this discussion on GitHub](https://github.com/dimsemenov/Magnific-Popu
 
 Improve this documentation page <a href="https://github.com/dimsemenov/Magnific-Popup/edit/master/website/documentation.md">via GitHub</a> (simply submit commit). Any improvements, including your own CodePen examples are very welcome. And, lastly, don't forget to star the script on GitHub:
 
-<iframe src="http://ghbtns.com/github-btn.html?user=dimsemenov&amp;repo=magnific-popup&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
+<div>
+  <iframe src="http://ghbtns.com/github-btn.html?user=dimsemenov&amp;repo=magnific-popup&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30">&nbsp;</iframe>
+</div>

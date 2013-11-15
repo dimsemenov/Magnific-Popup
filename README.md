@@ -49,6 +49,10 @@ Optionally:
 
 ## Changelog
 
+### 0.9.9 (Nov 15, 2013)
+
+- Popup instance object is now available even before the first `$.fn.magnificPopup call`.
+- Methods `_onFocusIn` and `_setFocus` are now public, to allow overriding.
 
 ### 0.9.8 (Oct 26, 2013)
 
