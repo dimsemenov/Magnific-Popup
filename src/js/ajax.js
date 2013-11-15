@@ -51,7 +51,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 
 					_removeAjaxCursor();
 
-					_setFocus();
+					mfp._setFocus();
 
 					setTimeout(function() {
 						mfp.wrap.addClass(READY_CLASS);

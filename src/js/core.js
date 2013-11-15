@@ -70,9 +70,6 @@ var _mfpOn = function(name, f) {
 			}
 		}
 	},
-	_setFocus = function() {
-		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
-	},
 	_getCloseBtn = function(type) {
 		if(type !== _currPopupType || !mfp.currTemplate.closeBtn) {
 			mfp.currTemplate.closeBtn = $( mfp.st.closeMarkup.replace('%title%', mfp.st.tClose ) );
@@ -354,19 +351,14 @@ MagnificPopup.prototype = {
 			
 			if(mfp.content) {
 				mfp._addClassToMFP(READY_CLASS);
-				_setFocus();
+				mfp._setFocus();
 			} else {
 				// if content is not defined (not loaded e.t.c) we add class only for BG
 				mfp.bgOverlay.addClass(READY_CLASS);
 			}
 			
 			// Trap the focus in popup
-			_document.on('focusin' + EVENT_NS, function (e) {
-				if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
-					_setFocus();
-					return false;
-				}
-			});
+			_document.on('focusin' + EVENT_NS, mfp._onFocusIn);
 
 		}, 16);
 
@@ -755,6 +747,15 @@ MagnificPopup.prototype = {
 	},
 	_hasScrollBar: function(winHeight) {
 		return (  (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) );
+	},
+	_setFocus: function() {
+		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
+	},
+	_onFocusIn: function(e) {
+		if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
+			mfp._setFocus();
+			return false;
+		}
 	},
 	_parseMarkup: function(template, values, item) {
 		var arr;
