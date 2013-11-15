@@ -266,6 +266,8 @@ img.mfp-img {
     display: block;
     font-size: 12px;
     line-height: 14px; }
+  .mfp-figure figure {
+    margin: 0; }
 
 .mfp-bottom-bar {
   margin-top: -36px;
