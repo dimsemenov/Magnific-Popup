@@ -9,6 +9,7 @@ Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 - More examples in [CodePen collection](http://codepen.io/collection/nLcqo).
 
 Optionally, install via Bower: `bower install magnific-popup`.
+[Ruby gem](https://rubygems.org/gems/magnific-popup-rails), `gem install magnific-popup-rails`.
 
 ## Extensions
 
@@ -17,9 +18,7 @@ Optionally, install via Bower: `bower install magnific-popup`.
 - [Concrete5 add-on](https://github.com/cdowdy/concrete5-Magnific-Popup).
 - [Redaxo add-on](http://www.redaxo.org/de/download/addons/?addon_id=1131).
 
-[Ruby gem](https://rubygems.org/gems/magnific-popup-rails), `gem install magnific-popup-rails`.
-
-If you created a popup extension for something, email me and I'll add it to this list.
+If you created an extension for some CMS, email me and I'll add it to this list.
 
 ## Location of stuff
 
