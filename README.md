@@ -15,7 +15,9 @@ Optionally, install via Bower: `bower install magnific-popup`.
 - WordPress plugin - [under development](http://dimsemenov.com/plugins/magnific-popup/wordpress.html).
 - [Drupal module](https://drupal.org/project/magnific_popup).
 - [Concrete5 add-on](https://github.com/cdowdy/concrete5-Magnific-Popup).
-- [Ruby gem](https://rubygems.org/gems/magnific-popup-rails), `gem install magnific-popup-rails`.
+- [Redaxo add-on](http://www.redaxo.org/de/download/addons/?addon_id=1131).
+
+[Ruby gem](https://rubygems.org/gems/magnific-popup-rails), `gem install magnific-popup-rails`.
 
 If you created a popup extension for something, email me and I'll add it to this list.
 
