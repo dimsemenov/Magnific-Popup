@@ -283,6 +283,9 @@ button {
   text-decoration: none;
   text-align: center;
   opacity: $controls-opacity;
+  @if $IE7support {
+    filter: unquote("alpha(opacity=#{$controls-opacity*100})");
+  }
   padding: 0 0 18px 10px;
   color: $controls-color;
 
@@ -293,6 +296,9 @@ button {
   &:hover,
   &:focus {
     opacity: 1;
+    @if $IE7support {
+      filter: unquote("alpha(opacity=#{1*100})");
+    }
   }
 
   &:active {
@@ -330,6 +336,9 @@ button {
   .mfp-arrow {
     position: absolute;
     opacity: $controls-opacity;
+    @if $IE7support {
+      filter: unquote("alpha(opacity=#{$controls-opacity*100})");
+    }
     margin: 0;
     top: 50%;
     margin-top: -55px;
@@ -343,6 +352,9 @@ button {
     &:hover,
     &:focus {
       opacity: 1;
+      @if $IE7support {
+        filter: unquote("alpha(opacity=#{1*100})");
+      }
     }
     &:before,
     &:after,
