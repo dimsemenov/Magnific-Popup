@@ -635,7 +635,11 @@ Delay before popup is removed from DOM. Used for the [animation](#animation).
 
 Markup of close button. %title% will be replaced with option `tClose`.
 
+### prependTo 
 
+<code class="def">document.body</code>
+
+The DOM element to which popup will be added. Useful when you're using Asp.NET where popup should be inside `form`. Option available since 2013/12/04.
 
 
 

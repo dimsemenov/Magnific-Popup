@@ -129,13 +129,15 @@ button::-moz-focus-inner {
   text-decoration: none;
   text-align: center;
   opacity: 0.65;
+  filter: alpha(opacity=65);
   padding: 0 0 18px 10px;
   color: white;
   font-style: normal;
   font-size: 28px;
   font-family: Arial, Baskerville, monospace; }
   .mfp-close:hover, .mfp-close:focus {
-    opacity: 1; }
+    opacity: 1;
+    filter: alpha(opacity=100); }
   .mfp-close:active {
     top: 1px; }
 
@@ -160,6 +162,7 @@ button::-moz-focus-inner {
 .mfp-arrow {
   position: absolute;
   opacity: 0.65;
+  filter: alpha(opacity=65);
   margin: 0;
   top: 50%;
   margin-top: -55px;
@@ -170,7 +173,8 @@ button::-moz-focus-inner {
   .mfp-arrow:active {
     margin-top: -54px; }
   .mfp-arrow:hover, .mfp-arrow:focus {
-    opacity: 1; }
+    opacity: 1;
+    filter: alpha(opacity=100); }
   .mfp-arrow:before, .mfp-arrow:after, .mfp-arrow .mfp-b, .mfp-arrow .mfp-a {
     content: '';
     display: block;
@@ -299,14 +303,12 @@ img.mfp-img {
     padding-right: 0; }
   .mfp-img-mobile img.mfp-img {
     padding: 0; }
-  .mfp-img-mobile .mfp-figure {
-    /* The shadow behind the image */ }
-    .mfp-img-mobile .mfp-figure:after {
-      top: 0;
-      bottom: 0; }
-    .mfp-img-mobile .mfp-figure small {
-      display: inline;
-      margin-left: 5px; }
+  .mfp-img-mobile .mfp-figure:after {
+    top: 0;
+    bottom: 0; }
+  .mfp-img-mobile .mfp-figure small {
+    display: inline;
+    margin-left: 5px; }
   .mfp-img-mobile .mfp-bottom-bar {
     background: rgba(0, 0, 0, 0.6);
     bottom: 0;

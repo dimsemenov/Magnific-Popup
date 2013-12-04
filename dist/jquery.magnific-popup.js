@@ -1,4 +1,4 @@
-/*! Magnific Popup - v0.9.9 - 2013-11-25
+/*! Magnific Popup - v0.9.9 - 2013-12-04
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2013 Dmitry Semenov; */
 ;(function($) {
@@ -345,7 +345,7 @@ MagnificPopup.prototype = {
 		$('html').css(windowStyles);
 		
 		// add everything to DOM
-		mfp.bgOverlay.add(mfp.wrap).prependTo( document.body );
+		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo );
 
 
 
@@ -886,6 +886,8 @@ $.magnificPopup = {
 		alignTop: false,
 	
 		removalDelay: 0,
+
+		prependTo: document.body,
 		
 		fixedContentPos: 'auto', 
 	
