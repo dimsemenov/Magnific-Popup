@@ -128,7 +128,6 @@ MagnificPopup.prototype = {
 		// We disable fixed positioned lightbox on devices that don't handle it nicely.
 		// If you know a better way of detecting this - let me know.
 		mfp.probablyMobile = (mfp.isAndroid || mfp.isIOS || /(Opera Mini)|Kindle|webOS|BlackBerry|(Opera Mobi)|(Windows Phone)|IEMobile/i.test(navigator.userAgent) );
-		_body = $(document.body);
 		_document = $(document);
 
 		mfp.popupsCache = {};
@@ -139,6 +138,10 @@ MagnificPopup.prototype = {
 	 * @param  data [description]
 	 */
 	open: function(data) {
+
+		if(!_body) {
+			_body = $(document.body);
+		}
 
 		var i;
 
@@ -334,14 +337,11 @@ MagnificPopup.prototype = {
 
 		_mfpTrigger('BuildControls');
 
-
 		// remove scrollbar, add margin e.t.c
 		$('html').css(windowStyles);
 		
 		// add everything to DOM
-		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo );
-
-
+		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || _body );
 
 		// Save last focused element
 		mfp._lastFocusedEl = document.activeElement;
@@ -881,7 +881,7 @@ $.magnificPopup = {
 	
 		removalDelay: 0,
 
-		prependTo: document.body,
+		prependTo: null,
 		
 		fixedContentPos: 'auto', 
 	
