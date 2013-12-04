@@ -339,7 +339,7 @@ MagnificPopup.prototype = {
 		$('html').css(windowStyles);
 		
 		// add everything to DOM
-		mfp.bgOverlay.add(mfp.wrap).prependTo( document.body );
+		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo );
 
 
 
@@ -880,6 +880,8 @@ $.magnificPopup = {
 		alignTop: false,
 	
 		removalDelay: 0,
+
+		prependTo: document.body,
 		
 		fixedContentPos: 'auto', 
 	
