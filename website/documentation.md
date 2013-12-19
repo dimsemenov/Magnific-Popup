@@ -14,9 +14,7 @@ buildtool: true
 
 ---
 
-
 <div id="documentation-intro">
-  <style type="text/css">#main-wrapper{background: #FFF;}</style>
   <h1><a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a> Documentation</h1>
   <p><a href="https://github.com/dimsemenov/Magnific-Popup/">Project on Github</a> &middot; <a href="#mfp-build-tool" class="mfp-build-tool-link">Build tool</a> &middot; <a href="http://twitter.com/dimsemenov">Twitter of developer</a> &middot; <a href="http://dimsemenov.com/subscribe.html">Newsletter of developer</a></p>
 </div>
@@ -607,7 +605,7 @@ If set to `true` popup is aligned to top instead of to center. (basically all th
 
 <code class="def">auto</code>
 
-Options defines how popup content position property. Can be `"auto"`, `true` or `false`.  If set to `true` - fixed position will be used, to `false` - absolute position based on current scroll. If set to `"auto"` popup will automatically disable this option when browser doesn't support fixed position properly.
+Popup content position. Can be `"auto"`, `true` or `false`.  If set to `true` - fixed position will be used, to `false` - absolute position based on current scroll. If set to `"auto"` popup will automatically disable this option when browser doesn't support fixed position properly.
 
 ### fixedBgPos
 
@@ -1171,15 +1169,28 @@ $.magnificPopup.instance.next = function() {
 
 You may override any public function, just note that this change applies globally.
 
+### How to add spinner indicator instead of "Loading..." text?
+
+Just style element with class `.mfp-preloader`. [Example on CodePen](http://codepen.io/dimsemenov/pen/aKwxt). [Another example](http://codepen.io/dimsemenov/pen/HdjtL) (if you want to show image only after its fully loaded).
+
+
 ## Known issues
+
+### When popup is opened scrollbar of window disappears and creates empty space or shifts some fixed-positioned menu (or whatever)
+
+Solution 1: add [overflowY:'scroll'](#overflowy) option to force the scrollbar. Solution 2: use open/close popup callbacks to apply custom styling to menu that behaves incorrectly.
 
 ### Text input in [Select2](http://ivaynberg.github.io/select2/) plugin is inactive when added inside popup
 
 Refer to [this discussion on GitHub](https://github.com/dimsemenov/Magnific-Popup/issues/280).
 
+
+
+
+
 <h2 id="contribute">Make Magnific Popup better!</h2>
 
-Improve this documentation page <a href="https://github.com/dimsemenov/Magnific-Popup/edit/master/website/documentation.md">via GitHub</a> (simply submit commit). Any improvements, including your own CodePen examples are very welcome. And, lastly, don't forget to star the script on GitHub:
+Improve this documentation page (simply submit commit <a href="https://github.com/dimsemenov/Magnific-Popup/edit/master/website/documentation.md">via GitHub</a>). Any improvements, including your own CodePen examples are very welcome. And, lastly, don't forget to star the script on GitHub:
 
 <div>
   <iframe src="http://ghbtns.com/github-btn.html?user=dimsemenov&amp;repo=magnific-popup&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30">&nbsp;</iframe>
