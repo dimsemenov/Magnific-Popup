@@ -27,6 +27,13 @@ If you created an extension for some CMS, email me and I'll add it to this list.
 - Website (examples & documentation) is in folder [website/](https://github.com/dimsemenov/Magnific-Popup/tree/master/website).
 - Documentation page itself is in [website/documentation.md](https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md) (contributions to it are very welcome).
 
+
+
+## Using Magnific Popup?
+
+If you used Magnific Popup in some interesting way, or on site of popular brand, I'd be very grateful if you <a href="mailto:diiiimaaaa@gmail.com?subject="Site that uses Magnific Popup"">shoot me</a> a link to it.
+
+
 ## Build 
 
 To compile Magnific Popup by yourself, first of make sure that you have [Node.js](http://nodejs.org/), [Grunt.js](https://github.com/cowboy/grunt), [Ruby](http://www.ruby-lang.org/) and [Jekyll](https://github.com/mojombo/jekyll/) installed, then:
@@ -49,138 +56,8 @@ Optionally:
 - If you don't have and don't want to install Jekyll, run `grunt nosite` to just build JS and CSS files related to popup in `dist/`.
 
 
-## Changelog
 
-### 0.9.9 (Nov 15, 2013)
-
-- Popup instance object is now available even before the first `$.fn.magnificPopup call`.
-- Methods `_onFocusIn` and `_setFocus` are now public, to allow overriding.
-
-### 0.9.8 (Oct 26, 2013)
-
-- Added figure and figcaption elements to image markup (#233, thanks to @pjackson28).
-- To avoid "jump" of content background, gap from right side (that "replaces" the scrollbar) is added with help of `margin`, instead of `padding`, (closes #125, thanks to @chodorowicz).
-- Function that checks if the clicked element should close popup or not is now public (so it <a href="http://dimsemenov.com/plugins/magnific-popup/documentation.html#how_to_override_some_function_without_modifying_the_source_files">can be overridden with your own logic</a>).
-- Working on a new module: the exact copy of native fullscreen Android/iOS gallery, with touch/zoom/pan e.t.c., will publish branch soon (&copy;Blizzard).
-
-### 0.9.7 (Oct 10, 2013)
-
-- CSS: removed outline on buttons (thanks to @OriginalEXE).
-- Allow multiple string tokens to be passed in gallery variables like `%curr% of %total%` and `%title%` (#234, thanks to Petr Marek).
-- A few small changes to Grunt build, `grunt-contrib-sass` > `grunt-sass`.  (thanks to @nschonni).
-
-### 0.9.6 (Sep 29, 2013)
-
-- Fixed bug: options object that you pass to popup gets modified after the initialization (#217, #203).
-- Fixed bug: zoom module creates global variable (#226).
-- Fixed bug: gallery from AJAX popups stacks content if it's switched before loading has finished.
-- Indented and combined SCSS classes (thanks to @nschonni).
-- `$.magnificPopup.close()` now doesn't throw an exception if there's no instance (#221, thanks to @mjlescano).
-
-### 0.9.5 (Aug 21, 2013)
-
-- Fixed bug: built-in tab focus in popup works incorrectly (caused by 0.9.3 update).
-
-### 0.9.4 (Aug 7, 2013)
-
-- Fixed bug: error in IE7 when minified version of script is used with some versions of jQuery, #156.
-- Fixed bug: DOM exception in Chrome when using gallery mode with some versions of jQuery, #177.
-
-### 0.9.3 (Jul 16, 2013)
-
-- Fixed blurry arrows in FF (#142)
-- Added `lazyLoadError` callback.
-- Popup now prevents closing if the clicked element is remvoved from DOM.
-- `overflow:hidden` is now applied to `html` instead of `body`.
-- Increased default z-index to from 500 to 1040.
-
-### 0.9.2 (Jul 5, 2013)
-
-- Fixed bug in new zoom module, that could cause incorrect calculation of image height, when jQuery is used instead of Zepto.
-
-### 0.9.1 (Jul 4, 2013)
-
-- Added zoom module effect for images, go to Magnific Popup [website](http://dimsemenov.com/plugins/magnific-popup/) to view demos. More info in [docs](http://dimsemenov.com/plugins/magnific-popup/documentation.html#zoom_effect).
-- `removalDelay` now applies only when browser supports CSS transitions.
-- Fix: removed tiny blink when switching between gallery images, or opening images that are already cached.
-- Changed the default appearance of gallery arrows (now its white triangle with black border, was vice-versa).
-- Added solid background to the image when its loading.
-
-
-
-
-### 0.9.0 (Jul 3, 2013)
-
-- Added `modal` option which disables all default ways to close the popup, learn more in [docs](http://dimsemenov.com/plugins/magnific-popup/documentation.html#modal). Thanks to [Julen Ruiz Aizpuru](https://github.com/julen).
-- Added `beforeClose` event.
-- Added `imageLoadComplete` event.
-- Removed jQuery event alias calls. Thanks to [Albert Casademont](https://github.com/acasademont).
-- Cleaned some duplicate styles in CSS. Thanks to [Yann Abgrall](https://github.com/yannabgrall).
-
-### 0.8.9 (Jun 4, 2013)
-
-- Fix: inline element that is created dynamically causes exception in jQuery 1.8.x.
-- Fix: incorrect detection of `_hasScrollBar` if body has defined height style.
-- Fix: body styles are kept after popup is closed.
-- Fix: close icon is aligned incorrectly with iframe type.
-- **responseText is deprected**. Argument of callback `parseAjax` - `obj.responseText` is now deprected, but you can still access it via `obj.xhr.responseText`. Instead of it, please use `obj.data` to modify your output.
-- Sass: changed variables to be default declarations to support front-loaded settings. i.e. You can override options by adding `_settings.scss` file near `main.scss` with your new options.
-- Added: `afterClose` event.
-- Added: `ajaxContentLoaded` event.
-- Added: [Bower](https://github.com/bower/bower) support.
-
-### 0.8.8 (May 24, 2013)
-
-- Fix: you can now put link inside popup that will open another popup - http://codepen.io/dimsemenov/pen/hwIng
-- Fix: incorrect index when opening popup that is already opened from multiple DOM elements.
-
-### 0.8.7 (May 19, 2013)
-
-- Fixed #62 - IE9 HTML5 YouTube player playing audio after pop up closed
-
-### 0.8.6 (May 18, 2013)
-
-- Controls are now removed when there is only one element in gallery.
-- Fixed issue that could cause incorrect main event element.
-- Public property `items` is now always an array (previously it could be jQuery object collection).
-- Added `word-break: break-word` to caption.
-
-### 0.8.5 (May 15, 2013)
-
-- Fix #43 - In IE8 whole window becomes black when YouTube iframe is
-closed.
-- Fix #51 - In IE9 YouTube HTML5 video keeps playing after iframe is
-removed from page.
-- Bugfix - box-sizing on IMG in low IE behaves incorrectly.
-- Fix #57 - padding on body is not added with overflowY:'scroll'.
-- removalDelay option is now ignored in IE.
-- Added an option closeOnBgClick.
-- Added BeforeChange callback.
-- Added AfterChange callback.
-
-### 0.8.4 (May 13, 2013)
-
-- You can now call any public method directly from jQuery DOM element, e.g.: `$('.some-el-with-popup').magnificPopup('methodName', /*, arguments */)`. 
-- Optimized inline module. Now target element is replaced with placeholder only when it has a defined parent node.
-- `inline` type is now set as a default, so you may skip it.
-- Now content is just replaced when you call `open()` on popup that is already opened.
-
-
-### 0.8.3 (May 9, 2013)
-
-- Added: `goTo` public method.
-- Custom events that are added to popup are now not lost when navigating through gallery.
-- If `delegate` option is used, events are now dispatched on main element instead of children.
-
-
-### 0.8.2 (May 5, 2013)
-
-- Added !important to mfp-hide class.
-- Fix gallery rendering issue in Opera.
-- Fix padding to body with overflow:scroll.
-
-
-
+## [Changelog](https://github.com/dimsemenov/Magnific-Popup/releases)
 
 ## License
 
