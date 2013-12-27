@@ -559,11 +559,12 @@ MagnificPopup.prototype = {
 	 */
 	parseEl: function(index) {
 		var item = mfp.items[index],
-			type = item.type;
+			type;
 
 		if(item.tagName) {
 			item = { el: $(item) };
 		} else {
+			type = item.type;
 			item = { data: item, src: item.src };
 		}
 
