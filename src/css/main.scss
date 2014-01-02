@@ -41,6 +41,7 @@ $z-index-base:                    1040 !default; // Base z-index of popup
 $include-arrows:                  true !default; // include styles for nav arrows
 $controls-opacity:                0.65 !default;
 $controls-color:                  #FFF !default;
+$controls-border-color:           #3F3F3F !default;
 $inner-close-icon-color:          #333 !default;
 $controls-text-color:             #CCC !default; // Color of preloader and "1 of X" indicator
 $controls-text-color-hover:       #FFF !default;
@@ -394,13 +395,13 @@ button {
 
     &:after,
     .mfp-a {
-      border-right: 17px solid #FFF;
+      border-right: 17px solid $controls-color;
       margin-left: 31px;
     }
     &:before,
     .mfp-b {
       margin-left: 25px;
-      border-right: 27px solid #3f3f3f;
+      border-right: 27px solid $controls-border-color; 
     }
   }
 
@@ -408,12 +409,12 @@ button {
     right: 0;
     &:after,
     .mfp-a {
-      border-left: 17px solid #FFF;
+      border-left: 17px solid $controls-color;
       margin-left: 39px
     }
     &:before,
     .mfp-b {
-      border-left: 27px solid #3f3f3f;
+      border-left: 27px solid $controls-border-color;
     }
   }
 }
