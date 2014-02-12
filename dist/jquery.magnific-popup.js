@@ -255,7 +255,7 @@ MagnificPopup.prototype = {
                 }
             }
         });
-        
+
 		if(mfp.st.preloader) {
 			mfp.preloader = _getEl('preloader', mfp.container, mfp.st.tLoading);
 		}
@@ -553,6 +553,7 @@ MagnificPopup.prototype = {
 		
 		// Append container back after its content changed
 		mfp.container.prepend(mfp.contentContainer);
+		$('.mfp-content').css('display', 'none');   
 
 		_mfpTrigger('AfterChange');
 	},
@@ -1318,6 +1319,7 @@ $.magnificPopup.registerModule('image', {
 							item.hasSize = true;
 							item.loaded = true;
 
+							$('.mfp-content').css('display', 'inline-block');
 							_mfpTrigger('ImageLoadComplete');
 							
 						}
