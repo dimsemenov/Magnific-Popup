@@ -139,7 +139,7 @@ MagnificPopup.prototype = {
 	 */
 	open: function(data) {
 
-		if(!_body) {
+		if(typeof Turbolinks !== "undefined" || !_body) {
 			_body = $(document.body);
 		}
 
