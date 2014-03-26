@@ -37,6 +37,9 @@ $.magnificPopup.registerModule(AJAX_NS, {
 
 			var opts = $.extend({
 				url: item.src,
+				beforeSend : function(xhrObj) {
+					_mfpTrigger('BeforeAjaxCall', xhrObj);
+				},
 				success: function(data, textStatus, jqXHR) {
 					var temp = {
 						data:data,
