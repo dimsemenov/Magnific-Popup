@@ -358,8 +358,15 @@ MagnificPopup.prototype = {
 			}
 			
 			// Trap the focus in popup
-			_document.on('focusin' + EVENT_NS, mfp._onFocusIn);
-
+			if(!('onfocusin' in window) && document.addEventListener) {
+				// In browsers which do not support focusin but have
+				// addEventListener, fall back to focus with capture.
+				// Note: Some browsers do not have onfocusin even though they
+				// support focusin.
+				document.addEventListener('focus', mfp._onFocusIn, true);
+			} else {
+				_document.on('focusin' + EVENT_NS, mfp._onFocusIn);
+			}
 		}, 16);
 
 		mfp.isOpen = true;
@@ -418,6 +425,10 @@ MagnificPopup.prototype = {
 		
 		_document.off('keyup' + EVENT_NS + ' focusin' + EVENT_NS);
 		mfp.ev.off(EVENT_NS);
+
+		if(!('onfocusin' in window) && document.addEventListener) {
+			document.removeEventListener('focus', mfp._onFocusIn, true);
+		}
 
 		// clean up DOM elements that aren't removed
 		mfp.wrap.attr('class', 'mfp-wrap').removeAttr('style');
