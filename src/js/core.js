@@ -750,11 +750,18 @@ MagnificPopup.prototype = {
 		return (  (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) );
 	},
 	_setFocus: function() {
-		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
+		if(mfp.st.focus) {
+			var el = mfp.content.find(mfp.st.focus).eq(0);
+			if(el.length) {
+				el.focus();
+				return;
+			}
+		}
+		mfp.wrap.focus();
 	},
 	_onFocusIn: function(e) {
 		if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
-			mfp._setFocus();
+			mfp.wrap.focus();
 			return false;
 		}
 	},
