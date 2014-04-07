@@ -1090,7 +1090,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 				url: item.src,
 				success: function(data, textStatus, jqXHR) {
 					var temp = {
-						data:data,
+						data: '<div class="new-ajax-content">'+data+'</div>',
 						xhr:jqXHR
 					};
 
