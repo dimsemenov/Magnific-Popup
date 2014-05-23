@@ -627,6 +627,12 @@ There is no option `overflowX`, but you may easily emulate it just via CSS.
 
 Delay before popup is removed from DOM. Used for the [animation](#animation).
 
+### customJsAnimations
+
+<code class="def">false</code>
+
+Set this to `true` when you are using custom Javascript animations in callbacks and you would like to preserve removalDelay. By default, we are not using removalDelay when browser dosen't support CSS animations. In this case we are calling directly `close()` method. With this option, you can change this behaviour and preserve removalDelay.
+
 ### closeMarkup 
 
 <code class="def">&lt;button title=&quot;%title%&quot; class=&quot;mfp-close&quot;&gt;&lt;i class=&quot;mfp-close-icn&quot;&gt;&amp;times;&lt;/i&gt;&lt;/button&gt;</code>
