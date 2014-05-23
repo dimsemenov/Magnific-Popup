@@ -1,6 +1,6 @@
-/*! Magnific Popup - v0.9.9 - 2013-12-27
+/*! Magnific Popup - v0.9.9 - 2014-05-23
 * http://dimsemenov.com/plugins/magnific-popup/
-* Copyright (c) 2013 Dmitry Semenov; */
+* Copyright (c) 2014 Dmitry Semenov; */
 ;(function($) {
 
 /*>>core*/
@@ -384,7 +384,7 @@ MagnificPopup.prototype = {
 
 		mfp.isOpen = false;
 		// for CSS3 animation
-		if(mfp.st.removalDelay && !mfp.isLowIE && mfp.supportsTransition )  {
+		if(mfp.st.customJsAnimations || (mfp.st.removalDelay && !mfp.isLowIE && mfp.supportsTransition))  {
 			mfp._addClassToMFP(REMOVING_CLASS);
 			setTimeout(function() {
 				mfp._close();
@@ -887,6 +887,8 @@ $.magnificPopup = {
 		alignTop: false,
 	
 		removalDelay: 0,
+
+        customJsAnimations: false,
 
 		prependTo: null,
 		
