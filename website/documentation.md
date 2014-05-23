@@ -786,6 +786,49 @@ Then just play with CSS3 transitions:
 }
 {% endhighlight %}
 
+### Javascript animations
+
+There is an option to use Javascript animations. We recommend to use only CSS animations, but sometimes it is required to preserve animations even in older browsers for example IE 9 or IE 8.
+
+To achive this, you can use jQuery `animate` method in callbacks. Then you will need to set `customJsAnimations` option to `true`.
+
+For example:
+
+{% highlight javascript %}
+$('.image-link').magnificPopup({
+    type: 'image',
+    removalDelay: 300,
+    customJsAnimations: true,
+    callbacks: {
+        open: function() {
+            $('.mfp-bg').animate({opacity: 0.8}, 300);
+        },
+        beforeClose: function() {
+            $('.mfp-content, .mfp-bg').animate({opacity: 0}, 300);
+        }
+    }
+});
+{% endhighlight %}
+
+{% highlight css %}
+.mfp-bg {
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  -o-opacity: 0;
+  opacity: 0;
+  -ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity = 0})";
+  filter: ~"alpha(opacity = 0)";
+}
+.mfp-content {
+  -webkit-opacity: 0;
+    -moz-opacity: 0;
+    -o-opacity: 0;
+    opacity: 0;
+    -ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity = 0})";
+    filter: ~"alpha(opacity = 0)";
+}
+{% endhighlight %}
+
 Please use animation wisely and when it's really required. Do not enable it when your popup may contain large image or a lot of HTML text.
 
 
