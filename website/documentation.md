@@ -1184,8 +1184,9 @@ Solution 1: add [overflowY:'scroll'](#overflowy) option to force the scrollbar. 
 
 Refer to [this discussion on GitHub](https://github.com/dimsemenov/Magnific-Popup/issues/280).
 
-
-
+### Possible problem with popup work in Internet Explorer 8
+In this case IE works in compatibility mode, add line to head tag to fix this problem: 
+<br/>```<meta http-equiv="X-UA-Compatible" content="IE=edge">```
 
 
 <h2 id="contribute">Make Magnific Popup better!</h2>
