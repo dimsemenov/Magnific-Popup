@@ -562,7 +562,7 @@ Close the popup when user clicks on the dark overlay.
 
 ### closeBtnInside
 
-<code class="def">false</code>
+<code class="def">true</code>
 
 If enabled, Magnific Popup will put close button inside content of popup, and wrapper will get class `mfp-close-btn-in` (which in default CSS file makes color of it change). If markup of popup item is defined element with class `mfp-close` will be replaced with this button, otherwise close button will be appended directly.
 
