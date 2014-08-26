@@ -378,7 +378,7 @@ MagnificPopup.prototype = {
 
 		mfp.isOpen = false;
 		// for CSS3 animation
-		if(mfp.st.removalDelay && !mfp.isLowIE && mfp.supportsTransition )  {
+		if(mfp.st.customJsAnimations || (mfp.st.removalDelay && !mfp.isLowIE && mfp.supportsTransition))  {
 			mfp._addClassToMFP(REMOVING_CLASS);
 			setTimeout(function() {
 				mfp._close();
@@ -881,6 +881,8 @@ $.magnificPopup = {
 		alignTop: false,
 	
 		removalDelay: 0,
+
+        customJsAnimations: false,
 
 		prependTo: null,
 		
