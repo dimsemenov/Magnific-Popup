@@ -1,6 +1,24 @@
 {
   "name": "magnific-popup",
-  "version": "0.0.0-ignored",
+
+  "version": "0.9.9",
+  "title": "Magnific Popup",
+  "description": "Lightbox and modal dialog plugin. Can display inline HTML, iframes (YouTube video, Vimeo, Google Maps), or an image gallery. Animation effects are added with CSS3 transitions. For jQuery or Zepto.",
+  "keywords": ["lightbox","popup","modal","window","dialog","gallery","jquery","photo","responsive","mobile"],
+  "author": {
+      "name": "Dmitry Semenov",
+      "email": "diiiimaaaa@gmail.com",
+      "web": "http://dimsemenov.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dimsemenov/Magnific-Popup/issues"
+  },
+  "main": "dist/jquery.magnific-popup.js",
+  "homepage": "http://dimsemenov.com/plugins/magnific-popup/",
+
+
+
   "engines": {
     "node": ">= 0.8.0"
   },
