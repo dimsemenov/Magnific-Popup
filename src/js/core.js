@@ -791,7 +791,9 @@ MagnificPopup.prototype = {
 				}
 
 			} else {
-				template.find(EVENT_NS + '-'+key).html(value);
+        try {
+          template.find(EVENT_NS + '-'+key).html(value);
+        } catch (e) { console.log(e); }
 			}
 		});
 	},

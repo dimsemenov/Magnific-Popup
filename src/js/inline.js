@@ -55,6 +55,7 @@ $.magnificPopup.registerModule(INLINE_NS, {
 				}
 
 				item.inlineElement = el;
+        mfp._parseMarkup(el, {}, item);
 				return el;
 			}
 
