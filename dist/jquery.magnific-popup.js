@@ -1,6 +1,6 @@
-/*! Magnific Popup - v0.9.9 - 2013-12-27
+/*! Magnific Popup - v0.9.9 - 2014-09-06
 * http://dimsemenov.com/plugins/magnific-popup/
-* Copyright (c) 2013 Dmitry Semenov; */
+* Copyright (c) 2014 Dmitry Semenov; */
 ;(function($) {
 
 /*>>core*/
@@ -806,7 +806,6 @@ MagnificPopup.prototype = {
 		// thx David
 		if(mfp.scrollbarSize === undefined) {
 			var scrollDiv = document.createElement("div");
-			scrollDiv.id = "mfp-sbm";
 			scrollDiv.style.cssText = 'width: 99px; height: 99px; overflow: scroll; position: absolute; top: -9999px;';
 			document.body.appendChild(scrollDiv);
 			mfp.scrollbarSize = scrollDiv.offsetWidth - scrollDiv.clientWidth;
