@@ -748,7 +748,7 @@ MagnificPopup.prototype = {
 	},
 	_hasScrollBar: function(winHeight) {
 		var html = $('html');
-		return ( html.css('overflow') == 'scroll' || html.css('overflow-y') == 'scroll' || (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) );
+		return ( html.css('overflow') === 'scroll' || html.css('overflow-y') === 'scroll' || (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) );
 	},
 	_setFocus: function() {
 		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
