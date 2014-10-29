@@ -17,6 +17,7 @@ Optionally, install via Bower: `bower install magnific-popup`.
 - [Drupal module](https://drupal.org/project/magnific_popup).
 - [Concrete5 add-on](https://github.com/cdowdy/concrete5-Magnific-Popup).
 - [Redaxo add-on](http://www.redaxo.org/de/download/addons/?addon_id=1131).
+- [Contao extension](https://github.com/fritzmg/contao-magnific-popup).
 
 If you created an extension for some CMS, email me and I'll add it to this list.
 
