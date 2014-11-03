@@ -16,7 +16,7 @@ buildtool: true
 
 <div id="documentation-intro">
   <h1><a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a> Documentation</h1>
-  <p><a href="https://github.com/dimsemenov/Magnific-Popup/">Project on Github</a> &middot; <a href="#mfp-build-tool" class="mfp-build-tool-link">Build tool</a> &middot; <a href="http://twitter.com/dimsemenov">Twitter of developer</a> &middot; <a href="http://dimsemenov.com/subscribe.html">Newsletter of developer</a></p>
+  <p><a href="https://github.com/dimsemenov/Magnific-Popup/">Project on GitHub</a> &middot; <a href="#mfp-build-tool" class="mfp-build-tool-link">Build tool</a> &middot; <a href="http://twitter.com/dimsemenov">Twitter of developer</a> &middot; <a href="http://dimsemenov.com/subscribe.html">Newsletter of developer</a></p>
 </div>
 
 
@@ -25,7 +25,7 @@ buildtool: true
 
 Here you can find the guide on how to use Magnific Popup. Besides this docs page, you can <a href="http://codepen.io/collection/nLcqo">play with examples on CodePen</a>. If you've found any mistake in this site or you know how to improve some part of this documentation - please <a href="https://github.com/dimsemenov/Magnific-Popup/blob/master/website/documentation.md">commit on GitHub</a>.
 
-Please ask general questions through <a href="http://stackoverflow.com/questions/ask?tags=magnific-popup">StackOverflow</a> tagged with `magnific-popup`.
+Please ask general questions through <a href="http://stackoverflow.com/questions/ask?tags=magnific-popup">Stack Overflow</a> tagged with `magnific-popup`.
 
 # magnific popup docs
 
@@ -145,7 +145,7 @@ Play with [this example on CodePen](http://codepen.io/dimsemenov/pen/vKrqs).
 
 ## Content Types
 
-By default, Magnific Popup has 4 types of content: `image`, `iframe`, `inline`, and `ajax`. There is no any "auto-detection" of type based on URL, so you should define it manually.
+By default, Magnific Popup has four types of content: `image`, `iframe`, `inline`, and `ajax`. There is no any "auto-detection" of type based on URL, so you should define it manually.
 
 The type of a popup can be defined in a two ways:
 
@@ -227,7 +227,7 @@ image: {
 }
 {% endhighlight %}
 
-Please note that Magnific Popup doesn't implement any Javascript-based client-side caching for images. So make sure that your server [adds expires headers](https://developers.google.com/speed/docs/best-practices/caching#LeverageBrowserCaching) so the image won't be downloaded each time. 
+Please note that Magnific Popup doesn't implement any JavaScript-based client-side caching for images. So make sure that your server [adds expires headers](https://developers.google.com/speed/docs/best-practices/caching#LeverageBrowserCaching) so the image won't be downloaded each time. 
 
 
 ## Iframe Type
@@ -461,7 +461,7 @@ Options for specific modules are explained in their sections of documentation (e
 
 <code class="def">null</code>
 
-If window width is less then number in this option - lightbox will not be opened and default behavior of element will be triggered. Set to `0` to disable behavior. Option works only when you initialize Magnific Popup from DOM element.
+If window width is less than the number in this option lightbox will not be opened and the default behavior of the element will be triggered. Set to `0` to disable behavior. Option works only when you initialize Magnific Popup from DOM element.
 
 Can also accept Function as a parameter, which should return `true` if lightbox can be opened and `false` otherwise. For example: 
 
@@ -502,7 +502,7 @@ You can delete cached templates like so:
 
 <code class="def">false</code>
 
-If set to `true` lightbox is opened if the user clicked on the middle mouse button, or click with command/ctrl key. Option works only when you initialize Magnific Popup from DOM element.
+If set to `true` lightbox is opened if the user clicked on the middle mouse button, or click with Command/Ctrl key. Option works only when you initialize Magnific Popup from DOM element.
 
 
 ### mainClass
@@ -564,7 +564,7 @@ Close the popup when user clicks on the dark overlay.
 
 <code class="def">false</code>
 
-If enabled, Magnific Popup will put close button inside content of popup, and wrapper will get class `mfp-close-btn-in` (which in default CSS file makes color of it change). If markup of popup item is defined element with class `mfp-close` will be replaced with this button, otherwise close button will be appended directly.
+If enabled, Magnific Popup will put close button inside content of popup, and wrapper will get class `mfp-close-btn-in` (which in default CSS file makes color of it change). If markup of popup item is defined element with class `mfp-close` it will be replaced with this button, otherwise close button will be appended directly.
 
 
 ### showCloseBtn
@@ -637,13 +637,13 @@ Markup of close button. %title% will be replaced with option `tClose`.
 
 <code class="def">document.body</code>
 
-The DOM element to which popup will be added. Useful when you're using Asp.NET where popup should be inside `form`. Option available since 2013/12/04.
+The DOM element to which popup will be added. Useful when you're using ASP.NET where popup should be inside `form`. Option available since 2013/12/04.
 
 
 
 ## Gallery
 
-Basically all galery module does is allows you to switch content of popup and adds navigation arrows. It can switch and mix any types of content, not just images. Gallery options: 
+Basically all gallery module does is allow you to switch content of popup and adds navigation arrows. It can switch and mix any types of content, not just images. Gallery options: 
 
 {% highlight javascript %}
 gallery: {
@@ -675,7 +675,7 @@ $('.gallery-item').magnificPopup({
 
 ### Multiple galleries
 
-To have multiple galleries on a page, you need to create a new instance of Magnific Popup for each seperate gallery. For example
+To have multiple galleries on a page, you need to create a new instance of Magnific Popup for each separate gallery. For example
 
 {% highlight html %}
 <div class="gallery">
@@ -705,7 +705,7 @@ You don't necessarily need to use `delegate` option, it can be just `$(this).fin
 
 ### Lazy-loading
 
-Lazy-loading option preloads nearby items. It accepts array with two integers, first one - is a number of items to preload before the current, second one - the number of images to preload after the current. For example `preload: [1,3]` will load 3 next items and 1 that is before current. These values are automatically switched based on direction of movement. 
+Lazy-loading option preloads nearby items. It accepts an array with two integers. The first is the number of items to preload before the current. The second is the number of images to preload after the current. For example, `preload: [1,3]` will load 3 next items and 1 that is before current. These values are automatically switched based on direction of movement. 
 
 
 By default all what it does is just searches for an image tag and preloads it with JavaScript. But you can extend it and do your custom preloading logic with help of `lazyLoad` event, like so:
