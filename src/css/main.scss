@@ -86,6 +86,10 @@ $mfp-use-visuallyhidden:              false !default; // Hide content from brows
 
   background: $mfp-overlay-color;
   opacity: $mfp-overlay-opacity;
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+          transform: translateZ(0);
   @if $mfp-IE7support {
     filter: unquote("alpha(opacity=#{$mfp-overlay-opacity*100})");
   }
