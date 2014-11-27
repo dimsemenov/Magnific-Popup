@@ -509,7 +509,7 @@ If set to `true` lightbox is opened if the user clicked on the middle mouse butt
 
 <code class="def">empty string</code>
 
-String that contains classes that will be added to the root element of popup wrapper and to dark overlay. For example `"myClass"`, can also contain multiple classes - `'myClassOne myClasTwo'`.
+String that contains classes that will be added to the root element of popup wrapper and to dark overlay. For example `"myClass"`, can also contain multiple classes - `'myClassOne myClassTwo'`.
 
 ### preloader
 
