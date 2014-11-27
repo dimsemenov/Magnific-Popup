@@ -643,7 +643,7 @@ The DOM element to which popup will be added. Useful when you're using Asp.NET w
 
 ## Gallery
 
-Basically all galery module does is allows you to switch content of popup and adds navigation arrows. It can switch and mix any types of content, not just images. Gallery options: 
+The gallery module allows you to switch the content of the popup and adds navigation arrows. It can switch and mix any types of content, not just images. Gallery options: 
 
 {% highlight javascript %}
 gallery: {
