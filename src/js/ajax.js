@@ -10,6 +10,11 @@ var AJAX_NS = 'ajax',
 		if(mfp.req) {
 			mfp.req.abort();
 		}
+	},
+	jqEscape = function( selector ) {
+		// Escapes the characters in a string for use in a jQuery selector
+		// Based on http://totaldev.com/content/escaping-characters-get-valid-jquery-id
+		return selector.replace( /([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, "\\$1" );
 	};
 
 $.magnificPopup.registerModule(AJAX_NS, {
@@ -41,7 +46,18 @@ $.magnificPopup.registerModule(AJAX_NS, {
 					var temp = {
 						data:data,
 						xhr:jqXHR
-					};
+					},
+					hash = item.src.match(/\#([^?]*)/),
+					placeHolder = $('<div></div>'),
+					$data, $filtered;
+
+					if (hash) {
+						$data = placeHolder.clone().append(temp.data);
+						$filtered = $data.find('#' + jqEscape(hash[1]));
+						if ($filtered.length !== 0) {
+							temp.data = placeHolder.clone().append($filtered).html();
+						}
+					}
 
 					_mfpTrigger('ParseAjax', temp);
 
@@ -79,4 +95,4 @@ $.magnificPopup.registerModule(AJAX_NS, {
 
 
 
-	
+
