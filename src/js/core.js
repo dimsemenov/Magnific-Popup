@@ -167,10 +167,9 @@ MagnificPopup.prototype = {
 			mfp.index = data.index || 0;
 		}
 
-		// if popup is already opened - we just update the content
+		// if popup is already opened - we get rid of the previous content
 		if(mfp.isOpen) {
-			mfp.updateItemHTML();
-			return;
+			mfp.contentContainer.detach();
 		}
 		
 		mfp.types = []; 

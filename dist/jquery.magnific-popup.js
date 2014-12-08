@@ -284,7 +284,7 @@ MagnificPopup.prototype = {
 
 		if(mfp.st.enableEscapeKey) {
 			// Close on ESC key
-			_document.on('keyup' + EVENT_NS, function(e) {
+			_document.on('keydown' + EVENT_NS, function(e) {
 				if(e.keyCode === 27) {
 					mfp.close();
 				}
@@ -422,7 +422,7 @@ MagnificPopup.prototype = {
 			$('html').css(windowStyles);
 		}
 		
-		_document.off('keyup' + EVENT_NS + ' focusin' + EVENT_NS);
+		_document.off('keydown' + EVENT_NS + ' focusin' + EVENT_NS);
 		mfp.ev.off(EVENT_NS);
 
 		// clean up DOM elements that aren't removed
