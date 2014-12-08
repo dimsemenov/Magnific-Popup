@@ -138,6 +138,9 @@ module.exports = function(grunt) {
             "if (typeof define === 'function' && define.amd) { \n" +
             " // AMD. Register as an anonymous module. \n" + 
             " define(['jquery'], factory); \n" + 
+            " } else if (typeof exports === 'object') { \n" +
+            " // Node/CommonJS \n" +
+            " factory(require('jquery')); \n" +
             " } else { \n" +
             " // Browser globals \n" +
             " factory(window.jQuery || window.Zepto); \n" +
