@@ -169,7 +169,7 @@ module.exports = function(grunt) {
       newContents += grunt.file.read( basePath + name + '.js' ) + '\n';
       newContents += "\n/*>>"+name+"*/\n"; 
     });
-    newContents+= " _checkInstance(); })(window.jQuery || window.Zepto);";
+    newContents+= " _checkInstance(); })(jQuery || Zepto);";
 
     grunt.file.write( this.data.dest, newContents );
   });
