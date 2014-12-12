@@ -16,7 +16,7 @@ __article/
 node_modules
 _production
 all.min.css
-.sublime-*
+*.sublime-*
 website/dist/
 *.idea
 /.idea
