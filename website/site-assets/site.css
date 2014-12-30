@@ -121,7 +121,9 @@ body {
 clear: left;
 }
 
-
+h1#magnific-popup-docs {
+  display: none;
+}
 
 #logo {
   height: 150px;

@@ -1,4 +1,4 @@
-/*! Magnific Popup - v1.0.0 - 2014-12-12
+/*! Magnific Popup - v1.0.0 - 2014-12-30
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2014 Dmitry Semenov; */
 ;(function (factory) { 
@@ -42,6 +42,7 @@ var CLOSE_EVENT = 'Close',
 /**
  * Private vars 
  */
+/*jshint -W079 */
 var mfp, // As we have only one instance of MagnificPopup object, we define it locally to not to use 'this'
 	MagnificPopup = function(){},
 	_isJQ = !!(window.jQuery),
@@ -97,6 +98,7 @@ var _mfpOn = function(name, f) {
 	// Initialize Magnific Popup only when called at least once
 	_checkInstance = function() {
 		if(!$.magnificPopup.instance) {
+			/*jshint -W020 */
 			mfp = new MagnificPopup();
 			mfp.init();
 			$.magnificPopup.instance = mfp;
