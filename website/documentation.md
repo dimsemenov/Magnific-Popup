@@ -148,7 +148,7 @@ Play with [this example on CodePen](http://codepen.io/dimsemenov/pen/vKrqs).
 
 ## Content Types
 
-By default, Magnific Popup has 4 types of content: `image`, `iframe`, `inline`, and `ajax`. There is no any "auto-detection" of type based on URL, so you should define it manually.
+By default, Magnific Popup has 4 types of content: `image`, `iframe`, `inline`, and `ajax`. There is not any "auto-detection" of type based on URL, so you should define it manually.
 
 The type of a popup can be defined in a two ways:
 
