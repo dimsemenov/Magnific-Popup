@@ -186,45 +186,46 @@ h2.intro {
 }*/
 
 
-#magnific_popup_docs {
-  display: none;
-}
-.maruku_toc {
+#markdown-toc {
   position: fixed;
   left: 0;
   top: 50px;
   padding: 20px 20px;
   background: rgba(255, 255, 255, 0.71);
   -webkit-backface-visibility:hidden;
-}
-.maruku_toc ul {
   list-style: none;
 }
-.maruku_toc ul ul {
+#markdown-toc a[href="#magnific-popup-docs"] {
   display: none;
 }
-.maruku_toc:before {
+#markdown-toc ul {
+  list-style: none;
+}
+#markdown-toc ul ul {
+  display: none;
+}
+#markdown-toc:before {
   content: 'Table of contents';
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
 }
 @media all and (max-width: 75em) {
-  .maruku_toc {
+  #markdown-toc {
     position: static;
     padding: 0;
     background: none;
   } 
 }
-.maruku_toc a {
+#markdown-toc a {
   text-decoration: none;
   border-bottom: 1px dotted;
 }
-.maruku_toc ul {
+#markdown-toc ul {
   margin: 0;
   padding: 0;
 }
-.maruku_toc .active a{
+#markdown-toc .active a{
   text-decoration: none;
   color: #666;
 }
@@ -296,6 +297,60 @@ content: 'JS';
 }
 code.css:before {
 content: 'CSS';
+}
+
+
+#mc_embed_signup {
+  max-width: 350px;
+  padding: 32px;
+  background: #EEE;
+}
+#mc_embed_signup input[type="email"] {
+  border: 1px solid #CCC;
+  border-top: 1px solid #999;
+  padding: 5px;
+  font-size: 18px;
+  width: 200px;
+  margin-right: 10px;
+  height: 25px;
+  transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+}
+#mc_embed_signup input[type="email"]:focus {
+  background-color: #FFF;
+  border: 1px solid #3169B3;
+  box-shadow: #3169B3 0px 0px 5px;
+  -moz-box-shadow: #3169B3 0px 0px 5px;
+  -webkit-box-shadow: #3169B3 0px 0px 5px;
+  outline: none;
+}
+#mc_embed_signup input[type="submit"] {
+  border: 1px solid #3169B3;
+  font-size: 13px;
+  font-weight: bold;
+  color: #FFF;
+  height: auto;
+  padding: 8px 13px;
+  cursor: pointer;
+  background-color: #3169B3;
+  display: inline-block;
+  width: auto;
+  -webkit-appearance: none;
+  border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  vertical-align: top;
+}
+.embed-form {
+  position: relative;
+}
+#mc_embed_signup p {
+  font-size: 15px;
+  color: #4F4F4F;
 }
 
 

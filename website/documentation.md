@@ -27,6 +27,9 @@ Here you can find the guide on how to use Magnific Popup. Besides this docs page
 
 Please ask general questions through <a href="http://stackoverflow.com/questions/ask?tags=magnific-popup">StackOverflow</a> tagged with `magnific-popup`.
 
+If you're looking for touch-friendly popup just for images, <a href="http://photoswipe.com">PhotoSwipe</a> might be a better choice.
+
+
 # magnific popup docs
 
 * This will become a table of contents (this text will be scraped).
@@ -599,6 +602,12 @@ This is is a shortcut to set ``closeOnContentClick``, ``closeOnBgClick``,
 <code class="def">false</code>
 
 If set to `true` popup is aligned to top instead of to center. (basically all this option does is adds `mfp-align-top` CSS class to popup which removes styles that align popup to center).
+
+### index
+
+<code class="def">null</code>
+
+Used for gallery. Defines starting index. If popup is initialised from DOM element, this option will be ignored.
 
 
 ### fixedContentPos
@@ -1195,3 +1204,16 @@ Improve this documentation page (simply submit commit <a href="https://github.co
 <div>
   <iframe src="http://ghbtns.com/github-btn.html?user=dimsemenov&amp;repo=magnific-popup&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30">&nbsp;</iframe>
 </div>
+
+<h2>Keep updated</h2>
+<div id="mc_embed_signup" class="embed-form">
+  <form action="http://dimsemenov.us1.list-manage.com/subscribe/post?u=ef6026d946a7b5d41d92c02e4&amp;id=54fae727da" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+    <p>Get notified about important update or new release.</p>
+    <div class="mc-field-group">
+      <input type="email" value="" name="EMAIL" placeholder="Your email" class="required email" id="mce-EMAIL">
+      <input type="hidden" id="group_2" name="group[2065][2]" value="true">
+      <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+    </div>
+    <p style="font-size: 12px; margin: 4px 0 0 0;">Newsletter is sent 3 times a year at max. Powered by Mailchimp.</p>
+  </form>
+ </div>
