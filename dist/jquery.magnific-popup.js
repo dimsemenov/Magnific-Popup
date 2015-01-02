@@ -1,6 +1,6 @@
-/*! Magnific Popup - v1.0.0 - 2014-12-30
+/*! Magnific Popup - v1.0.0 - 2015-01-02
 * http://dimsemenov.com/plugins/magnific-popup/
-* Copyright (c) 2014 Dmitry Semenov; */
+* Copyright (c) 2015 Dmitry Semenov; */
 ;(function (factory) { 
 if (typeof define === 'function' && define.amd) { 
  // AMD. Register as an anonymous module. 
