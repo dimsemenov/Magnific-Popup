@@ -1,4 +1,4 @@
-/*! Magnific Popup - v1.0.0 - 2015-01-02
+/*! Magnific Popup - v1.0.0 - 2015-01-03
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2015 Dmitry Semenov; */
 ;(function (factory) { 
@@ -48,7 +48,6 @@ var mfp, // As we have only one instance of MagnificPopup object, we define it l
 	_isJQ = !!(window.jQuery),
 	_prevStatus,
 	_window = $(window),
-	_body,
 	_document,
 	_prevContentType,
 	_wrapClasses,
@@ -157,10 +156,6 @@ MagnificPopup.prototype = {
 	 * @param  data [description]
 	 */
 	open: function(data) {
-
-		if(!_body) {
-			_body = $(document.body);
-		}
 
 		var i;
 
@@ -360,7 +355,7 @@ MagnificPopup.prototype = {
 		$('html').css(windowStyles);
 		
 		// add everything to DOM
-		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || _body );
+		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || $(document.body) );
 
 		// Save last focused element
 		mfp._lastFocusedEl = document.activeElement;
@@ -1065,7 +1060,7 @@ var AJAX_NS = 'ajax',
 	_ajaxCur,
 	_removeAjaxCursor = function() {
 		if(_ajaxCur) {
-			_body.removeClass(_ajaxCur);
+			$(document.body).removeClass(_ajaxCur);
 		}
 	},
 	_destroyAjaxRequest = function() {
@@ -1093,8 +1088,9 @@ $.magnificPopup.registerModule(AJAX_NS, {
 		},
 		getAjax: function(item) {
 
-			if(_ajaxCur)
-				_body.addClass(_ajaxCur);
+			if(_ajaxCur) {
+				$(document.body).addClass(_ajaxCur);
+			}
 
 			mfp.updateStatus('loading');
 
@@ -1194,13 +1190,13 @@ $.magnificPopup.registerModule('image', {
 
 			_mfpOn(OPEN_EVENT+ns, function() {
 				if(mfp.currItem.type === 'image' && imgSt.cursor) {
-					_body.addClass(imgSt.cursor);
+					$(document.body).addClass(imgSt.cursor);
 				}
 			});
 
 			_mfpOn(CLOSE_EVENT+ns, function() {
 				if(imgSt.cursor) {
-					_body.removeClass(imgSt.cursor);
+					$(document.body).removeClass(imgSt.cursor);
 				}
 				_window.off('resize' + EVENT_NS);
 			});
