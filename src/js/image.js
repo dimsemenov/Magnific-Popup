@@ -45,13 +45,13 @@ $.magnificPopup.registerModule('image', {
 
 			_mfpOn(OPEN_EVENT+ns, function() {
 				if(mfp.currItem.type === 'image' && imgSt.cursor) {
-					_body.addClass(imgSt.cursor);
+					$(document.body).addClass(imgSt.cursor);
 				}
 			});
 
 			_mfpOn(CLOSE_EVENT+ns, function() {
 				if(imgSt.cursor) {
-					_body.removeClass(imgSt.cursor);
+					$(document.body).removeClass(imgSt.cursor);
 				}
 				_window.off('resize' + EVENT_NS);
 			});

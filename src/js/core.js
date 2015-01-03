@@ -31,7 +31,6 @@ var mfp, // As we have only one instance of MagnificPopup object, we define it l
 	_isJQ = !!(window.jQuery),
 	_prevStatus,
 	_window = $(window),
-	_body,
 	_document,
 	_prevContentType,
 	_wrapClasses,
@@ -140,10 +139,6 @@ MagnificPopup.prototype = {
 	 * @param  data [description]
 	 */
 	open: function(data) {
-
-		if(!_body) {
-			_body = $(document.body);
-		}
 
 		var i;
 
@@ -343,7 +338,7 @@ MagnificPopup.prototype = {
 		$('html').css(windowStyles);
 		
 		// add everything to DOM
-		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || _body );
+		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || $(document.body) );
 
 		// Save last focused element
 		mfp._lastFocusedEl = document.activeElement;
