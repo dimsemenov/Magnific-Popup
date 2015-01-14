@@ -834,7 +834,11 @@ $.magnificPopup = {
 	},
 
 	close: function() {
-		return $.magnificPopup.instance && $.magnificPopup.instance.close();
+		if (window.parent !== window) {
+			return window.parent.$.magnificPopup.close();
+		} else {
+			return $.magnificPopup.instance && $.magnificPopup.instance.close();
+		}
 	},
 
 	registerModule: function(name, module) {
