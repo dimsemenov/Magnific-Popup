@@ -721,7 +721,7 @@ MagnificPopup.prototype = {
 			}
 
 			// if click is outside the content
-			if(  (target !== mfp.content[0] && !$.contains(mfp.content[0], target))  ) {
+			if( (target !== mfp.content[0] && !$.contains(mfp.content[0].parentElement, target)) ) {
 				if(closeOnBg) {
 					// last check, if the clicked element is in DOM, (in case it's removed onclick)
 					if( $.contains(document, target) ) {
