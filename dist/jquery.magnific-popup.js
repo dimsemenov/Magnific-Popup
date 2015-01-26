@@ -1,4 +1,4 @@
-/*! Magnific Popup - v1.0.0 - 2015-01-03
+/*! Magnific Popup - v1.0.0 - 2015-01-26
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2015 Dmitry Semenov; */
 ;(function (factory) { 
@@ -738,7 +738,7 @@ MagnificPopup.prototype = {
 			}
 
 			// if click is outside the content
-			if(  (target !== mfp.content[0] && !$.contains(mfp.content[0], target))  ) {
+			if( (target !== mfp.content[0] && !$.contains(mfp.content[0].parentElement, target)) ) {
 				if(closeOnBg) {
 					// last check, if the clicked element is in DOM, (in case it's removed onclick)
 					if( $.contains(document, target) ) {
