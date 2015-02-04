@@ -184,7 +184,11 @@ module.exports = function(grunt) {
       newContents += grunt.file.read( basePath + name + '.js' ) + '\n';
       newContents += "\n/*>>"+name+"*/\n"; 
     });
-    newContents+= " _checkInstance(); }));";
+    newContents+= " _checkInstance();\n";
+    newContents+= " if (typeof define === 'function' && define.amd) {\n";
+    newContents+= "  return $.fn.magnificPopup;\n";
+    newContents+= " }\n";
+    newContents+= "\n}));";
 
     grunt.file.write( this.data.dest, newContents );
   });
