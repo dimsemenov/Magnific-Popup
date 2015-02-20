@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "title": "Magnific Popup",
   "description": "Lightbox and modal dialog plugin. Can display inline HTML, iframes (YouTube video, Vimeo, Google Maps), or an image gallery. Animation effects are added with CSS3 transitions. For jQuery or Zepto.",
-  "keywords": ["lightbox","popup","modal","window","dialog","gallery","jquery","photo","responsive","mobile"],
+  "keywords": ["ecosystem:jquery", "jquery-plugin", "zepto", "lightbox","popup","modal","window","dialog","gallery","jquery","photo","responsive","mobile"],
   "author": {
       "name": "Dmitry Semenov",
       "email": "diiiimaaaa@gmail.com",
