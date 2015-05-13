@@ -305,6 +305,10 @@ button {
   &:active {
     top: 1px;
   }
+
+  &:before {
+    content: '×';
+  }
 }
 .mfp-close-btn-in {
   .mfp-close {

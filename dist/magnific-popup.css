@@ -140,6 +140,8 @@ button::-moz-focus-inner {
     filter: alpha(opacity=100); }
   .mfp-close:active {
     top: 1px; }
+  .mfp-close:before {
+    content: '×';}
 
 .mfp-close-btn-in .mfp-close {
   color: #333; }
