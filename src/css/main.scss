@@ -6,13 +6,12 @@
 //
 // Contents:
 //
-// 1. Default Settings
-// 2. General styles
+// 1. General styles
 //    - Transluscent overlay
 //    - Containers, wrappers
 //    - Cursors
 //    - Helper classes
-// 3. Appearance
+// 2. Appearance
 //    - Preloader & text that displays error messages
 //    - CSS reset for buttons
 //    - Close icon
@@ -28,50 +27,7 @@
 
 
 ////////////////////////
-// 1. Default Settings
-////////////////////////
-
-$mfp-overlay-color:                   #0b0b0b !default;
-$mfp-overlay-opacity:                 0.8 !default;
-$mfp-shadow:                          0 0 8px rgba(0, 0, 0, 0.6) !default; // shadow on image or iframe
-$mfp-popup-padding-left:              8px !default; // Padding from left and from right side
-$mfp-popup-padding-left-mobile:       6px !default; // Same as above, but is applied when width of window is less than 800px
-
-$mfp-z-index-base:                    1040 !default; // Base z-index of popup
-$mfp-include-arrows:                  true !default; // include styles for nav arrows
-$mfp-controls-opacity:                0.65 !default;
-$mfp-controls-color:                  #FFF !default;
-$mfp-controls-border-color:           #3F3F3F !default;
-$mfp-inner-close-icon-color:          #333 !default;
-$mfp-controls-text-color:             #CCC !default; // Color of preloader and "1 of X" indicator
-$mfp-controls-text-color-hover:       #FFF !default;
-$mfp-IE7support:                      true !default; // Very basic IE7 support
-
-// Iframe-type options
-$mfp-include-iframe-type:             true !default;
-$mfp-iframe-padding-top:              40px !default;
-$mfp-iframe-background:               #000 !default;
-$mfp-iframe-max-width:                900px !default;
-$mfp-iframe-ratio:                    9/16 !default;
-
-// Image-type options
-$mfp-include-image-type:              true !default;
-$mfp-image-background:                #444 !default;
-$mfp-image-padding-top:               40px !default;
-$mfp-image-padding-bottom:            40px !default;
-$mfp-include-mobile-layout-for-image: true !default; // Removes paddings from top and bottom
-
-// Image caption options
-$mfp-caption-title-color:             #F3F3F3 !default;
-$mfp-caption-subtitle-color:          #BDBDBD !default;
-
-// A11y
-$mfp-use-visuallyhidden:              false !default; // Hide content from browsers, but make it available for screen readers 
-
-
-
-////////////////////////
-// 2. General styles
+// 1. General styles
 ////////////////////////
 
 // Transluscent overlay
@@ -129,7 +85,7 @@ $mfp-use-visuallyhidden:              false !default; // Hide content from brows
 
 // Remove vertical centering when popup has class `mfp-align-top`
 .mfp-align-top {
-  .mfp-container { 
+  .mfp-container {
     &:before {
       display: none;
     }
@@ -213,7 +169,7 @@ $mfp-use-visuallyhidden:              false !default; // Hide content from brows
 
 
 ////////////////////////
-// 3. Appearance
+// 2. Appearance
 ////////////////////////
 
 // Preloader and text that displays error messages
@@ -402,7 +358,7 @@ button {
     &:before,
     .mfp-b {
       margin-left: 25px;
-      border-right: 27px solid $mfp-controls-border-color; 
+      border-right: 27px solid $mfp-controls-border-color;
     }
   }
 
