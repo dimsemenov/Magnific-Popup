@@ -3,43 +3,43 @@
 ////////////////////////
 
 // overlay
-$mfp-overlay-color:                   #0b0b0b;                    // Color of overlay screen
-$mfp-overlay-opacity:                 0.8;                        // Opacity of overlay screen
-$mfp-shadow:                          0 0 8px rgba(0, 0, 0, 0.6); // Shadow on image or iframe
+$mfp-overlay-color:                   #0b0b0b !default;                    // Color of overlay screen
+$mfp-overlay-opacity:                 0.8 !default;                        // Opacity of overlay screen
+$mfp-shadow:                          0 0 8px rgba(0, 0, 0, 0.6) !default; // Shadow on image or iframe
 
 // spacing
-$mfp-popup-padding-left:              8px;                        // Padding from left and from right side
-$mfp-popup-padding-left-mobile:       6px;                        // Same as above, but is applied when width of window is less than 800px
+$mfp-popup-padding-left:              8px!default ;                        // Padding from left and from right side
+$mfp-popup-padding-left-mobile:       6px !default;                        // Same as above, but is applied when width of window is less than 800px
 
-$mfp-z-index-base:                    1040;                        // Base z-index of popup
+$mfp-z-index-base:                    1040 !default;                       // Base z-index of popup
 
 // controls
-$mfp-include-arrows:                  true;                       // Include styles for nav arrows
-$mfp-controls-opacity:                0.65;                       // Opacity of controls
-$mfp-controls-color:                  #FFF;                       // Color of controls
-$mfp-controls-border-color:           #3F3F3F; 	                  // Border color of controls
-$mfp-inner-close-icon-color:          #333;                       // Color of close button when inside
-$mfp-controls-text-color:             #CCC;                       // Color of preloader and "1 of X" indicator
-$mfp-controls-text-color-hover:       #FFF;                       // Hover color of preloader and "1 of X" indicator
-$mfp-IE7support:                      true;                       // Very basic IE7 support
+$mfp-include-arrows:                  true !default;                       // Include styles for nav arrows
+$mfp-controls-opacity:                0.65 !default;                       // Opacity of controls
+$mfp-controls-color:                  #FFF !default;                       // Color of controls
+$mfp-controls-border-color:           #3F3F3F !default; 	                 // Border color of controls
+$mfp-inner-close-icon-color:          #333 !default;                       // Color of close button when inside
+$mfp-controls-text-color:             #CCC !default;                       // Color of preloader and "1 of X" indicator
+$mfp-controls-text-color-hover:       #FFF !default;                       // Hover color of preloader and "1 of X" indicator
+$mfp-IE7support:                      true !default;                       // Very basic IE7 support
 
 // Iframe-type options
-$mfp-include-iframe-type:             true;                       // Enable Iframe-type popups
-$mfp-iframe-padding-top:              40px;                       // Iframe padding top
-$mfp-iframe-background:               #000;                       // Background color of iframes
-$mfp-iframe-max-width:                900px;                      // Maximum width of iframes
-$mfp-iframe-ratio:                    9/16;                       // Ratio of iframe (9/16 = widescreen, 3/4 = standard, etc.)
+$mfp-include-iframe-type:             true !default;                       // Enable Iframe-type popups
+$mfp-iframe-padding-top:              40px !default;                       // Iframe padding top
+$mfp-iframe-background:               #000 !default;                       // Background color of iframes
+$mfp-iframe-max-width:                900px !default;                      // Maximum width of iframes
+$mfp-iframe-ratio:                    9/16 !default;                       // Ratio of iframe (9/16 = widescreen, 3/4 = standard, etc.)
 
 // Image-type options
-$mfp-include-image-type:              true;                       // Enable Image-type popups
+$mfp-include-image-type:              true !default;                       // Enable Image-type popups
 $mfp-image-background:                #444 !default;
-$mfp-image-padding-top:               40px;                       // Image padding top
-$mfp-image-padding-bottom:            40px;                       // Image padding bottom
-$mfp-include-mobile-layout-for-image: true;                       // Removes paddings from top and bottom
+$mfp-image-padding-top:               40px !default;                       // Image padding top
+$mfp-image-padding-bottom:            40px !default;                       // Image padding bottom
+$mfp-include-mobile-layout-for-image: true !default;                       // Removes paddings from top and bottom
 
 // Image caption options
-$mfp-caption-title-color:             #F3F3F3;                    // Caption title color
-$mfp-caption-subtitle-color:          #BDBDBD;                    // Caption subtitle color
+$mfp-caption-title-color:             #F3F3F3 !default;                    // Caption title color
+$mfp-caption-subtitle-color:          #BDBDBD !default;                    // Caption subtitle color
 
 // A11y
-$mfp-use-visuallyhidden:              false; 
+$mfp-use-visuallyhidden:              false !default;                      // Hide content from browsers, but make it available for screen readers
