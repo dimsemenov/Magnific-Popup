@@ -376,7 +376,7 @@ I have created two examples on CodePen that will help you better understand how 
 
 ## Ajax Type
 
-To create such type of popup, first of define the path to the file that you wish to display and select `ajax` type of the popup. Popup itself should be styled in exactly the same way as an [inline popup type](#inline_type).
+To create such type of popup, first of define the path to the file that you wish to display and select `ajax` type of the popup. Popup itself should be styled in exactly the same way as an [inline popup type](#inline-type).
 
 **Important note!** The contents of the file that you load is already a popup itself, so there must be **only one root element**.
 
