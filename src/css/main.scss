@@ -101,6 +101,14 @@
   text-align: left;
   z-index: $mfp-z-index-base + 5;
 }
+.mfp-content-before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
 .mfp-inline-holder,
 .mfp-ajax-holder {
   .mfp-content {

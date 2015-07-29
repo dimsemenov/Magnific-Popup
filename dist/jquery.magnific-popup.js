@@ -1,4 +1,4 @@
-/*! Magnific Popup - v1.0.0 - 2015-01-03
+/*! Magnific Popup - v1.0.0 - 2015-06-18
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2015 Dmitry Semenov; */
 ;(function (factory) { 
@@ -226,14 +226,27 @@ MagnificPopup.prototype = {
 				mfp.close();
 			});
 
-			mfp.wrap = _getEl('wrap').attr('tabindex', -1).on('click'+EVENT_NS, function(e) {
+			mfp.wrap = _getEl('wrap').attr('tabindex', -1);
+
+			mfp.container = _getEl('container', mfp.wrap);
+		}
+
+		if (data.closeOnContentClick) {
+			mfp.wrap.on('click'+EVENT_NS, function(e) {
 				if(mfp._checkIfClose(e.target)) {
 					mfp.close();
 				}
 			});
-
-			mfp.container = _getEl('container', mfp.wrap);
+		} else {
+			mfp.wrap.off('click'+EVENT_NS);
 		}
+		mfp.contentBefore = _getEl('content-before').on('click'+EVENT_NS, function(e) {
+			if(mfp._checkIfClose(e.target)) {
+				mfp.close();
+			}
+		});
+
+		mfp.container.prepend(mfp.contentBefore);
 
 		mfp.contentContainer = _getEl('content');
 		if(mfp.st.preloader) {
@@ -288,7 +301,6 @@ MagnificPopup.prototype = {
 			});
 		}
 
-		
 
 		if(mfp.st.enableEscapeKey) {
 			// Close on ESC key
@@ -533,7 +545,21 @@ MagnificPopup.prototype = {
 		
 		// Append container back after its content changed
 		mfp.container.prepend(mfp.contentContainer);
+		
+		if (type == 'inline') {
+			var $cnt = $(mfp.contentContainer[0].firstChild);
+			
+			setTimeout(function(){
+				var 
+					width = $cnt.width(),
+					maxWidth = parseInt($cnt.css('max-width')) > 0 ? $cnt.css('max-width') : width
 
+				mfp.contentContainer.css({
+					'max-width': maxWidth
+				});
+			},0);
+		}
+		
 		_mfpTrigger('AfterChange');
 	},
 
