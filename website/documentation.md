@@ -638,7 +638,7 @@ Delay before popup is removed from DOM. Used for the [animation](#animation).
 
 ### closeMarkup
 
-<code class="def">&lt;button title=&quot;%title%&quot; class=&quot;mfp-close&quot;&gt;&lt;i class=&quot;mfp-close-icn&quot;&gt;&amp;times;&lt;/i&gt;&lt;/button&gt;</code>
+<code class="def">&lt;button title=&quot;%title%&quot; type=&quot;button&quot; class=&quot;mfp-close&quot;&gt;&times;&lt;/button&gt;</code>
 
 Markup of close button. %title% will be replaced with option `tClose`.
 
