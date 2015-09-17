@@ -8,19 +8,19 @@
 /**
  * Private static constants
  */
-var CLOSE_EVENT = 'Close',
-	BEFORE_CLOSE_EVENT = 'BeforeClose',
-	AFTER_CLOSE_EVENT = 'AfterClose',
+var CLOSE_EVENT       = 'Close',
+	BEFORE_CLOSE_EVENT  = 'BeforeClose',
+	AFTER_CLOSE_EVENT   = 'AfterClose',
 	BEFORE_APPEND_EVENT = 'BeforeAppend',
-	MARKUP_PARSE_EVENT = 'MarkupParse',
-	OPEN_EVENT = 'Open',
-	CHANGE_EVENT = 'Change',
-	NS = 'mfp',
-	EVENT_NS = '.' + NS,
-	READY_CLASS = 'mfp-ready',
-	REMOVING_CLASS = 'mfp-removing',
+	MARKUP_PARSE_EVENT  = 'MarkupParse',
+	OPEN_EVENT          = 'Open',
+  AFTER_OPEN_EVENT    = 'AfterOpen',
+	CHANGE_EVENT        = 'Change',
+	NS                  = 'mfp',
+	EVENT_NS            = '.' + NS,
+	READY_CLASS         = 'mfp-ready',
+	REMOVING_CLASS      = 'mfp-removing',
 	PREVENT_CLOSE_CLASS = 'mfp-prevent-close';
-
 
 /**
  * Private vars 
@@ -748,6 +748,7 @@ MagnificPopup.prototype = {
 	},
 	_setFocus: function() {
 		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
+    _mfpTrigger(AFTER_OPEN_EVENT);
 	},
 	_onFocusIn: function(e) {
 		if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
