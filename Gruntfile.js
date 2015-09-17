@@ -90,12 +90,12 @@ module.exports = function(grunt) {
     copy: {
       main: {
         files: [
-          {src: ['dist/**'], dest: 'website/'}
+          {expand:true, src: ['dist/**'], dest: 'website/'}
         ]
       },
       dev: {
         files: [
-          {src: ['dist/**'], dest: '_site/'}
+          {expand:true, src: ['dist/**'], dest: '_site/'}
         ]
       }
     },
