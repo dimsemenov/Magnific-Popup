@@ -35,7 +35,7 @@ module.exports = function(grunt) {
     sass: {                            
       dist: {                      
         files: {      
-          'dist/magnific-popup.css': 'src/css/main.scss'
+          'dist/magnific-popup.css': 'src/css/magnific_popup.scss'
         }
       }
     },
