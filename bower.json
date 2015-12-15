@@ -1,6 +1,5 @@
 {
   "name": "magnific-popup",
-  "version": "1.0.0",
   "main": [
     "dist/jquery.magnific-popup.js",
     "dist/magnific-popup.css"

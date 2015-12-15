@@ -68,3 +68,9 @@ Script is MIT licensed and free and will always be kept this way. But has a smal
 Created by [@dimsemenov](http://twitter.com/dimsemenov) & [contributors](https://github.com/dimsemenov/Magnific-Popup/contributors).
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dimsemenov/magnific-popup/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
+## Bugs & contributing
+
+Please report bugs via GitHub and ask general questions through [StackOverflow](http://stackoverflow.com/questions/tagged/magnific-popup). Feel free to submit commit [pull-request](https://github.com/dimsemenov/Magnific-Popup/pulls), even the tiniest contributions to the script or to the documentation are very welcome.
+
+
