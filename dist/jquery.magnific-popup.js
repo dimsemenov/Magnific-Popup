@@ -1,4 +1,4 @@
-/*! Magnific Popup - v1.0.0 - 2015-09-17
+/*! Magnific Popup - v1.0.0 - 2015-12-16
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2015 Dmitry Semenov; */
 ;(function (factory) { 
@@ -446,7 +446,7 @@ MagnificPopup.prototype = {
 		}
 
 
-		if(mfp._lastFocusedEl) {
+		if(mfp.st.autoFocusLast && mfp._lastFocusedEl) {
 			$(mfp._lastFocusedEl).focus(); // put tab focus back
 		}
 		mfp.currItem = null;	
@@ -907,7 +907,9 @@ $.magnificPopup = {
 
 		tClose: 'Close (Esc)',
 
-		tLoading: 'Loading...'
+		tLoading: 'Loading...',
+
+		autoFocusLast: true
 
 	}
 };

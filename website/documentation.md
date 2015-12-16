@@ -648,6 +648,12 @@ Markup of close button. %title% will be replaced with option `tClose`.
 
 The DOM element to which popup will be added. Useful when you're using Asp.NET where popup should be inside `form`. Option available since 2013/12/04.
 
+### autoFocusLast 
+
+<code class="def">true</code>
+
+If set to `true` last focused element before popup showup will be focused after popup close. Option available since 2015/05/19.
+  
 
 
 ## Gallery
