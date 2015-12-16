@@ -652,8 +652,7 @@ The DOM element to which popup will be added. Useful when you're using Asp.NET w
 
 <code class="def">true</code>
 
-If set to `true` last focused element before popup showup will be focused after popup close. Option available since 2015/05/19.
-  
+If set to `true` last focused element before popup showup will be focused after popup close. Option available since 2015/12/16.
 
 
 ## Gallery
