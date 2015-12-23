@@ -132,6 +132,8 @@ $.magnificPopup.registerModule('gallery', {
 		goTo: function(newIndex) {
 			mfp.direction = (newIndex >= mfp.index);
 			mfp.index = newIndex;
+			mfp._preloadItem(mfp.index);
+			mfp.preloadNearbyImages();
 			mfp.updateItemHTML();
 		},
 		preloadNearbyImages: function() {
