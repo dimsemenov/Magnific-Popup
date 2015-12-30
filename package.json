@@ -1,6 +1,6 @@
 {
   "name": "magnific-popup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "title": "Magnific Popup",
   "description": "Lightbox and modal dialog plugin. Can display inline HTML, iframes (YouTube video, Vimeo, Google Maps), or an image gallery. Animation effects are added with CSS3 transitions. For jQuery or Zepto.",
   "keywords": [
