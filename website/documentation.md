@@ -593,7 +593,7 @@ When set to `true`, the popup will have a modal-like behavior: it won't be
 possible to dismiss it by usual means (close button, escape key, or
 clicking in the overlay).
 
-This is is a shortcut to set ``closeOnContentClick``, ``closeOnBgClick``,
+This is a shortcut to set ``closeOnContentClick``, ``closeOnBgClick``,
 ``showCloseBtn``, and ``enableEscapeKey`` to ``false``.
 
 
