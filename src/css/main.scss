@@ -216,7 +216,6 @@ button {
     outline: none;
     padding: 0;
     z-index: $mfp-z-index-base + 6;
-    -webkit-box-shadow: none;
     box-shadow: none;
   }
   &::-moz-focus-inner {
