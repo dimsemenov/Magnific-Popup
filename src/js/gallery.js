@@ -82,15 +82,7 @@ $.magnificPopup.registerModule('gallery', {
 					});			
 					arrowRight.click(function() {
 						mfp.next();
-					});	
-
-					// Polyfill for :before and :after (adds elements with classes mfp-a and mfp-b)
-					if(mfp.isIE7) {
-						_getEl('b', arrowLeft[0], false, true);
-						_getEl('a', arrowLeft[0], false, true);
-						_getEl('b', arrowRight[0], false, true);
-						_getEl('a', arrowRight[0], false, true);
-					}
+					});
 
 					mfp.container.append(arrowLeft.add(arrowRight));
 				}
