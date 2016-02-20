@@ -2,7 +2,7 @@
   "name": "magnific-popup",
   "title": "Magnific Popup",
   "description": "Fast, light, mobile-friendly and responsive lightbox and modal dialog plugin. Open inline HTML, ajax loaded content, image, form, iframe (YouTube video, Vimeo, Google Maps), photo gallery. Animation effects added with CSS3 transitions. For jQuery or Zepto.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "homepage": "http://dimsemenov.com/plugins/magnific-popup/",
   "demo": "http://dimsemenov.com/plugins/magnific-popup/",
   "docs": "http://dimsemenov.com/plugins/magnific-popup/documentation.html",
@@ -17,7 +17,7 @@
   },
   "bugs": "https://github.com/dimsemenov/Magnific-Popup/issues",
   "dependencies": {
-    "jquery": ">=1.7.2"
+    "jquery": ">=1.8.0"
   },
   "keywords": ["lightbox","popup","modal","window","dialog","ui","gallery","slideshow","video","image","ajax","html5","animation","jquery","photo","responsive","mobile"],
   "licenses": [
