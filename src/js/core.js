@@ -208,15 +208,20 @@ MagnificPopup.prototype = {
 			});
 
 			mfp.wrap = _getEl('wrap').attr('tabindex', -1).on('click'+EVENT_NS, function(e) {
-				if(mfp._checkIfClose(e.target)) {
+				if(mfp._checkIfClose(e.target, e.target._mfpFromContent)) {
 					mfp.close();
 				}
+				delete e.target._mfpFromContent;
 			});
 
 			mfp.container = _getEl('container', mfp.wrap);
 		}
 
 		mfp.contentContainer = _getEl('content');
+		mfp.contentContainer.on('click'+EVENT_NS, function(e) {
+			// Notify wrap click event handler the event bubbled from content
+			e.target._mfpFromContent = (e.target !== this);
+		});
 		if(mfp.st.preloader) {
 			mfp.preloader = _getEl('preloader', mfp.container, mfp.st.tLoading);
 		}
@@ -693,8 +698,7 @@ MagnificPopup.prototype = {
 	 */
 	// Check to close popup or not
 	// "target" is an element that was clicked
-	_checkIfClose: function(target) {
-
+	_checkIfClose: function(target, fromContent) {
 		if($(target).hasClass(PREVENT_CLOSE_CLASS)) {
 			return;
 		}
@@ -705,14 +709,11 @@ MagnificPopup.prototype = {
 		if(closeOnContent && closeOnBg) {
 			return true;
 		} else {
-
-			// We close the popup if click is on close button or on preloader. Or if there is no content.
-			if(!mfp.content || $(target).hasClass('mfp-close') || (mfp.preloader && target === mfp.preloader[0]) ) {
+			// We close the popup if click is on close button or on preloader.
+			if($(target).hasClass('mfp-close') || (mfp.preloader && target === mfp.preloader[0]) ) {
 				return true;
 			}
-
-			// if click is outside the content
-			if(  (target !== mfp.content[0] && !$.contains(mfp.content[0], target))  ) {
+			if(!fromContent) {
 				if(closeOnBg) {
 					// last check, if the clicked element is in DOM, (in case it's removed onclick)
 					if( $.contains(document, target) ) {
