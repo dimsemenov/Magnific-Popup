@@ -32,8 +32,7 @@ $.magnificPopup.registerModule('gallery', {
 		initGallery: function() {
 
 			var gSt = mfp.st.gallery,
-				ns = '.mfp-gallery',
-				supportsFastClick = Boolean($.fn.mfpFastClick);
+				ns = '.mfp-gallery';
 
 			mfp.direction = true; // true - next, false - prev
 			
@@ -78,11 +77,10 @@ $.magnificPopup.registerModule('gallery', {
 						arrowLeft = mfp.arrowLeft = $( markup.replace(/%title%/gi, gSt.tPrev).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),			
 						arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, gSt.tNext).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
 
-					var eName = supportsFastClick ? 'mfpFastClick' : 'click';
-					arrowLeft[eName](function() {
+					arrowLeft.click(function() {
 						mfp.prev();
 					});			
-					arrowRight[eName](function() {
+					arrowRight.click(function() {
 						mfp.next();
 					});	
 
@@ -111,10 +109,6 @@ $.magnificPopup.registerModule('gallery', {
 			_mfpOn(CLOSE_EVENT+ns, function() {
 				_document.off(ns);
 				mfp.wrap.off('click'+ns);
-			
-				if(mfp.arrowLeft && supportsFastClick) {
-					mfp.arrowLeft.add(mfp.arrowRight).destroyMfpFastClick();
-				}
 				mfp.arrowRight = mfp.arrowLeft = null;
 			});
 

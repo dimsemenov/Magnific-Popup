@@ -60,7 +60,6 @@ module.exports = function(grunt) {
           'iframe',
           'gallery',
           'retina',
-          'fastclick'
         ],
         basePath: 'src/js/',
         dest: 'dist/jquery.magnific-popup.js',

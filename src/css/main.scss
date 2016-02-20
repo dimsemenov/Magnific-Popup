@@ -217,6 +217,7 @@ button {
     padding: 0;
     z-index: $mfp-z-index-base + 6;
     box-shadow: none;
+    touch-action: manipulation;
   }
   &::-moz-focus-inner {
       padding: 0;
