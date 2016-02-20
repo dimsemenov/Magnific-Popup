@@ -75,9 +75,3 @@ $.magnificPopup.registerModule(AJAX_NS, {
 		}
 	}
 });
-
-
-
-
-
-	
