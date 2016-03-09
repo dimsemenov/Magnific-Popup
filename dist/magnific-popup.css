@@ -104,8 +104,7 @@
 .mfp-s-error .mfp-content {
   display: none; }
 
-button.mfp-close,
-button.mfp-arrow {
+button.mfp-close, button.mfp-arrow {
   overflow: visible;
   cursor: pointer;
   background: transparent;
@@ -137,8 +136,7 @@ button::-moz-focus-inner {
   font-style: normal;
   font-size: 28px;
   font-family: Arial, Baskerville, monospace; }
-  .mfp-close:hover,
-  .mfp-close:focus {
+  .mfp-close:hover, .mfp-close:focus {
     opacity: 1; }
   .mfp-close:active {
     top: 1px; }
@@ -175,11 +173,9 @@ button::-moz-focus-inner {
   -webkit-tap-highlight-color: transparent; }
   .mfp-arrow:active {
     margin-top: -54px; }
-  .mfp-arrow:hover,
-  .mfp-arrow:focus {
+  .mfp-arrow:hover, .mfp-arrow:focus {
     opacity: 1; }
-  .mfp-arrow:before,
-  .mfp-arrow:after {
+  .mfp-arrow:before, .mfp-arrow:after {
     content: '';
     display: block;
     width: 0;

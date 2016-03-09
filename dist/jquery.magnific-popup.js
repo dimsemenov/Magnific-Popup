@@ -1,4 +1,4 @@
-/*! Magnific Popup - v1.1.0 - 2016-02-20
+/*! Magnific Popup - v1.1.0 - 2016-03-09
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2016 Dmitry Semenov; */
 ;(function (factory) { 
@@ -1472,6 +1472,10 @@ $.magnificPopup.registerModule('zoom', {
 					mfp.content.css('visibility', 'hidden');
 
 					setTimeout(function() {
+						if(!animatedImg) {
+							showMainContent();
+							return;
+						}
 						animatedImg.css( mfp._getOffset() );
 					}, 16);
 				}
