@@ -452,6 +452,18 @@ MagnificPopup.prototype = {
 		// Fixes #84: popup incorrectly positioned with position:relative on body
 		if(!mfp.fixedContentPos) {
 			mfp.wrap.css('height', mfp.wH);
+
+			/**
+			After rotating, the popup is not vertical middle  aligned.
+			Tested on iPhone 6S Plus latest firmware (v9.3.x)
+			*/
+			if(mfp.isIOS) {
+				setTimeout(function() {
+					$('html, body').animate({
+						scrollTop: mfp.wrap.offset().top
+					}, 100);
+				}, 250);
+			}
 		}
 
 		_mfpTrigger('Resize');
