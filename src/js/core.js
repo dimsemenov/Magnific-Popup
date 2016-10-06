@@ -339,7 +339,11 @@ MagnificPopup.prototype = {
 		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || $(document.body) );
 
 		// Save last focused element
-		mfp._lastFocusedEl = document.activeElement;
+		try {
+			mfp._lastFocusedEl = document.activeElement;
+		} catch (error) {
+			mfp._lastFocusedEl = document.body;
+		}
 		
 		// Wait for next cycle to allow CSS transition
 		setTimeout(function() {
