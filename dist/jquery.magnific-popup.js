@@ -161,8 +161,8 @@ MagnificPopup.prototype = {
 
 			//remove items where the href is empty.  EX. <a href="#" ... 
 			for(i = 0; i < data.items.length; i++){
-				item = data.items[i];
-				if( item.href.substr(item.href.length -1 , 1) === '#'){
+				it = data.items[i];
+				if( it.href.substr(it.href.length -1 , 1) === '#'){
 					//remove it
 					data.items.splice(i,1);
 					//decrement i because you just removed an element from the array.
