@@ -233,7 +233,35 @@ MagnificPopup.prototype = {
 			mfp.container = _getEl('container', mfp.wrap);
 		}
 
+		// Add touch events
 		mfp.contentContainer = _getEl('content');
+        var touchPositions = {};
+        mfp.contentContainer.on('touchstart', function (e) {
+            touchPositions.startPosX = e.originalEvent.changedTouches[0].clientX;
+            touchPositions.startPosY = e.originalEvent.changedTouches[0].clientY;
+        });
+        mfp.contentContainer.on('touchmove', function (event) {
+            event.preventDefault();		    
+        });
+        mfp.contentContainer.on('touchend', function (e)   {
+            touchPositions.endPosX = e.originalEvent.changedTouches[0].clientX;
+            touchPositions.endPosY = e.originalEvent.changedTouches[0].clientY;
+            var difX = touchPositions.startPosX - touchPositions.endPosX;
+            touchPositions.directionX = 'Right';		        
+            if (difX < 0) {
+                touchPositions.directionX = 'Left';
+                difX = difX * -1;
+            }
+            var difY = touchPositions.startPosY - touchPositions.endPosY;
+            if (difX > difY && difX > 50) {
+                if (touchPositions.directionX == 'Right') {
+                    mfp.next();
+                } else {
+                    mfp.prev();
+                }
+            }
+        });
+
 		if(mfp.st.preloader) {
 			mfp.preloader = _getEl('preloader', mfp.container, mfp.st.tLoading);
 		}
@@ -527,6 +555,7 @@ MagnificPopup.prototype = {
 
 		// Append container back after its content changed
 		mfp.container.prepend(mfp.contentContainer);
+		$('.mfp-content').css('display', 'none');   
 
 		_mfpTrigger('AfterChange');
 	},
@@ -1264,6 +1293,7 @@ $.magnificPopup.registerModule('image', {
 							item.hasSize = true;
 							item.loaded = true;
 
+							$('.mfp-content').css('display', 'inline-block');
 							_mfpTrigger('ImageLoadComplete');
 
 						}
