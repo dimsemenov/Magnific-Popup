@@ -589,7 +589,7 @@ MagnificPopup.prototype = {
 	 */
 	addGroup: function(el, options) {
 		var eHandler = function(e) {
-			e.mfpEl = this;
+			e.mfpEl = $(this).blur();
 			mfp._openClick(e, el, options);
 		};
 
