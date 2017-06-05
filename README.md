@@ -33,7 +33,7 @@ If you created an extension for some CMS, email me and I'll add it to this list.
 
 ## Using Magnific Popup?
 
-If you used Magnific Popup in some interesting way, or on site of popular brand, I'd be very grateful if you <a href="mailto:diiiimaaaa@gmail.com?subject="Site that uses Magnific Popup"">shoot me</a> a link to it.
+If you used Magnific Popup in some interesting way, or on site of popular brand, I'd be very grateful if you <a href='mailto:diiiimaaaa@gmail.com?subject="Site that uses Magnific Popup"'>email me</a> a link to it.
 
 
 ## Build 
@@ -71,6 +71,6 @@ Created by [@dimsemenov](http://twitter.com/dimsemenov) & [contributors](https:/
 
 ## Bugs & contributing
 
-Please report bugs via GitHub and ask general questions through [StackOverflow](http://stackoverflow.com/questions/tagged/magnific-popup). Feel free to submit commit [pull-request](https://github.com/dimsemenov/Magnific-Popup/pulls), even the tiniest contributions to the script or to the documentation are very welcome.
+Please report bugs via GitHub and ask general questions through [Stack Overflow](http://stackoverflow.com/questions/tagged/magnific-popup). Feel free to submit commit [pull-request](https://github.com/dimsemenov/Magnific-Popup/pulls), even the tiniest contributions to the script or to the documentation are very welcome.
 
 
