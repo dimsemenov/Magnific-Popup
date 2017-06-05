@@ -20,6 +20,7 @@ $.magnificPopup.registerModule('gallery', {
 		enabled: false,
 		arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"></button>',
 		preload: [0,2],
+		preloadAfterLoad: false,
 		navigateByImgClick: true,
 		arrows: true,
 
@@ -89,14 +90,21 @@ $.magnificPopup.registerModule('gallery', {
 			});
 
 			_mfpOn(CHANGE_EVENT+ns, function() {
-				if(mfp._preloadTimeout) clearTimeout(mfp._preloadTimeout);
+				if (!gSt.preloadAfterLoad) {
+					if(mfp._preloadTimeout) clearTimeout(mfp._preloadTimeout);
 
-				mfp._preloadTimeout = setTimeout(function() {
-					mfp.preloadNearbyImages();
-					mfp._preloadTimeout = null;
-				}, 16);
+					mfp._preloadTimeout = setTimeout(function() {
+						mfp.preloadNearbyImages();
+						mfp._preloadTimeout = null;
+					}, 16);
+				}
 			});
 
+			_mfpOn('ImageLoadComplete', function() {
+				if (gSt.preloadAfterLoad) {
+					mfp.preloadNearbyImages();
+				}
+			});
 
 			_mfpOn(CLOSE_EVENT+ns, function() {
 				_document.off(ns);
