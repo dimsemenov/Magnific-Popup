@@ -52,10 +52,12 @@ $.magnificPopup.registerModule('gallery', {
 				}
 
 				_document.on('keydown'+ns, function(e) {
-					if (e.keyCode === 37) {
-						mfp.prev();
-					} else if (e.keyCode === 39) {
-						mfp.next();
+					if (!e.altKey && !e.ctrlKey && !e.shiftKey) {
+						if (e.keyCode === 37) {
+							mfp.prev();
+						} else if (e.keyCode === 39) {
+							mfp.next();
+						}
 					}
 				});
 			});
