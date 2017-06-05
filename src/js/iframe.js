@@ -29,13 +29,25 @@ $.magnificPopup.registerModule(IFRAME_NS, {
 
 		srcAction: 'iframe_src',
 
-		// we don't care and support only one default type of URL by default
 		patterns: {
+			// Youtube video
 			youtube: {
-				index: 'youtube.com',
+				index: 'youtube.com/watch',
 				id: 'v=',
 				src: '//www.youtube.com/embed/%id%?autoplay=1'
 			},
+			// Youtube short url. Note that the ?list param will not be retained due to autoplay flag. Either remove autoplay flag, or link to playlist instead (see next)
+			youtu_be: {
+				index: 'youtu.be',
+				id: '/',
+				src: '//www.youtube.com/embed/%id%?autoplay=1'
+			},
+			// Youtube playlist
+			youtube_playlist: {
+				index: 'youtube.com/playlist',
+				id: 'list=',
+				src: '//www.youtube.com/embed/videoseries?list=%id%&autoplay=1'
+			}
 			vimeo: {
 				index: 'vimeo.com/',
 				id: '/',
