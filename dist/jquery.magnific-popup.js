@@ -642,7 +642,7 @@ MagnificPopup.prototype = {
 
 		if(disableOn) {
 			if($.isFunction(disableOn)) {
-				if( !disableOn.call(mfp) ) {
+				if( !disableOn.call(mfp, e) ) {
 					return true;
 				}
 			} else { // else it's number

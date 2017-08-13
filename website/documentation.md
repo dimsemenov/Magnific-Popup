@@ -468,7 +468,7 @@ If window width is less than the number in this option lightbox will not be open
 Can also accept Function as a parameter, which should return `true` if lightbox can be opened and `false` otherwise. For example:
 
 {% highlight javascript %}
-disableOn: function() {
+disableOn: function(e) {
   if( $(window).width() < 600 ) {
     return false;
   }
