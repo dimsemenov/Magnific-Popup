@@ -33,7 +33,17 @@ $.magnificPopup.registerModule(INLINE_NS, {
 			if(item.src) {
 				var inlineSt = mfp.st.inline,
 					el = $(item.src);
-
+				
+				// If the source element is a template tag then it is a document fragment
+				// and must have the content pulled out into a new element.
+				// The benefit of using a template tag is that the browser will not
+				// render it or fetch its images before needed.
+				if (el[0].tagName === "TEMPLATE") {
+				  content = el.html();
+				  el = $("<div></div>");
+				  el.html(content);
+				}
+				
 				if(el.length) {
 
 					// If target element has parent - we replace it with placeholder and put it back after popup is closed
