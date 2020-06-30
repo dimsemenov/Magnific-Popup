@@ -1,24 +1,24 @@
 /*! Magnific Popup - v1.1.0 - 2016-02-20
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2016 Dmitry Semenov; */
-;(function (factory) { 
-if (typeof define === 'function' && define.amd) { 
- // AMD. Register as an anonymous module. 
- define(['jquery'], factory); 
- } else if (typeof exports === 'object') { 
- // Node/CommonJS 
- factory(require('jquery')); 
- } else { 
- // Browser globals 
- factory(window.jQuery || window.Zepto); 
- } 
- }(function($) { 
+;(function (factory) {
+if (typeof define === 'function' && define.amd) {
+ // AMD. Register as an anonymous module.
+ define(['jquery'], factory);
+ } else if (typeof exports === 'object') {
+ // Node/CommonJS
+ factory(require('jquery'));
+ } else {
+ // Browser globals
+ factory(window.jQuery || window.Zepto);
+ }
+ }(function($) {
 
 /*>>core*/
 /**
- * 
+ *
  * Magnific Popup Core JS file
- * 
+ *
  */
 
 
@@ -40,7 +40,7 @@ var CLOSE_EVENT = 'Close',
 
 
 /**
- * Private vars 
+ * Private vars
  */
 /*jshint -W079 */
 var mfp, // As we have only one instance of MagnificPopup object, we define it locally to not to use 'this'
@@ -109,15 +109,15 @@ var _mfpOn = function(name, f) {
 			v = ['ms','O','Moz','Webkit']; // 'v' for vendor
 
 		if( s['transition'] !== undefined ) {
-			return true; 
+			return true;
 		}
-			
+
 		while( v.length ) {
 			if( v.pop() + 'Transition' in s ) {
 				return true;
 			}
 		}
-				
+
 		return false;
 	};
 
@@ -131,7 +131,7 @@ MagnificPopup.prototype = {
 	constructor: MagnificPopup,
 
 	/**
-	 * Initializes Magnific Popup plugin. 
+	 * Initializes Magnific Popup plugin.
 	 * This function is triggered only once when $.fn.magnificPopup or $.magnificPopup is executed
 	 */
 	init: function() {
@@ -157,7 +157,7 @@ MagnificPopup.prototype = {
 
 		var i;
 
-		if(data.isObj === false) { 
+		if(data.isObj === false) {
 			// convert jQuery collection to array to avoid conflicts later
 			mfp.items = data.items.toArray();
 
@@ -184,8 +184,8 @@ MagnificPopup.prototype = {
 			mfp.updateItemHTML();
 			return;
 		}
-		
-		mfp.types = []; 
+
+		mfp.types = [];
 		_wrapClasses = '';
 		if(data.mainEl && data.mainEl.length) {
 			mfp.ev = data.mainEl.eq(0);
@@ -204,7 +204,7 @@ MagnificPopup.prototype = {
 
 
 
-		mfp.st = $.extend(true, {}, $.magnificPopup.defaults, data ); 
+		mfp.st = $.extend(true, {}, $.magnificPopup.defaults, data );
 		mfp.fixedContentPos = mfp.st.fixedContentPos === 'auto' ? !mfp.probablyMobile : mfp.st.fixedContentPos;
 
 		if(mfp.st.modal) {
@@ -213,7 +213,7 @@ MagnificPopup.prototype = {
 			mfp.st.showCloseBtn = false;
 			mfp.st.enableEscapeKey = false;
 		}
-		
+
 
 		// Building markup
 		// main containers are created only once
@@ -265,7 +265,7 @@ MagnificPopup.prototype = {
 			_wrapClasses += ' mfp-align-top';
 		}
 
-	
+
 
 		if(mfp.fixedContentPos) {
 			mfp.wrap.css({
@@ -274,19 +274,19 @@ MagnificPopup.prototype = {
 				overflowY: mfp.st.overflowY
 			});
 		} else {
-			mfp.wrap.css({ 
-				top: _window.scrollTop(),
+			mfp.wrap.css({
+				top: _window.scrollTop() + 'px',
 				position: 'absolute'
 			});
 		}
 		if( mfp.st.fixedBgPos === false || (mfp.st.fixedBgPos === 'auto' && !mfp.fixedContentPos) ) {
 			mfp.bgOverlay.css({
-				height: _document.height(),
+				height: _document.height() + 'px',
 				position: 'absolute'
 			});
 		}
 
-		
+
 
 		if(mfp.st.enableEscapeKey) {
 			// Close on ESC key
@@ -305,7 +305,7 @@ MagnificPopup.prototype = {
 		if(!mfp.st.closeOnContentClick) {
 			_wrapClasses += ' mfp-auto-cursor';
 		}
-		
+
 		if(_wrapClasses)
 			mfp.wrap.addClass(_wrapClasses);
 
@@ -313,7 +313,7 @@ MagnificPopup.prototype = {
 		// this triggers recalculation of layout, so we get it once to not to trigger twice
 		var windowHeight = mfp.wH = _window.height();
 
-		
+
 		var windowStyles = {};
 
 		if( mfp.fixedContentPos ) {
@@ -334,8 +334,8 @@ MagnificPopup.prototype = {
 			}
 		}
 
-		
-		
+
+
 		var classesToadd = mfp.st.mainClass;
 		if(mfp.isIE7) {
 			classesToadd += ' mfp-ie7';
@@ -351,16 +351,16 @@ MagnificPopup.prototype = {
 
 		// remove scrollbar, add margin e.t.c
 		$('html').css(windowStyles);
-		
+
 		// add everything to DOM
 		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || $(document.body) );
 
 		// Save last focused element
 		mfp._lastFocusedEl = document.activeElement;
-		
+
 		// Wait for next cycle to allow CSS transition
 		setTimeout(function() {
-			
+
 			if(mfp.content) {
 				mfp._addClassToMFP(READY_CLASS);
 				mfp._setFocus();
@@ -368,7 +368,7 @@ MagnificPopup.prototype = {
 				// if content is not defined (not loaded e.t.c) we add class only for BG
 				mfp.bgOverlay.addClass(READY_CLASS);
 			}
-			
+
 			// Trap the focus in popup
 			_document.on('focusin' + EVENT_NS, mfp._onFocusIn);
 
@@ -427,7 +427,7 @@ MagnificPopup.prototype = {
 			}
 			$('html').css(windowStyles);
 		}
-		
+
 		_document.off('keyup' + EVENT_NS + ' focusin' + EVENT_NS);
 		mfp.ev.off(EVENT_NS);
 
@@ -445,30 +445,30 @@ MagnificPopup.prototype = {
 
 
 		if(mfp.st.autoFocusLast && mfp._lastFocusedEl) {
-			$(mfp._lastFocusedEl).focus(); // put tab focus back
+			$(mfp._lastFocusedEl).trigger('focus'); // put tab focus back
 		}
-		mfp.currItem = null;	
+		mfp.currItem = null;
 		mfp.content = null;
 		mfp.currTemplate = null;
 		mfp.prevHeight = 0;
 
 		_mfpTrigger(AFTER_CLOSE_EVENT);
 	},
-	
+
 	updateSize: function(winHeight) {
 
 		if(mfp.isIOS) {
 			// fixes iOS nav bars https://github.com/dimsemenov/Magnific-Popup/issues/2
 			var zoomLevel = document.documentElement.clientWidth / window.innerWidth;
 			var height = window.innerHeight * zoomLevel;
-			mfp.wrap.css('height', height);
+			mfp.wrap.css('height', height + 'px');
 			mfp.wH = height;
 		} else {
 			mfp.wH = winHeight || _window.height();
 		}
 		// Fixes #84: popup incorrectly positioned with position:relative on body
 		if(!mfp.fixedContentPos) {
-			mfp.wrap.css('height', mfp.wH);
+			mfp.wrap.css('height', mfp.wH + 'px');
 		}
 
 		_mfpTrigger('Resize');
@@ -755,7 +755,7 @@ MagnificPopup.prototype = {
 		return (  (mfp.isIE7 ? _document.height() : document.body.scrollHeight) > (winHeight || _window.height()) );
 	},
 	_setFocus: function() {
-		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).focus();
+		(mfp.st.focus ? mfp.content.find(mfp.st.focus).eq(0) : mfp.wrap).trigger('focus');
 	},
 	_onFocusIn: function(e) {
 		if( e.target !== mfp.wrap[0] && !$.contains(mfp.wrap[0], e.target) ) {
@@ -1182,7 +1182,7 @@ $.magnificPopup.registerModule('image', {
 				if(mfp.isLowIE) {
 					decr = parseInt(item.img.css('padding-top'), 10) + parseInt(item.img.css('padding-bottom'),10);
 				}
-				item.img.css('max-height', mfp.wH-decr);
+				item.img.css('max-height', mfp.wH-decr + 'px');
 			}
 		},
 		_onImageHasSize: function(item) {
@@ -1393,9 +1393,9 @@ $.magnificPopup.registerModule('zoom', {
 						transition = 'all '+(zoomSt.duration/1000)+'s ' + zoomSt.easing,
 						cssObj = {
 							position: 'fixed',
-							zIndex: 9999,
-							left: 0,
-							top: 0,
+							zIndex: '9999',
+							left: '0',
+							top: '0',
 							'-webkit-backface-visibility': 'hidden'
 						},
 						t = 'transition';
@@ -1522,9 +1522,9 @@ $.magnificPopup.registerModule('zoom', {
 
 			 */
 			var obj = {
-				width: el.width(),
+				width: el.width() + 'px',
 				// fix Zepto height+padding issue
-				height: (_isJQ ? el.innerHeight() : el[0].offsetHeight) - paddingBottom - paddingTop
+				height: (_isJQ ? el.innerHeight() : el[0].offsetHeight) - paddingBottom - paddingTop + 'px'
 			};
 
 			// I hate to do this, but there is no another option
@@ -1731,10 +1731,10 @@ $.magnificPopup.registerModule('gallery', {
 						arrowLeft = mfp.arrowLeft = $( markup.replace(/%title%/gi, gSt.tPrev).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),
 						arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, gSt.tNext).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
 
-					arrowLeft.click(function() {
+					arrowLeft.on('click', function() {
 						mfp.prev();
 					});
-					arrowRight.click(function() {
+					arrowRight.on('click', function() {
 						mfp.next();
 					});
 
@@ -1842,7 +1842,7 @@ $.magnificPopup.registerModule(RETINA_NS, {
 				if(ratio > 1) {
 					_mfpOn('ImageHasSize' + '.' + RETINA_NS, function(e, item) {
 						item.img.css({
-							'max-width': item.img[0].naturalWidth / ratio,
+							'max-width': item.img[0].naturalWidth / ratio + 'px',
 							'width': '100%'
 						});
 					});
