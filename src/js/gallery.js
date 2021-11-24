@@ -25,7 +25,9 @@ $.magnificPopup.registerModule('gallery', {
 
 		tPrev: 'Previous (Left arrow key)',
 		tNext: 'Next (Right arrow key)',
-		tCounter: '%curr% of %total%'
+		tCounter: '%curr% of %total%',
+		
+		langDir: null,
 	},
 
 	proto: {
@@ -37,6 +39,10 @@ $.magnificPopup.registerModule('gallery', {
 			mfp.direction = true; // true - next, false - prev
 
 			if(!gSt || !gSt.enabled ) return false;
+			
+			if (!gSt.langDir) {
+				gSt.langDir = document.dir || 'ltr';
+			}
 
 			_wrapClasses += ' mfp-gallery';
 
@@ -53,9 +59,11 @@ $.magnificPopup.registerModule('gallery', {
 
 				_document.on('keydown'+ns, function(e) {
 					if (e.keyCode === 37) {
-						mfp.prev();
+						if (gSt.langDir === 'rtl') mfp.next();
+						else mfp.prev();
 					} else if (e.keyCode === 39) {
-						mfp.next();
+						if (gSt.langDir === 'rtl') mfp.prev();
+						else mfp.next();
 					}
 				});
 			});
@@ -78,10 +86,12 @@ $.magnificPopup.registerModule('gallery', {
 						arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, gSt.tNext).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
 
 					arrowLeft.click(function() {
-						mfp.prev();
+						if (gSt.langDir === 'rtl') mfp.next();
+						else mfp.prev();
 					});
 					arrowRight.click(function() {
-						mfp.next();
+						if (gSt.langDir === 'rtl') mfp.prev();
+						else mfp.next();
 					});
 
 					mfp.container.append(arrowLeft.add(arrowRight));
