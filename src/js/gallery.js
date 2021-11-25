@@ -81,9 +81,18 @@ $.magnificPopup.registerModule('gallery', {
 
 			_mfpOn('BuildControls' + ns, function() {
 				if(mfp.items.length > 1 && gSt.arrows && !mfp.arrowLeft) {
+
+					if (gSt.langDir === 'rtl') {
+					    var arrowLeftDesc = gSt.tNext;
+					    var arrowRightDesc = gSt.tPrev;
+					} else {
+					    var arrowLeftDesc = gSt.tPrev;
+					    var arrowRightDesc = gSt.tNext;
+					}
+
 					var markup = gSt.arrowMarkup,
-						arrowLeft = mfp.arrowLeft = $( markup.replace(/%title%/gi, gSt.tPrev).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),
-						arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, gSt.tNext).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
+						arrowLeft = mfp.arrowLeft = $( markup.replace(/%title%/gi, arrowLeftDesc).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),
+						arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, arrowRightDesc).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
 
 					arrowLeft.click(function() {
 						if (gSt.langDir === 'rtl') mfp.next();
