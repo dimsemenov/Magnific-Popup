@@ -82,17 +82,23 @@ $.magnificPopup.registerModule('gallery', {
 			_mfpOn('BuildControls' + ns, function() {
 				if(mfp.items.length > 1 && gSt.arrows && !mfp.arrowLeft) {
 
+					var arrowLeftDesc, arrowRightDesc, arrowLeftAction, arrowRightAction;
+
 					if (gSt.langDir === 'rtl') {
-					    var arrowLeftDesc = gSt.tNext;
-					    var arrowRightDesc = gSt.tPrev;
+						arrowLeftDesc = gSt.tNext;
+						arrowRightDesc = gSt.tPrev;
+						arrowLeftAction = 'next';
+						arrowRightAction = 'prev';
 					} else {
-					    var arrowLeftDesc = gSt.tPrev;
-					    var arrowRightDesc = gSt.tNext;
+						arrowLeftDesc = gSt.tPrev;
+						arrowRightDesc = gSt.tNext;
+						arrowLeftAction = 'prev';
+						arrowRightAction = 'next';
 					}
 
-					var markup = gSt.arrowMarkup,
-						arrowLeft = mfp.arrowLeft = $( markup.replace(/%title%/gi, arrowLeftDesc).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),
-						arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, arrowRightDesc).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
+					var markup     = gSt.arrowMarkup,
+					    arrowLeft  = mfp.arrowLeft = $( markup.replace(/%title%/gi, arrowLeftDesc).replace(/%action%/gi, arrowLeftAction).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),
+					    arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, arrowRightDesc).replace(/%action%/gi, arrowRightAction).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
 
 					arrowLeft.click(function() {
 						if (gSt.langDir === 'rtl') mfp.next();
