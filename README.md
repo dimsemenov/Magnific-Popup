@@ -1,4 +1,4 @@
-# Magnific Popup Repository (my fork with support for gallery arrows in Right-to-Left languages, i.e. Hebrew/Arabic)
+# Magnific Popup Repository
 
 [![Build Status](https://travis-ci.org/dimsemenov/Magnific-Popup.png)](https://travis-ci.org/dimsemenov/Magnific-Popup) 
 [![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/thing/1310305/Magnific-Popup-by-dimsemenov)
