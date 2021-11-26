@@ -90,42 +90,42 @@ $.magnificPopup.registerModule('gallery', {
 			_mfpOn('BuildControls' + ns, function() {
 				if(mfp.items.length > 1 && gSt.arrows && !mfp.arrowLeft) {
 
-						var arrowLeftDesc, arrowRightDesc, arrowLeftAction, arrowRightAction;
+					var arrowLeftDesc, arrowRightDesc, arrowLeftAction, arrowRightAction;
 
-						if (gSt.langDir === 'rtl') {
-							arrowLeftDesc = gSt.tNext;
-							arrowRightDesc = gSt.tPrev;
-							arrowLeftAction = 'next';
-							arrowRightAction = 'prev';
-						} else {
-							arrowLeftDesc = gSt.tPrev;
-							arrowRightDesc = gSt.tNext;
-							arrowLeftAction = 'prev';
-							arrowRightAction = 'next';
-						}
+					if (gSt.langDir === 'rtl') {
+						arrowLeftDesc = gSt.tNext;
+						arrowRightDesc = gSt.tPrev;
+						arrowLeftAction = 'next';
+						arrowRightAction = 'prev';
+					} else {
+						arrowLeftDesc = gSt.tPrev;
+						arrowRightDesc = gSt.tNext;
+						arrowLeftAction = 'prev';
+						arrowRightAction = 'next';
+					}
 
-						var markup     = gSt.arrowMarkup,
-						    arrowLeft  = mfp.arrowLeft = $( markup.replace(/%title%/gi, arrowLeftDesc).replace(/%action%/gi, arrowLeftAction).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),
-						    arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, arrowRightDesc).replace(/%action%/gi, arrowRightAction).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
+					var markup     = gSt.arrowMarkup,
+					    arrowLeft  = mfp.arrowLeft = $( markup.replace(/%title%/gi, arrowLeftDesc).replace(/%action%/gi, arrowLeftAction).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),
+					    arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, arrowRightDesc).replace(/%action%/gi, arrowRightAction).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
 
-						if (gSt.langDir === 'rtl') {
-							mfp.arrowNext = arrowLeft;
-							mfp.arrowPrev = arrowRight;
-						} else {
-							mfp.arrowNext = arrowRight;
-							mfp.arrowPrev = arrowLeft;
-						}
+					if (gSt.langDir === 'rtl') {
+						mfp.arrowNext = arrowLeft;
+						mfp.arrowPrev = arrowRight;
+					} else {
+						mfp.arrowNext = arrowRight;
+						mfp.arrowPrev = arrowLeft;
+					}
 
-						arrowLeft.click(function() {
-							if (gSt.langDir === 'rtl') mfp.next();
-							else mfp.prev();
-						});
-						arrowRight.click(function() {
-							if (gSt.langDir === 'rtl') mfp.prev();
-							else mfp.next();
-						});
+					arrowLeft.click(function() {
+						if (gSt.langDir === 'rtl') mfp.next();
+						else mfp.prev();
+					});
+					arrowRight.click(function() {
+						if (gSt.langDir === 'rtl') mfp.prev();
+						else mfp.next();
+					});
 
-						mfp.container.append(arrowLeft.add(arrowRight));
+					mfp.container.append(arrowLeft.add(arrowRight));
 
 				}
 			});
