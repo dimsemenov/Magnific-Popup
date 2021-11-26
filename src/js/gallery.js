@@ -28,6 +28,7 @@ $.magnificPopup.registerModule('gallery', {
 		tCounter: '%curr% of %total%',
 		
 		langDir: null,
+		loop: true,
 	},
 
 	proto: {
@@ -66,6 +67,13 @@ $.magnificPopup.registerModule('gallery', {
 						else mfp.next();
 					}
 				});
+
+				mfp.updateGalleryButtons();
+
+			});
+
+			_mfpOn('UpdateStatus'+ns, function(e, data) {
+				mfp.updateGalleryButtons();
 			});
 
 			_mfpOn('UpdateStatus'+ns, function(e, data) {
@@ -132,12 +140,16 @@ $.magnificPopup.registerModule('gallery', {
 		},
 		next: function() {
 			mfp.direction = true;
-			mfp.index = _getLoopedId(mfp.index + 1);
+			var newIndex = _getLoopedId(mfp.index + 1);
+			if (!mfp.st.gallery.loop && newIndex === 0 ) return false;
+			mfp.index = newIndex;
 			mfp.updateItemHTML();
 		},
 		prev: function() {
 			mfp.direction = false;
-			mfp.index = _getLoopedId(mfp.index - 1);
+			var newIndex = mfp.index - 1;
+			if (!mfp.st.gallery.loop && newIndex < 0) return false;
+			mfp.index = _getLoopedId(newIndex);
 			mfp.updateItemHTML();
 		},
 		goTo: function(newIndex) {
@@ -184,6 +196,26 @@ $.magnificPopup.registerModule('gallery', {
 
 
 			item.preloaded = true;
-		}
+		},
+
+		/**
+		 * Show/hide the gallery prev/next buttons if we're at the start/end, if looping is turned off
+		 * Added by Joloco for Veg
+		 */
+		updateGalleryButtons: function() {
+
+			if ( !mfp.st.gallery.loop && typeof mfp.arrowPrev === 'object' && mfp.arrowPrev !== null) {
+
+				if (mfp.index === 0) mfp.arrowPrev.hide();
+				else mfp.arrowPrev.show();
+
+				if (mfp.index === (mfp.items.length - 1)) mfp.arrowNext.hide();
+				else mfp.arrowNext.show();
+
+			}
+
+		},
+
 	}
+
 });
