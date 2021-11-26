@@ -148,16 +148,16 @@ $.magnificPopup.registerModule('gallery', {
 
 		},
 		next: function() {
-			mfp.direction = true;
 			var newIndex = _getLoopedId(mfp.index + 1);
 			if (!mfp.st.gallery.loop && newIndex === 0 ) return false;
+			mfp.direction = true;
 			mfp.index = newIndex;
 			mfp.updateItemHTML();
 		},
 		prev: function() {
-			mfp.direction = false;
 			var newIndex = mfp.index - 1;
 			if (!mfp.st.gallery.loop && newIndex < 0) return false;
+			mfp.direction = false;
 			mfp.index = _getLoopedId(newIndex);
 			mfp.updateItemHTML();
 		},
