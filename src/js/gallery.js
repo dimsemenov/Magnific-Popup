@@ -25,7 +25,10 @@ $.magnificPopup.registerModule('gallery', {
 
 		tPrev: 'Previous (Left arrow key)',
 		tNext: 'Next (Right arrow key)',
-		tCounter: '%curr% of %total%'
+		tCounter: '%curr% of %total%',
+		
+		langDir: null,
+		loop: true,
 	},
 
 	proto: {
@@ -37,6 +40,10 @@ $.magnificPopup.registerModule('gallery', {
 			mfp.direction = true; // true - next, false - prev
 
 			if(!gSt || !gSt.enabled ) return false;
+			
+			if (!gSt.langDir) {
+				gSt.langDir = document.dir || 'ltr';
+			}
 
 			_wrapClasses += ' mfp-gallery';
 
@@ -53,11 +60,20 @@ $.magnificPopup.registerModule('gallery', {
 
 				_document.on('keydown'+ns, function(e) {
 					if (e.keyCode === 37) {
-						mfp.prev();
+						if (gSt.langDir === 'rtl') mfp.next();
+						else mfp.prev();
 					} else if (e.keyCode === 39) {
-						mfp.next();
+						if (gSt.langDir === 'rtl') mfp.prev();
+						else mfp.next();
 					}
 				});
+
+				mfp.updateGalleryButtons();
+
+			});
+
+			_mfpOn('UpdateStatus'+ns, function(e, data) {
+				mfp.updateGalleryButtons();
 			});
 
 			_mfpOn('UpdateStatus'+ns, function(e, data) {
@@ -73,18 +89,44 @@ $.magnificPopup.registerModule('gallery', {
 
 			_mfpOn('BuildControls' + ns, function() {
 				if(mfp.items.length > 1 && gSt.arrows && !mfp.arrowLeft) {
-					var markup = gSt.arrowMarkup,
-						arrowLeft = mfp.arrowLeft = $( markup.replace(/%title%/gi, gSt.tPrev).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),
-						arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, gSt.tNext).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
+
+					var arrowLeftDesc, arrowRightDesc, arrowLeftAction, arrowRightAction;
+
+					if (gSt.langDir === 'rtl') {
+						arrowLeftDesc = gSt.tNext;
+						arrowRightDesc = gSt.tPrev;
+						arrowLeftAction = 'next';
+						arrowRightAction = 'prev';
+					} else {
+						arrowLeftDesc = gSt.tPrev;
+						arrowRightDesc = gSt.tNext;
+						arrowLeftAction = 'prev';
+						arrowRightAction = 'next';
+					}
+
+					var markup     = gSt.arrowMarkup,
+					    arrowLeft  = mfp.arrowLeft = $( markup.replace(/%title%/gi, arrowLeftDesc).replace(/%action%/gi, arrowLeftAction).replace(/%dir%/gi, 'left') ).addClass(PREVENT_CLOSE_CLASS),
+					    arrowRight = mfp.arrowRight = $( markup.replace(/%title%/gi, arrowRightDesc).replace(/%action%/gi, arrowRightAction).replace(/%dir%/gi, 'right') ).addClass(PREVENT_CLOSE_CLASS);
+
+					if (gSt.langDir === 'rtl') {
+						mfp.arrowNext = arrowLeft;
+						mfp.arrowPrev = arrowRight;
+					} else {
+						mfp.arrowNext = arrowRight;
+						mfp.arrowPrev = arrowLeft;
+					}
 
 					arrowLeft.click(function() {
-						mfp.prev();
+						if (gSt.langDir === 'rtl') mfp.next();
+						else mfp.prev();
 					});
 					arrowRight.click(function() {
-						mfp.next();
+						if (gSt.langDir === 'rtl') mfp.prev();
+						else mfp.next();
 					});
 
 					mfp.container.append(arrowLeft.add(arrowRight));
+
 				}
 			});
 
@@ -106,13 +148,17 @@ $.magnificPopup.registerModule('gallery', {
 
 		},
 		next: function() {
+			var newIndex = _getLoopedId(mfp.index + 1);
+			if (!mfp.st.gallery.loop && newIndex === 0 ) return false;
 			mfp.direction = true;
-			mfp.index = _getLoopedId(mfp.index + 1);
+			mfp.index = newIndex;
 			mfp.updateItemHTML();
 		},
 		prev: function() {
+			var newIndex = mfp.index - 1;
+			if (!mfp.st.gallery.loop && newIndex < 0) return false;
 			mfp.direction = false;
-			mfp.index = _getLoopedId(mfp.index - 1);
+			mfp.index = _getLoopedId(newIndex);
 			mfp.updateItemHTML();
 		},
 		goTo: function(newIndex) {
@@ -159,6 +205,26 @@ $.magnificPopup.registerModule('gallery', {
 
 
 			item.preloaded = true;
-		}
+		},
+
+		/**
+		 * Show/hide the gallery prev/next buttons if we're at the start/end, if looping is turned off
+		 * Added by Joloco for Veg
+		 */
+		updateGalleryButtons: function() {
+
+			if ( !mfp.st.gallery.loop && typeof mfp.arrowPrev === 'object' && mfp.arrowPrev !== null) {
+
+				if (mfp.index === 0) mfp.arrowPrev.hide();
+				else mfp.arrowPrev.show();
+
+				if (mfp.index === (mfp.items.length - 1)) mfp.arrowNext.hide();
+				else mfp.arrowNext.show();
+
+			}
+
+		},
+
 	}
+
 });
