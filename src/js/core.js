@@ -28,7 +28,7 @@ var CLOSE_EVENT = 'Close',
 /*jshint -W079 */
 var mfp, // As we have only one instance of MagnificPopup object, we define it locally to not to use 'this'
 	MagnificPopup = function(){},
-	_isJQ = !!(window.jQuery),
+	_isJQ = !!(window.jQuery) || typeof jQuery !== 'undefined',
 	_prevStatus,
 	_window = $(window),
 	_document,
