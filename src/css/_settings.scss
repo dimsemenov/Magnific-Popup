@@ -42,3 +42,7 @@ $mfp-caption-subtitle-color:          #BDBDBD !default;                    // Ca
 
 // A11y
 $mfp-use-visuallyhidden:              false !default;                      // Hide content from browsers, but make it available for screen readers
+
+// breakpoints
+$mfp-mobile-width:                    900px !default;                      // max width to use for mobile breakpoint
+$mfp-mobile-height:                   300px !default;                      // max height for mobile portrait orientation

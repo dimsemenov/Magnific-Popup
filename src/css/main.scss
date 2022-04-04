@@ -462,7 +462,7 @@ button {
 
 
   @if $mfp-include-mobile-layout-for-image {
-    @media screen and (max-width: 800px) and (orientation:landscape), screen and (max-height: 300px) {
+    @media screen and (max-width: $mfp-mobile-width) and (orientation:landscape), screen and (max-height: $mfp-mobile-height) {
       /**
        * Remove all paddings around the image on small screen
        */
@@ -522,7 +522,7 @@ button {
 
 
 // Scale navigation arrows and reduce padding from sides
-@media all and (max-width: 900px) {
+@media all and (max-width: $mfp-mobile-width) {
   .mfp-arrow {
     -webkit-transform: scale(0.75);
     transform: scale(0.75);
