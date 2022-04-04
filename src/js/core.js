@@ -334,6 +334,16 @@ MagnificPopup.prototype = {
 
 		// remove scrollbar, add margin e.t.c
 		$('html').css(windowStyles);
+
+		// Add aria-hidden attributes to page elements, so that they are not
+		// accessible for as long as the popup is on.
+		// The original aria-hidden attributes (if any) are saved as
+		// data-aria-hidden, and resumed afterwards.
+		mfp._ariaHiddenElements = $('body').children();
+		$(mfp._ariaHiddenElements).each(function() {
+			$(this).attr('data-aria-hidden', $(this).attr('aria-hidden'));
+			$(this).attr('aria-hidden', 'true');
+		});
 		
 		// add everything to DOM
 		mfp.bgOverlay.add(mfp.wrap).prependTo( mfp.st.prependTo || $(document.body) );
@@ -418,6 +428,17 @@ MagnificPopup.prototype = {
 		mfp.wrap.attr('class', 'mfp-wrap').removeAttr('style');
 		mfp.bgOverlay.attr('class', 'mfp-bg');
 		mfp.container.attr('class', 'mfp-container');
+
+		// Remove aria-hidden attributes from page elements
+		$(mfp._ariaHiddenElements).each(function() {
+			if(typeof $(this).attr('data-aria-hidden') === 'undefined') {
+				$(this).removeAttr('aria-hidden');
+			} else {
+				$(this).attr('aria-hidden', $(this).attr('data-aria-hidden'));
+			}
+			$(this).removeAttr('data-aria-hidden');
+		});
+		mfp._ariaHiddenElements = [];
 
 		// remove close button from target element
 		if(mfp.st.showCloseBtn &&
