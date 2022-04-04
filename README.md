@@ -30,6 +30,8 @@
 
 Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 
+_This fork contains a LESS version of the SASS files._
+
 - [Documentation and getting started guide](http://dimsemenov.com/plugins/magnific-popup/documentation.html).
 - [Examples and plugin home page](http://dimsemenov.com/plugins/magnific-popup/).
 - More examples in [CodePen collection](http://codepen.io/collection/nLcqo).
