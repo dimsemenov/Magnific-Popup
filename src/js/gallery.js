@@ -59,6 +59,7 @@ $.magnificPopup.registerModule('gallery', {
 				}
 
 				_document.on('keydown'+ns, function(e) {
+					if ( $("*:focus").is("textarea, input") ) return;
 					if (e.keyCode === 37) {
 						if (gSt.langDir === 'rtl') mfp.next();
 						else mfp.prev();
