@@ -113,6 +113,10 @@ $.magnificPopup.registerModule('zoom', {
 					mfp.content.css('visibility', 'hidden');
 
 					setTimeout(function() {
+						if(!animatedImg) {
+							showMainContent();
+							return;
+						}
 						animatedImg.css( mfp._getOffset() );
 					}, 16);
 				}
