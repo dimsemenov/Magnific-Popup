@@ -265,7 +265,7 @@ iframe: {
       // Or a function that should return %id%, for example:
       // id: function(url) { return 'parsed id'; }
 
-      src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe.
+      src: 'https://www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe.
     },
     vimeo: {
       index: 'vimeo.com/',
