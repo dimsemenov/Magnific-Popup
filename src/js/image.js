@@ -138,6 +138,23 @@ $.magnificPopup.registerModule('image', {
 
 			var guard = 0,
 
+				imgSt = mfp.st.image,
+
+				// image error handler
+				onLoadError = function() {
+					if(item) {
+						item.img.off('.mfploader');
+						if(item === mfp.currItem){
+							mfp._onImageHasSize(item);
+							mfp.updateStatus('error', imgSt.tError.replace('%url%', item.src) );
+						}
+
+						item.hasSize = true;
+						item.loaded = true;
+						item.loadError = true;
+					}
+				},
+
 				// image load complete handler
 				onLoadComplete = function() {
 					if(item) {
@@ -166,23 +183,8 @@ $.magnificPopup.registerModule('image', {
 							}
 						}
 					}
-				},
-
-				// image error handler
-				onLoadError = function() {
-					if(item) {
-						item.img.off('.mfploader');
-						if(item === mfp.currItem){
-							mfp._onImageHasSize(item);
-							mfp.updateStatus('error', imgSt.tError.replace('%url%', item.src) );
-						}
-
-						item.hasSize = true;
-						item.loaded = true;
-						item.loadError = true;
-					}
-				},
-				imgSt = mfp.st.image;
+				};
+				
 
 
 			var el = template.find('.mfp-img');
