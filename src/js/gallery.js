@@ -72,7 +72,7 @@ $.magnificPopup.registerModule('gallery', {
 
 			});
 
-			_mfpOn('UpdateStatus'+ns, function(e, data) {
+			_mfpOn('UpdateStatus'+ns, function(/*e, data*/) {
 				mfp.updateGalleryButtons();
 			});
 
@@ -116,11 +116,11 @@ $.magnificPopup.registerModule('gallery', {
 						mfp.arrowPrev = arrowLeft;
 					}
 
-					arrowLeft.click(function() {
+					arrowLeft.on('click', function() {
 						if (gSt.langDir === 'rtl') mfp.next();
 						else mfp.prev();
 					});
-					arrowRight.click(function() {
+					arrowRight.on('click', function() {
 						if (gSt.langDir === 'rtl') mfp.prev();
 						else mfp.next();
 					});

@@ -17,7 +17,7 @@ $.magnificPopup.registerModule(AJAX_NS, {
 	options: {
 		settings: null,
 		cursor: 'mfp-ajax-cur',
-		tError: '<a href="%url%">The content</a> could not be loaded.'
+		tError: 'The content could not be loaded.'
 	},
 
 	proto: {
