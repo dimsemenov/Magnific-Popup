@@ -401,7 +401,7 @@ float: right;
 .example h3:hover {
   color: #C00;
 }
-.example h3:hover:after {
+.example h3:after {
   content: 'view source';
   padding-left: 8px;
   color: #999;

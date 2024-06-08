@@ -8,7 +8,7 @@
     <meta charset="utf-8"> 
     <meta name="description" content="{{page.description}}"/>
     <meta name="viewport" content="width = device-width, initial-scale = 1.0" />
-    <meta name="author" content="Dmitry Semenov">
+    <meta name="author" content="Dmytro Semenov">
     <link rel="canonical" href="{{page.canonical_url}}" />
 
     <meta property="og:url" content="{{page.canonical_url}}">
@@ -39,7 +39,7 @@
     {{ content | markdown }}
 
     <div id="footer">
-      Created by <a href="http://dimsemenov.com" rel="author">Dmitry Semenov</a>.{% if page.include_credit %} Photography in demo by <a href="http://www.squiver.com">Marsel Van Oosten</a>{% endif %}
+      Created by <a href="http://dimsemenov.com" rel="author">Dmytro Semenov</a>.{% if page.include_credit %} Photography in demo by <a href="http://www.squiver.com">Marsel Van Oosten</a>{% endif %}
     </div>
 
   </div>
@@ -65,10 +65,6 @@
   {% endif %}
 
   {% include analytics.html %}
-
-  {% if page.buildtool %}
-    {% include build-tool.html %}
-  {% endif %}
 
   {% if site.url == 'local' %}
     <strong style="display:block; width:100%;text-align:center;">This page is just for tests and should not be used for production!</strong>

@@ -1,32 +1,10 @@
-> # 🇺🇦 UKRAINE NEEDS YOUR HELP NOW!
->
-> I'm the creator of this project and I'm Ukrainian.
->
-> **My country, Ukraine, [is being invaded by the Russian Federation, right now](https://www.bbc.com/news/world-europe-60504334)**. I've fled Kyiv and now I'm safe with my family in the western part of Ukraine. At least for now.
-> Russia is hitting target all over my country by ballistic missiles.
->
-> **Please, save me and help to save my country!**
->
-> Ukrainian National Bank opened [an account to Raise Funds for Ukraine’s Armed Forces](https://bank.gov.ua/en/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi):
->
-> ```
-> SWIFT Code NBU: NBUA UA UX
-> JP MORGAN CHASE BANK, New York
-> SWIFT Code: CHASUS33
-> Account: 400807238
-> 383 Madison Avenue, New York, NY 10179, USA
-> IBAN: UA843000010000000047330992708
-> ```
->
-> You can also donate to [charity supporting Ukrainian army](https://savelife.in.ua/en/donate/).
->
-> **THANK YOU!**
+**Important note** This jQuery plugin is deprecated, only critical or security bug fixes will be released in future. Use native `<dialog>` element if you need a basic dialog/modal/popup, or my <a href="https://photoswipe.com">PhotoSwipe</a> library if you need an advanced image gallery. Feel free to email me if you need assistance.
 
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct.svg)](https://savelife.in.ua/en/)
 
 # Magnific Popup Repository
 
 [![Build Status](https://travis-ci.org/dimsemenov/Magnific-Popup.png)](https://travis-ci.org/dimsemenov/Magnific-Popup) 
-[![Flattr](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/thing/1310305/Magnific-Popup-by-dimsemenov)
 
 Fast, light and responsive lightbox plugin, for jQuery and Zepto.js.
 

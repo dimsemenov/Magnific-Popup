@@ -1,6 +1,6 @@
 {
   "name": "magnific-popup",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "title": "Magnific Popup",
   "description": "Lightbox and modal dialog plugin. Can display inline HTML, iframes (YouTube video, Vimeo, Google Maps), or an image gallery. Animation effects are added with CSS3 transitions. For jQuery or Zepto.",
   "keywords": [
@@ -19,7 +19,7 @@
     "mobile"
   ],
   "author": {
-    "name": "Dmitry Semenov",
+    "name": "Dmytro Semenov",
     "email": "diiiimaaaa@gmail.com",
     "web": "http://dimsemenov.com"
   },
@@ -37,6 +37,7 @@
     "test": "grunt jshint"
   },
   "devDependencies": {
+    "dart-sass": "^1.25.0",
     "grunt": "~1.6.1",
     "grunt-contrib-clean": "~2.0.1",
     "grunt-contrib-concat": "^2.1.0",

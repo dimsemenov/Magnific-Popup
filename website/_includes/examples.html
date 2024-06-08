@@ -1,20 +1,7 @@
-{% if site.url == 'local' %}
-   <!-- <script  src="third-party-libs/zepto.js"></script> -->
-   <script>
-    document.write('<script src=third-party-libs/' +
-    ('__proto__' in {} ? 'zepto' : 'jquery') +
-    '.min.js><\/script>')
-  </script>
-  <script src="dist/jquery.magnific-popup.js?v={{site.mfpversion}}"></script>
-  
-{% else %}
-  <script>
-    document.write('<script src=third-party-libs/' +
-    ('__proto__' in {} ? 'zepto' : 'jquery') +
-    '.min.js><\/script>')
-  </script>
-  <script src="dist/jquery.magnific-popup.min.js?v={{site.mfpversion}}"></script>
-{% endif %}
+<script src="third-party-libs/jquery.js?v={{site.mfpversion}}"></script>
+<script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+
+<script src="dist/jquery.magnific-popup.js?v={{site.mfpversion}}"></script>
 
 <!--
 
@@ -162,7 +149,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           image: {
             tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
             titleSrc: function(item) {
-              return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
+              return item.el.attr('title') + ' by Marsel Van Oosten';
             }
           }
         });
@@ -202,12 +189,17 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
           closeOnContentClick: false,
           closeBtnInside: false,
           mainClass: 'mfp-with-zoom mfp-img-mobile',
+
+          // If you enable allowHTMLInTemplate - 
+          // make sure your HTML attributes are sanitized if they can be created by a non-admin user
+          allowHTMLInTemplate: true,
           image: {
             verticalFit: true,
             titleSrc: function(item) {
               return item.el.attr('title') + ' &middot; <a class="image-source-link" href="'+item.el.attr('data-source')+'" target="_blank">image source</a>';
             }
           },
+
           gallery: {
             enabled: true
           },
@@ -632,7 +624,7 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
     <p>This is just basic example of how error messages are displayed. Surely, you can change text or style them.</p>
     <div class="html-code">
       <!-- classes mfp-image and mfp-ajax define type of the popup -->
-      <a id="broken-image" class="mfp-image" href="http://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Blois_Loire_Panorama_-_July_2011.jpg/640px-Blois_Loire_Panorama_-_July_2011-fake.jpg" >Broken image</a><br/>
+      <a id="broken-image" class="mfp-image" href="http://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Blois_Loire_Panorama_-_July_2011-404-image-link" >Broken image</a><br/>
       <a id="broken-ajax" class="mfp-ajax" href="http://example.com/fakeg" >Broken ajax request</a>
     </div>
     <script type="text/javascript">
@@ -674,3 +666,147 @@ Each '.example' block contains JS, HTML and optionally CSS for popup.
 Examples end.
 
 -->
+
+
+
+<!-- Basic idea of such build tool is stolen from modernizr.com -->
+<div id="mfp-build-tool" class="mfp-hide">
+  <h2>Magnific Popup v{{site.mfpversion}} Build Tool</h2>
+  <form id="mfp-build-form">
+    <p class="help-block">Here you can generate optimized version of main JS file. Please note that CSS you should download directly: <a target="_blank"  href="https://raw.github.com/dimsemenov/Magnific-Popup/master/src/css/main.scss">Sass version</a> or <a target="_blank" href="https://raw.github.com/dimsemenov/Magnific-Popup/master/dist/magnific-popup.css">CSS version</a>.</p>
+     <label class="checkbox">
+      <input type="checkbox" name="inline" checked> Inline
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="image" checked> Image
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="ajax" checked> Ajax
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="iframe" checked> Iframe
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="gallery" checked> Gallery
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="retina" checked> High-DPI (retina) support for image type
+    </label>
+    <label class="checkbox">
+      <input type="checkbox" name="imagezoom" checked> Image zoom animation
+    </label>
+  </form> 
+     
+  <br/>
+  <div>
+    <button id="mfp-build-button">Generate build</button>  
+  	<label class="checkbox">
+      <input id="mfp-minify" type="checkbox" name="minify" checked="checked"> Minify code
+    </label> 
+  </div>
+  <br/>
+  <p id="mfp-build-status" style="display:none"></p>
+  <br/>
+  <textarea id="mfp-build-tool-out" style="width: 100%; height: 300px; display:none;"></textarea>
+</div>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function($) {
+		/**
+		 * Popup with source code for each example
+		 */
+		var example,
+		      getCode,
+		      CSS,
+		      JS,
+		      HTML,
+		      highlighterLoaded;
+
+		  var formatCode = function (str) {
+		      if(str) {
+		        // replace special chars
+		        str = str.replace(/[&<>"']/g, function($0) {
+		            return "&" + {"&":"amp", "<":"lt", ">":"gt", '"':"quot", "'":"#39"}[$0] + ";";
+		        });
+		        
+		        // remove spaces from each line based on spaces on first line
+		        var firstLineLength = str.match(/^(\s*)/)[1].length;
+		        var regExp = new RegExp('^ {' + (firstLineLength-1) + '}', "gm");
+		        str = str.replace(regExp, '');
+
+		        // replace spaces with tabs
+		        str = str.replace(/  /g,'\t');
+
+		        str = $.trim(str);
+		      }
+		      return str;
+		    };
+
+		  var highlight = function() {
+		    hljs.highlightBlock(JS.find('code')[0]);
+
+		    if(CSS)
+		      hljs.highlightBlock(CSS.find('code')[0]);
+
+		    if(HTML)
+		      hljs.highlightBlock(HTML.find('code')[0]);
+		  };
+
+		$('.example').each(function() {
+		    $(this).find('h3').click(function() {
+				var example = $(this).parent('.example');
+				var getCodeWindow = $('<div class="get-code-window"><h1>'+example.find('h3').text()+'</h1></div>');
+				JS = $('<div class="highlight"><pre><code class="javascript">'+formatCode(example.find('script').eq(0).html())+'</code></pre></div>');
+
+				CSS = example.find('style');
+				if(CSS.length) {
+					CSS = $('<div class="highlight"><pre><code class="css">'+formatCode(CSS.html())+'</code></pre></div>');
+				} else {
+					CSS = '';
+				}
+
+				HTML = example.find('.html-code');
+				if(HTML.length) {
+					HTML = $('<div class="highlight"><pre><code class="xml html">'+formatCode(HTML.html())+'</code></pre></div>');
+				} else {
+					HTML = '';
+				}
+
+				if(!highlighterLoaded) {
+					highlighterLoaded = true;
+					var script = document.createElement("script"),
+						$script = $(script);
+						script.src = 'http://yandex.st/highlightjs/7.3/highlight.min.js';
+					if(window.jQuery) {
+						$.getScript(script.src , function() {
+							highlight();
+						});
+					} else {
+						$(script).appendTo("head").on("load", function() {
+							highlight();
+						});
+					}
+				} else {
+					highlight();
+				}
+
+				getCodeWindow.append(JS);
+				getCodeWindow.append(HTML);
+				getCodeWindow.append(CSS);
+
+				getCodeWindow.append('<p>Code above is dynamically generated directly from the source of this example.<br/>Please read <a href="documentation.html">the documentation</a> before using it.</p>');
+
+				$.magnificPopup.open({
+					items: {
+						src: getCodeWindow,
+						type: 'inline'
+					}
+				});
+
+		});
+
+	});
+});
+</script>

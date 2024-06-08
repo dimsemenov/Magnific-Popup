@@ -10,13 +10,13 @@ addjs: true
 
 canonical_url: http://dimsemenov.com/plugins/magnific-popup/documentation.html
 
-buildtool: true
+permalink: /documentation.html
 
 ---
 
 <div id="documentation-intro">
   <h1><a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a> Documentation</h1>
-  <p><a href="https://github.com/dimsemenov/Magnific-Popup/">Project on GitHub</a> &middot; <a href="#mfp-build-tool" class="mfp-build-tool-link">Build tool</a> &middot; <a href="http://twitter.com/dimsemenov">Twitter of developer</a> &middot; <a href="http://dimsemenov.com/subscribe.html">Newsletter of developer</a></p>
+  <p><a href="https://github.com/dimsemenov/Magnific-Popup/">Project on GitHub</a> &middot; <a href="http://twitter.com/dimsemenov">Twitter of developer</a> &middot; <a href="http://dimsemenov.com/subscribe.html">Newsletter of developer</a></p>
 </div>
 
 
@@ -37,7 +37,7 @@ If you're looking for touch-friendly popup just for images, <a href="http://phot
 
 ## Including files
 
-You can get Magnific Popup JS and CSS file from the <a href="#mfp-build-tool" class="mfp-build-tool-link">build tool</a>, from the `dist/` folder in the <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub repository</a>, or by compiling it yourself with Grunt.
+You can get Magnific Popup JS and CSS file from the `dist/` folder in the <a href="https://github.com/dimsemenov/Magnific-Popup">GitHub repository</a>, or by compiling it yourself with Grunt.
 
 {% highlight html %}
 <!-- Magnific Popup core CSS file -->
@@ -221,12 +221,12 @@ image: {
   titleSrc: 'title', // Attribute of the target element that contains caption for the slide.
   // Or the function that should return the title. For example:
   // titleSrc: function(item) {
-  //   return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
+  //   return item.el.attr('title') + ' by Marsel Van Oosten';
   // }
 
   verticalFit: true, // Fits image in area vertically
 
-  tError: '<a href="%url%">The image</a> could not be loaded.' // Error message
+  tError: 'The image could not be loaded.' // Error message
 }
 {% endhighlight %}
 
@@ -400,7 +400,7 @@ ajax: {
   // settings: {cache:false, async:false}
 
   cursor: 'mfp-ajax-cur', // CSS class that will be added to body during the loading (adds "progress" cursor)
-  tError: '<a href="%url%">The content</a> could not be loaded.' //  Error message, can contain %curr% and %total% tags if gallery is enabled
+  tError: 'The content could not be loaded.' //  Error message, can contain %curr% and %total% tags if gallery is enabled
 }
 {% endhighlight %}
 
@@ -652,6 +652,19 @@ The DOM element to which popup will be added. Useful when you're using ASP.NET w
 <code class="def">true</code>
 
 If set to `true` last focused element before popup showup will be focused after popup close. Option available since 2015/12/16.
+
+### allowHTMLInTemplate 
+
+<code class="def">false</code>
+
+Available since 1.2.0. Allows HTML content in the source template (such as text under image). If you enable this - make sure your HTML attributes are sanitized if they can be created by a non-admin user.
+
+
+### allowHTMLInStatusIndicator 
+
+<code class="def">false</code>
+
+Available since 1.2.0. Same as above, but allows HTML content in the status indicator (such as "Loading..." or error message text).
 
 
 ## Gallery
@@ -1127,10 +1140,10 @@ $.extend(true, $.magnificPopup.defaults, {
     tCounter: '%curr% of %total%' // Markup for "1 of 7" counter
   },
   image: {
-    tError: '<a href="%url%">The image</a> could not be loaded.' // Error message when image could not be loaded
+    tError: 'The image could not be loaded.' // Error message when image could not be loaded
   },
   ajax: {
-    tError: '<a href="%url%">The content</a> could not be loaded.' // Error message when ajax request failed
+    tError: 'The content could not be loaded.' // Error message when ajax request failed
   }
 });
 {% endhighlight %}
@@ -1147,10 +1160,10 @@ $('.some-button').magnificPopup({
     tCounter: '%curr% of %total%'
   },
   image: {
-    tError: '<a href="%url%">The image</a> could not be loaded.'
+    tError: 'The image could not be loaded.'
   },
   ajax: {
-    tError: '<a href="%url%">The request</a> failed.'
+    tError: 'The request failed.'
   }
 
   // surely, you may add other options here
