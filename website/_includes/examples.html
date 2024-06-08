@@ -1,6 +1,4 @@
 <script src="third-party-libs/jquery.js?v={{site.mfpversion}}"></script>
-<script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
-
 <script src="dist/jquery.magnific-popup.js?v={{site.mfpversion}}"></script>
 
 <!--
@@ -739,23 +737,25 @@ Examples end.
 		        // replace spaces with tabs
 		        str = str.replace(/  /g,'\t');
 
-		        str = $.trim(str);
+		        str = str.trim();
 		      }
 		      return str;
 		    };
 
 		  var highlight = function() {
-		    hljs.highlightBlock(JS.find('code')[0]);
+        if (window.hljs) {
+          hljs.highlightBlock(JS.find('code')[0]);
 
-		    if(CSS)
-		      hljs.highlightBlock(CSS.find('code')[0]);
+          if(CSS)
+            hljs.highlightBlock(CSS.find('code')[0]);
 
-		    if(HTML)
-		      hljs.highlightBlock(HTML.find('code')[0]);
+          if(HTML)
+            hljs.highlightBlock(HTML.find('code')[0]);
+        }
 		  };
 
 		$('.example').each(function() {
-		    $(this).find('h3').click(function() {
+		    $(this).find('h3').on('click', function() {
 				var example = $(this).parent('.example');
 				var getCodeWindow = $('<div class="get-code-window"><h1>'+example.find('h3').text()+'</h1></div>');
 				JS = $('<div class="highlight"><pre><code class="javascript">'+formatCode(example.find('script').eq(0).html())+'</code></pre></div>');
