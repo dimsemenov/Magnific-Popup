@@ -34,7 +34,8 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "grunt jshint"
+    "test": "grunt jshint",
+    "prod": "grunt production"
   },
   "devDependencies": {
     "dart-sass": "^1.25.0",
