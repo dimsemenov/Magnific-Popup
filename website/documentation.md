@@ -619,7 +619,7 @@ Popup content position. Can be `"auto"`, `true` or `false`.  If set to `true` - 
 
 <code class="def">auto</code>
 
-Same as an option above, but it defines position property of the dark transluscent overlay. If set to `false` - huge tall overlay will be generated that equals height of window to emulate fixed position. It's recommended to set this option to `true` if you animate this dark overlay and content is most likely will not be zoomed, as size of it will be much smaller.
+Same as an option above, but it defines position property of the dark translucent overlay. If set to `false` - huge tall overlay will be generated that equals height of window to emulate fixed position. It's recommended to set this option to `true` if you animate this dark overlay and content is most likely will not be zoomed, as size of it will be much smaller.
 
 ### overflowY
 
@@ -1108,7 +1108,7 @@ magnificPopup.currItem // data for current item
 magnificPopup.index // current item index (integer)
 
 magnificPopup.content // direct reference to jQuery DOM element that you open in popup
-magnificPopup.bgOverlay // transluscent overlay
+magnificPopup.bgOverlay // translucent overlay
 magnificPopup.wrap // container that holds all controls and contentContainer
 magnificPopup.contentContainer // container that holds popup content, child of wrap
 
