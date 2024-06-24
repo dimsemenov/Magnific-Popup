@@ -513,6 +513,8 @@ If set to `true` lightbox is opened if the user clicked on the middle mouse butt
 
 String that contains classes that will be added to the root element of popup wrapper and to dark overlay. For example `"myClass"`, can also contain multiple classes - `'myClassOne myClassTwo'`.
 
+It is common to add `mfp-img-mobile` as a class using `mainClass`.  This automatically triggers CSS when a device's screen is in landscape mode, or otherwise has a small height, and lets images fill the full height of those screens, pushing padding and text out of the way.  When the device's screen is not in landscape and has a normal height the class has no effect.
+
 ### preloader
 
 <code class="def">true</code>
