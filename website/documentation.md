@@ -148,9 +148,9 @@ Play with [this example on CodePen](http://codepen.io/dimsemenov/pen/vKrqs).
 
 ## Content Types
 
-By default, Magnific Popup has four types of content: `image`, `iframe`, `inline`, and `ajax`. There is no any "auto-detection" of type based on URL, so you should define it manually.
+By default, Magnific Popup has four types of content: `image`, `iframe`, `inline`, and `ajax`. There is not any "auto-detection" of type based on URL, so you should define it manually.
 
-The type of a popup can be defined in a two ways:
+The type of a popup can be defined in two ways:
 
 1. Using the `type` option. E.g.: `$('.image-link').magnificPopup({type:'image'})`.
 
@@ -291,7 +291,7 @@ iframe: {
 
 To create popup from inline element you need to:
 
-1) Create a HTML element that you wish to display in popup and add it somewhere. Class `mfp-hide` is required to hide the popup from the page.
+1) Create an HTML element that you wish to display in the popup and add it somewhere. Class `mfp-hide` is required to hide the popup from the page.
 
 {% highlight html %}
 <div id="test-popup" class="white-popup mfp-hide">
@@ -332,7 +332,7 @@ $('.open-popup-link').magnificPopup({
 });
 {% endhighlight %}
 
-Here are some other ways to initialize popup:
+Here are some other ways to initialize the popup:
 
 {% highlight javascript %}
 // From HTML string
@@ -362,7 +362,7 @@ $('button').magnificPopup({
 // Open directly via API
 $.magnificPopup.open({
   items: {
-    src: '<div class="white-popup">Dynamically created popup</div>', // can be a HTML string, jQuery object, or CSS selector
+    src: '<div class="white-popup">Dynamically created popup</div>', // can be an HTML string, jQuery object, or CSS selector
     type: 'inline'
   }
 });
@@ -375,9 +375,9 @@ I have created two examples on CodePen that will help you better understand how 
 
 ## Ajax Type
 
-To create such type of popup, first of define the path to the file that you wish to display and select `ajax` type of the popup. Popup itself should be styled in exactly the same way as an [inline popup type](#inline-type).
+To create this type of popup, first define the path to the file that you wish to display and select the `ajax` popup type. The popup itself should be styled in exactly the same way as an [inline popup type](#inline-type).
 
-**Important note!** The contents of the file that you load is already a popup itself, so there must be **only one root element**.
+**Important note!** The content of the file that you load is already a popup itself, so there must be **only one root element**.
 
 {% highlight html %}
 <a href="path-to-file.html" class="ajax-popup-link">Show inline popup</a>
@@ -389,7 +389,7 @@ $('.ajax-popup-link').magnificPopup({
 });
 {% endhighlight %}
 
-Note that path to the file that will be loaded should have the same origin (e.g. be on the same domain), [learn more](http://stackoverflow.com/questions/3076414/ways-to-circumvent-the-same-origin-policy).
+Note that the path to the file that will be loaded should have the same origin (e.g. be on the same domain), [learn more](http://stackoverflow.com/questions/3076414/ways-to-circumvent-the-same-origin-policy).
 
 Ajax options:
 
@@ -457,13 +457,13 @@ $('.some-link').magnificPopup({
 });
 {% endhighlight %}
 
-Options for specific modules are explained in their sections of documentation (e.g. related to text are in <a href="#translating">translating section</a>, related to gallery are in <a href="#gallery">gallery section</a>. Here you can find the list of general options:
+Options for specific modules are explained in their sections of documentation (e.g. those related to text are in <a href="#translating">translating section</a>, those related to gallery are in <a href="#gallery">gallery section</a>. Here you can find the list of general options:
 
 ### disableOn
 
 <code class="def">null</code>
 
-If window width is less than the number in this option lightbox will not be opened and the default behavior of the element will be triggered. Set to `0` to disable behavior. Option works only when you initialize Magnific Popup from DOM element.
+If the window width is less than the number in this option lightbox will not be opened and the default behavior of the element will be triggered. Set to `0` to disable behavior. Option works only when you initialize Magnific Popup from DOM element.
 
 Can also accept Function as a parameter, which should return `true` if lightbox can be opened and `false` otherwise. For example:
 
@@ -482,11 +482,11 @@ disableOn: function() {
 
 <code class="def">null</code>
 
-"Key" option is a unique identifier of a single or a group of popups with the same structure. If you will not define it, DOM elements will be created and destroyed each time when you open and close popup.
+"Key" option is a unique identifier of a single or a group of popups with the same structure. If you do not define it, DOM elements will be created and destroyed each time you open and close the popup.
 
-You may (and should) set an equal key to different popups if their markup matches. By markup I mean options that change HTML structure of the popup (e.g. close icon placement and HTML code of it).
+You may (and should) set an equal key to different popups if their markup matches. By markup I mean options that change the HTML structure of the popup (e.g. close icon placement and its HTML code).
 
-For example: you have many popups that show title, some text and button - you may use one key for all of them, so only one instance of this element is created. Same for popup that always contains image and caption.
+For example: you have many popups that show title, some text and button - you may use one key for all of them, so only one instance of this element is created. Same for popups that always contain an image and caption.
 
 You can delete cached templates like so:
 
@@ -504,7 +504,7 @@ You can delete cached templates like so:
 
 <code class="def">false</code>
 
-If set to `true` lightbox is opened if the user clicked on the middle mouse button, or click with Command/Ctrl key. Option works only when you initialize Magnific Popup from DOM element.
+If set to `true` lightbox is opened if the user clicked on the middle mouse button, or clicked with Command/Ctrl key. Option works only when you initialize Magnific Popup from DOM element.
 
 
 ### mainClass
@@ -517,7 +517,7 @@ String that contains classes that will be added to the root element of popup wra
 
 <code class="def">true</code>
 
-Preloader in Magnific Popup is used as an indicator of current status. If option enabled, it's always present in DOM only text inside of it changes. Below you can see explanation of CSS names that are applied to container that holds preloader and content area depending on the state of current item:
+Preloader in Magnific Popup is used as an indicator of current status. If this option is enabled, it's always present in DOM; only text inside of it changes. Below you can see an explanation of CSS names that are applied to container that holds preloader and content area depending on the state of current item:
 
 {% highlight css %}
 
@@ -527,11 +527,11 @@ Preloader in Magnific Popup is used as an indicator of current status. If option
 /* Content successfully loaded */
 .mfp-s-ready { }
 
-/* Error during loading  */
+/* Error during loading */
 .mfp-s-error { }
 {% endhighlight %}
 
-For example, if you want your error message to be in red add such CSS:
+For example, if you want your error message to be in red add CSS as follows:
 
 {% highlight css %}
 .mfp-s-error .mfp-preloader {
@@ -539,20 +539,20 @@ For example, if you want your error message to be in red add such CSS:
 }
 {% endhighlight %}
 
-You can trigger change of status manually by calling `instance.updateStatus('error', 'error message')`.
+You can trigger a change of status manually by calling `instance.updateStatus('error', 'error message')`.
 
 
 ### focus
 
 <code class="def">empty string</code>
 
-String with CSS selector of an element inside popup that should be focused. Ideally it should be the first element of popup that can be focused. For example `'input'` or `'#login-input'`. Leave empty to focus the popup itself.
+String with CSS selector of an element inside popup that should be focused. Ideally it should be the first element of the popup that can be focused. For example `'input'` or `'#login-input'`. Leave empty to focus the popup itself.
 
 ### closeOnContentClick
 
 <code class="def">false</code>
 
-Close popup when user clicks on content of it. It's recommended to enable this option when you have only image in popup.
+Close popup when user clicks on content of it. It's recommended to enable this option when the popup only has an image.
 
 
 ### closeOnBgClick
@@ -566,7 +566,7 @@ Close the popup when user clicks on the dark overlay.
 
 <code class="def">true</code>
 
-If enabled, Magnific Popup will put close button inside content of popup, and wrapper will get class `mfp-close-btn-in` (which in default CSS file makes color of it change). If markup of popup item is defined element with class `mfp-close` it will be replaced with this button, otherwise close button will be appended directly.
+If enabled, Magnific Popup will put the close button inside the content of the popup, and a wrapper will get class `mfp-close-btn-in` (which in the default CSS file makes the color of it change). If the markup of the popup item is a defined element with class `mfp-close` it will be replaced with this button. Otherwise the close button will be appended directly.
 
 
 ### showCloseBtn
@@ -619,7 +619,7 @@ Popup content position. Can be `"auto"`, `true` or `false`.  If set to `true` - 
 
 <code class="def">auto</code>
 
-Same as an option above, but it defines position property of the dark transluscent overlay. If set to `false` - huge tall overlay will be generated that equals height of window to emulate fixed position. It's recommended to set this option to `true` if you animate this dark overlay and content is most likely will not be zoomed, as size of it will be much smaller.
+Same as option above, but it defines the position property of the dark transluscent overlay. If set to `false`, a huge tall overlay will be generated that equals the height of the window to emulate fixed position. It's recommended to set this option to `true` if you animate this dark overlay and the content is not likely to be zoomed, as its size will be much smaller.
 
 ### overflowY
 
@@ -733,7 +733,7 @@ You don't necessarily need to use `delegate` option, it can be just `$(this).fin
 
 Lazy-loading option preloads nearby items. It accepts an array with two integers. The first is the number of items to preload before the current. The second is the number of images to preload after the current. For example, `preload: [1,3]` will load 3 next items and 1 that is before current. These values are automatically switched based on direction of movement. 
 
-By default all what it does is just searches for an image tag and preloads it with JavaScript. But you can extend it and do your custom preloading logic with help of `lazyLoad` event, like so:
+By default all it does is just searches for an image tag and preloads it with JavaScript. But you can extend it and do your custom preloading logic with the help of `lazyLoad` event, like so:
 
 {% highlight javascript %}
 callbacks: {
@@ -810,9 +810,9 @@ Please use animation wisely and when it's really required. Do not enable it when
 
 ## Retina
 
-"Retina" module allows you to display high-resolution images on high-dpi screens with different `devicePixelRatio`. Module works only with "image" type and only when `window.devicePixelRatio > 1`.
+"Retina" module allows you to display high-resolution images on high-dpi screens with different `devicePixelRatio`. This module works only with "image" type and only when `window.devicePixelRatio > 1`.
 
-First of prepare two sets of images. Default supported syntax requires `@2x` at the end of the image file name, e.g.: `image.jpg` > `image@2x.jpg`. Then initialize popup as usual and add `ratio` in retina set of options.
+First prepare two sets of images. Default supported syntax requires `@2x` at the end of the image file name, e.g.: `image.jpg` > `image@2x.jpg`. Then initialize popup as usual and add `ratio` in retina set of options.
 
 {% highlight html %}
 <a href="image.jpg" class="image-link">Open popup</a>
@@ -842,7 +842,7 @@ View [example of retina popup on CodePen](http://codepen.io/dimsemenov/pen/Dohka
 
 ## Zoom effect
 
-Zooming only works for images, for now. To add zooming effect, first of make sure that you included "zoom" module to Magnific Popup build (since v0.9.1.). Then follow steps:
+Zooming only works for images, for now. To add zooming effect, first off make sure that you included the "zoom" module to Magnific Popup build (since v0.9.1.). Then follow steps:
 
 1) Add the thumbnail with link that will open the popup, for example:
 
@@ -852,7 +852,7 @@ Zooming only works for images, for now. To add zooming effect, first of make sur
 </a>
 {% endhighlight %}
 
-You need to make sure that ratio of your thumbnail matches the ratio of the big image, to avoid "jumps" at the end of zoom-out animation.
+You need to make sure that the ratio of your thumbnail matches the ratio of the big image, to avoid "jumps" at the end of the zoom-out animation.
 
 2) Initialize popup with `zoom` options:
 
@@ -870,10 +870,10 @@ $('.image-link').magnificPopup({
 
     // The "opener" function should return the element from which popup will be zoomed in
     // and to which popup will be scaled down
-    // By defailt it looks for an image tag:
+    // By default it looks for an image tag:
     opener: function(openerElement) {
       // openerElement is the element on which popup was initialized, in this case its <a> tag
-      // you don't need to add "opener" option if this code matches your needs, it's defailt one.
+      // you don't need to add "opener" option if this code matches your needs, it's default one.
       return openerElement.is('img') ? openerElement : openerElement.find('img');
     }
   }
@@ -915,11 +915,11 @@ Zoom module adds `zoomAnimationEnded` callback, which fires when zoom-in animati
 
 ## API
 
-There is a much bigger list of public events, methods and variables than provided here which is used for module development, look inside code or type in console `$.magnificPopup.instance.` to find them, if you think that something should be added to docs - please submit commit.
+There is a much bigger list of public events, methods and variables than provided here which are used for module development.  Look inside the code or type `$.magnificPopup.instance.` in the console to find them.  If you think that something should be added to docs, please submit a commit.
 
 ### Events
 
-You can define callbacks in `callbacks` option. Besides that, all Magnific Popup events are also dispatched using `triggerHandler` on target element (or to document if the element doesn't exist).
+You can define callbacks in the `callbacks` option. Besides that, all Magnific Popup events are also dispatched using `triggerHandler` on target element (or to document if the element doesn't exist).
 
 {% highlight javascript %}
 $('.image-link').magnificPopup({
@@ -992,7 +992,7 @@ callbacks: {
     // "data" is an object that has two properties:
     // "data.status" - current status type, can be "loading", "error", "ready"
     // "data.text" - text that will be displayed (e.g. "Loading...")
-    // you may modify this properties to change current status or its text dynamically
+    // you may modify these properties to change current status or its text dynamically
   },
   imageLoadComplete: function() {
     // fires when image in current popup finished loading
@@ -1004,7 +1004,7 @@ callbacks: {
   // Only for ajax popup type
   parseAjax: function(mfpResponse) {
     // mfpResponse.data is a "data" object from ajax "success" callback
-    // for simple HTML file, it will be just String
+    // for a simple HTML file, it will just be a String
     // You may modify it to change contents of the popup
     // For example, to show just #some-element:
     // mfpResponse.data = $(mfpResponse.data).find('#some-element');
@@ -1034,7 +1034,7 @@ $.magnificPopup.open({
   },
   type: 'image'
 
-  // You may add options here, they're exactly the same as for $.fn.magnificPopup call
+  // You may add options here; they're exactly the same as for $.fn.magnificPopup call
   // Note that some settings that rely on click event (like disableOn or midClick) will not work here
 }, 0);
 
@@ -1045,7 +1045,7 @@ $.magnificPopup.close(); // Close popup that is currently opened (shorthand)
 /*
   Methods below don't have shorthand like "open" and "close".
   They should be called through "instance" object.
-  "instance" is available only when at least one popup was opened.
+  "instance" is available only when at least one popup has been opened.
   For example: $.magnificPopup.instance.doSomething();
 */
 
@@ -1073,7 +1073,7 @@ magnificPopup.updateStatus('loading', 'The loading text...');
 You may also call ANY method via `$.fn.magnificPopup('methodName' /*, param1, param2 ... */)` after you initialized the popup, for example:
 
 {% highlight javascript %}
-// First of make sure that you initialized popup on element $('.element-with-popup')
+// First off make sure that you initialized popup on element $('.element-with-popup')
 
 // Then
 $('.element-with-popup').magnificPopup('open'); // Will open the popup
@@ -1097,7 +1097,7 @@ $('.element-with-popup').magnificPopup({
 
 ### Public properties
 
-Most properties are available only after the popup is opened. Only most used are listed here.
+Most properties are available only after the popup is opened. Only the most used are listed here.
 
 {% highlight javascript %}
 var magnificPopup = $.magnificPopup.instance;
@@ -1125,7 +1125,7 @@ magnificPopup.isIOS
 
 ## Translating
 
-Internationalization of Magnific Popup is very simple, all you need is to extend default settings object with new values, or just pass options to your initialization code. If you're making some public plugin or theme, it's strongly recommended to use only second method to avoid conflicts.
+Internationalization of Magnific Popup is very simple.  All you need is to extend the default settings object with new values, or just pass options to your initialization code. If you're making some public plugin or theme, it's strongly recommended to use only second method to avoid conflicts.
 
 Some properties contain %keys% that should not be translated, but may be reordered or removed.
 
@@ -1179,7 +1179,7 @@ See [example on CodePen](http://codepen.io/dimsemenov/pen/JGjHK).
 
 ### How to override some function without modifying the source files?
 
-Rewrite the function that you wish to modify by editing Magnific Popup object, you can access it like so `$.magnificPopup.instance`. For example to override function that goes to "next" item in gallery:
+To rewrite the function that you wish to modify by editing Magnific Popup object, you can access it like so `$.magnificPopup.instance`. For example to override the function that goes to the "next" item in a gallery:
 
 {% highlight javascript %}
 // add this code after popup JS file is included
@@ -1192,11 +1192,11 @@ $.magnificPopup.instance.next = function() {
 };
 {% endhighlight %}
 
-You may override any public function, just note that this change applies globally.
+You may override any public function; just note that this change applies globally.
 
 ### How to add spinner indicator instead of "Loading..." text?
 
-Just style element with class `.mfp-preloader`. [Example on CodePen](http://codepen.io/dimsemenov/pen/aKwxt). [Another example](http://codepen.io/dimsemenov/pen/HdjtL) (if you want to show image only after its fully loaded).
+Just style element with class `.mfp-preloader`. [Example on CodePen](http://codepen.io/dimsemenov/pen/aKwxt). [Another example](http://codepen.io/dimsemenov/pen/HdjtL) (if you want to show image only after it's fully loaded).
 
 
 ## Known issues
