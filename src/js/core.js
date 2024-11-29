@@ -368,8 +368,8 @@ MagnificPopup.prototype = {
 	 * Closes the popup
 	 */
 	close: function() {
-		if(!mfp.isOpen) return;
 		_mfpTrigger(BEFORE_CLOSE_EVENT);
+		if(!mfp.isOpen) return;
 
 		mfp.isOpen = false;
 		// for CSS3 animation
