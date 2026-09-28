@@ -6,7 +6,7 @@
  * 
  */
 
-var sass = require('dart-sass');
+var sass = require('sass');
 
 module.exports = function(grunt) {
 

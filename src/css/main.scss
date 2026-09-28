@@ -1,6 +1,6 @@
 /* Magnific Popup CSS */
 
-@import "settings";
+@use "settings";
 
 ////////////////////////
 //
@@ -36,12 +36,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: $mfp-z-index-base + 2;
+  z-index: settings.$mfp-z-index-base + 2;
   overflow: hidden;
   position: fixed;
 
-  background: $mfp-overlay-color;
-  opacity: $mfp-overlay-opacity;
+  background: settings.$mfp-overlay-color;
+  opacity: settings.$mfp-overlay-opacity;
 }
 
 // Wrapper for popup
@@ -50,7 +50,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: $mfp-z-index-base + 3;
+  z-index: settings.$mfp-z-index-base + 3;
   position: fixed;
   outline: none !important;
   -webkit-backface-visibility: hidden; // fixes webkit bug that can cause "false" scrollbar
@@ -64,7 +64,7 @@
   height: 100%;
   left: 0;
   top: 0;
-  padding: 0 $mfp-popup-padding-left;
+  padding: 0 settings.$mfp-popup-padding-left;
   box-sizing: border-box;
 }
 
@@ -94,7 +94,7 @@
   vertical-align: middle;
   margin: 0 auto;
   text-align: left;
-  z-index: $mfp-z-index-base + 5;
+  z-index: settings.$mfp-z-index-base + 5;
 }
 .mfp-inline-holder,
 .mfp-ajax-holder {
@@ -144,7 +144,7 @@
 }
 
 // Helper class that hides stuff
-@if $mfp-use-visuallyhidden {
+@if settings.$mfp-use-visuallyhidden {
   // From HTML5 Boilerplate https://github.com/h5bp/html5-boilerplate/blob/v4.2.0/doc/css.md#visuallyhidden
   .mfp-hide {
     border: 0 !important;
@@ -169,7 +169,7 @@
 
 // Preloader and text that displays error messages
 .mfp-preloader {
-  color: $mfp-controls-text-color;
+  color: settings.$mfp-controls-text-color;
   position: absolute;
   top: 50%;
   width: auto;
@@ -177,11 +177,11 @@
   margin-top: -0.8em;
   left: 8px;
   right: 8px;
-  z-index: $mfp-z-index-base + 4;
+  z-index: settings.$mfp-z-index-base + 4;
   a {
-    color: $mfp-controls-text-color;
+    color: settings.$mfp-controls-text-color;
     &:hover {
-      color: $mfp-controls-text-color-hover;
+      color: settings.$mfp-controls-text-color-hover;
     }
   }
 }
@@ -212,7 +212,7 @@ button {
     display: block;
     outline: none;
     padding: 0;
-    z-index: $mfp-z-index-base + 6;
+    z-index: settings.$mfp-z-index-base + 6;
     box-shadow: none;
     touch-action: manipulation;
   }
@@ -234,9 +234,9 @@ button {
   top: 0;
   text-decoration: none;
   text-align: center;
-  opacity: $mfp-controls-opacity;
+  opacity: settings.$mfp-controls-opacity;
   padding: 0 0 18px 10px;
-  color: $mfp-controls-color;
+  color: settings.$mfp-controls-color;
 
   font-style: normal;
   font-size: 28px;
@@ -253,13 +253,13 @@ button {
 }
 .mfp-close-btn-in {
   .mfp-close {
-    color: $mfp-inner-close-icon-color;
+    color: settings.$mfp-inner-close-icon-color;
   }
 }
 .mfp-image-holder,
 .mfp-iframe-holder {
   .mfp-close {
-    color: $mfp-controls-color;
+    color: settings.$mfp-controls-color;
     right: -6px;
     text-align: right;
     padding-right: 6px;
@@ -272,17 +272,17 @@ button {
   position: absolute;
   top: 0;
   right: 0;
-  color: $mfp-controls-text-color;
+  color: settings.$mfp-controls-text-color;
   font-size: 12px;
   line-height: 18px;
   white-space: nowrap;
 }
 
 // Navigation arrows
-@if $mfp-include-arrows {
+@if settings.$mfp-include-arrows {
   .mfp-arrow {
     position: absolute;
-    opacity: $mfp-controls-opacity;
+    opacity: settings.$mfp-controls-opacity;
     margin: 0;
     top: 50%;
     margin-top: -55px;
@@ -329,23 +329,23 @@ button {
   .mfp-arrow-left {
     left: 0;
     &:after {
-      border-right: 17px solid $mfp-controls-color;
+      border-right: 17px solid settings.$mfp-controls-color;
       margin-left: 31px;
     }
     &:before {
       margin-left: 25px;
-      border-right: 27px solid $mfp-controls-border-color;
+      border-right: 27px solid settings.$mfp-controls-border-color;
     }
   }
 
   .mfp-arrow-right {
     right: 0;
     &:after {
-      border-left: 17px solid $mfp-controls-color;
+      border-left: 17px solid settings.$mfp-controls-color;
       margin-left: 39px
     }
     &:before {
-      border-left: 27px solid $mfp-controls-border-color;
+      border-left: 27px solid settings.$mfp-controls-border-color;
     }
   }
 }
@@ -353,14 +353,14 @@ button {
 
 
 // Iframe content type
-@if $mfp-include-iframe-type {
+@if settings.$mfp-include-iframe-type {
   .mfp-iframe-holder {
-    padding-top: $mfp-iframe-padding-top;
-    padding-bottom: $mfp-iframe-padding-top;
+    padding-top: settings.$mfp-iframe-padding-top;
+    padding-bottom: settings.$mfp-iframe-padding-top;
     .mfp-content {
       line-height: 0;
       width: 100%;
-      max-width: $mfp-iframe-max-width;
+      max-width: settings.$mfp-iframe-max-width;
     }
     .mfp-close {
       top: -40px;
@@ -370,7 +370,7 @@ button {
     width: 100%;
     height: 0;
     overflow: hidden;
-    padding-top: $mfp-iframe-ratio * 100%;
+    padding-top: settings.$mfp-iframe-ratio * 100%;
     iframe {
       position: absolute;
       display: block;
@@ -378,8 +378,8 @@ button {
       left: 0;
       width: 100%;
       height: 100%;
-      box-shadow: $mfp-shadow;
-      background: $mfp-iframe-background;
+      box-shadow: settings.$mfp-shadow;
+      background: settings.$mfp-iframe-background;
     }
   }
 }
@@ -387,7 +387,7 @@ button {
 
 
 // Image content type
-@if $mfp-include-image-type {
+@if settings.$mfp-include-image-type {
 
   /* Main image in popup */
   img {
@@ -398,7 +398,7 @@ button {
       display: block;
       line-height: 0;
       box-sizing: border-box;
-      padding: $mfp-image-padding-top 0 $mfp-image-padding-bottom;
+      padding: settings.$mfp-image-padding-top 0 settings.$mfp-image-padding-bottom;
       margin: 0 auto;
     }
   }
@@ -410,18 +410,18 @@ button {
       content: '';
       position: absolute;
       left: 0;
-      top: $mfp-image-padding-top;
-      bottom: $mfp-image-padding-bottom;
+      top: settings.$mfp-image-padding-top;
+      bottom: settings.$mfp-image-padding-bottom;
       display: block;
       right: 0;
       width: auto;
       height: auto;
       z-index: -1;
-      box-shadow: $mfp-shadow;
-      background: $mfp-image-background;
+      box-shadow: settings.$mfp-shadow;
+      background: settings.$mfp-image-background;
     }
     small {
-      color: $mfp-caption-subtitle-color;
+      color: settings.$mfp-caption-subtitle-color;
       display: block;
       font-size: 12px;
       line-height: 14px;
@@ -431,7 +431,7 @@ button {
     }
   }
   .mfp-bottom-bar {
-    margin-top: -$mfp-image-padding-bottom + 4;
+    margin-top: -(settings.$mfp-image-padding-bottom) + 4;
     position: absolute;
     top: 100%;
     left: 0;
@@ -441,7 +441,7 @@ button {
   .mfp-title {
     text-align: left;
     line-height: 18px;
-    color: $mfp-caption-title-color;
+    color: settings.$mfp-caption-title-color;
     word-wrap: break-word;
     padding-right: 36px; // leave some space for counter at right side
   }
@@ -461,7 +461,7 @@ button {
   }
 
 
-  @if $mfp-include-mobile-layout-for-image {
+  @if settings.$mfp-include-mobile-layout-for-image {
     @media screen and (max-width: 800px) and (orientation:landscape), screen and (max-height: 300px) {
       /**
        * Remove all paddings around the image on small screen
@@ -536,8 +536,8 @@ button {
     transform-origin: 100%;
   }
   .mfp-container {
-    padding-left: $mfp-popup-padding-left-mobile;
-    padding-right: $mfp-popup-padding-left-mobile;
+    padding-left: settings.$mfp-popup-padding-left-mobile;
+    padding-right: settings.$mfp-popup-padding-left-mobile;
   }
 }
 

@@ -38,7 +38,6 @@
     "prod": "grunt production"
   },
   "devDependencies": {
-    "dart-sass": "^1.25.0",
     "grunt": "~1.6.1",
     "grunt-contrib-clean": "~2.0.1",
     "grunt-contrib-concat": "^2.1.0",
@@ -48,7 +47,8 @@
     "grunt-contrib-uglify": "~5.2.2",
     "grunt-contrib-watch": "~1.1.0",
     "grunt-jekyll": "~1.0.1",
-    "grunt-sass": "~3.1.0"
+    "grunt-sass": "^4.1.0",
+    "sass": "^1.105.0"
   },
   "repository": {
     "type": "git",
